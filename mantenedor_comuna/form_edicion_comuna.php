@@ -2,11 +2,10 @@
     require('..\conexion.php');
     $id_recibido=$_GET["id_e"];
 
-    $consulta ="SELECT *FROM comuna WHERE id_comuna='$id_recibido'";
+    $consulta ="SELECT * FROM comuna WHERE id_comuna=$id_recibido";
     $resultado = mysqli_query($conexion, $consulta);
 
     while($row = mysqli_fetch_assoc($resultado)){
-        
         $nombre_comuna_consultado = $row["nombre_comuna"];
         $id_ciudad_consultado = $row["id_ciudad"];
         $id=$row["id_comuna"];
