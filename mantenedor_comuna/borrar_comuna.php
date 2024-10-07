@@ -3,7 +3,7 @@
 
     $id_r=$_GET["id_e"];
 
-    $consulta = "DELETE FROM comuna WHERE id='$id_r';";
+    $consulta = "DELETE FROM comuna WHERE id_comuna=$id_r;";
     $resultado = mysqli_query($conexion, $consulta);
 
     header('Location: index_comuna.php');
