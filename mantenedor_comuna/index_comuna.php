@@ -91,14 +91,15 @@
             
             $nombre_comuna_consultado = $row["nombre_comuna"];
             $id_ciudad_consultado = $row["id_ciudad"];
+            $id_comuna_consultado = $row["id_comuna"];
             echo "<tr>";
                 
                 echo "<td>".$nombre_comuna_consultado."</td>";
                 echo "<td>".$id_ciudad_consultado."</td>";
                 echo "<td>";
-                    echo "<a href='borrar_comuna.php?id_e=".$id_ciudad_consultado."' class='btn btn-danger' style='color: white; text-decoration: none;'>Borrar</a>";
+                    echo "<a href='borrar_comuna.php?id_e=$id_comuna_consultado' class='btn btn-danger' style='color: white; text-decoration: none;'>Borrar</a>";
                     echo " ";
-                    echo "<a href='form_edicion_comuna.php?id_e=".$id_ciudad_consultado."' class='btn btn-primary' style='color: white; text-decoration: none;'> Editar</a>";
+                    echo "<a href='form_edicion_comuna.php?id_e=$id_comuna_consultado' class='btn btn-primary' style='color: white; text-decoration: none;'> Editar</a>";
                 echo "</td>";
                 
             echo "</tr>";
@@ -107,6 +108,3 @@
         ?>
         </table>
     </div>
-</body>
-
-</html>
