@@ -48,7 +48,7 @@
             $password = mysqli_real_escape_string($conexion, $password);
 
             // Aquí cambia la consulta para que use el RUT
-            $query = "SELECT * FROM usuario WHERE rut='$rut' AND password='" . md5($password) . "'";
+            $query = "SELECT * FROM usuario WHERE rut='$rut' AND contraseña='" . md5($password) . "'";
             $result = mysqli_query($conexion, $query) or die(mysqli_error($conexion));
             $rows = mysqli_num_rows($result);
             if ($rows == 1) {
