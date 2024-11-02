@@ -41,20 +41,23 @@
     <?php
         require('conexion.php');
         session_start();
-        if (isset($_POST['username'])) {
-            $username = stripslashes($_POST['username']);
-            $username = mysqli_real_escape_string($conexion, $username);
+        if (isset($_POST['rut'])) {
+            $rut = stripslashes($_POST['rut']);
+            $rut = mysqli_real_escape_string($conexion, $rut);
             $password = stripslashes($_POST['password']);
             $password = mysqli_real_escape_string($conexion, $password);
 
-            $query = "SELECT * FROM users WHERE username='$username' and password='" . md5($password) . "'";
+            // Aquí cambia la consulta para que use el RUT
+            $query = "SELECT * FROM usuario WHERE rut='$rut' AND password='" . md5($password) . "'";
             $result = mysqli_query($conexion, $query) or die(mysqli_error($conexion));
             $rows = mysqli_num_rows($result);
             if ($rows == 1) {
-                $_SESSION['username'] = $username;
+                // Aquí inicia sesión
+                $_SESSION['rut'] = $rut;
                 header('Location: index.php');
+                exit();
             } else {
-                echo "<div class='alert alert-danger'>Usuario o contraseña incorrecto</div>";
+                echo "<div class='alert alert-danger'>RUT o contraseña incorrecto</div>";
             }
         }
     ?>
@@ -64,7 +67,7 @@
         <h1>Inicia Sesión</h1>
         <form action="" method="POST" name="login">
             <div class="mb-3">
-                <input type="text" name="username" class="form-control" placeholder="Usuario" required>
+                <input type="text" name="rut" class="form-control" placeholder="RUT" required>
             </div>
             <div class="mb-3">
                 <input type="password" name="password" class="form-control" placeholder="Contraseña" required>
