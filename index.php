@@ -8,10 +8,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="public/css/index.css">
-
+    <link rel="icon" type="image/png" href="public/images/logo.png">
 </head>
 
-<body style="background-color: rgb(240, 223, 255 );">
+<body style="background-color: rgb(240, 223, 255);">
     <nav class="navbar navbar-expand-lg bg-gradient bg-opacity-50" style="background-color: rgb(113, 59, 228);">
         <div class="container-fluid ">
             <a class="navbar-brand" href="#">
@@ -102,7 +102,7 @@
                     <div class="col py-5 px-1 mt-4">
                         <form class="d-flex" role="search">
                             <input class="form-control me-1" type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-outline-success " type="submit">Search</button>
+                            <button class="btn btn-outline-success " type="submit">Buscar</button>
                         </form>
                     </div>
                 </div>
