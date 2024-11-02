@@ -10,4 +10,5 @@
     $db_user = $env['DB_USER'];
     $db_pass = $env['DB_PASSWORD']; 
     $db = $env['DB_NAME'];
+
 ?>

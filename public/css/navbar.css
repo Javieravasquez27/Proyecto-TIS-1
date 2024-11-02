@@ -1,0 +1,13 @@
+.navbar-nav .nav-link,
+.navbar-brand {
+    color: white !important;
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-brand:hover {
+    color: rgb(207, 207, 207) !important;
+}
+
+.navbar-nav .nav-link.active {
+    color: rgb(207, 207, 207) !important;
+}
