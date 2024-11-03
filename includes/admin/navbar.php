@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function() {
 </script>
 
 <body style="background-color: rgb(240, 223, 255);">
-    <nav class="navbar navbar-expand-lg bg-gradient bg-opacity-50" style="background-color: rgb(113, 59, 228);">
+    <nav class="navbar navbar-expand-lg bg-gradient bg-opacity-50" style="background-color: rgb(150, 120, 182);">
         <div class="container-fluid ">
             <a class="navbar-brand" href="#">
                 <img src="public/images/logo.png" alt="Logo KindomJobs" height="50" class="imagen d-inline-block">

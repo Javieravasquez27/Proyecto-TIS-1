@@ -10,7 +10,7 @@ try {
 
         $rut = $_REQUEST['rut'];
 
-        $query = "DELETE FROM usuario WHERE rut=" . $rut . ";";
+        $query = "DELETE FROM usuario WHERE rut = '$rut'";
 
         $result = mysqli_query($connection, $query);
 

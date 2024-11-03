@@ -176,7 +176,7 @@
                         <label for="rol" class="form-label">Rol</label>
                         <select id="rol" name="rol" class="form-select" required>
                             <!-- Las opciones se llenarán aquí con AJAX -->
-                        </select>
+                        </select>   
                     </div>
                 </form>
             </div>
@@ -248,7 +248,7 @@
 
 
     $(document).on('click', '#delete', function() {
-        const id = $(this).data("id");
+        const rut = $(this).data("id");
 
         Swal.fire({
             title: "¿Estás seguro de eliminar este usuario?",

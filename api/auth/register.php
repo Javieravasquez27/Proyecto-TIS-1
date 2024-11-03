@@ -1,8 +1,7 @@
-<?php
+<?php 
 include '../../database/connection.php';
 
 try {
-
     if (isset($_POST['rut']) && isset($_POST['nombre_usuario']) && isset($_POST['nombres']) && isset($_POST['apellido_p']) && isset($_POST['apellido_m'])
         && isset($_POST['correo']) && isset($_POST['telefono']) && isset($_POST['password']) && isset($_POST['fecha_nac']) && isset($_POST['direccion'])
         && isset($_POST['comuna']) && isset($_POST['rol'])) {
@@ -32,8 +31,73 @@ try {
         $rol = stripslashes($_REQUEST['rol']);
         $rol = mysqli_real_escape_string($connection, $rol);
 
-        $sql_ingreso_usuario = "INSERT INTO usuario (rut, nombre_usuario, nombres, apellido_p, apellido_m, correo, telefono, contrasena, fecha_nac, direccion, id_comuna, id_rol) VALUES ('$rut', '$nombre_usuario', '$nombres', '$apellido_p', '$apellido_m', '$correo', '$telefono', '" . md5($password) . "', '$fecha_nac', '$direccion', '$comuna', '$rol')";
-        $result = mysqli_query($connection, $sql_ingreso_usuario);
+        // Procesar la foto de perfil si el rol es Profesional (id_rol = 3)
+        $foto_perfil = null;
+        if ($rol == 3 && isset($_FILES['foto_perfil'])) {
+            $directorio_foto_perfil = "../../uploads/foto_perfil/";
+            $localizacion_foto_perfil = $directorio_foto_perfil . basename($_FILES["foto_perfil"]["name"]);
+            $subida_correcta_fp = 1;
+            $extension_fp = strtolower(pathinfo($localizacion_foto_perfil, PATHINFO_EXTENSION));
+
+            // Verificar si el archivo es una imagen
+            $verificar_fp = getimagesize($_FILES["foto_perfil"]["tmp_name"]);
+            if($verificar_fp !== false) {
+                $subida_correcta_fp = 1;
+            } else {
+                $subida_correcta_fp = 0;
+            }
+
+            // Intentar cargar el archivo
+            if ($subida_correcta_fp == 1 && move_uploaded_file($_FILES["foto_perfil"]["tmp_name"], $localizacion_foto_perfil)) {
+                $foto_perfil = mysqli_real_escape_string($connection, $localizacion_foto_perfil);
+            } else {
+                $response = array(
+                    'success' => false,
+                    'message' => 'Error al cargar la foto de perfil.'
+                );
+                echo json_encode($response);
+                exit();
+            }
+        }
+
+        // Insertar datos en la tabla usuario, incluyendo foto_perfil si se proporciona
+        $sql_ingreso_usuario = "INSERT INTO usuario (rut, nombre_usuario, nombres, apellido_p, apellido_m, correo, telefono, contrasena, fecha_nac, direccion, foto_perfil, id_comuna, id_rol) 
+                                VALUES ('$rut', '$nombre_usuario', '$nombres', '$apellido_p', '$apellido_m', '$correo', '$telefono', '" . md5($password) . "', '$fecha_nac', '$direccion', '$foto_perfil', '$comuna', '$rol')";
+        $resultado_usuario = mysqli_query($connection, $sql_ingreso_usuario);
+
+        // Si el rol es profesional, insertar en la tabla profesional
+        if ($rol == 3 && $resultado_usuario) {
+            $id_profesion = stripslashes($_REQUEST['profesion']);
+            $id_profesion = mysqli_real_escape_string($connection, $id_profesion);
+            $id_institucion = stripslashes($_REQUEST['institucion']);
+            $id_institucion = mysqli_real_escape_string($connection, $id_institucion);
+            $experiencia = stripslashes($_REQUEST['experiencia']);
+            $experiencia = mysqli_real_escape_string($connection, $experiencia);
+            
+            $titulo_profesional = null;
+            if (isset($_FILES['titulo_profesional'])) {
+                $directorio_titulo_profesional = "../../uploads/titulo_profesional/";
+                $localizacion_titulo_profesional = $directorio_titulo_profesional . basename($_FILES["titulo_profesional"]["name"]);
+                $subida_correcta_tp = 1;
+                $extension_tp = strtolower(pathinfo($localizacion_titulo_profesional, PATHINFO_EXTENSION));
+    
+                // Intentar cargar el archivo
+                if ($subida_correcta_tp == 1 && move_uploaded_file($_FILES["titulo_profesional"]["tmp_name"], $localizacion_titulo_profesional)) {
+                    $titulo_profesional = mysqli_real_escape_string($connection, $localizacion_titulo_profesional);
+                } else {
+                    $response = array(
+                        'success' => false,
+                        'message' => 'Error al cargar título profesional.'
+                    );
+                    echo json_encode($response);
+                    exit();
+                }
+            }
+            
+            $sql_ingreso_profesional = "INSERT INTO profesional (rut, id_profesion, id_institucion, experiencia, titulo_profesional, autorizado) 
+                                        VALUES ('$rut', '$id_profesion', '$id_institucion', '$experiencia', '$titulo_profesional', 0)";
+            $resultado_profesional = mysqli_query($connection, $sql_ingreso_profesional);
+        }
 
         $response = array(
             'success' => true,
@@ -47,11 +111,10 @@ try {
     }
     
 } catch (PDOException $e) {
-
     $response = array(
         'success' => false,
         'message' => 'Error en el servidor. Intente de nuevo más tarde.'
     );
 }
 
-echo json_encode($response);
+echo json_encode($response); 

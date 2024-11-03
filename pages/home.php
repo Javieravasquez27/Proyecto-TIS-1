@@ -7,40 +7,6 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        // Función para cargar profesiones usando AJAX
-        function cargarProfesiones() {
-            fetch("utils/get_profesion.php")
-                .then(response => response.json())
-                .then(data => {
-                    const select = document.getElementById("profesion");
-
-                    // Vaciar el select por si tiene opciones
-                    select.innerHTML = '';
-
-                    // Agregar una opción por defecto
-                    const defaultOption = document.createElement("option");
-                    defaultOption.textContent = "Profesión";
-                    defaultOption.value = "";
-                    select.appendChild(defaultOption);
-
-                    // Rellenar el select con las profesiones recibidas
-                    data.forEach(profesion => {
-                        const option = document.createElement("option");
-                        option.value = profesion.id_profesion;
-                        option.textContent = profesion.nombre_profesion;
-                        select.appendChild(option);
-                    });
-                })
-                .catch(error => console.error("Error al cargar profesiones:", error));
-        }
-
-        // Llamar a la función para cargar profesiones al cargar la página
-        cargarProfesiones();
-    });
-</script>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // Función para cargar regiones usando AJAX
         function cargarRegiones() {
             fetch("utils/get_region.php")
                 .then(response => response.json())
@@ -67,13 +33,6 @@
                 .catch(error => console.error("Error al cargar regiones:", error));
         }
 
-        // Llamar a la función para cargar regiones al cargar la página
-        cargarRegiones();
-    });
-</script>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // Función para cargar ciudades usando AJAX
         function cargarCiudades() {
             fetch("utils/get_ciudad.php")
                 .then(response => response.json())
@@ -100,13 +59,6 @@
                 .catch(error => console.error("Error al cargar ciudades:", error));
         }
 
-        // Llamar a la función para cargar ciudades al cargar la página
-        cargarCiudades();
-    });
-</script>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // Función para cargar comunas usando AJAX
         function cargarComunas() {
             fetch("utils/get_comuna.php")
                 .then(response => response.json())
@@ -133,13 +85,52 @@
                 .catch(error => console.error("Error al cargar comunas:", error));
         }
 
-        // Llamar a la función para cargar comunas al cargar la página
-        cargarComunas();
-    });
-</script>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // Función para cargar servicios usando AJAX
+        function cargarProfesiones() {
+            fetch("utils/get_profesion.php")
+                .then(response => response.json())
+                .then(data => {
+                    const select = document.getElementById("profesion");
+
+                    // Vaciar el select por si tiene opciones
+                    select.innerHTML = '';
+
+                    // Agregar una opción por defecto
+                    const defaultOption = document.createElement("option");
+                    defaultOption.textContent = "Profesión";
+                    defaultOption.value = "";
+                    select.appendChild(defaultOption);
+
+                    // Rellenar el select con las profesiones recibidas
+                    data.forEach(profesion => {
+                        const option = document.createElement("option");
+                        option.value = profesion.id_profesion;
+                        option.textContent = profesion.nombre_profesion;
+                        select.appendChild(option);
+                    });
+                })
+                .catch(error => console.error("Error al cargar profesiones:", error));
+        }
+
+        function cargarInstituciones() {
+            fetch("utils/get_institucion.php")
+                .then(response => response.json())
+                .then(data => {
+                    const select = document.getElementById("institucion");
+                    select.innerHTML = '';
+                    const defaultOption = document.createElement("option");
+                    defaultOption.textContent = "Seleccione una institución";
+                    defaultOption.value = "";
+                    select.appendChild(defaultOption);
+                    data.forEach(institucion => {
+                        const option = document.createElement("option");
+                        option.value = institucion.id_institucion;
+                        option.textContent = institucion.nombre_institucion;
+                        select.appendChild(option);
+                    });
+                })
+                .catch(error => console.error("Error al cargar instituciones:", error));
+        }
+
         function cargarServicios() {
             fetch("utils/get_servicio.php")
                 .then(response => response.json())
@@ -166,7 +157,10 @@
                 .catch(error => console.error("Error al cargar servicios:", error));
         }
 
-        // Llamar a la función para cargar servicios al cargar la página
+        cargarRegiones();
+        cargarCiudades();
+        cargarComunas();
+        cargarProfesiones();
         cargarServicios();
     });
 </script>
@@ -228,7 +222,7 @@
             <div class="row">
                 <div class="col-2"></div>
                 <div class="col-8 mapa">
-                    <iframe class="mapa" src="https://locatestore.com/WcoXme" style="border:none;width:100%;height:300px" allow="geolocation"></iframe>
+                    <!-- <iframe class="mapa" src="https://locatestore.com/Xh--K4" style="border:none;width:100%;height:300px" allow="geolocation"></iframe> -->
                 </div>
                 <dic class="col-2"></dic>
             </div>
