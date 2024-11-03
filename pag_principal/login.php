@@ -39,28 +39,35 @@
 </head>
 <body>
     <?php
-        require('conexion.php');
-        session_start();
-        if (isset($_POST['rut'])) {
-            $rut = stripslashes($_POST['rut']);
-            $rut = mysqli_real_escape_string($conexion, $rut);
-            $password = stripslashes($_POST['password']);
-            $password = mysqli_real_escape_string($conexion, $password);
+    require('conexion.php');
+    session_start();
+    
+    // Mostrar errores para depuración
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
 
-            // Aquí cambia la consulta para que use el RUT
-            $query = "SELECT * FROM usuario WHERE rut='$rut' AND contraseña='" . md5($password) . "'";
-            $result = mysqli_query($conexion, $query) or die(mysqli_error($conexion));
-            $rows = mysqli_num_rows($result);
-            if ($rows == 1) {
-                // Aquí inicia sesión
-                $_SESSION['rut'] = $rut;
-                header('Location: index.php');
-                exit();
-            } else {
-                echo "<div class='alert alert-danger'>RUT o contraseña incorrecto</div>";
-            }
+    if (isset($_POST['rut'])) {
+        $rut = stripslashes($_POST['rut']);
+        $rut = mysqli_real_escape_string($conexion, $rut);
+        $password = stripslashes($_POST['password']);
+        $password = mysqli_real_escape_string($conexion, $password);
+
+        // Consulta para verificar el RUT y la contraseña
+        $query = "SELECT * FROM usuario WHERE rut='$rut' AND contraseña='" . md5($password) . "'";
+        $result = mysqli_query($conexion, $query) or die(mysqli_error($conexion));
+        $rows = mysqli_num_rows($result);
+        
+        if($rows == 1) {
+            // Inicia sesión
+            $_SESSION['rut'] = $rut;
+            echo "Inicio de sesión exitoso, redirigiendo...";
+            header('Location: index.html');
+            exit();
+        } else {
+            echo "<div class='alert alert-danger'>RUT o contraseña incorrecto</div>";
         }
-    ?>
+    }
+?>
 
     <div class="login-container">
         <img src="Logo_KindomJobs.png" alt="Logo">
@@ -76,6 +83,10 @@
         </form>
         <p class="mt-3">
             ¿Olvidaste tu contraseña? <a href="cambiarcontraseña.php">Cambia tu contraseña aquí</a>
+        </p>
+        <hr>
+        <p class="mt-3">
+            ¿No tienes una cuenta? <a href="registration.php">Regístrate aquí</a>
         </p>
     </div>
 
