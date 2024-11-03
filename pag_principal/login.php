@@ -72,7 +72,7 @@
     <div class="login-container">
         <img src="Logo_KindomJobs.png" alt="Logo">
         <h1>Inicia Sesión</h1>
-        <form action="" method="POST" name="login">
+        <form action="index.html" method="POST" name="login">
             <div class="mb-3">
                 <input type="text" name="rut" class="form-control" placeholder="RUT" required>
             </div>
