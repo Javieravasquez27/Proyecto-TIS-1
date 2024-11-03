@@ -6,10 +6,12 @@
             session_start();
         }
 
-        $sql = "SELECT u.rut, u.nombre_usuario, u.nombres, u.apellido_p, u.apellido_m, u.correo, u.telefono, u.fecha_nac,
-                       u.direccion, c.nombre_comuna AS comuna, r.nombre_rol AS rol, u.id_comuna, u.id_rol, u.id_estado_usuario
-                FROM usuario u LEFT JOIN comuna c ON u.id_comuna = c.id_comuna
-                               LEFT JOIN rol r ON u.id_rol = r.id_rol";
+        $sql = "SELECT p.rut, u.nombres, u.apellido_p, u.apellido_m, u.correo, u.telefono,
+                       pr.nombre_profesion AS profesion, i.nombre_institucion AS institucion,
+                       p.experiencia, p.titulo_profesional, p.id_profesion, p.id_institucion, u.id_estado_usuario
+                FROM profesional p JOIN profesion pr ON p.id_profesion = pr.id_profesion
+                                   JOIN institucion i ON p.id_institucion = i.id_institucion
+                                   JOIN usuario u ON p.rut = u.rut";
         $resultado = mysqli_query($connection, $sql);
 
         if ($resultado) {
@@ -20,25 +22,21 @@
                 while ($record = $resultado->fetch_array()) {
                     $row = array();
                     $row['rut'] = $record['rut'];
-                    $row['nombre_usuario'] = $record['nombre_usuario'];
                     $row['nombres'] = $record['nombres'];
                     $row['apellido_p'] = $record['apellido_p'];
                     $row['apellido_m'] = $record['apellido_m'];
                     $row['correo'] = $record['correo'];
                     $row['telefono'] = $record['telefono'];
-                    $row['fecha_nac'] = $record['fecha_nac'];
-                    $row['direccion'] = $record['direccion'];
-                    $row['comuna'] = $record['comuna'];
-                    $row['rol'] = $record['rol'];
-                    $row['id_rol'] = $record['id_rol'];
+                    $row['profesion'] = $record['profesion'];
+                    $row['institucion'] = $record['institucion'];
+                    $row['titulo_profesional'] = $record['titulo_profesional'];
+                    $row['id_estado_usuario'] = $record['id_estado_usuario'];
 
                     $estado_usuario = $record['id_estado_usuario'];
-                    $rol_usuario = $record['id_rol'];
                     $clase_boton = $estado_usuario == 1 ? 'btn-outline-danger' : 'btn-outline-success';
-                    $texto_boton = $estado_usuario == 1 ? 'Desactivar' : 'Activar';
+                    $texto_boton = $estado_usuario == 1 ? 'Desautorizar' : 'Autorizar';
 
-                    $row['options'] = "<a data-id='{$record['rut']}' data-status='{$estado_usuario}' class='btn btn-sm {$clase_boton} toggle-status'>{$texto_boton}</a>
-                                       <a data-id='{$record['rut']}' data-status='{$rol_usuario}' data-rol='{$rol_usuario}' class='btn btn-sm btn-outline-primary' data-bs-toggle='modal' data-bs-target='#addUserModal'>Cambiar Rol</a>";
+                    $row['options'] = "<a data-id='{$record['rut']}' data-status='{$estado_usuario}' class='btn btn-sm {$clase_boton} toggle-status'>{$texto_boton}</a>";
 
                     $usuarios[] = $row;
                 }

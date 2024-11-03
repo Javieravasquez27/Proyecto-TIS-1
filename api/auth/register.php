@@ -60,43 +60,58 @@ try {
             }
         }
 
-        // Insertar datos en la tabla usuario, incluyendo foto_perfil si se proporciona
-        $sql_ingreso_usuario = "INSERT INTO usuario (rut, nombre_usuario, nombres, apellido_p, apellido_m, correo, telefono, contrasena, fecha_nac, direccion, foto_perfil, id_comuna, id_rol) 
-                                VALUES ('$rut', '$nombre_usuario', '$nombres', '$apellido_p', '$apellido_m', '$correo', '$telefono', '" . md5($password) . "', '$fecha_nac', '$direccion', '$foto_perfil', '$comuna', '$rol')";
-        $resultado_usuario = mysqli_query($connection, $sql_ingreso_usuario);
-
         // Si el rol es profesional, insertar en la tabla profesional
-        if ($rol == 3 && $resultado_usuario) {
-            $id_profesion = stripslashes($_REQUEST['profesion']);
-            $id_profesion = mysqli_real_escape_string($connection, $id_profesion);
-            $id_institucion = stripslashes($_REQUEST['institucion']);
-            $id_institucion = mysqli_real_escape_string($connection, $id_institucion);
-            $experiencia = stripslashes($_REQUEST['experiencia']);
-            $experiencia = mysqli_real_escape_string($connection, $experiencia);
-            
-            $titulo_profesional = null;
-            if (isset($_FILES['titulo_profesional'])) {
-                $directorio_titulo_profesional = "../../uploads/titulo_profesional/";
-                $localizacion_titulo_profesional = $directorio_titulo_profesional . basename($_FILES["titulo_profesional"]["name"]);
-                $subida_correcta_tp = 1;
-                $extension_tp = strtolower(pathinfo($localizacion_titulo_profesional, PATHINFO_EXTENSION));
-    
-                // Intentar cargar el archivo
-                if ($subida_correcta_tp == 1 && move_uploaded_file($_FILES["titulo_profesional"]["tmp_name"], $localizacion_titulo_profesional)) {
-                    $titulo_profesional = mysqli_real_escape_string($connection, $localizacion_titulo_profesional);
-                } else {
-                    $response = array(
-                        'success' => false,
-                        'message' => 'Error al cargar título profesional.'
-                    );
-                    echo json_encode($response);
-                    exit();
+        if ($rol == 3) {
+            $sql_ingreso_usuario = "INSERT INTO usuario (rut, nombre_usuario, nombres, apellido_p, apellido_m, correo, telefono, contrasena, fecha_nac, direccion, foto_perfil, id_comuna, id_rol, id_estado_usuario) 
+                                    VALUES ('$rut', '$nombre_usuario', '$nombres', '$apellido_p', '$apellido_m', '$correo', '$telefono', '" . md5($password) . "', '$fecha_nac', '$direccion', '$foto_perfil', '$comuna', '$rol', 0)";
+            $resultado_usuario = mysqli_query($connection, $sql_ingreso_usuario);
+
+            if ($resultado_usuario)
+            {
+                $id_profesion = stripslashes($_REQUEST['profesion']);
+                $id_profesion = mysqli_real_escape_string($connection, $id_profesion);
+                $id_institucion = stripslashes($_REQUEST['institucion']);
+                $id_institucion = mysqli_real_escape_string($connection, $id_institucion);
+                $experiencia = stripslashes($_REQUEST['experiencia']);
+                $experiencia = mysqli_real_escape_string($connection, $experiencia);
+                
+                $titulo_profesional = null;
+                if (isset($_FILES['titulo_profesional'])) {
+                    $directorio_titulo_profesional = "../../uploads/titulo_profesional/";
+                    $localizacion_titulo_profesional = $directorio_titulo_profesional . basename($_FILES["titulo_profesional"]["name"]);
+                    $subida_correcta_tp = 1;
+                    $extension_tp = strtolower(pathinfo($localizacion_titulo_profesional, PATHINFO_EXTENSION));
+                
+                    // Intentar cargar el archivo
+                    if ($subida_correcta_tp == 1 && move_uploaded_file($_FILES["titulo_profesional"]["tmp_name"], $localizacion_titulo_profesional)) {
+                        $titulo_profesional = mysqli_real_escape_string($connection, $localizacion_titulo_profesional);
+                    } else {
+                        $response = array(
+                            'success' => false,
+                            'message' => 'Error al cargar título profesional.'
+                        );
+                        echo json_encode($response);
+                        exit();
+                    }
                 }
+
+                $sql_ingreso_profesional = "INSERT INTO profesional (rut, id_profesion, id_institucion, experiencia, titulo_profesional) 
+                                            VALUES ('$rut', '$id_profesion', '$id_institucion', '$experiencia', '$titulo_profesional')";
+                $resultado_profesional = mysqli_query($connection, $sql_ingreso_profesional);
             }
-            
-            $sql_ingreso_profesional = "INSERT INTO profesional (rut, id_profesion, id_institucion, experiencia, titulo_profesional, autorizado) 
-                                        VALUES ('$rut', '$id_profesion', '$id_institucion', '$experiencia', '$titulo_profesional', 0)";
-            $resultado_profesional = mysqli_query($connection, $sql_ingreso_profesional);
+        }
+
+        if ($rol == 4)
+        {
+            $sql_ingreso_usuario = "INSERT INTO usuario (rut, nombre_usuario, nombres, apellido_p, apellido_m, correo, telefono, contrasena, fecha_nac, direccion, foto_perfil, id_comuna, id_rol, id_estado_usuario) 
+                                    VALUES ('$rut', '$nombre_usuario', '$nombres', '$apellido_p', '$apellido_m', '$correo', '$telefono', '" . md5($password) . "', '$fecha_nac', '$direccion', '$foto_perfil', '$comuna', '$rol', 1)";
+            $resultado_usuario = mysqli_query($connection, $sql_ingreso_usuario);
+
+            if ($resultado_usuario)
+            {
+                $sql_ingreso_cliente = "INSERT INTO cliente (rut) VALUES ('$rut')";
+                $resultado_cliente = mysqli_query($connection, $sql_ingreso_cliente);
+            }
         }
 
         $response = array(

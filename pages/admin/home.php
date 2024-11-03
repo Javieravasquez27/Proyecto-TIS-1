@@ -20,8 +20,17 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Usuarios</h5>
-                    <p class="card-text">Administra los usuarios de la plataforma.</p>
+                    <p class="card-text">Administra los usuarios de la plataforma, activando o desactivando sus cuentas.</p>
                     <a href="index.php?p=admin/users/index" class="btn btn-primary">Ir a Usuarios</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Profesionales</h5>
+                    <p class="card-text">Gestiona las autorizaciones de los profesionales que solicitan registrarse en la plataforma.</p>
+                    <a href="index.php?p=admin/profesionales/index" class="btn btn-primary">Ir a Usuarios</a>
                 </div>
             </div>
         </div>

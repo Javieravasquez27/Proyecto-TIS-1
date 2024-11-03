@@ -5,91 +5,53 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // Función para cargar comunas usando AJAX
-        function cargarComunas() {
-            fetch("utils/get_comuna.php")
-                .then(response => response.json())
-                .then(data => {
-                    const select = document.getElementById("comuna");
+    $(document).on('click', '.btn-outline-primary', function() {
+        const rut = $(this).data('id');
+        const currentRol = $(this).data('rol');
 
-                    // Vaciar el select por si tiene opciones
-                    select.innerHTML = '';
+        $('#rut').val(rut);  // Establece el RUT en el modal
 
-                    // Agregar una opción por defecto
-                    const defaultOption = document.createElement("option");
-                    defaultOption.textContent = "Seleccione una comuna";
-                    defaultOption.value = "";
-                    select.appendChild(defaultOption);
-
-                    // Rellenar el select con las comunas recibidas
-                    data.forEach(comuna => {
-                        const option = document.createElement("option");
-                        option.value = comuna.id_comuna;
-                        option.textContent = comuna.nombre_comuna;
-                        select.appendChild(option);
-                    });
-                })
-                .catch(error => console.error("Error al cargar comunas:", error));
-        }
-
-        // Llamar a la función para cargar comunas al cargar la página
-        cargarComunas();
+        // Cargar roles en el dropdown, filtrando según el rol actual
+        cargarRoles(currentRol);
     });
-</script>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // Función para cargar roles usando AJAX
-        function cargarRoles() {
-            fetch("utils/get_rol_create.php")
-                .then(response => response.json())
-                .then(data => {
-                    const select = document.getElementById("rol");
 
-                    // Vaciar el select por si tiene opciones
-                    select.innerHTML = '';
+    function cargarRoles(currentRol) {
+        fetch("utils/get_rol_create.php")
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById("rol");
+                select.innerHTML = '';  // Limpiar el dropdown
 
-                    // Agregar una opción por defecto
-                    const defaultOption = document.createElement("option");
-                    defaultOption.textContent = "Seleccione un rol";
-                    defaultOption.value = "";
-                    select.appendChild(defaultOption);
+                const defaultOption = document.createElement("option");
+                defaultOption.textContent = "Seleccione un rol";
+                defaultOption.value = "";
+                select.appendChild(defaultOption);
 
-                    // Rellenar el select con los roles recibidos
-                    data.forEach(rol => {
+                // Filtrar roles según el rol actual
+                data.forEach(rol => {
+                    if (
+                        (currentRol == 1) && (rol.id_rol == 1 || rol.id_rol == 2 || rol.id_rol == 4) ||
+                        (currentRol == 2) && (rol.id_rol == 1 || rol.id_rol == 3 || rol.id_rol == 4) ||
+                        (currentRol == 4) && (rol.id_rol == 1 || rol.id_rol == 2 || rol.id_rol == 3) ||
+                        (currentRol == 3) && (rol.id_rol == 1 || rol.id_rol == 2 || rol.id_rol == 3)
+                    ) {
                         const option = document.createElement("option");
                         option.value = rol.id_rol;
                         option.textContent = rol.nombre_rol;
                         select.appendChild(option);
-                    });
-                })
-                .catch(error => console.error("Error al cargar roles:", error));
-        }
-
-        // Llamar a la función para cargar roles al cargar la página
-        cargarRoles();
-    });
+                    }
+                });
+            })
+        .catch(error => console.error("Error al cargar roles:", error));
+    }
 </script>
 
 <h1 class="text-center my-5">Gestión de usuarios</h1>
 
-<main class="container mt-5">
+<main class="">
     <div class="card">
-        <div class="card-header">
-            <div class="d-flex justify-content-between align-items-center">
-                <div class="text-center">
-
-                </div>
-                <div>
-                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal">
-                        Agregar nuevo
-                    </button>
-                    <!-- <a class="btn btn-sm btn-primary" href="index.php?p=users/create" role="button">Agregar nuevo</a> -->
-                </div>
-            </div>
-        </div>
-        <div class="card-body table-responsive ">
-            <table id="userTable" class="table table-hover" style="width:100%">
+        <div class="card-body table-responsive">
+            <table id="userTable" class="table table-hover" style="width: 100%;">
                 <thead class="">
                     <tr>
                         <th scope="col">RUT</th>
@@ -103,7 +65,7 @@
                         <th scope="col">Dirección</th>
                         <th scope="col">Comuna</th>
                         <th scope="col">Rol</th>
-                        <th scope="col">Opciones</th>
+                        <th scope="col">Acciones</th>
                     </tr>
                 </thead>
 
@@ -117,78 +79,36 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addUserModalLabel">Agregar usuario</h5>
+                <h5 class="modal-title" id="addUserModalLabel">Cambiar rol de usuario</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="addUserForm">
-                    <div class="mb-3">
-                        <label for="rut" class="form-label">RUT</label>
-                        <input type="text" class="form-control" id="rut" name="rut" required>
+                <form name="addUserForm" id="addUserForm" action="" method="post" enctype="multipart/form-data">
+                    <div class="row mb-3">
+                        <fieldset disabled>
+                            <div class="col">
+                                <label for="rut" class="form-label">RUT</label>
+                                <input type="text" id="rut" name="rut" class="form-control" readonly>
+                            </div>
+                        </fieldset>
                     </div>
-                    <div class="mb-3">
-                        <label for="nombre_usuario" class="form-label">Nombre de usuario</label>
-                        <input type="text" class="form-control" id="nombre_usuario" name="nombre_usuario" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="nombres" class="form-label">Nombres</label>
-                        <input type="text" class="form-control" id="nombres" name="nombres" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="apellido_p" class="form-label">Apellido Paterno</label>
-                        <input type="text" class="form-control" id="apellido_p" name="apellido_p" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="apellido_m" class="form-label">Apellido Materno</label>
-                        <input type="text" class="form-control" id="apellido_m" name="apellido_m" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="correo" class="form-label">Correo</label>
-                        <input type="email" class="form-control" id="correo" name="correo" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="telefono" class="form-label">Teléfono</label>
-                        <input type="tel" class="form-control" id="telefono" name="telefono" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="fecha_nac" class="form-label">Fecha de Nacimiento</label>
-                        <input type="date" class="form-control" id="fecha_nac" name="fecha_nac" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="direccion" class="form-label">Dirección</label>
-                        <input type="text" class="form-control" id="direccion" name="direccion" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="comuna" class="form-label">Comuna</label>
-                        <select id="comuna" name="comuna" class="form-select" required>
-                            <!-- Las opciones se llenarán aquí con AJAX -->
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Contraseña</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="confirmar_password" class="form-label">Confirmar contraseña</label>
-                        <input type="password" class="form-control" id="confirmar_password" name="confirmar_password" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="rol" class="form-label">Rol</label>
-                        <select id="rol" name="rol" class="form-select" required>
-                            <!-- Las opciones se llenarán aquí con AJAX -->
-                        </select>   
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label for="rol" class="form-label">Rol</label>
+                            <select id="rol" name="rol" class="form-select" required>
+                                <!-- Las opciones se llenarán aquí con AJAX -->
+                            </select>
+                        </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="submit" form="addUserForm" class="btn btn-primary">Agregar</button>
+                <button type="submit" form="addUserForm" class="btn btn-primary">Cambiar Rol</button>
             </div>
         </div>
     </div>
 </div>
-
-
 
 <!-- DataTable -->
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -244,9 +164,74 @@
                 }
             ]
         });
+
+        $(document).on('click', '.toggle-status', function() {
+            var rut = $(this).data('id');
+            var actual_estado_usuario = $(this).data('status');
+            var nuevo_estado_usuario = actual_estado_usuario == 1 ? 0 : 1;
+            var button = $(this);
+
+            $.ajax({
+                url: 'utils/cambio_estado_usuario.php',
+                type: 'POST',
+                data: { rut: rut, id_estado_usuario: nuevo_estado_usuario },
+                success: function(response) {
+                    if (response.success) {
+                        // Actualizar el botón según el nuevo estado
+                        if (nuevo_estado_usuario == 1) {
+                            button
+                                .removeClass('btn-outline-success')
+                                .addClass('btn-outline-danger')
+                                .text('Desactivar')
+                                .data('status', 1);
+                        } else {
+                            button
+                                .removeClass('btn-outline-danger')
+                                .addClass('btn-outline-success')
+                                .text('Activar')
+                                .data('status', 0);
+                        }
+                    } else {
+                        console.log("Error al cambiar el estado.");
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.log("Error en la solicitud AJAX: " + error);
+                }
+            });
+        });
+    });
+
+    $('#addUserForm').submit(function(e) {
+        e.preventDefault();
+        const rut = $('#rut').val();
+        const id_rol = $('#rol').val();
+
+        if (!id_rol) {
+            alert("Seleccione un rol.");
+            return;
+        }
+
+        $.ajax({
+            url: 'utils/cambio_rol_usuario.php',
+            type: 'POST',
+            data: { rut: rut, id_rol: id_rol },
+            success: function(response) {
+                if (response.success) {
+                    $('#addUserModal').modal('hide');
+                    $('#userTable').DataTable().ajax.reload();
+                } else {
+                    alert("Error al cambiar el rol del usuario.");
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("Error en la solicitud AJAX:", error);
+            }
+        });
     });
 
 
+/*
     $(document).on('click', '#delete', function() {
         const rut = $(this).data("id");
 
@@ -295,81 +280,5 @@
             }
         });
     });
-
-    const addUserForm = document.querySelector("#addUserForm");
-
-    addUserForm.addEventListener("submit", (event) => {
-        event.preventDefault();
-
-        const rut = document.querySelector("#rut").value;
-        const nombre_usuario = document.querySelector("#nombre_usuario").value;
-        const nombres = document.querySelector("#nombres").value;
-        const apellido_p = document.querySelector("#apellido_p").value;
-        const apellido_m = document.querySelector("#apellido_m").value;
-        const correo = document.querySelector("#correo").value;
-        const telefono = document.querySelector("#telefono").value;
-        const fecha_nac = document.querySelector("#fecha_nac").value;
-        const direccion = document.querySelector("#direccion").value;
-        const comuna = document.querySelector("#comuna").value;
-        const password = document.querySelector("#password").value;
-        const confirmar_password = document.querySelector("#confirmar_password").value;
-        const rol = document.querySelector("#rol").value;
-
-        if (password !== confirmar_password) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Las contraseñas no coinciden',
-                showConfirmButton: false,
-                timer: 1500
-            });
-            return;
-        }
-
-        $.ajax({
-            url: "api/users/create.php",
-            type: "POST",
-            data: {
-                rut: rut,
-                nombre_usuario: nombre_usuario,
-                nombres: nombres,
-                apellido_p: apellido_p,
-                apellido_m: apellido_m,
-                correo: correo,
-                telefono: telefono,
-                fecha_nac: fecha_nac,
-                direccion: direccion,
-                comuna: comuna,
-                password: password,
-                rol: rol
-            },
-            success: function(response) {
-                const result = JSON.parse(response);
-                if (result.success) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: result.message,
-                        timer: 1500,
-                        showCancelButton: false,
-                        confirmButtonColor: "#3085d6",
-                        confirmButtonText: "Aceptar",
-                        allowOutsideClick: false,
-                    }).then(() => {
-                        $('#addUserModal').modal('hide');
-                        addUserForm.reset();
-                        $('#userTable').DataTable().ajax.reload();
-                    });
-
-                } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: result.message,
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                }
-            }
-        });
-
-    });
-
+*/
 </script>

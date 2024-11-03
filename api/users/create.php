@@ -5,7 +5,7 @@ try {
 
     if (isset($_POST['rut']) && isset($_POST['nombre_usuario']) && isset($_POST['nombres']) && isset($_POST['apellido_p']) && isset($_POST['apellido_m'])
         && isset($_POST['correo']) && isset($_POST['telefono']) && isset($_POST['password']) && isset($_POST['fecha_nac']) && isset($_POST['direccion'])
-        && isset($_POST['comuna']) && isset($_POST['rol'])) {
+        && isset($_POST['comuna'])) {
 
         $rut = stripslashes($_REQUEST['rut']);
         $rut = mysqli_real_escape_string($connection, $rut);
@@ -29,11 +29,15 @@ try {
         $direccion = mysqli_real_escape_string($connection, $direccion);
         $comuna = stripslashes($_REQUEST['comuna']);
         $comuna = mysqli_real_escape_string($connection, $comuna);
-        $rol = stripslashes($_REQUEST['rol']);
-        $rol = mysqli_real_escape_string($connection, $rol);
 
-        $sql_ingreso_usuario = "INSERT INTO usuario (rut, nombre_usuario, nombres, apellido_p, apellido_m, correo, telefono, contrasena, fecha_nac, direccion, id_comuna, id_rol) VALUES ('$rut', '$nombre_usuario', '$nombres', '$apellido_p', '$apellido_m', '$correo', '$telefono', '" . md5($password) . "', '$fecha_nac', '$direccion', '$comuna', '$rol')";
-        $result = mysqli_query($connection, $sql_ingreso_usuario);
+        $sql_ingreso_usuario = "INSERT INTO usuario (rut, nombre_usuario, nombres, apellido_p, apellido_m, correo, telefono, contrasena, fecha_nac, direccion, id_comuna, id_rol) VALUES ('$rut', '$nombre_usuario', '$nombres', '$apellido_p', '$apellido_m', '$correo', '$telefono', '" . md5($password) . "', '$fecha_nac', '$direccion', '$comuna', 2)";
+        $resultado_usuario = mysqli_query($connection, $sql_ingreso_usuario);
+
+        if ($resultado_usuario)
+        {
+            $sql_ingreso_administrador = "INSERT INTO administrador (rut) VALUES ('$rut')";
+            $resultado_administrador = mysqli_query($connection, $sql_ingreso_administrador);
+        }
 
         $response = array(
             'success' => true,

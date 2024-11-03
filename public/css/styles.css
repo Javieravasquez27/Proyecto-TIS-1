@@ -9,9 +9,9 @@ body {
 
 .navbar-nav .nav-link:hover,
 .navbar-brand:hover {
-    color: rgb(207, 207, 207) !important;
+    color: rgb(230, 230, 230) !important;
 }
 
 .navbar-nav .nav-link.active {
-    color: rgb(207, 207, 207) !important;
+    color: rgb(230, 230, 230) !important;
 }

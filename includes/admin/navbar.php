@@ -39,6 +39,9 @@ document.addEventListener("DOMContentLoaded", function() {
                     <li class="nav-item">
                         <a class="nav-link <?php echo (strpos($pagina, 'admin/users') !== false) ? 'active' : null ?>" href="index.php?p=admin/users/index">Usuarios</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link <?php echo (strpos($pagina, 'admin/profesionales') !== false) ? 'active' : null ?>" href="index.php?p=admin/profesionales/index">Profesionales</a>
+                    </li>
                 </ul>
                 <ul class="navbar-nav me-right mb-5 mb-lg-0">
                     <li class="nav-item dropdown">
