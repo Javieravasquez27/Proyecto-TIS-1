@@ -13,6 +13,7 @@ if (!isset($_SESSION["rut"])) {
     header("Location: index.php?p=auth/login");
 } else {
     $rut = $_SESSION["rut"];
+    $nombre_usuario = $_SESSION["nombre_usuario"];
     $user = get_user_by_rut($rut);
 
     if (!$user) {

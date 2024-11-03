@@ -216,7 +216,12 @@
                 </div>
             </div>
             <div class="col-1"></div>
-            
+        </div>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col text-center mb-1" style="font-size: 20px;"><span>Busqueda de profesionales cercanos</span></div>
+            </div>
         </div>
         
         <div class="container cont_mapa">

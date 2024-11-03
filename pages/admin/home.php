@@ -1,5 +1,5 @@
 <?php
-include("middleware/auth.php");
+    include("middleware/auth.php");
 ?>
 
 <title>Panel de Administradores - KindomJob's</title>

@@ -23,8 +23,7 @@ try {
 
             $datos_usuario = mysqli_fetch_assoc($resultado_usuario);
             $rol_usuario = $datos_usuario['id_rol'];
-
-            if ($datos_usuario['id_rol'])
+            $nombre_usuario = $datos_usuario['nombre_usuario'];
 
             $sql_rol = "SELECT * FROM rol WHERE nombre_rol = 'cliente'";
             $resultado_rol = mysqli_query($connection, $sql_rol);
@@ -32,6 +31,7 @@ try {
             $id_rol = $rol['id_rol'];
 
             $_SESSION['rut'] = $rut;
+            $_SESSION['nombre_usuario'] = $nombre_usuario;
 
             $response = array(
                 'success' => true,

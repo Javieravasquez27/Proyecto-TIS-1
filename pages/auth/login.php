@@ -5,7 +5,7 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
-                    <h1 class="text-center">Inicia Sesión</h1>
+                    <h1 class="text-center"><img src="public/images/logo.png" alt="Logo"><br>Inicia Sesión</h1>
                 </div>
                 <div class="card-body">
                     <form action="" method="post" name="login" id="login-form">
@@ -17,7 +17,7 @@
                             <label for="password">Contraseña</label>
                             <input type="password" id="password" name="password" class="form-control" placeholder="Ingresa tu contraseña" required />
                         </div>
-                        <div class="form-group">
+                        <div class="d-grid gap-2">
                             <button name="submit" type="submit" class="btn btn-primary btn-block">Entrar</button>
                         </div>
                     </form>

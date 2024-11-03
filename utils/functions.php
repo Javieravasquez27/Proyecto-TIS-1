@@ -1,9 +1,9 @@
 <?php
-function get_user_by_username($username)
+function get_user_by_username($nombre_usuario)
 {
     global $connection;
 
-    $sql = "SELECT * FROM usuario WHERE nombre_usuario = '$username'";
+    $sql = "SELECT * FROM usuario WHERE nombre_usuario = '$nombre_usuario'";
     $result = mysqli_query($connection, $sql);
 
     if (mysqli_num_rows($result) == 1) {
@@ -18,6 +18,34 @@ function get_user_by_rut($rut)
     global $connection;
 
     $sql = "SELECT * FROM usuario WHERE rut = '$rut'";
+    $result = mysqli_query($connection, $sql);
+
+    if (mysqli_num_rows($result) == 1) {
+        return mysqli_fetch_assoc($result);
+    } else {
+        return false;
+    }
+}
+
+function get_user_by_nombres($nombres)
+{
+    global $connection;
+
+    $sql = "SELECT * FROM usuario WHERE nombres = '$nombres'";
+    $result = mysqli_query($connection, $sql);
+
+    if (mysqli_num_rows($result) == 1) {
+        return mysqli_fetch_assoc($result);
+    } else {
+        return false;
+    }
+}
+
+function get_user_by_apellido_p($nombres)
+{
+    global $connection;
+
+    $sql = "SELECT * FROM usuario WHERE apellido_p = '$apellido_p'";
     $result = mysqli_query($connection, $sql);
 
     if (mysqli_num_rows($result) == 1) {

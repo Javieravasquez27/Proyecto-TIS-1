@@ -40,10 +40,17 @@ document.addEventListener("DOMContentLoaded", function() {
                         <a class="nav-link <?php echo (strpos($pagina, 'admin/users') !== false) ? 'active' : null ?>" href="index.php?p=admin/users/index">Usuarios</a>
                     </li>
                 </ul>
-                <div class="d-flex">
-                    <a href="index.php?p=auth/profile" class="btn btn-sm btn-light me-2">Perfil</a>
-                    <a id="logout" class="btn btn-sm btn-light">Cerrar Sesión</a>
-                </div>
+                <ul class="navbar-nav me-right mb-5 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <b><?php echo $_SESSION['nombre_usuario']; ?></b>
+                        </a>
+                        <ul class="dropdown-menu" style="margin-left: -80px;">
+                            <li><a class="dropdown-item <?php echo ($pagina == 'auth/profile') ? 'active' : null ?>" aria-current="page" href="index.php?p=auth/profile">Perfil</a></li>
+                            <li><a class="dropdown-item" id="logout" href="#">Cerrar Sesión</a></li>
+                        </ul>
+                    </li>
+                </u1>
             <?php
             } else {
             ?>
