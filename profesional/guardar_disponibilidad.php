@@ -70,5 +70,6 @@ for ($i = 0; $i < count($_POST['dia']); $i++) {
     }
 }
 echo "Disponibilidad guardada correctamente.";
+header('location: perfil.php');
 $conexion->close();
 ?>

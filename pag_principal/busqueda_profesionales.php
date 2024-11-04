@@ -32,7 +32,7 @@ $query = "SELECT usuario.foto_perfil, profesional.nombre_usuario, profesion.nomb
 
 // Añadir condiciones según los filtros recibidos
 if (!empty($filtro_nombre)) {
-    $query .= " AND usuario.nombres = '$filtro_nombre'";
+    $query .= " AND LOWER(usuario.nombre_usuario) LIKE LOWER('%$filtro_nombre%')";
 }
 if (!empty($filtro_comuna)) {
     $query .= " AND lugar_atencion_presencial.id_comuna = '$filtro_comuna'";
