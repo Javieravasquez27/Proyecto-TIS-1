@@ -23,7 +23,7 @@
             <div class="col-lg-7 col-sm-14 mt-2">
               <div class="d-grid gap-2">
                 <a class="btn btn-info rounded-pill" href="admin/index.php" type="button">Mantenedores</a>
-                <a class="btn btn-info rounded-pill" href="pagina_principal/index.php" type="button">Pagina Principal</a>
+                <a class="btn btn-info rounded-pill" href="pag_principal/index.php" type="button">Pagina Principal</a>
               </div>
             </div>
         </div>
