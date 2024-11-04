@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function() {
 </script>
 
 <body style="background-color: rgb(240, 223, 255);">
-    <nav class="navbar navbar-expand-lg bg-gradient bg-opacity-50" style="background-color: rgb(150, 120, 182);">
+    <nav class="navbar sticky-top navbar-expand-lg bg-gradient bg-opacity-50" style="background-color: rgb(150, 120, 182);">
         <div class="container-fluid ">
             <a class="navbar-brand" href="#">
                 <img src="public/images/logo.png" alt="Logo KindomJobs" height="50" class="imagen d-inline-block">
@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         <a class="nav-link <?php echo (strpos($pagina, 'admin/profesionales') !== false) ? 'active' : null ?>" href="index.php?p=admin/profesionales/index">Profesionales</a>
                     </li>
                 </ul>
-                <ul class="navbar-nav me-right mb-5 mb-lg-0">
+                <ul class="navbar-nav mr-auto mb-5 mb-lg-0">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <b><?php echo $_SESSION['nombre_usuario']; ?></b>
