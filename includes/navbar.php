@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function() {
         <div class="container-fluid ">
             <a class="navbar-brand" href="#">
                 <img src="public/images/logo.png" alt="Logo KindomJobs" height="50" class="imagen d-inline-block">
-                <span class="h3 align-middle">KindomJob's</span>
+                <span class="h3 align-middle" style="color: black;">KindomJob's</span>
             </a>
             <button class="navbar-toggler me-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">

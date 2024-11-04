@@ -1,8 +1,10 @@
 <?php
-    include 'database/conexion.php';
-    $query = "SELECT * FROM usuario
+    define('PERMISO_REQUERIDO', 'Acceder a las páginas de profesionales');
+    include("middleware/auth.php");
+    include("database/conexion.php");
+    $consulta = "SELECT * FROM usuario
     where rut = '$_SESSION[rut]'";
-    $resultado=mysqli_query($conexion,$query);
+    $resultado=mysqli_query($conexion,$consulta);
     $user= mysqli_fetch_assoc($resultado);
 ?>
 

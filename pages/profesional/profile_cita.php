@@ -1,83 +1,11 @@
 <?php
-    include 'database/conexion.php';
+    define('PERMISO_REQUERIDO', 'Acceder a las páginas de profesionales');
+    include("middleware/auth.php");
+    include("database/conexion.php");
     $nombre_usuario = $_GET['nombre_usuario'];
 ?>
 
-<style>
-    /* Colores y estilos personalizados */
-    body {
-        background-color: white;
-        font-family: Arial, sans-serif;
-        color: black;
-    }
-    .navbar {
-        background-color: rgb(150, 120, 182);
-    }
-    .navbar .navbar-brand span {
-        color: black;
-    }
-    .navbar .navbar-nav .nav-link {
-        color: white;
-    }
-    .profile-header, .calendar {
-        background-color: #f8f8f8;
-        border: 1px solid #ddd;
-        padding: 20px;
-        border-radius: 10px;
-        margin-bottom: 20px;
-    }
-    .profile-header {
-        text-align: center;
-    }
-    .profile-header img {
-        border-radius: 50%;
-        width: 80px;
-        height: 80px;
-    }
-    .nav-tabs .nav-link {
-        border: 1px solid #ddd;
-        border-radius: 0;
-        color: black;
-    }
-    .nav-tabs .nav-link.active {
-        background-color: #ddd;
-        color: black;
-    }
-    .tab-content {
-        border: 1px solid #ddd;
-        padding: 20px;
-    }
-    .service-item {
-        display: flex;
-        justify-content: space-between;
-        padding: 8px 0;
-        border-bottom: 1px solid #ddd;
-    }
-    .graph-placeholder {
-        height: 150px;
-        border: 1px solid #ddd;
-        margin-top: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #999;
-    }
-    .calendar select, .calendar input {
-        margin: 5px 0;
-        width: 100%;
-        padding: 5px;
-    }
-    .calendar .btn-time {
-        background-color: rgb(153, 102, 255);
-        color: white;
-        border: none;
-        margin: 5px 0;
-        width: 100%;
-    }
-    .calendar .btn-time:hover {
-        background-color: rgb(128, 0, 128);
-    }
-</style>
+<link rel="stylesheet" href="public/css/profile_profesional.css">
 
 <div class="container my-5">
     <?php
