@@ -381,6 +381,7 @@ switch ($action) {
             <div class="row">
                 <div class="col-2"></div>
                 <div class="col-8 mapa">
+			<iframe src="https://locatestore.com/8xSkHE" style="border:none;width:100%;height:300px" allow="geolocation"></iframe>
                     <!-- <iframe class="mapa" src="https://locatestore.com/Xh--K4" style="border:none;width:100%;height:300px" allow="geolocation"></iframe> -->
                 </div>
                 <dic class="col-2"></dic>
