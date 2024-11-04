@@ -1,4 +1,4 @@
-<?php
+<?php 
     include '../../database/conexion.php';
 
     try {
@@ -14,40 +14,43 @@
             $password = mysqli_real_escape_string($conexion, $password);
 
             $sql_usuario = "SELECT * FROM usuario WHERE rut='$rut' and contrasena='" . md5($password) . "'";
-
             $resultado_usuario = mysqli_query($conexion, $sql_usuario);
+            $datos_usuario = mysqli_fetch_assoc($resultado_usuario);
 
-            $usuario = mysqli_num_rows($resultado_usuario);
+            if ($datos_usuario) {
+                if ($datos_usuario['id_estado_usuario'] == 0) {
+                    $response = array(
+                        'success' => false,
+                        'message' => 'Su cuenta está deshabilitada. Por favor, contacte con el administrador.'
+                    );
+                } else {
+                    $rol_usuario = $datos_usuario['id_rol'];
+                    $nombre_usuario = $datos_usuario['nombre_usuario'];
 
-            if ($usuario == 1) {
+                    $sql_rol = "SELECT * FROM rol WHERE nombre_rol = 'cliente'";
+                    $resultado_rol = mysqli_query($conexion, $sql_rol);
+                    $rol = mysqli_fetch_assoc($resultado_rol);
+                    $id_rol = $rol['id_rol'];
 
-                $datos_usuario = mysqli_fetch_assoc($resultado_usuario);
-                $rol_usuario = $datos_usuario['id_rol'];
-                $nombre_usuario = $datos_usuario['nombre_usuario'];
+                    $_SESSION['rut'] = $rut;
+                    $_SESSION['nombre_usuario'] = $nombre_usuario;
 
-                $sql_rol = "SELECT * FROM rol WHERE nombre_rol = 'cliente'";
-                $resultado_rol = mysqli_query($conexion, $sql_rol);
-                $rol = mysqli_fetch_assoc($resultado_rol);
-                $id_rol = $rol['id_rol'];
-
-                $_SESSION['rut'] = $rut;
-                $_SESSION['nombre_usuario'] = $nombre_usuario;
-
-                $response = array(
-                    'success' => true,
-                    'message' => 'Inicio de sesión exitoso',
-                    'redirect' => $id_rol === $rol_usuario ? 'index.php?p=home' : 'index.php?p=admin/home'
-                );
+                    $response = array(
+                        'success' => true,
+                        'message' => 'Has iniciado sesión correctamente.',
+                        'redirect' => $id_rol === $rol_usuario ? 'index.php?p=home' : 'index.php?p=admin/home'
+                    );
+                }
             } else {
                 $response = array(
                     'success' => false,
-                    'message' => 'Nombre de usuario o contraseña incorrectos. Intente de nuevo.'
+                    'message' => 'Nombre de usuario o contraseña incorrectos. Por favor, intente de nuevo.'
                 );
             }
         } else {
             $response = array(
                 'success' => false,
-                'message' => 'Error en los datos recibidos'
+                'message' => 'Error en los datos recibidos.'
             );
         }
 
@@ -55,7 +58,7 @@
 
         $response = array(
             'success' => false,
-            'message' => 'Error en el servidor. Intente de nuevo más tarde.'
+            'message' => 'Error en el servidor. Por favor, intente de nuevo más tarde.'
         );
 
     }
