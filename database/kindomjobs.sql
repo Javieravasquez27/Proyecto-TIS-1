@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-11-2024 a las 16:25:31
+-- Tiempo de generación: 04-11-2024 a las 19:56:54
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -135,6 +135,13 @@ INSERT INTO `ciudad` (`id_ciudad`, `nombre_ciudad`, `id_region`) VALUES
 CREATE TABLE `cliente` (
   `rut` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `cliente`
+--
+
+INSERT INTO `cliente` (`rut`) VALUES
+(11086788);
 
 -- --------------------------------------------------------
 
@@ -608,7 +615,8 @@ CREATE TABLE `profesional` (
 --
 
 INSERT INTO `profesional` (`rut`, `id_profesion`, `id_institucion`, `biografia_prof`, `experiencia`, `titulo_profesional`) VALUES
-(14565656, 1, 1, NULL, 'Sé hacer de todo', '../../uploads/titulo_profesional/Consentimiento Informado ENCE CRUCH 2024.docx.pdf');
+(14565656, 1, 1, NULL, 'Sé hacer de todo', '../../uploads/titulo_profesional/Consentimiento Informado ENCE CRUCH 2024.docx.pdf'),
+(16767878, 7, 3, NULL, 'Gestión tributaria y Operación Renta anual', '../../uploads/titulo_profesional/DataTables example - PDF - image.pdf');
 
 -- --------------------------------------------------------
 
@@ -850,10 +858,12 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`rut`, `nombre_usuario`, `nombres`, `apellido_p`, `apellido_m`, `correo`, `telefono`, `fecha_nac`, `direccion`, `contrasena`, `foto_perfil`, `id_comuna`, `id_rol`, `id_estado_usuario`) VALUES
+(11086788, 'Lorena', 'Lorena', 'Lagos', 'Sanhueza', 'lorena@gmail.com', 998876565, '1998-08-25', 'Avenida Bernardo O\'Higgins 3272', '827ccb0eea8a706c4c34a16891f84e7b', '', 65, 4, 1),
 (12345678, 'Cliente', 'Cliente', 'Pérez', 'García', 'cliente@gmail.com', 999999999, '1999-08-25', 'Calle DEF, 321', '202cb962ac59075b964b07152d234b70', NULL, 1, 4, 1),
 (13082637, 'Admin', 'Admin', 'Prueba', 'Prueba', 'admin@gmail.com', 982872637, '1995-08-08', 'Calle Nueva 123', '81dc9bdb52d04dc20036dbd8313ed055', NULL, 1, 2, 1),
-(14565656, 'Hector', 'Héctor', 'Jiménez', 'Suazo', 'hector@gmail.com', 965656565, '2002-07-08', 'Avenida Arturo Prat 234', '202cb962ac59075b964b07152d234b70', '../../uploads/foto_perfil/IMG_20240831_163740121.jpg', 1, 3, 1),
-(20786387, 'Alvaro', 'Álvaro Alfonso', 'Molina', 'Jara', 'alvaromolinacl@gmail.com', 951269878, '2001-07-10', 'Calle ABC, 123', '202cb962ac59075b964b07152d234b70', NULL, 1, 1, 1),
+(14565656, 'Hector', 'Héctor', 'Jiménez', 'Suazo', 'hector@gmail.com', 965656565, '2002-07-08', 'Avenida Arturo Prat 234', '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/IMG_20240831_163740121.jpg', 1, 3, 1),
+(16767878, 'Ernesto', 'Ernesto', 'Loyola', 'Zapata', 'ernesto@gmail.com', 988786565, '1991-12-15', 'José Arrieta 2345', 'e10adc3949ba59abbe56e057f20f883e', 'uploads/foto_perfil/IMG_20240810_181021908.jpg', 36, 3, 0),
+(20786387, 'Alvaro', 'Álvaro Alfonso', 'Molina', 'Jara', 'alvaromolinacl@gmail.com', 951269878, '2001-07-10', 'Calle ABC, 123', '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 1, 1, 1),
 (23456789, 'Juanito', 'Juan', 'Pérez', 'Gar', 'juan@gmail.com', 987654321, '2000-08-02', 'Calle GHI, 786', '202cb962ac59075b964b07152d234b70', NULL, 1, 3, 1);
 
 --
@@ -1048,7 +1058,7 @@ ALTER TABLE `cita`
 -- AUTO_INCREMENT de la tabla `ciudad`
 --
 ALTER TABLE `ciudad`
-  MODIFY `id_ciudad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `id_ciudad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT de la tabla `comuna`
