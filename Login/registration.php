@@ -62,7 +62,10 @@
 
         $sql = "INSERT INTO usuario (nombres, apellido_p, apellido_m, nombre_usuario, rut, correo, telefono, fecha_nac, id_comuna, calle, contraseña, id_rol)
                 VALUES ('$nombres', '$apellido_p', '$apellido_m', '$nombre_usuario', '$rut', '$correo', '$telefono', '$fecha_nacimiento',  '$comuna', '$calle', '$contraseña_hash', '$rol')";
-
+        if($id_rol == 11){
+          $sql = "INSERT INTO profesional (nombre_usuario,id_institucion,id_profesion,experiencia,titulo_prof)
+                  VALUES ('$nombre_usuario','$institucion','$profesion','$experiencia','$titulo_profesional')";
+        }
         if (mysqli_query($conexion, $sql)) {
             echo "<div class='alert alert-success'>Registro exitoso. ¡Bienvenido!</div>";
             header ('Location: login.php ');
@@ -179,11 +182,13 @@
                        while($row= mysqli_fetch_assoc($resultado)){
                         $nombre = $row["nombre_rol"];
                         $id = $row["id_rol"];
+                        if($nombre != 'Admin'){
                     ?>
                         <input type="radio" id="rol_cliente_<?php echo $id; ?>" name="rol" value="<?php echo $id; ?>" required onchange="toggleProfessionalFields()">
                         <label for="rol_cliente_<?php echo $id; ?>"><?php echo $nombre; ?></label>
                     <?php
-                        }
+                      }
+                    }
                     ?>
                   </div>
                 </div>
