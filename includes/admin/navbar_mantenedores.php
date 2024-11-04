@@ -14,6 +14,9 @@
                     <a class="nav-link <?php echo (strpos($pagina, 'admin/mantenedores/comuna/index_comuna') !== false) ? 'active' : null ?>" href="index.php?p=admin/mantenedores/comuna/index_comuna">Comunas</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link <?php echo (strpos($pagina, 'admin/mantenedores/estado_usuario/index_estado_usuario') !== false) ? 'active' : null ?>" href="index.php?p=admin/mantenedores/estado_usuario/index_estado_usuario">Estados de Usuario</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link <?php echo (strpos($pagina, 'admin/mantenedores/institucion/index_institucion') !== false) ? 'active' : null ?>" href="index.php?p=admin/mantenedores/institucion/index_institucion">Instituciones</a>
                 </li>
                 <li class="nav-item">
@@ -26,16 +29,19 @@
                     <a class="nav-link <?php echo (strpos($pagina, 'admin/mantenedores/red_social/index_rs') !== false) ? 'active' : null ?>" href="index.php?p=admin/mantenedores/red_social/index_rs">Redes Sociales</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link <?php echo (strpos($pagina, 'admin/mantenedores/region/index_region') !== false) ? 'active' : null ?>" href="index.php?p=admin/mantenedores/region/index_region">Regiones</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link <?php echo (strpos($pagina, 'admin/mantenedores/rol/index_rol') !== false) ? 'active' : null ?>" href="index.php?p=admin/mantenedores/rol/index_rol">Roles</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link <?php echo (strpos($pagina, 'admin/mantenedores/rol_permiso/index_rol_permiso') !== false) ? 'active' : null ?>" href="index.php?p=admin/mantenedores/rol_permiso/index_rol_permiso">Roles y Permisos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <?php echo (strpos($pagina, 'admin/mantenedores/region/index_region') !== false) ? 'active' : null ?>" href="index.php?p=admin/mantenedores/region/index_region">Regiones</a>
+                    <a class="nav-link <?php echo (strpos($pagina, 'admin/mantenedores/servicio/index_servicio') !== false) ? 'active' : null ?>" href="index.php?p=admin/mantenedores/servicio/index_servicio">Servicios</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <?php echo (strpos($pagina, 'admin/mantenedores/servicio/index_servicio') !== false) ? 'active' : null ?>" href="index.php?p=admin/mantenedores/servicio/index_servicio">Servicios</a>
+                    <a class="nav-link <?php echo (strpos($pagina, 'admin/mantenedores/tipo_horario/index_th') !== false) ? 'active' : null ?>" href="index.php?p=admin/mantenedores/tipo_horario/index_th">Tipos de Horario</a>
                 </li>
             </ul>
         </div>

@@ -198,7 +198,7 @@
                 <div class="row py-3">
                     <div class="col py-5 px-1 mt-4">
                         <form class="d-flex" role="search" action="index.php?p=busqueda">
-                            <input class="form-control me-1" type="search" placeholder="Search" aria-label="Search">
+                            <input class="form-control me-1" type="search" placeholder="Ingrese un término" aria-label="Search">
                             <button class="btn btn-outline-success " type="submit">Buscar</button>
                         </form>
                     </div>

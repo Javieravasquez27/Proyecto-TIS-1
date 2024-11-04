@@ -21,23 +21,27 @@
             <tbody>
                 <tr>
                     <th scope="row">1</th>
-                    <td>Ciudad</td>
+                    <td>Ciudades</td>
                 </tr>
                 <tr>
                     <th scope="row">2</th>
-                    <td>Comuna</td>
+                    <td>Comunas</td>
                 </tr>
                 <tr>
                     <th scope="row">3</th>
-                    <td>Institución</td>
+                    <td>Estados de Usuario</td>
                 </tr>
                 <tr>
                     <th scope="row">4</th>
-                    <td>Permisos</td>
+                    <td>Instituciones</td>
                 </tr>
                 <tr>
                     <th scope="row">5</th>
-                    <td>Profesión</td>
+                    <td>Permisos</td>
+                </tr>
+                <tr>
+                    <th scope="row">6</th>
+                    <td>Profesiones</td>
                 </tr>
                 <tr>
                     <th scope="row">6</th>
@@ -45,7 +49,7 @@
                 </tr>
                 <tr>
                     <th scope="row">7</th>
-                    <td>Region</td>
+                    <td>Regiones</td>
                 </tr>
                 <tr>
                     <th scope="row">8</th>
@@ -53,7 +57,7 @@
                 </tr>
                 <tr>
                     <th scope="row">9</th>
-                    <td>Roles Permisos</td>
+                    <td>Roles y Permisos</td>
                 </tr>
                 <tr>
                     <th scope="row">10</th>
@@ -61,9 +65,8 @@
                 </tr>
                 <tr>
                     <th scope="row">11</th>
-                    <td>Tipo Horario</td>
+                    <td>Tipos de Horario</td>
                 </tr>
-
             </tbody>
         </table>
     </div>

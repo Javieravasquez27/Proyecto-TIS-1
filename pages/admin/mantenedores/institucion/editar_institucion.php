@@ -1,5 +1,5 @@
 <?php
-    require('..\conexion.php');
+    require('database\conexion.php');
     
     $nombre_institucion_r=$_POST["nombre_e"];
     $id_r=$_POST["id_e"];
@@ -9,6 +9,6 @@
     WHERE id_institucion = '$id_r';";
     $resultado = mysqli_query($conexion, $consulta);
 
-    header('Location: index_institucion.php');
+    header('Location: index.php?p=admin/mantenedores/institucion/index_institucion');
 
 ?>

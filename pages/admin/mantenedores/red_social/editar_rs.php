@@ -1,5 +1,6 @@
 <?php
-    require('..\conexion.php');
+    require('database\conexion.php');
+
     $nombre_e = $_POST["nombre_e"];
     $id_e = $_POST["id_e"];
     $consulta ="UPDATE red_social
@@ -7,6 +8,6 @@
                 WHERE id_rs = '$id_e'";
 
     $resultado = mysqli_query($connection,$consulta);
-    header('location: index_rs.php') ;
-
+    
+    header('location: index.php?p=admin/mantenedores/red_social/index_rs') ;
 ?>

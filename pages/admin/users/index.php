@@ -36,7 +36,7 @@
                         (currentRol == 1) && (rol.id_rol == 2 || rol.id_rol == 4) ||
                         (currentRol == 2) && (rol.id_rol == 4) ||
                         (currentRol == 3) && (rol.id_rol == 2 || rol.id_rol == 4) ||
-                        (currentRol == 4) && (rol.id_rol == 2 || rol.id_rol == 4)
+                        (currentRol == 4) && (rol.id_rol == 2)
                     ) {
                         const option = document.createElement("option");
                         option.value = rol.id_rol;
