@@ -1,5 +1,5 @@
 <?php
-    include '../../database/connection.php';
+    include '../../database/conexion.php';
 
     try {
         if (session_status() == PHP_SESSION_NONE) {
@@ -12,7 +12,7 @@
                 FROM profesional p JOIN profesion pr ON p.id_profesion = pr.id_profesion
                                    JOIN institucion i ON p.id_institucion = i.id_institucion
                                    JOIN usuario u ON p.rut = u.rut";
-        $resultado = mysqli_query($connection, $sql);
+        $resultado = mysqli_query($conexion, $sql);
 
         if ($resultado) {
             $usuarios = array();

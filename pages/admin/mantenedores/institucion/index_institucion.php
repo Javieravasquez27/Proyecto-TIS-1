@@ -1,19 +1,10 @@
-<?php
-    require('database\connection.php');
+<?php 
+    define('PERMISO_REQUERIDO', 'Gestionar los mantenedores de la plataforma');
+    include("middleware/auth.php");
+    require('database\conexion.php');
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <title>Instituciones - KindomJob's</title>
-    <link rel="stylesheet" href="../estilos.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <script src="../funciones.js"></script>
-</head>
+<title>Gestión de instituciones - KindomJob's</title>
 
 <body>
     <script src="../funciones.js"></script>
@@ -93,7 +84,7 @@
 
             <?php
         $consulta ="SELECT * FROM institucion";
-        $resultado = mysqli_query($connection, $consulta);
+        $resultado = mysqli_query($conexion, $consulta);
 
         while($row = mysqli_fetch_assoc($resultado)){
             

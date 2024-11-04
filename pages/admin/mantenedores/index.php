@@ -1,3 +1,8 @@
+<?php 
+    define('PERMISO_REQUERIDO', 'Gestionar los mantenedores de la plataforma');
+    include("middleware/auth.php");
+?>
+
 <title>Mantenedores - KindomJob's</title>
 
 <body>

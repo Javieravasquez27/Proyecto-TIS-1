@@ -1,9 +1,9 @@
 <?php
-    require('../database/connection.php');
+    require('../database/conexion.php');
 
     // Consulta para obtener las regiones
     $sql = "SELECT id_region, nombre_region FROM region ORDER BY id_region";
-    $resultado = $connection->query($sql);
+    $resultado = $conexion->query($sql);
 
     $regiones = [];
 
@@ -19,5 +19,5 @@
     header('Content-Type: application/json');
     echo json_encode($regiones);
 
-    $connection->close();
+    $conexion->close();
 ?>

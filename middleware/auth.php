@@ -2,45 +2,60 @@
     require_once __DIR__ . '/../config/config.php';
     include __DIR__ . '/../utils/functions.php';
 
-    // Iniciar la sesión (si no está iniciada)
-    if (session_status() == PHP_SESSION_NONE) {
+    if (session_status() == PHP_SESSION_NONE)
+    {
         session_start();
     }
 
-    // Comprueba si el usuario está logueado
-    if (!isset($_SESSION["rut"])) {
+    if (!isset($_SESSION["rut"]))
+    {
         header("Location: index.php?p=auth/login");
         exit();
-    } else {
+    }
+    else
+    {
         $rut = $_SESSION["rut"];
-        $nombre_usuario = $_SESSION["nombre_usuario"];
-        $user = get_user_by_rut($rut);
-
-        if (!$user) {
+        $usuario = get_user_by_rut($rut);
+    
+        if (!$usuario)
+        {
             session_destroy();
             header("Location: index.php?p=auth/login");
             exit();
         }
-/*
-        // Definir las páginas permitidas por rol
-        $rolePermissions = [
-            1 => ['admin/dashboard.php', 'admin/users.php'], // Superadmin
-            2 => ['admin/dashboard.php'],                    // Administrador
-            3 => ['profesional/profile.php', 'profesional/appointments.php'], // Profesional
-            4 => ['client/dashboard.php', 'client/appointments.php']          // Cliente
-        ];
-
-        // Página solicitada (extraer de la URL)
-        $requestedPage = basename($_SERVER['PHP_SELF']);
-
-        // Verificar si el usuario tiene permiso para acceder a la página
-        $userRoleId = $user['id_rol'];
-        if (!in_array($requestedPage, $rolePermissions[$userRoleId])) {
-            // Redirigir al usuario a una página de error o a su página de inicio
-            header("Location: index.php");
-            exit();
+    
+        if (defined('PERMISO_REQUERIDO'))
+        {
+            if (!user_has_permission($rut, PERMISO_REQUERIDO))
+            {
+                header("Location: index.php?p=error/acceso_denegado");
+                exit();
+            }
         }
-            */
     }
     
+    function user_has_permission($rut, $permiso_requerido)
+    {
+        global $conexion;
+    
+        // Obtener el id_rol del usuario
+        $sql_usuario = "SELECT id_rol FROM usuario WHERE rut = '$rut'";
+        $resultado_usuario = mysqli_query($conexion, $sql_usuario);
+        $usuario = mysqli_fetch_assoc($resultado_usuario);
+    
+        if (!$usuario)
+        {
+            return false;
+        }
+
+        $id_rol = $usuario['id_rol'];
+        $sql_permiso = "
+            SELECT 1 FROM permiso_rol pr
+            JOIN permiso p ON pr.id_permiso = p.id_permiso
+            WHERE pr.id_rol = $id_rol AND p.nombre_permiso = '$permiso_requerido'
+        ";
+        $resultado_permiso = mysqli_query($conexion, $sql_permiso);
+    
+        return mysqli_num_rows($resultado_permiso) > 0;
+    }
 ?>

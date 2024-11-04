@@ -1,19 +1,10 @@
-<?php
-    require('database\connection.php');
+<?php 
+    define('PERMISO_REQUERIDO', 'Gestionar los mantenedores de la plataforma');
+    include("middleware/auth.php");
+    require('database\conexion.php');
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Permisos - KindomJob's</title>
-    <link rel="stylesheet" href="../estilos.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-</head>
+<title>Gestión de permisos - KindomJob's</title>
 
 <body>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -90,30 +81,30 @@
             </tr>
             <?php
             $consulta = "SELECT * FROM permiso";
-            $resultado = mysqli_query($connection,$consulta);
+            $resultado = mysqli_query($conexion,$consulta);
             while($row=mysqli_fetch_assoc($resultado)){
                 $nombre_consultado = $row["nombre_permiso"];
                 $id = $row["id_permiso"];
                 echo "<tr>";
                     echo "<td>".$nombre_consultado."</td>";
-                    echo"<td><a href='borrar_permiso.php?id_e=$id' class='btn btn-danger' style='color: white; text-decoration: none;'><span class='material-icons'>delete</span></a> <a href='form_edicion_permiso.php?id_e=$id' class='btn btn-primary' style='color: white; text-decoration: none;'><span class='material-icons'>edit</span></a></td>";
+                    echo"<td><a href='index.php?p=admin/mantenedores/permiso/borrar_permiso&id_e=$id' class='btn btn-danger' style='color: white; text-decoration: none;'><span class='material-icons'>delete</span></a> <a href='index.php?p=admin/mantenedores/permiso/form_edicion_permiso&id_e=$id' class='btn btn-primary' style='color: white; text-decoration: none;'><span class='material-icons'>edit</span></a></td>";
                 echo"</tr>";
             }
         ?>
         </table>
     </div>
     </div>
-        <form action="ingresar_permiso.php" method="POST">
+        <form action="index.php?p=admin/mantenedores/permiso/ingresar_permiso" method="POST">
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
                 <div class="modal-header " style="background-color: rgb(234, 228, 246)">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Ingresar Nuevo Rol</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Ingresar nuevo permiso</h1>
                 </div>
                 <div class="modal-body">
-                        <h6>Nombre Del Nuevo Rol:</h6>
+                        <h6>Nombre:</h6>
                         <div class="input-group mb-3">
-                            <input type="text" name="nombre_permiso" class="form-control" placeholder="Ingrese el nombre del nuevo rol" aria-label="Recipient's username" aria-describedby="button-addon2" required>
+                            <input type="text" name="nombre_permiso" class="form-control" placeholder="Ingrese el nombre del nuevo permiso" aria-label="Recipient's username" aria-describedby="button-addon2" required>
                             <button class="btn btn-outline-success" type="sumbit" id="button-addon2">Guardar</button>
                         </div>
                 </div>

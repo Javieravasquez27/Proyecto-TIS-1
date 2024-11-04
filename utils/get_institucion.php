@@ -1,9 +1,9 @@
 <?php
-    require('../database/connection.php');
+    require('../database/conexion.php');
 
     // Consulta para obtener las instituciones
     $sql = "SELECT id_institucion, nombre_institucion FROM institucion ORDER BY nombre_institucion";
-    $resultado = $connection->query($sql);
+    $resultado = $conexion->query($sql);
 
     $instituciones = [];
 
@@ -19,5 +19,5 @@
     header('Content-Type: application/json');
     echo json_encode($instituciones);
 
-    $connection->close();
+    $conexion->close();
 ?>

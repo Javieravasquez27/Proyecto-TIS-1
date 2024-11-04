@@ -1,9 +1,9 @@
 <?php
-    require('../database/connection.php');
+    require('../database/conexion.php');
 
     // Consulta para obtener las comunas
     $sql = "SELECT id_comuna, nombre_comuna FROM comuna ORDER BY nombre_comuna";
-    $resultado = $connection->query($sql);
+    $resultado = $conexion->query($sql);
 
     $comunas = [];
 
@@ -19,5 +19,5 @@
     header('Content-Type: application/json');
     echo json_encode($comunas);
 
-    $connection->close();
+    $conexion->close();
 ?>

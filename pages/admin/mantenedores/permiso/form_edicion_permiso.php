@@ -1,5 +1,5 @@
 <?php
-    require('..\conexion.php');
+    require('database\conexion.php');
     $id_recibido = $_GET["id_e"];
         $consulta = "SELECT * FROM permiso WHERE id_permiso=$id_recibido";
         $resultado = mysqli_query($conexion,$consulta);
@@ -9,70 +9,57 @@
         }
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Permisos - KindomJob's</title>
-    <link rel="stylesheet" href="../estilos.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-</head>
-
 <body>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-    <div class="container-fluid contenedorcompleto py-4">
-    <nav class="navbar navbar-expand-lg bg-gradient bg-opacity-50" data-bs-theme="dark" style="background-color: rgb(113, 59, 228);">
-            <div class="container-fluid mt-2 mb-2">
-                <a class="navbar-brand" href="../index.php"><b>Mantenedores KindomJob's</b></a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="../mantenedor_ciudad/index_ciudad.php"><b>Ciudad</b></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../mantenedor_comuna/index_comuna.php"><b>Comuna</b></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../mantenedor_institucion/index_institucion.php"><b>Institución</b></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../mantenedor_permiso/index_permiso.php"><b>Permisos</b></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../mantenedor_profesion/index_profesion.php"><b>Profesión</b></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../mantenedor_redes_sociales/index_rs.php"><b>Redes Sociales</b></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../mantenedor_roles/index_rol.php"><b>Roles</b></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../mantenedor_roles_permisos/index_rol_permiso.php"><b>Roles Permisos</b></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../mantenedor_region/index_region.php"><b>Región</b></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../mantenedor_servicio/index_servicio.php"><b>Servicios</b></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../mantenedor_tiempohorario/index_th.php"><b>Tipo Horario</b></a>
-                        </li>
-                    </ul>
+        <div class="container-fluid py-2 contenedorcompleto">
+            <nav class="navbar navbar-expand-lg bg-gradient bg-opacity-50" data-bs-theme="dark" style="background-color: rgb(113, 59, 228);">
+                <div class="container-fluid mt-2 mb-2">
+                <a class="navbar-brand <?php echo (strpos($pagina, 'admin/mantenedores/index') !== false) ? 'active' : null ?>" href="index.php?p=admin/mantenedores/index"><b>Mantenedores</b></a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link <?php echo (strpos($pagina, 'admin/mantenedores/ciudad/index_ciudad') !== false) ? 'active' : null ?>" href="index.php?p=admin/mantenedores/ciudad/index_ciudad">Ciudades</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link <?php echo (strpos($pagina, 'admin/mantenedores/comuna/index_comuna') !== false) ? 'active' : null ?>" href="index.php?p=admin/mantenedores/comuna/index_comuna">Comunas</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link <?php echo (strpos($pagina, 'admin/mantenedores/institucion/index_institucion') !== false) ? 'active' : null ?>" href="index.php?p=admin/mantenedores/institucion/index_institucion">Instituciones</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link <?php echo (strpos($pagina, 'admin/mantenedores/permiso/index_permiso') !== false) ? 'active' : null ?>" href="index.php?p=admin/mantenedores/permiso/index_permiso">Permisos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link <?php echo (strpos($pagina, 'admin/mantenedores/profesion/index_profesion') !== false) ? 'active' : null ?>" href="index.php?p=admin/mantenedores/profesion/index_profesion">Profesiones</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link <?php echo (strpos($pagina, 'admin/mantenedores/red_social/index_rs') !== false) ? 'active' : null ?>" href="index.php?p=admin/mantenedores/red_social/index_rs">Redes Sociales</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link <?php echo (strpos($pagina, 'admin/mantenedores/rol/index_rol') !== false) ? 'active' : null ?>" href="index.php?p=admin/mantenedores/rol/index_rol">Roles</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link <?php echo (strpos($pagina, 'admin/mantenedores/rol_permiso/index_rol_permiso') !== false) ? 'active' : null ?>" href="index.php?p=admin/mantenedores/rol_permiso/index_rol_permiso">Roles y Permisos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link <?php echo (strpos($pagina, 'admin/mantenedores/region/index_region') !== false) ? 'active' : null ?>" href="index.php?p=admin/mantenedores/region/index_region">Regiones</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link <?php echo (strpos($pagina, 'admin/mantenedores/servicio/index_servicio') !== false) ? 'active' : null ?>" href="index.php?p=admin/mantenedores/servicio/index_servicio">Servicios</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link <?php echo (strpos($pagina, 'admin/mantenedores/tiempo_horario/index_th') !== false) ? 'active' : null ?>" href="index.php?p=admin/mantenedores/tiempo_horario/index_th">Tipos de Horario</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </nav>
+            </nav>
         <br>
         <div class="container text-center">
             <div class="row">
@@ -104,7 +91,7 @@
                 if ($id == $id_p) {
                     ?>
                     <tr>
-                    <td><form action='editar_permiso.php' method='POST'>
+                    <td><form action='index.php?p=admin/mantenedores/permiso/editar_permiso' method='POST'>
                         <div class="input-group mb-3">
                         <input type="hidden" name="id_e" value="<?php echo $id_p ?>"> 
                         <input type="text" name="nombre_e" class="form-control" aria-describedby="button-addon2" value="<?php echo $nombre_consultado ?>" style="width:50%" required>
@@ -112,15 +99,15 @@
                         </div>
                     </form></td>
                     <td>
-                        <a href= "borrar_permiso.php?id_e=<?php echo $id_p ?>" class="btn btn-danger" style="color: white; text-decoration: none;"><span class="material-icons">delete</span></a>
-                        <a href="form_edicion_permiso.php?id_e=<?php echo $id_p ?>" class='btn btn-primary' style='color: white; text-decoration: none;'><span class='material-icons'>edit</span></a>
+                        <a href= "index.php?p=admin/mantenedores/permiso/borrar_permiso&id_e=<?php echo $id_p ?>" class="btn btn-danger" style="color: white; text-decoration: none;"><span class="material-icons">delete</span></a>
+                        <a href="index.php?p=admin/mantenedores/permiso/form_edicion_permiso&id_e=<?php echo $id_p ?>" class='btn btn-primary' style='color: white; text-decoration: none;'><span class='material-icons'>edit</span></a>
                     </td>
                     </tr>
                 <?php
                 }else{
                     echo "<tr>";
                         echo "<td>".$nombre_consultado."</td>";
-                        echo"<td><a href='borrar_permiso.php?id_e=$id_p' class='btn btn-danger' style='color: white; text-decoration: none;'><span class='material-icons'>delete</span></a> <a href='form_edicion_permiso.php?id_e=$id' class='btn btn-primary' style='color: white; text-decoration: none;'><span class='material-icons'>edit</span></a></td>";
+                        echo"<td><a href='index.php?p=admin/mantenedores/permiso/borrar_permiso&id_e=$id_p' class='btn btn-danger' style='color: white; text-decoration: none;'><span class='material-icons'>delete</span></a> <a href='index.php?p=admin/mantenedores/permiso/form_edicion_permiso&id_e=$id' class='btn btn-primary' style='color: white; text-decoration: none;'><span class='material-icons'>edit</span></a></td>";
                     echo"</tr>";
                 }
             }

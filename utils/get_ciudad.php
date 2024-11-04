@@ -1,9 +1,9 @@
 <?php
-    require('../database/connection.php');
+    require('../database/conexion.php');
 
     // Consulta para obtener las ciudades
     $sql = "SELECT id_ciudad, nombre_ciudad FROM ciudad ORDER BY nombre_ciudad";
-    $resultado = $connection->query($sql);
+    $resultado = $conexion->query($sql);
 
     $ciudades = [];
 
@@ -19,5 +19,5 @@
     header('Content-Type: application/json');
     echo json_encode($ciudades);
 
-    $connection->close();
+    $conexion->close();
 ?>

@@ -1,19 +1,10 @@
-<?php
-    require('database\connection.php');
+<?php 
+    define('PERMISO_REQUERIDO', 'Gestionar los mantenedores de la plataforma');
+    include("middleware/auth.php");
+    require('database\conexion.php');
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <title>Comunas - KindomJob's</title>
-    <link rel="stylesheet" href="../estilos.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-</head>
+<title>Gestión de comunas - KindomJob's</title>
 
 <body>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -94,7 +85,7 @@
 
             <?php
         $consulta ="SELECT nombre_comuna, nombre_ciudad,id_comuna from comuna join ciudad using (id_ciudad)";
-        $resultado = mysqli_query($connection, $consulta);
+        $resultado = mysqli_query($conexion, $consulta);
 
         while($row = mysqli_fetch_assoc($resultado)){
             
@@ -131,7 +122,7 @@
                             <option value="">Nombre Ciudades</option>
                             <?php
                                 $nombre_region="SELECT * FROM ciudad";
-                                $resultado_region=mysqli_query($connection,$nombre_region);
+                                $resultado_region=mysqli_query($conexion,$nombre_region);
                                 while($row_rol= mysqli_fetch_assoc($resultado_region)){
                                     $nombre = $row_rol["nombre_ciudad"];
                                     $id = $row_rol["id_ciudad"];

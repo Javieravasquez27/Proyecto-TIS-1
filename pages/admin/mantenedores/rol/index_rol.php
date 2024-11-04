@@ -1,19 +1,10 @@
-<?php
-    require('database\connection.php');
+<?php 
+    define('PERMISO_REQUERIDO', 'Gestionar los mantenedores de la plataforma');
+    include("middleware/auth.php");
+    require('database\conexion.php');
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Roles - KindomJob's</title>
-    <link rel="stylesheet" href="../estilos.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-</head>
+<title>Gestión de roles - KindomJob's</title>
 
 <body>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -90,14 +81,14 @@
             </tr>
             <?php
             $consulta = "SELECT * FROM rol";
-            $resultado = mysqli_query($connection,$consulta);
+            $resultado = mysqli_query($conexion,$consulta);
             while($row=mysqli_fetch_assoc($resultado)){
                 $nombre_consultado = $row["nombre_rol"];
                 $id = $row["id_rol"];
                 echo "<tr>";
                     echo "<td>".$nombre_consultado."</td>";
-                    echo"<td><a href='borrar_rol.php?id_e=$id' class='btn btn-danger' style='color: white; text-decoration: none;'><span class='material-icons'>delete</span></a> <a href='form_edicion_rol.php?id_e=$id' class='btn btn-primary' style='color: white; text-decoration: none;'><span class='material-icons'>edit</span></a></td>";
-                echo"</tr>";
+                    echo "<td><a href='index.php?p=admin/mantenedores/rol/borrar_rol&id_e=$id' class='btn btn-danger' style='color: white; text-decoration: none;'><span class='material-icons'>delete</span></a> <a href='index.php?p=admin/mantenedores/rol/form_edicion_rol&id_e=$id' class='btn btn-primary' style='color: white; text-decoration: none;'><span class='material-icons'>edit</span></a></td>";
+                echo "</tr>";
             }
         ?>
         </table>

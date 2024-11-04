@@ -1,6 +1,10 @@
-<?php
-    require('database\connection.php');
+<?php 
+    define('PERMISO_REQUERIDO', 'Gestionar los mantenedores de la plataforma');
+    include("middleware/auth.php");
+    require('database\conexion.php');
 ?>
+
+<title>Gestión de ciudades - KindomJob's</title>
 
 <body>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -73,7 +77,7 @@
 
         <table class="table table-striped table-bordered ">
             <tr>
-                <th>Nombre Region</th>
+                <th>Nombre Región</th>
                 <th>Ciudad</th>
                 <th>Opciones</th>
             </tr>
@@ -81,7 +85,7 @@
 
             <?php
             $consulta ="SELECT nombre_region,nombre_ciudad, id_ciudad FROM ciudad join region using (id_region)";
-            $resultado = mysqli_query($connection, $consulta);
+            $resultado = mysqli_query($conexion, $consulta);
     
             while($row = mysqli_fetch_assoc($resultado)){
                 $ciudad = $row["nombre_ciudad"];
@@ -117,7 +121,7 @@
                             <option value="">Nombre Regiones</option>
                             <?php
                                 $nombre_region="SELECT * FROM region";
-                                $resultado_region=mysqli_query($connection,$nombre_region);
+                                $resultado_region=mysqli_query($conexion, $nombre_region);
                                 while($row_rol= mysqli_fetch_assoc($resultado_region)){
                                     $nombre = $row_rol["nombre_region"];
                                     $id = $row_rol["id_region"];

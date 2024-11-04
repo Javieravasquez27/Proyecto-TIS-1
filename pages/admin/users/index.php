@@ -1,6 +1,9 @@
-<?php
+<?php 
+    define('PERMISO_REQUERIDO', 'Gestionar roles y activación de las cuentas de usuario');
     include("middleware/auth.php");
 ?>
+
+<title>Gestión de usuarios - KindomJob's</title>
 
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
 
@@ -30,10 +33,10 @@
                 // Filtrar roles según el rol actual
                 data.forEach(rol => {
                     if (
-                        (currentRol == 1) && (rol.id_rol == 1 || rol.id_rol == 2 || rol.id_rol == 4) ||
-                        (currentRol == 2) && (rol.id_rol == 1 || rol.id_rol == 3 || rol.id_rol == 4) ||
-                        (currentRol == 4) && (rol.id_rol == 1 || rol.id_rol == 2 || rol.id_rol == 3) ||
-                        (currentRol == 3) && (rol.id_rol == 1 || rol.id_rol == 2 || rol.id_rol == 3)
+                        (currentRol == 1) && (rol.id_rol == 2 || rol.id_rol == 4) ||
+                        (currentRol == 2) && (rol.id_rol == 4) ||
+                        (currentRol == 3) && (rol.id_rol == 2 || rol.id_rol == 4) ||
+                        (currentRol == 4) && (rol.id_rol == 2 || rol.id_rol == 4)
                     ) {
                         const option = document.createElement("option");
                         option.value = rol.id_rol;

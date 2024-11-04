@@ -1,9 +1,9 @@
 <?php
-    require('../database/connection.php');
+    require('../database/conexion.php');
 
     // Consulta para obtener los roles
     $sql = "SELECT id_rol, nombre_rol FROM rol ORDER BY id_rol";
-    $resultado = $connection->query($sql);
+    $resultado = $conexion->query($sql);
 
     $roles = [];
 
@@ -19,5 +19,5 @@
     header('Content-Type: application/json');
     echo json_encode($roles);
 
-    $connection->close();
+    $conexion->close();
 ?>

@@ -1,9 +1,9 @@
 <?php
-    require('../database/connection.php');
+    require('../database/conexion.php');
 
     // Consulta para obtener las profesiones
     $sql = "SELECT id_profesion, nombre_profesion FROM profesion ORDER BY nombre_profesion";
-    $resultado = $connection->query($sql);
+    $resultado = $conexion->query($sql);
 
     $profesiones = [];
 
@@ -19,5 +19,5 @@
     header('Content-Type: application/json');
     echo json_encode($profesiones);
 
-    $connection->close();
+    $conexion->close();
 ?>

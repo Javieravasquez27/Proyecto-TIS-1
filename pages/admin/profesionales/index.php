@@ -1,10 +1,13 @@
-<?php
+<?php 
+    define('PERMISO_REQUERIDO', 'Gestionar autorizaciones de profesionales');
     include("middleware/auth.php");
 ?>
 
+<title>Gestión de profesionales - KindomJob's</title>
+
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
 
-<h1 class="text-center my-5">Gestión de usuarios</h1>
+<h1 class="text-center my-5">Gestión de profesionales</h1>
 
 <main class="">
     <div class="card">

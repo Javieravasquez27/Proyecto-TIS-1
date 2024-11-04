@@ -1,9 +1,9 @@
 <?php
-    require('../database/connection.php');
+    require('../database/conexion.php');
 
     // Consulta para obtener las servicios
     $sql = "SELECT id_servicio, nombre_servicio FROM servicio ORDER BY nombre_servicio";
-    $resultado = $connection->query($sql);
+    $resultado = $conexion->query($sql);
 
     $servicios = [];
 
@@ -19,5 +19,5 @@
     header('Content-Type: application/json');
     echo json_encode($servicios);
 
-    $connection->close();
+    $conexion->close();
 ?>

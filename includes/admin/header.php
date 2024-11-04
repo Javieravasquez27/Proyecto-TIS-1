@@ -19,7 +19,10 @@
 	<link rel="stylesheet" href="public/css/styles.css">
 
 	<!-- Favicon -->
-	<link rel="icon" type="image/png" href="public/images/logo.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="public/images/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="public/images/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="public/images/favicon-16x16.png">
+	<link rel="manifest" href="public/images/site.webmanifest">
 
 	<!-- Tipografía -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">

@@ -1,5 +1,5 @@
 <?php
-    include '../database/connection.php';
+    include '../database/conexion.php';
 
     header('Content-Type: application/json'); // Asegúrate de que se envíe la respuesta como JSON
 
@@ -9,8 +9,8 @@
         $rut = $_POST['rut'];
         $nuevo_estado_usuario = $_POST['id_estado_usuario'];
 
-        $query = "UPDATE usuario SET id_estado_usuario = ? WHERE rut = ?";
-        $stmt = $connection->prepare($query);
+        $consulta = "UPDATE usuario SET id_estado_usuario = ? WHERE rut = ?";
+        $stmt = $conexion->prepare($consulta);
         $stmt->bind_param("is", $nuevo_estado_usuario, $rut);
 
         if ($stmt->execute()) {
@@ -25,6 +25,6 @@
         $response["message"] = "Parámetros faltantes.";
     }
 
-    $connection->close();
+    $conexion->close();
     echo json_encode($response);
 ?>

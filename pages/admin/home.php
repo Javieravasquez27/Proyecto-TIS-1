@@ -1,4 +1,5 @@
-<?php
+<?php 
+    define('PERMISO_REQUERIDO', 'Acceder al panel de administración');
     include("middleware/auth.php");
 ?>
 
@@ -30,7 +31,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Profesionales</h5>
                     <p class="card-text">Gestiona las autorizaciones de los profesionales que solicitan registrarse en la plataforma.</p>
-                    <a href="index.php?p=admin/profesionales/index" class="btn btn-primary">Ir a Usuarios</a>
+                    <a href="index.php?p=admin/profesionales/index" class="btn btn-primary">Ir a Profesionales</a>
                 </div>
             </div>
         </div>

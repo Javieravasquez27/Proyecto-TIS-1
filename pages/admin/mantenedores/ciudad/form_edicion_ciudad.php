@@ -1,5 +1,5 @@
 <?php
-    require('..\conexion.php');
+    require('..\database\conexion.php');
     $id_recibido=$_GET["id_e"];
 
     $consulta ="SELECT * FROM ciudad WHERE id_ciudad='$id_recibido'";

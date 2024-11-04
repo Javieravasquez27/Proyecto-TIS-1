@@ -1,5 +1,5 @@
 <?php
-    include '../database/connection.php';
+    include '../database/conexion.php';
 
     header('Content-Type: application/json');
 
@@ -10,7 +10,7 @@
         $id_rol = $_POST['id_rol'];
 
         $sql = "UPDATE usuario SET id_rol = ? WHERE rut = ?";
-        $stmt = $connection->prepare($sql);
+        $stmt = $conexion->prepare($sql);
         $stmt->bind_param("is", $id_rol, $rut);
 
         if ($stmt->execute()) {
@@ -25,6 +25,6 @@
         $response["message"] = "Parámetros faltantes.";
     }
 
-    $connection->close();
+    $conexion->close();
     echo json_encode($response);
 ?>

@@ -1,19 +1,10 @@
-<?php
-    require('database\connection.php');
+<?php 
+    define('PERMISO_REQUERIDO', 'Gestionar los mantenedores de la plataforma');
+    include("middleware/auth.php");
+    require('database\conexion.php');
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Roles - KindomJob's</title>
-    <link rel="stylesheet" href="../estilos.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-</head>
+<title>Gestión de permisos para roles - KindomJob's</title>
 
 <body>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -91,7 +82,7 @@
             </tr>
             <?php
             $consulta = "SELECT id_rol,nombre_rol,nombre_permiso FROM permiso join permiso_rol using (id_permiso) join rol using (id_rol) ORDER BY nombre_rol";
-            $resultado = mysqli_query($connection,$consulta);
+            $resultado = mysqli_query($conexion,$consulta);
             while($row=mysqli_fetch_assoc($resultado)){
                 $nombre_consultado = $row["nombre_rol"];
                 $nombre_permiso = $row["nombre_permiso"];
@@ -119,7 +110,7 @@
                             <option value="">Nombre Roles</option>
                             <?php
                                 $nombre_rol="SELECT * FROM rol";
-                                $resultado_rol=mysqli_query($connection,$nombre_rol);
+                                $resultado_rol=mysqli_query($conexion,$nombre_rol);
                                 while($row_rol= mysqli_fetch_assoc($resultado_rol)){
                                     $nombre = $row_rol["nombre_rol"];
                                     $id = $row_rol["id_rol"];
@@ -132,7 +123,7 @@
                         <div class="form-group mb-3">
                             <?php
                                 $nombre_rol="SELECT * FROM permiso";
-                                $resultado_rol=mysqli_query($connection,$nombre_rol);
+                                $resultado_rol=mysqli_query($conexion,$nombre_rol);
                                 while($row_rol= mysqli_fetch_assoc($resultado_rol)){
                                     $nombre = $row_rol["nombre_permiso"];
                                     $id = $row_rol["id_permiso"];

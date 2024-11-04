@@ -1,5 +1,5 @@
 <?php 
-include '../../database/connection.php';
+include '../../database/conexion.php';
 
 try {
     if (isset($_POST['rut']) && isset($_POST['nombre_usuario']) && isset($_POST['nombres']) && isset($_POST['apellido_p']) && isset($_POST['apellido_m'])
@@ -7,29 +7,29 @@ try {
         && isset($_POST['comuna']) && isset($_POST['rol'])) {
 
         $rut = stripslashes($_REQUEST['rut']);
-        $rut = mysqli_real_escape_string($connection, $rut);
+        $rut = mysqli_real_escape_string($conexion, $rut);
         $nombre_usuario = stripslashes($_REQUEST['nombre_usuario']);
-        $nombre_usuario = mysqli_real_escape_string($connection, $nombre_usuario);
+        $nombre_usuario = mysqli_real_escape_string($conexion, $nombre_usuario);
         $nombres = stripslashes($_REQUEST['nombres']);
-        $nombres = mysqli_real_escape_string($connection, $nombres);
+        $nombres = mysqli_real_escape_string($conexion, $nombres);
         $apellido_p = stripslashes($_REQUEST['apellido_p']);
-        $apellido_p = mysqli_real_escape_string($connection, $apellido_p);
+        $apellido_p = mysqli_real_escape_string($conexion, $apellido_p);
         $apellido_m = stripslashes($_REQUEST['apellido_m']);
-        $apellido_m = mysqli_real_escape_string($connection, $apellido_m);
+        $apellido_m = mysqli_real_escape_string($conexion, $apellido_m);
         $correo = stripslashes($_REQUEST['correo']);
-        $correo = mysqli_real_escape_string($connection, $correo);
+        $correo = mysqli_real_escape_string($conexion, $correo);
         $telefono = stripslashes($_REQUEST['telefono']);
-        $telefono = mysqli_real_escape_string($connection, $telefono);
+        $telefono = mysqli_real_escape_string($conexion, $telefono);
         $password = stripslashes($_REQUEST['password']);
-        $password = mysqli_real_escape_string($connection, $password);
+        $password = mysqli_real_escape_string($conexion, $password);
         $fecha_nac = stripslashes($_REQUEST['fecha_nac']);
-        $fecha_nac = mysqli_real_escape_string($connection, $fecha_nac);
+        $fecha_nac = mysqli_real_escape_string($conexion, $fecha_nac);
         $direccion = stripslashes($_REQUEST['direccion']);
-        $direccion = mysqli_real_escape_string($connection, $direccion);
+        $direccion = mysqli_real_escape_string($conexion, $direccion);
         $comuna = stripslashes($_REQUEST['comuna']);
-        $comuna = mysqli_real_escape_string($connection, $comuna);
+        $comuna = mysqli_real_escape_string($conexion, $comuna);
         $rol = stripslashes($_REQUEST['rol']);
-        $rol = mysqli_real_escape_string($connection, $rol);
+        $rol = mysqli_real_escape_string($conexion, $rol);
 
         // Procesar la foto de perfil si el rol es Profesional (id_rol = 3)
         $foto_perfil = null;
@@ -49,7 +49,7 @@ try {
 
             // Intentar cargar el archivo
             if ($subida_correcta_fp == 1 && move_uploaded_file($_FILES["foto_perfil"]["tmp_name"], $localizacion_foto_perfil)) {
-                $foto_perfil = mysqli_real_escape_string($connection, $localizacion_foto_perfil);
+                $foto_perfil = mysqli_real_escape_string($conexion, $localizacion_foto_perfil);
             } else {
                 $response = array(
                     'success' => false,
@@ -64,16 +64,16 @@ try {
         if ($rol == 3) {
             $sql_ingreso_usuario = "INSERT INTO usuario (rut, nombre_usuario, nombres, apellido_p, apellido_m, correo, telefono, contrasena, fecha_nac, direccion, foto_perfil, id_comuna, id_rol, id_estado_usuario) 
                                     VALUES ('$rut', '$nombre_usuario', '$nombres', '$apellido_p', '$apellido_m', '$correo', '$telefono', '" . md5($password) . "', '$fecha_nac', '$direccion', '$foto_perfil', '$comuna', '$rol', 0)";
-            $resultado_usuario = mysqli_query($connection, $sql_ingreso_usuario);
+            $resultado_usuario = mysqli_query($conexion, $sql_ingreso_usuario);
 
             if ($resultado_usuario)
             {
                 $id_profesion = stripslashes($_REQUEST['profesion']);
-                $id_profesion = mysqli_real_escape_string($connection, $id_profesion);
+                $id_profesion = mysqli_real_escape_string($conexion, $id_profesion);
                 $id_institucion = stripslashes($_REQUEST['institucion']);
-                $id_institucion = mysqli_real_escape_string($connection, $id_institucion);
+                $id_institucion = mysqli_real_escape_string($conexion, $id_institucion);
                 $experiencia = stripslashes($_REQUEST['experiencia']);
-                $experiencia = mysqli_real_escape_string($connection, $experiencia);
+                $experiencia = mysqli_real_escape_string($conexion, $experiencia);
                 
                 $titulo_profesional = null;
                 if (isset($_FILES['titulo_profesional'])) {
@@ -84,7 +84,7 @@ try {
                 
                     // Intentar cargar el archivo
                     if ($subida_correcta_tp == 1 && move_uploaded_file($_FILES["titulo_profesional"]["tmp_name"], $localizacion_titulo_profesional)) {
-                        $titulo_profesional = mysqli_real_escape_string($connection, $localizacion_titulo_profesional);
+                        $titulo_profesional = mysqli_real_escape_string($conexion, $localizacion_titulo_profesional);
                     } else {
                         $response = array(
                             'success' => false,
@@ -97,7 +97,7 @@ try {
 
                 $sql_ingreso_profesional = "INSERT INTO profesional (rut, id_profesion, id_institucion, experiencia, titulo_profesional) 
                                             VALUES ('$rut', '$id_profesion', '$id_institucion', '$experiencia', '$titulo_profesional')";
-                $resultado_profesional = mysqli_query($connection, $sql_ingreso_profesional);
+                $resultado_profesional = mysqli_query($conexion, $sql_ingreso_profesional);
             }
         }
 
@@ -105,12 +105,12 @@ try {
         {
             $sql_ingreso_usuario = "INSERT INTO usuario (rut, nombre_usuario, nombres, apellido_p, apellido_m, correo, telefono, contrasena, fecha_nac, direccion, foto_perfil, id_comuna, id_rol, id_estado_usuario) 
                                     VALUES ('$rut', '$nombre_usuario', '$nombres', '$apellido_p', '$apellido_m', '$correo', '$telefono', '" . md5($password) . "', '$fecha_nac', '$direccion', '$foto_perfil', '$comuna', '$rol', 1)";
-            $resultado_usuario = mysqli_query($connection, $sql_ingreso_usuario);
+            $resultado_usuario = mysqli_query($conexion, $sql_ingreso_usuario);
 
             if ($resultado_usuario)
             {
                 $sql_ingreso_cliente = "INSERT INTO cliente (rut) VALUES ('$rut')";
-                $resultado_cliente = mysqli_query($connection, $sql_ingreso_cliente);
+                $resultado_cliente = mysqli_query($conexion, $sql_ingreso_cliente);
             }
         }
 

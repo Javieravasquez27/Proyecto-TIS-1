@@ -1,8 +1,3 @@
-<?php
-// Descomentar linea 3 si es que se quiere usar la autenticación para esta página
-// require("database/auth.php");
-?>
-
 <title>KindomJob's</title>
 
 <script>

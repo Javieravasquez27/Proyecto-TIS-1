@@ -1,5 +1,5 @@
 <?php
-include '../../database/connection.php';
+include '../../database/conexion.php';
 
 try {
 

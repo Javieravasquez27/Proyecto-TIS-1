@@ -1,5 +1,5 @@
 <?php
-include '../../database/connection.php';
+include '../../database/conexion.php';
 
 try {
     if (session_status() == PHP_SESSION_NONE) {
@@ -10,11 +10,11 @@ try {
 
         $rut = $_REQUEST['rut'];
 
-        $query = "DELETE FROM usuario WHERE rut = '$rut'";
+        $sql = "DELETE FROM usuario WHERE rut = '$rut'";
 
-        $result = mysqli_query($connection, $query);
+        $resultado = mysqli_query($conexion, $sql);
 
-        if ($result) {
+        if ($resultado) {
             $response = array(
                 'success' => true,
                 'message' => 'Usuario eliminado exitosamente',

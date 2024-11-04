@@ -1,5 +1,5 @@
 <?php
-    include '../../database/connection.php';
+    include '../../database/conexion.php';
 
     try {
         if (session_status() == PHP_SESSION_NONE) {
@@ -9,8 +9,9 @@
         $sql = "SELECT u.rut, u.nombre_usuario, u.nombres, u.apellido_p, u.apellido_m, u.correo, u.telefono, u.fecha_nac,
                        u.direccion, c.nombre_comuna AS comuna, r.nombre_rol AS rol, u.id_comuna, u.id_rol, u.id_estado_usuario
                 FROM usuario u LEFT JOIN comuna c ON u.id_comuna = c.id_comuna
-                               LEFT JOIN rol r ON u.id_rol = r.id_rol";
-        $resultado = mysqli_query($connection, $sql);
+                               LEFT JOIN rol r ON u.id_rol = r.id_rol
+                WHERE u.id_rol != 1";
+        $resultado = mysqli_query($conexion, $sql);
 
         if ($resultado) {
             $usuarios = array();
