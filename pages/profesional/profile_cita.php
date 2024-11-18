@@ -1,19 +1,20 @@
 <?php
-    define('PERMISO_REQUERIDO', 'Acceder a las páginas de profesionales');
+   // define('PERMISO_REQUERIDO', 'Acceder a las páginas de profesionales');
     include("middleware/auth.php");
     include("database/conexion.php");
-    $nombre_usuario = $_GET['nombre_usuario'];
+    $rut = $_GET['rut'];
 ?>
-
+<!--ARREGLAR EL STYLE del perfil de los profesionales que no los pesca -->
 <link rel="stylesheet" href="../public/css/profile_profesional.css">
 
 <div class="container my-5">
     <?php
-    $query = "SELECT * FROM comuna, institucion, usuario join profesional using (nombre_usuario) join profesion using (id_profesion)
-              where profesional.id_institucion = institucion.id_institucion
-              and usuario.id_comuna = comuna.id_comuna ";
-    $resultado_prof = mysqli_query($conexion, $query);
-    $row_prof = mysqli_fetch_assoc($resultado_prof);
+    $query = "SELECT * FROM comuna, institucion, usuario join profesional using (rut) join profesion using (id_profesion)
+            where profesional.id_institucion = institucion.id_institucion
+            and usuario.id_comuna = comuna.id_comuna
+            and profesional.rut = '$rut'";
+    $resultado = mysqli_query($conexion,$query);
+    $row_prof = mysqli_fetch_assoc($resultado);
     ?>
     
     <div class="profile-header">
@@ -43,12 +44,12 @@
                 <div class="tab-pane fade show active" id="services" role="tabpanel">
                     <h5>Servicios y Precios</h5>
                     <?php
-                    $query = "SELECT nombre_servicio, monto from servicio_prof join servicio using (id_servicio)
-                    where nombre_usuario_prof = '$nombre_usuario'";
+                    $query = "SELECT nombre_servicio, precio_serv_prof from servicio_profesional join servicio using (id_servicio)
+                    where rut_profesional = '$rut'";
                     $resultado_prof = mysqli_query($conexion, $query);
                     while($row_prof = mysqli_fetch_assoc($resultado_prof)){
                     ?>
-                    <div class="service-item"><span><?php echo $row_prof['nombre_servicio'] ?></span><span>$<?php echo $row_prof['monto'] ?></span></div>
+                    <div class="service-item"><span><?php echo $row_prof['nombre_servicio'] ?></span><span>$<?php echo $row_prof['precio_serv_prof'] ?></span></div>
                     <?php
                     }
                     ?>
@@ -58,7 +59,7 @@
                     <h5>Direcciones</h5>
                     <?php
                     $query = "SELECT nombre_comuna, nombre_ciudad,nombre_region from lugar_atencion_presencial join comuna using (id_comuna) join ciudad using (id_ciudad) join region using (id_region)
-                    where nombre_usuario_prof = '$nombre_usuario'";
+                    where rut = '$rut'";
                     $resultado_prof = mysqli_query($conexion, $query);
                     while($row_prof = mysqli_fetch_assoc($resultado_prof)){
                     ?>
