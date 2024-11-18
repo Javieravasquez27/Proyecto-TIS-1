@@ -163,48 +163,42 @@
 <div class="container">
         
         <div class="row py-5">
-            <div class="col-1"></div>
-            <div class="col-7">
-                <div class="row py-3">
-                    <div class="col py-5 px-1 mt-4">
-                        <select id="profesion" name="profesion" class="form-select" required>
-                            <!-- Las opciones se llenarán aquí con AJAX -->
-                        </select>
-                    </div>
-                    <div class="col py-5 px-1 mt-4">
-                        <select id="region" name="region" class="form-select" required>
-                            <!-- Las opciones se llenarán aquí con AJAX -->
-                        </select>
-                    </div>
-                    <div class="col py-5 px-1 mt-4">
-                        <select id="ciudad" name="ciudad" class="form-select" required>
-                            <!-- Las opciones se llenarán aquí con AJAX -->
-                        </select>
-                    </div>
-                    <div class="col py-5 px-1 mt-4">
-                        <select id="comuna" name="comuna" class="form-select" required>
-                            <!-- Las opciones se llenarán aquí con AJAX -->
-                        </select>
-                    </div>
-                    <div class="col py-5 px-1 mt-4">
-                        <select id="servicio" name="servicio" class="form-select" required>
-                            <!-- Las opciones se llenarán aquí con AJAX -->
-                        </select>
-                    </div>                    
-                    
+            <form class="d-flex" method="POST" role="search" action="index.php?p=busqueda">
+                <div class="col">
+                    <div class="row py-3">
+                        <div class="col py-5 px-1 mt-4">
+                            <select id="profesion" name="profesion" class="form-select">
+                                <!-- Las opciones se llenarán aquí con AJAX -->
+                            </select>
+                        </div>
+                        <div class="col py-5 px-1 mt-4">
+                            <select id="region" name="region" class="form-select">
+                                <!-- Las opciones se llenarán aquí con AJAX -->
+                            </select>
+                        </div>
+                        <div class="col py-5 px-1 mt-4">
+                            <select id="ciudad" name="ciudad" class="form-select">
+                                <!-- Las opciones se llenarán aquí con AJAX -->
+                            </select>
+                        </div>
+                        <div class="col py-5 px-1 mt-4">
+                            <select id="comuna" name="comuna" class="form-select">
+                                <!-- Las opciones se llenarán aquí con AJAX -->
+                            </select>
+                        </div>
+                        <div class="col py-5 px-1 mt-4">
+                            <select id="servicio" name="servicio" class="form-select">
+                                <!-- Las opciones se llenarán aquí con AJAX -->
+                            </select>
+                        </div>                    
+                        <div class="col py-5 px-1 mt-4 input-group">
+                            <input class="form-control" type="search" placeholder="Nombre" aria-label="Search" name="nombreprof">
+                            <button class="btn btn-success " type="submit">Buscar</button>
+                        </div>
+                    </div> 
                 </div>
             </div>
-            <div class="col-3">
-                <div class="row py-3">
-                    <div class="col py-5 px-1 mt-4">
-                        <form class="d-flex" role="search" action="index.php?p=busqueda">
-                            <input class="form-control me-1" type="search" placeholder="Ingrese un término" aria-label="Search">
-                            <button class="btn btn-outline-success " type="submit">Buscar</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="col-1"></div>
+            </form>
         </div>
 
         <div class="container-fluid">

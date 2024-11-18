@@ -5,7 +5,7 @@
     $nombre_usuario = $_GET['nombre_usuario'];
 ?>
 
-<link rel="stylesheet" href="public/css/profile_profesional.css">
+<link rel="stylesheet" href="../public/css/profile_profesional.css">
 
 <div class="container my-5">
     <?php
