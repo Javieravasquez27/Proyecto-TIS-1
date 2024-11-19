@@ -4,6 +4,7 @@
 
     include 'database/conexion.php';
 
+
     $pagina = isset($_GET['p']) ? strtolower($_GET['p']) : 'home';
 
     $esPaginaAdmin = strpos($pagina, "admin") === 0;
