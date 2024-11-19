@@ -153,5 +153,3 @@ if (logout) {
         });
     });
 }
-
-const busqueda = document.querySelector("#logout");
