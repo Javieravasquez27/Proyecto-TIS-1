@@ -50,7 +50,7 @@
         }
     }
 
-    function get_user_by_apellido_p($nombres)
+    function get_user_by_apellido_p($apellido_p)
     {
         global $conexion;
 

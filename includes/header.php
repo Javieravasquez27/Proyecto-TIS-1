@@ -15,6 +15,17 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
 	<!-- CSS -->
+	<?php
+	// Se hace la consulta para obtener si es que profile_cita se repite en alguna parte
+	// de la pagina si es asi entonces se muestra el profile_profesional
+	$pagina = isset($_GET['p']) ? strtolower($_GET['p']): 'home';
+	$esprofilecita = preg_match('*\b'.preg_quote('profile_cita').'\b*i',$pagina);
+	if ($esprofilecita == 1) { ?>
+		<link rel="stylesheet" href="public/css/profile_profesional.css">
+		
+	<?php
+	} 
+	?>
 	<link rel="stylesheet" href="public/css/styles.css">
 	
 	<!-- Favicon -->
@@ -33,7 +44,6 @@
 
 	<!-- Select2 -->
 	<!-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> -->
-
 	<!-- jQuery -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>

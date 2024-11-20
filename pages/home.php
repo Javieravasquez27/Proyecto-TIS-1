@@ -1,7 +1,27 @@
 <title>KindomJob's</title>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
+    const Toast = Swal.mixin({
+        toast: true,
+        position: "top",
+        color: "#fff",
+        background: "#cf142b",
+        showConfirmButton: false,
+        timer: 10000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+        }
+    });
+    Toast.fire({
+        icon: "warning",
+        html: "Para ser mostrado en la busqueda <b>Tienes que rellenar tus campos de profesional </b><a href='' style='color:#fff;'>Rellene los campos Aqui</a>"
+    });
+
+
+
+    document.addEventListener("DOMContentLoaded", function () {
         function cargarRegiones() {
             fetch("utils/get_region.php")
                 .then(response => response.json())
@@ -161,66 +181,60 @@
 </script>
 
 <div class="container">
-        
-        <div class="row py-5">
-            <div class="col-1"></div>
-            <div class="col-7">
+    <div class="row py-5">
+        <form class="d-flex" method="POST" role="search" action="index.php?p=busqueda">
+            <div class="col">
                 <div class="row py-3">
                     <div class="col py-5 px-1 mt-4">
-                        <select id="profesion" name="profesion" class="form-select" required>
+                        <select id="profesion" name="profesion" class="form-select">
                             <!-- Las opciones se llenarán aquí con AJAX -->
                         </select>
                     </div>
                     <div class="col py-5 px-1 mt-4">
-                        <select id="region" name="region" class="form-select" required>
+                        <select id="region" name="region" class="form-select">
                             <!-- Las opciones se llenarán aquí con AJAX -->
                         </select>
                     </div>
                     <div class="col py-5 px-1 mt-4">
-                        <select id="ciudad" name="ciudad" class="form-select" required>
+                        <select id="ciudad" name="ciudad" class="form-select">
                             <!-- Las opciones se llenarán aquí con AJAX -->
                         </select>
                     </div>
                     <div class="col py-5 px-1 mt-4">
-                        <select id="comuna" name="comuna" class="form-select" required>
+                        <select id="comuna" name="comuna" class="form-select">
                             <!-- Las opciones se llenarán aquí con AJAX -->
                         </select>
                     </div>
                     <div class="col py-5 px-1 mt-4">
-                        <select id="servicio" name="servicio" class="form-select" required>
+                        <select id="servicio" name="servicio" class="form-select">
                             <!-- Las opciones se llenarán aquí con AJAX -->
                         </select>
-                    </div>                    
-                    
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="row py-3">
-                    <div class="col py-5 px-1 mt-4">
-                        <form class="d-flex" role="search" action="index.php?p=busqueda">
-                            <input class="form-control me-1" type="search" placeholder="Ingrese un término" aria-label="Search">
-                            <button class="btn btn-outline-success " type="submit">Buscar</button>
-                        </form>
+                    </div>
+                    <div class="col py-5 px-1 mt-4 input-group">
+                        <input class="form-control" type="search" placeholder="Nombre" aria-label="Search"
+                            name="nombreprof">
+                        <button class="btn btn-success " type="submit">Buscar</button>
                     </div>
                 </div>
             </div>
-            <div class="col-1"></div>
-        </div>
-
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col text-center mb-1" style="font-size: 20px;"><span>Busqueda de profesionales cercanos</span></div>
-            </div>
-        </div>
-        
-        <div class="container cont_mapa">
-            <div class="row">
-                <div class="col-2"></div>
-                <div class="col-8 mapa">
-                    <!-- <iframe class="mapa" src="https://locatestore.com/Xh--K4" style="border:none;width:100%;height:300px" allow="geolocation"></iframe> -->
-                </div>
-                <dic class="col-2"></dic>
-            </div>
-        </div>
-            
     </div>
+    </form>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col text-center mb-1" style="font-size: 20px;"><span>Busqueda de profesionales cercanos</span></div>
+    </div>
+</div>
+
+<div class="container cont_mapa">
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8 mapa">
+            <!-- <iframe class="mapa" src="https://locatestore.com/Xh--K4" style="border:none;width:100%;height:300px" allow="geolocation"></iframe> -->
+        </div>
+        <dic class="col-2"></dic>
+    </div>
+</div>
+
+</div>
