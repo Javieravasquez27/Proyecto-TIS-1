@@ -15,6 +15,15 @@
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
 	<!-- CSS -->
+	<?php
+	$pagina = isset($_GET['p']) ? strtolower($_GET['p']): 'home';
+	$esprofilecita = preg_match('*\b'.preg_quote('profile_cita').'\b*i',$pagina);
+	if ($esprofilecita == 1) { ?>
+		<link rel="stylesheet" href="public/css/profile_profesional.css">
+		
+	<?php
+	} 
+	?>
 	<link rel="stylesheet" href="public/css/styles.css">
 
 	<!-- Favicon -->
