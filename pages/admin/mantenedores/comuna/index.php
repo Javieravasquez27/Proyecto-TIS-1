@@ -9,11 +9,13 @@
 
 <script>
     $(document).on('click', '#edit', function () {
+        const id_comuna = $(this).data('id'); // ID específico del botón presionado
         const nombre_comuna = $(this).data('comuna');
         const id_provincia = $(this).data('provincia');
 
-        // Rellenar el campo del nombre de la comuna
-        $('#nombre_comuna_edit').val(nombre_comuna);
+        $('#editComunaForm').data('id', id_comuna); // Guardar el ID en un campo oculto del formulario
+
+        $('#nombre_comuna_edit').val(nombre_comuna); // Rellenar el campo del nombre de la comuna
 
         // Esperar a que las provincias se carguen
         fetch("utils/get_provincia.php")
@@ -41,7 +43,6 @@
             .catch(error => console.error("Error al cargar provincias:", error));
     });
 
-
     function cargarProvincias() {
         fetch("utils/get_provincia.php")
             .then(response => response.json())
@@ -66,11 +67,10 @@
     cargarProvincias();
 
     function guardarEdicion() {
-        // Obtener los datos del formulario
-        const id_comuna = $('#edit').data('id'); // ID de la comuna desde el botón
-        const nombre_comuna = $('#editComunaForm #nombre_comuna_edit').val();
-        const id_provincia = $('#editComunaForm #provincia_edit').val();
-
+        const id_comuna = $('#editComunaForm').data('id'); // ID de la comuna desde el formulario
+        const nombre_comuna = $('#nombre_comuna_edit').val();
+        const id_provincia = $('#provincia_edit').val();
+        
         // Validar datos antes de enviar
         if (!nombre_comuna || !id_provincia) {
             Swal.fire({
@@ -80,10 +80,10 @@
             });
             return;
         }
-
+    
         // Enviar datos al servidor
         $.ajax({
-            url: "api/mantenedores/comuna/update.php", // Archivo PHP para procesar la edición
+            url: "api/mantenedores/comuna/update.php",
             type: "POST",
             data: {
                 id_comuna: id_comuna,
