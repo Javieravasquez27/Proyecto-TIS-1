@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-11-2024 a las 19:56:54
+-- Tiempo de generación: 22-11-2024 a las 06:11:54
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -55,80 +55,6 @@ CREATE TABLE `cita` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `ciudad`
---
-
-CREATE TABLE `ciudad` (
-  `id_ciudad` int(11) NOT NULL,
-  `nombre_ciudad` varchar(50) NOT NULL,
-  `id_region` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `ciudad`
---
-
-INSERT INTO `ciudad` (`id_ciudad`, `nombre_ciudad`, `id_region`) VALUES
-(1, 'Arica', 1),
-(2, 'Putre', 1),
-(3, 'Iquique', 2),
-(4, 'Pozo Almonte', 2),
-(6, 'Antofagasta', 3),
-(7, 'Calama', 3),
-(8, 'Tocopilla', 3),
-(9, 'Chañaral', 4),
-(10, 'Copiapó', 4),
-(11, 'Vallenar', 4),
-(12, 'Coquimbo', 5),
-(13, 'Ovalle', 5),
-(14, 'Illapel', 5),
-(15, 'Hanga Roa', 6),
-(16, 'Los Andes', 6),
-(17, 'La Ligua', 6),
-(18, 'Quillota', 6),
-(19, 'San Antonio', 6),
-(20, 'San Felipe', 6),
-(21, 'Valparaíso', 6),
-(22, 'Quilpué', 6),
-(23, 'Colina', 7),
-(24, 'Puente Alto', 7),
-(25, 'San Bernardo', 7),
-(26, 'Melipilla', 7),
-(27, 'Santiago', 7),
-(28, 'Talagante', 7),
-(29, 'Rancagua', 8),
-(30, 'Pichilemu', 8),
-(31, 'San Fernando', 8),
-(32, 'Cauquenes', 9),
-(33, 'Curicó', 9),
-(34, 'Linares', 9),
-(35, 'Talca', 9),
-(36, 'Quirihue', 10),
-(37, 'Bulnes', 10),
-(38, 'San Carlos', 10),
-(39, 'Lebu', 11),
-(40, 'Los Ángeles', 11),
-(41, 'Concepción', 11),
-(42, 'Temuco', 12),
-(43, 'Angol', 12),
-(44, 'Valdivia', 13),
-(45, 'La Unión', 13),
-(46, 'Castro', 14),
-(47, 'Puerto Montt', 14),
-(48, 'Osorno', 14),
-(49, 'Chaitén', 14),
-(50, 'Puerto Aysén', 15),
-(51, 'Cochrane', 15),
-(52, 'Coyhaique', 15),
-(53, 'Chile Chico', 15),
-(54, 'Puerto Williams', 16),
-(55, 'Punta Arenas', 16),
-(56, 'Porvenir', 16),
-(57, 'Puerto Natales', 16);
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `cliente`
 --
 
@@ -151,97 +77,361 @@ INSERT INTO `cliente` (`rut`) VALUES
 
 CREATE TABLE `comuna` (
   `id_comuna` int(11) NOT NULL,
-  `nombre_comuna` varchar(50) NOT NULL,
-  `id_ciudad` int(11) NOT NULL
+  `nombre_comuna` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `id_provincia` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `comuna`
 --
 
-INSERT INTO `comuna` (`id_comuna`, `nombre_comuna`, `id_ciudad`) VALUES
+INSERT INTO `comuna` (`id_comuna`, `nombre_comuna`, `id_provincia`) VALUES
 (1, 'Arica', 1),
-(3, 'Camarones', 1),
-(4, 'General Lagos', 2),
-(5, 'Putre', 2),
-(6, 'Alto Hospicio', 3),
-(7, 'Iquique', 3),
-(8, 'Camiña', 4),
-(9, 'Colchane', 4),
-(10, 'Huara', 4),
-(11, 'Pica', 4),
-(12, 'Pozo Almonte', 4),
-(13, 'Antofagasta', 6),
-(14, 'Mejillones', 6),
-(15, 'Sierra Gorda', 6),
-(16, 'Taltal', 6),
-(17, 'Calama', 7),
-(18, 'Ollagüe', 7),
-(19, 'San Pedro de Atacama', 7),
-(20, 'María Elena', 8),
-(21, 'Tocopilla', 8),
-(22, 'Chañaral', 9),
-(23, 'Diego de Almagro', 9),
-(24, 'Caldera', 10),
-(25, 'Copiapó', 10),
-(26, 'Tierra Amarilla', 10),
-(27, 'Alto del Carmen', 11),
-(28, 'Freirina', 11),
-(29, 'Huasco', 11),
-(30, 'Vallenar', 11),
-(31, 'Andacollo', 12),
-(32, 'Coquimbo', 12),
-(33, 'La Higuera', 12),
-(34, 'La Serena', 12),
-(35, 'Paihuano', 12),
-(36, 'Vicuña', 12),
-(37, 'Combarbalá', 13),
-(38, 'Monte Patria', 13),
-(39, 'Ovalle', 13),
-(40, 'Punitaqui', 13),
-(41, 'Río Hurtado', 13),
-(42, 'Canela', 14),
-(43, 'Los Vilos', 14),
-(44, 'Salamanca', 14),
-(45, 'Isla de Pascua', 15),
-(46, 'Calle Larga', 16),
-(47, 'Los Andes', 16),
-(48, 'Rinconada', 16),
-(49, 'San Esteban', 16),
-(50, 'Cabildo', 17),
-(51, 'La Ligua', 17),
-(52, 'Papudo', 17),
-(53, 'Papudo', 17),
-(54, 'Petorca', 17),
-(55, 'Zapallar', 17),
-(56, 'Hijuelas', 18),
-(57, 'La Calera', 18),
-(58, 'La Cruz', 18),
-(59, 'Nogales', 18),
-(60, 'Quillota', 18),
-(61, 'Algarrobo', 19),
-(62, 'Cartagena', 19),
-(63, 'El Quisco', 19),
-(64, 'El Tabo', 19),
-(65, 'San Antonio', 19),
-(66, 'Santo Domingo', 19),
-(67, 'Catemu', 20),
-(68, 'Llay-Llay', 20),
-(69, 'Panquehue', 20),
-(70, 'Putaendo', 20),
-(71, 'San Felipe', 20),
-(72, 'Santa María', 20),
-(73, 'Casablanca', 21),
-(74, 'Concón', 21),
-(75, 'Juan Fernández', 21),
-(76, 'Puchuncaví', 21),
-(77, 'Quintero', 21),
-(78, 'Valparaíso', 21),
-(79, 'Viña del Mar', 21),
-(80, 'Limache', 22),
-(81, 'Olmué', 22),
-(82, 'Quilpué', 22),
-(83, 'Villa Alemana', 22);
+(2, 'Camarones', 1),
+(3, 'General Lagos', 2),
+(4, 'Putre', 2),
+(5, 'Alto Hospicio', 3),
+(6, 'Iquique', 3),
+(7, 'Camiña', 4),
+(8, 'Colchane', 4),
+(9, 'Huara', 4),
+(10, 'Pica', 4),
+(11, 'Pozo Almonte', 4),
+(12, 'Tocopilla', 5),
+(13, 'María Elena', 5),
+(14, 'Calama', 6),
+(15, 'Ollague', 6),
+(16, 'San Pedro de Atacama', 6),
+(17, 'Antofagasta', 7),
+(18, 'Mejillones', 7),
+(19, 'Sierra Gorda', 7),
+(20, 'Taltal', 7),
+(21, 'Chañaral', 8),
+(22, 'Diego de Almagro', 8),
+(23, 'Copiapó', 9),
+(24, 'Caldera', 9),
+(25, 'Tierra Amarilla', 9),
+(26, 'Vallenar', 10),
+(27, 'Alto del Carmen', 10),
+(28, 'Freirina', 10),
+(29, 'Huasco', 10),
+(30, 'La Serena', 11),
+(31, 'Coquimbo', 11),
+(32, 'Andacollo', 11),
+(33, 'La Higuera', 11),
+(34, 'Paihuano', 11),
+(35, 'Vicuña', 11),
+(36, 'Ovalle', 12),
+(37, 'Combarbalá', 12),
+(38, 'Monte Patria', 12),
+(39, 'Punitaqui', 12),
+(40, 'Río Hurtado', 12),
+(41, 'Illapel', 13),
+(42, 'Canela', 13),
+(43, 'Los Vilos', 13),
+(44, 'Salamanca', 13),
+(45, 'La Ligua', 14),
+(46, 'Cabildo', 14),
+(47, 'Zapallar', 14),
+(48, 'Papudo', 14),
+(49, 'Petorca', 14),
+(50, 'Los Andes', 15),
+(51, 'San Esteban', 15),
+(52, 'Calle Larga', 15),
+(53, 'Rinconada', 15),
+(54, 'San Felipe', 16),
+(55, 'Llaillay', 16),
+(56, 'Putaendo', 16),
+(57, 'Santa María', 16),
+(58, 'Catemu', 16),
+(59, 'Panquehue', 16),
+(60, 'Quillota', 17),
+(61, 'La Cruz', 17),
+(62, 'La Calera', 17),
+(63, 'Nogales', 17),
+(64, 'Hijuelas', 17),
+(65, 'Valparaíso', 18),
+(66, 'Viña del Mar', 18),
+(67, 'Concón', 18),
+(68, 'Quintero', 18),
+(69, 'Puchuncaví', 18),
+(70, 'Casablanca', 18),
+(71, 'Juan Fernández', 18),
+(72, 'San Antonio', 19),
+(73, 'Cartagena', 19),
+(74, 'El Tabo', 19),
+(75, 'El Quisco', 19),
+(76, 'Algarrobo', 19),
+(77, 'Santo Domingo', 19),
+(78, 'Isla de Pascua', 20),
+(79, 'Quilpué', 21),
+(80, 'Limache', 21),
+(81, 'Olmué', 21),
+(82, 'Villa Alemana', 21),
+(83, 'Colina', 22),
+(84, 'Lampa', 22),
+(85, 'Tiltil', 22),
+(86, 'Santiago', 23),
+(87, 'Vitacura', 23),
+(88, 'San Ramón', 23),
+(89, 'San Miguel', 23),
+(90, 'San Joaquín', 23),
+(91, 'Renca', 23),
+(92, 'Recoleta', 23),
+(93, 'Quinta Normal', 23),
+(94, 'Quilicura', 23),
+(95, 'Pudahuel', 23),
+(96, 'Providencia', 23),
+(97, 'Peñalolén', 23),
+(98, 'Pedro Aguirre Cerda', 23),
+(99, 'Ñuñoa', 23),
+(100, 'Maipú', 23),
+(101, 'Macul', 23),
+(102, 'Lo Prado', 23),
+(103, 'Lo Espejo', 23),
+(104, 'Lo Barnechea', 23),
+(105, 'Las Condes', 23),
+(106, 'La Reina', 23),
+(107, 'La Pintana', 23),
+(108, 'La Granja', 23),
+(109, 'La Florida', 23),
+(110, 'La Cisterna', 23),
+(111, 'Independencia', 23),
+(112, 'Huechuraba', 23),
+(113, 'Estación Central', 23),
+(114, 'El Bosque', 23),
+(115, 'Conchalí', 23),
+(116, 'Cerro Navia', 23),
+(117, 'Cerrillos', 23),
+(118, 'Puente Alto', 24),
+(119, 'San José de Maipo', 24),
+(120, 'Pirque', 24),
+(121, 'San Bernardo', 25),
+(122, 'Buin', 25),
+(123, 'Paine', 25),
+(124, 'Calera de Tango', 25),
+(125, 'Melipilla', 26),
+(126, 'Alhué', 26),
+(127, 'Curacaví', 26),
+(128, 'María Pinto', 26),
+(129, 'San Pedro', 26),
+(130, 'Isla de Maipo', 27),
+(131, 'El Monte', 27),
+(132, 'Padre Hurtado', 27),
+(133, 'Peñaflor', 27),
+(134, 'Talagante', 27),
+(135, 'Codegua', 28),
+(136, 'Coínco', 28),
+(137, 'Coltauco', 28),
+(138, 'Doñihue', 28),
+(139, 'Graneros', 28),
+(140, 'Las Cabras', 28),
+(141, 'Machalí', 28),
+(142, 'Malloa', 28),
+(143, 'Mostazal', 28),
+(144, 'Olivar', 28),
+(145, 'Peumo', 28),
+(146, 'Pichidegua', 28),
+(147, 'Quinta de Tilcoco', 28),
+(148, 'Rancagua', 28),
+(149, 'Rengo', 28),
+(150, 'Requínoa', 28),
+(151, 'San Vicente de Tagua Tagua', 28),
+(152, 'Chépica', 29),
+(153, 'Chimbarongo', 29),
+(154, 'Lolol', 29),
+(155, 'Nancagua', 29),
+(156, 'Palmilla', 29),
+(157, 'Peralillo', 29),
+(158, 'Placilla', 29),
+(159, 'Pumanque', 29),
+(160, 'San Fernando', 29),
+(161, 'Santa Cruz', 29),
+(162, 'La Estrella', 30),
+(163, 'Litueche', 30),
+(164, 'Marchigüe', 30),
+(165, 'Navidad', 30),
+(166, 'Paredones', 30),
+(167, 'Pichilemu', 30),
+(168, 'Curicó', 31),
+(169, 'Hualañé', 31),
+(170, 'Licantén', 31),
+(171, 'Molina', 31),
+(172, 'Rauco', 31),
+(173, 'Romeral', 31),
+(174, 'Sagrada Familia', 31),
+(175, 'Teno', 31),
+(176, 'Vichuquén', 31),
+(177, 'Talca', 32),
+(178, 'San Clemente', 32),
+(179, 'Pelarco', 32),
+(180, 'Pencahue', 32),
+(181, 'Maule', 32),
+(182, 'San Rafael', 32),
+(183, 'Curepto', 33),
+(184, 'Constitución', 32),
+(185, 'Empedrado', 32),
+(186, 'Río Claro', 32),
+(187, 'Linares', 33),
+(188, 'San Javier', 33),
+(189, 'Parral', 33),
+(190, 'Villa Alegre', 33),
+(191, 'Longaví', 33),
+(192, 'Colbún', 33),
+(193, 'Retiro', 33),
+(194, 'Yerbas Buenas', 33),
+(195, 'Cauquenes', 34),
+(196, 'Chanco', 34),
+(197, 'Pelluhue', 34),
+(198, 'Bulnes', 35),
+(199, 'Chillán', 35),
+(200, 'Chillán Viejo', 35),
+(201, 'El Carmen', 35),
+(202, 'Pemuco', 35),
+(203, 'Pinto', 35),
+(204, 'Quillón', 35),
+(205, 'San Ignacio', 35),
+(206, 'Yungay', 35),
+(207, 'Cobquecura', 36),
+(208, 'Coelemu', 36),
+(209, 'Ninhue', 36),
+(210, 'Portezuelo', 36),
+(211, 'Quirihue', 36),
+(212, 'Ránquil', 36),
+(213, 'Treguaco', 36),
+(214, 'San Carlos', 37),
+(215, 'Coihueco', 37),
+(216, 'San Nicolás', 37),
+(217, 'Ñiquén', 37),
+(218, 'San Fabián', 37),
+(219, 'Alto Biobío', 38),
+(220, 'Antuco', 38),
+(221, 'Cabrero', 38),
+(222, 'Laja', 38),
+(223, 'Los Ángeles', 38),
+(224, 'Mulchén', 38),
+(225, 'Nacimiento', 38),
+(226, 'Negrete', 38),
+(227, 'Quilaco', 38),
+(228, 'Quilleco', 38),
+(229, 'San Rosendo', 38),
+(230, 'Santa Bárbara', 38),
+(231, 'Tucapel', 38),
+(232, 'Yumbel', 38),
+(233, 'Concepción', 39),
+(234, 'Coronel', 39),
+(235, 'Chiguayante', 39),
+(236, 'Florida', 39),
+(237, 'Hualpén', 39),
+(238, 'Hualqui', 39),
+(239, 'Lota', 39),
+(240, 'Penco', 39),
+(241, 'San Pedro de La Paz', 39),
+(242, 'Santa Juana', 39),
+(243, 'Talcahuano', 39),
+(244, 'Tomé', 39),
+(245, 'Arauco', 40),
+(246, 'Cañete', 40),
+(247, 'Contulmo', 40),
+(248, 'Curanilahue', 40),
+(249, 'Lebu', 40),
+(250, 'Los Álamos', 40),
+(251, 'Tirúa', 40),
+(252, 'Angol', 41),
+(253, 'Collipulli', 41),
+(254, 'Curacautín', 41),
+(255, 'Ercilla', 41),
+(256, 'Lonquimay', 41),
+(257, 'Los Sauces', 41),
+(258, 'Lumaco', 41),
+(259, 'Purén', 41),
+(260, 'Renaico', 41),
+(261, 'Traiguén', 41),
+(262, 'Victoria', 41),
+(263, 'Temuco', 42),
+(264, 'Carahue', 42),
+(265, 'Cholchol', 42),
+(266, 'Cunco', 42),
+(267, 'Curarrehue', 42),
+(268, 'Freire', 42),
+(269, 'Galvarino', 42),
+(270, 'Gorbea', 42),
+(271, 'Lautaro', 42),
+(272, 'Loncoche', 42),
+(273, 'Melipeuco', 42),
+(274, 'Nueva Imperial', 42),
+(275, 'Padre Las Casas', 42),
+(276, 'Perquenco', 42),
+(277, 'Pitrufquén', 42),
+(278, 'Pucón', 42),
+(279, 'Saavedra', 42),
+(280, 'Teodoro Schmidt', 42),
+(281, 'Toltén', 42),
+(282, 'Vilcún', 42),
+(283, 'Villarrica', 42),
+(284, 'Valdivia', 43),
+(285, 'Corral', 43),
+(286, 'Lanco', 43),
+(287, 'Los Lagos', 43),
+(288, 'Máfil', 43),
+(289, 'Mariquina', 43),
+(290, 'Paillaco', 43),
+(291, 'Panguipulli', 43),
+(292, 'La Unión', 44),
+(293, 'Futrono', 44),
+(294, 'Lago Ranco', 44),
+(295, 'Río Bueno', 44),
+(296, 'Osorno', 45),
+(297, 'Puerto Octay', 45),
+(298, 'Purranque', 45),
+(299, 'Puyehue', 45),
+(300, 'Río Negro', 45),
+(301, 'San Juan de la Costa', 45),
+(302, 'San Pablo', 45),
+(303, 'Calbuco', 46),
+(304, 'Cochamó', 46),
+(305, 'Fresia', 46),
+(306, 'Frutillar', 46),
+(307, 'Llanquihue', 46),
+(308, 'Los Muermos', 46),
+(309, 'Maullín', 46),
+(310, 'Puerto Montt', 46),
+(311, 'Puerto Varas', 46),
+(312, 'Ancud', 47),
+(313, 'Castro', 47),
+(314, 'Chonchi', 47),
+(315, 'Curaco de Vélez', 47),
+(316, 'Dalcahue', 47),
+(317, 'Puqueldón', 47),
+(318, 'Queilén', 47),
+(319, 'Quellón', 47),
+(320, 'Quemchi', 47),
+(321, 'Quinchao', 47),
+(322, 'Chaitén', 48),
+(323, 'Futaleufú', 48),
+(324, 'Hualaihué', 48),
+(325, 'Palena', 48),
+(326, 'Lago Verde', 49),
+(327, 'Coihaique', 49),
+(328, 'Aysén', 50),
+(329, 'Cisnes', 50),
+(330, 'Guaitecas', 50),
+(331, 'Río Ibáñez', 51),
+(332, 'Chile Chico', 51),
+(333, 'Cochrane', 52),
+(334, 'O\'Higgins', 52),
+(335, 'Tortel', 52),
+(336, 'Natales', 53),
+(337, 'Torres del Paine', 53),
+(338, 'Laguna Blanca', 54),
+(339, 'Punta Arenas', 54),
+(340, 'Río Verde', 54),
+(341, 'San Gregorio', 54),
+(342, 'Porvenir', 55),
+(343, 'Primavera', 55),
+(344, 'Timaukel', 55),
+(345, 'Cabo de Hornos', 56),
+(346, 'Antártica', 56);
 
 -- --------------------------------------------------------
 
@@ -615,8 +805,85 @@ CREATE TABLE `profesional` (
 --
 
 INSERT INTO `profesional` (`rut`, `id_profesion`, `id_institucion`, `biografia_prof`, `experiencia`, `titulo_profesional`) VALUES
+(10286235, 3, 8, NULL, 'Mecánica de Rocas', '../../uploads/titulo_profesional/com_data_12.pdf'),
+(11022434, 11, 10, NULL, 'Preparación para TOEFL', '../../uploads/titulo_profesional/Tarea_3_ComData_2024.pdf'),
 (14565656, 1, 1, NULL, 'Sé hacer de todo', '../../uploads/titulo_profesional/Consentimiento Informado ENCE CRUCH 2024.docx.pdf'),
-(16767878, 7, 3, NULL, 'Gestión tributaria y Operación Renta anual', '../../uploads/titulo_profesional/DataTables example - PDF - image.pdf');
+(16767878, 7, 3, NULL, 'Gestión tributaria y Operación Renta anual', '../../uploads/titulo_profesional/DataTables example - PDF - image.pdf'),
+(20876543, 9, 16, NULL, 'Gestión de información', '../../uploads/titulo_profesional/Feedback Incremento 2.pdf');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `provincia`
+--
+
+CREATE TABLE `provincia` (
+  `id_provincia` int(11) NOT NULL,
+  `nombre_provincia` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `id_region` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `provincia`
+--
+
+INSERT INTO `provincia` (`id_provincia`, `nombre_provincia`, `id_region`) VALUES
+(1, 'Arica', 1),
+(2, 'Parinacota', 1),
+(3, 'Iquique', 2),
+(4, 'El Tamarugal', 2),
+(5, 'Tocopilla', 3),
+(6, 'El Loa', 3),
+(7, 'Antofagasta', 3),
+(8, 'Chañaral', 4),
+(9, 'Copiapó', 4),
+(10, 'Huasco', 4),
+(11, 'Elqui', 5),
+(12, 'Limarí', 5),
+(13, 'Choapa', 5),
+(14, 'Petorca', 6),
+(15, 'Los Andes', 6),
+(16, 'San Felipe de Aconcagua', 6),
+(17, 'Quillota', 6),
+(18, 'Valparaiso', 6),
+(19, 'San Antonio', 6),
+(20, 'Isla de Pascua', 6),
+(21, 'Marga Marga', 6),
+(22, 'Chacabuco', 7),
+(23, 'Santiago', 7),
+(24, 'Cordillera', 7),
+(25, 'Maipo', 7),
+(26, 'Melipilla', 7),
+(27, 'Talagante', 7),
+(28, 'Cachapoal', 8),
+(29, 'Colchagua', 8),
+(30, 'Cardenal Caro', 8),
+(31, 'Curicó', 9),
+(32, 'Talca', 9),
+(33, 'Linares', 9),
+(34, 'Cauquenes', 9),
+(35, 'Diguillín', 10),
+(36, 'Itata', 10),
+(37, 'Punilla', 10),
+(38, 'Bio Bío', 11),
+(39, 'Concepción', 11),
+(40, 'Arauco', 11),
+(41, 'Malleco', 12),
+(42, 'Cautín', 12),
+(43, 'Valdivia', 13),
+(44, 'Ranco', 13),
+(45, 'Osorno', 14),
+(46, 'Llanquihue', 14),
+(47, 'Chiloé', 14),
+(48, 'Palena', 14),
+(49, 'Coyhaique', 15),
+(50, 'Aysén', 15),
+(51, 'General Carrera', 15),
+(52, 'Capitán Prat', 15),
+(53, 'Última Esperanza', 16),
+(54, 'Magallanes', 16),
+(55, 'Tierra del Fuego', 16),
+(56, 'Antártica Chilena', 16);
 
 -- --------------------------------------------------------
 
@@ -660,7 +927,7 @@ CREATE TABLE `red_social_profesional` (
 
 CREATE TABLE `region` (
   `id_region` int(11) NOT NULL,
-  `nombre_region` varchar(50) NOT NULL
+  `nombre_region` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -673,7 +940,7 @@ INSERT INTO `region` (`id_region`, `nombre_region`) VALUES
 (3, 'Antofagasta'),
 (4, 'Atacama'),
 (5, 'Coquimbo'),
-(6, 'Valparaíso'),
+(6, 'Valparaiso'),
 (7, 'Metropolitana de Santiago'),
 (8, 'Libertador General Bernardo O\'Higgins'),
 (9, 'Maule'),
@@ -858,12 +1125,15 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`rut`, `nombre_usuario`, `nombres`, `apellido_p`, `apellido_m`, `correo`, `telefono`, `fecha_nac`, `direccion`, `contrasena`, `foto_perfil`, `id_comuna`, `id_rol`, `id_estado_usuario`) VALUES
+(10286235, 'Profesional456', 'ProfesionalP', 'PPP', 'ProfPP', 'profprof@gmail.com', 986372773, '2002-01-12', 'Calle Nueva 343', '202cb962ac59075b964b07152d234b70', '../../uploads/foto_perfil/IMG_20240831_181353881.jpg', 37, 3, 0),
+(11022434, 'Profesional123', 'Profesional', 'Prof', 'ProfProf', 'profesional@gmail.com', 987875646, '1999-12-12', 'Avenida Portales 1234', '81dc9bdb52d04dc20036dbd8313ed055', '../../uploads/foto_perfil/IMG_20240831_175406455.jpg', 78, 3, 0),
 (11086788, 'Lorena', 'Lorena', 'Lagos', 'Sanhueza', 'lorena@gmail.com', 998876565, '1998-08-25', 'Avenida Bernardo O\'Higgins 3272', '827ccb0eea8a706c4c34a16891f84e7b', '', 65, 4, 1),
 (12345678, 'Cliente', 'Cliente', 'Pérez', 'García', 'cliente@gmail.com', 999999999, '1999-08-25', 'Calle DEF, 321', '202cb962ac59075b964b07152d234b70', NULL, 1, 4, 1),
 (13082637, 'Admin', 'Admin', 'Prueba', 'Prueba', 'admin@gmail.com', 982872637, '1995-08-08', 'Calle Nueva 123', '81dc9bdb52d04dc20036dbd8313ed055', NULL, 1, 2, 1),
 (14565656, 'Hector', 'Héctor', 'Jiménez', 'Suazo', 'hector@gmail.com', 965656565, '2002-07-08', 'Avenida Arturo Prat 234', '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/IMG_20240831_163740121.jpg', 1, 3, 1),
 (16767878, 'Ernesto', 'Ernesto', 'Loyola', 'Zapata', 'ernesto@gmail.com', 988786565, '1991-12-15', 'José Arrieta 2345', 'e10adc3949ba59abbe56e057f20f883e', 'uploads/foto_perfil/IMG_20240810_181021908.jpg', 36, 3, 0),
 (20786387, 'Alvaro', 'Álvaro Alfonso', 'Molina', 'Jara', 'alvaromolinacl@gmail.com', 951269878, '2001-07-10', 'Calle ABC, 123', '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 1, 1, 1),
+(20876543, 'PruebaProf', 'Prueba', 'Profesional', 'Prof', 'pruebaprof@gmail.com', 987767657, '2002-08-12', 'Calle Gabriela 143', '202cb962ac59075b964b07152d234b70', '../../uploads/foto_perfil/Calculadora_01_AforoApp.jpg', 83, 3, 1),
 (23456789, 'Juanito', 'Juan', 'Pérez', 'Gar', 'juan@gmail.com', 987654321, '2000-08-02', 'Calle GHI, 786', '202cb962ac59075b964b07152d234b70', NULL, 1, 3, 1);
 
 --
@@ -886,13 +1156,6 @@ ALTER TABLE `cita`
   ADD KEY `id_th` (`id_th`);
 
 --
--- Indices de la tabla `ciudad`
---
-ALTER TABLE `ciudad`
-  ADD PRIMARY KEY (`id_ciudad`),
-  ADD KEY `id_region` (`id_region`);
-
---
 -- Indices de la tabla `cliente`
 --
 ALTER TABLE `cliente`
@@ -903,7 +1166,7 @@ ALTER TABLE `cliente`
 --
 ALTER TABLE `comuna`
   ADD PRIMARY KEY (`id_comuna`),
-  ADD KEY `id_ciudad` (`id_ciudad`);
+  ADD KEY `comuna_ibfk_1` (`id_provincia`);
 
 --
 -- Indices de la tabla `disponibilidad`
@@ -983,6 +1246,13 @@ ALTER TABLE `profesional`
   ADD KEY `id_institucion` (`id_institucion`);
 
 --
+-- Indices de la tabla `provincia`
+--
+ALTER TABLE `provincia`
+  ADD PRIMARY KEY (`id_provincia`),
+  ADD KEY `provincia_ibfk_1` (`id_region`);
+
+--
 -- Indices de la tabla `red_social`
 --
 ALTER TABLE `red_social`
@@ -1040,9 +1310,9 @@ ALTER TABLE `tipo_horario`
 ALTER TABLE `usuario`
   ADD PRIMARY KEY (`rut`),
   ADD UNIQUE KEY `nombre_usuario` (`nombre_usuario`),
-  ADD KEY `id_comuna` (`id_comuna`),
-  ADD KEY `id_rol` (`id_rol`),
-  ADD KEY `id_estado_usuario` (`id_estado_usuario`);
+  ADD KEY `usuario_ibfk_1` (`id_comuna`),
+  ADD KEY `usuario_ibfk_2` (`id_rol`),
+  ADD KEY `usuario_ibfk_3` (`id_estado_usuario`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -1055,16 +1325,10 @@ ALTER TABLE `cita`
   MODIFY `id_cita` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `ciudad`
---
-ALTER TABLE `ciudad`
-  MODIFY `id_ciudad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
-
---
 -- AUTO_INCREMENT de la tabla `comuna`
 --
 ALTER TABLE `comuna`
-  MODIFY `id_comuna` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
+  MODIFY `id_comuna` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=347;
 
 --
 -- AUTO_INCREMENT de la tabla `disponibilidad`
@@ -1107,6 +1371,12 @@ ALTER TABLE `permiso`
 --
 ALTER TABLE `profesion`
   MODIFY `id_profesion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT de la tabla `provincia`
+--
+ALTER TABLE `provincia`
+  MODIFY `id_provincia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT de la tabla `red_social`
@@ -1163,12 +1433,6 @@ ALTER TABLE `cita`
   ADD CONSTRAINT `cita_ibfk_3` FOREIGN KEY (`id_th`) REFERENCES `tipo_horario` (`id_th`);
 
 --
--- Filtros para la tabla `ciudad`
---
-ALTER TABLE `ciudad`
-  ADD CONSTRAINT `ciudad_ibfk_1` FOREIGN KEY (`id_region`) REFERENCES `region` (`id_region`);
-
---
 -- Filtros para la tabla `cliente`
 --
 ALTER TABLE `cliente`
@@ -1178,7 +1442,7 @@ ALTER TABLE `cliente`
 -- Filtros para la tabla `comuna`
 --
 ALTER TABLE `comuna`
-  ADD CONSTRAINT `comuna_ibfk_1` FOREIGN KEY (`id_ciudad`) REFERENCES `ciudad` (`id_ciudad`);
+  ADD CONSTRAINT `comuna_ibfk_1` FOREIGN KEY (`id_provincia`) REFERENCES `provincia` (`id_provincia`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `disponibilidad`
@@ -1198,8 +1462,7 @@ ALTER TABLE `foro`
 -- Filtros para la tabla `lugar_atencion_presencial`
 --
 ALTER TABLE `lugar_atencion_presencial`
-  ADD CONSTRAINT `lugar_atencion_presencial_ibfk_1` FOREIGN KEY (`rut_profesional`) REFERENCES `profesional` (`rut`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `lugar_atencion_presencial_ibfk_2` FOREIGN KEY (`id_comuna`) REFERENCES `comuna` (`id_comuna`);
+  ADD CONSTRAINT `lugar_atencion_presencial_ibfk_1` FOREIGN KEY (`rut_profesional`) REFERENCES `profesional` (`rut`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `lugar_atencion_virtual`
@@ -1230,6 +1493,12 @@ ALTER TABLE `profesional`
   ADD CONSTRAINT `profesional_ibfk_3` FOREIGN KEY (`id_institucion`) REFERENCES `institucion` (`id_institucion`);
 
 --
+-- Filtros para la tabla `provincia`
+--
+ALTER TABLE `provincia`
+  ADD CONSTRAINT `provincia_ibfk_1` FOREIGN KEY (`id_region`) REFERENCES `region` (`id_region`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Filtros para la tabla `red_social_profesional`
 --
 ALTER TABLE `red_social_profesional`
@@ -1249,14 +1518,6 @@ ALTER TABLE `reporte_profesional`
 ALTER TABLE `servicio_profesional`
   ADD CONSTRAINT `servicio_profesional_ibfk_1` FOREIGN KEY (`rut_profesional`) REFERENCES `profesional` (`rut`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `servicio_profesional_ibfk_2` FOREIGN KEY (`id_servicio`) REFERENCES `servicio` (`id_servicio`);
-
---
--- Filtros para la tabla `usuario`
---
-ALTER TABLE `usuario`
-  ADD CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`id_comuna`) REFERENCES `comuna` (`id_comuna`),
-  ADD CONSTRAINT `usuario_ibfk_2` FOREIGN KEY (`id_rol`) REFERENCES `rol` (`id_rol`),
-  ADD CONSTRAINT `usuario_ibfk_3` FOREIGN KEY (`id_estado_usuario`) REFERENCES `estado_usuario` (`id_estado_usuario`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
