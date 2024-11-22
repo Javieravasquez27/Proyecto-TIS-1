@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-11-2024 a las 06:11:54
+-- Tiempo de generación: 22-11-2024 a las 14:02:30
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -1151,9 +1151,9 @@ ALTER TABLE `administrador`
 --
 ALTER TABLE `cita`
   ADD PRIMARY KEY (`id_cita`),
-  ADD KEY `rut_cliente` (`rut_cliente`),
-  ADD KEY `rut_profesional` (`rut_profesional`),
-  ADD KEY `id_th` (`id_th`);
+  ADD KEY `cita_ibfk_1` (`rut_cliente`),
+  ADD KEY `cita_ibfk_2` (`rut_profesional`),
+  ADD KEY `cita_ibfk_3` (`id_th`);
 
 --
 -- Indices de la tabla `cliente`
@@ -1173,8 +1173,8 @@ ALTER TABLE `comuna`
 --
 ALTER TABLE `disponibilidad`
   ADD PRIMARY KEY (`id_disponibilidad`),
-  ADD KEY `rut_cliente` (`rut_cliente`),
-  ADD KEY `disponibilidad_ibfk_1` (`rut_profesional`);
+  ADD KEY `disponibilidad_ibfk_1` (`rut_profesional`),
+  ADD KEY `disponibilidad_ibfk_2` (`rut_cliente`);
 
 --
 -- Indices de la tabla `estado_usuario`
@@ -1201,7 +1201,7 @@ ALTER TABLE `institucion`
 --
 ALTER TABLE `lugar_atencion_presencial`
   ADD PRIMARY KEY (`rut_profesional`,`id_comuna`),
-  ADD KEY `id_comuna` (`id_comuna`);
+  ADD KEY `lugar_atencion_presencial_ibfk_2` (`id_comuna`);
 
 --
 -- Indices de la tabla `lugar_atencion_virtual`
@@ -1215,8 +1215,8 @@ ALTER TABLE `lugar_atencion_virtual`
 --
 ALTER TABLE `mensaje`
   ADD PRIMARY KEY (`id_mensaje`),
-  ADD KEY `rut_profesional` (`rut_profesional`),
-  ADD KEY `rut_cliente` (`rut_cliente`);
+  ADD KEY `mensaje_ibfk_1` (`rut_cliente`),
+  ADD KEY `mensaje_ibfk_2` (`rut_profesional`);
 
 --
 -- Indices de la tabla `permiso`
@@ -1242,8 +1242,8 @@ ALTER TABLE `profesion`
 --
 ALTER TABLE `profesional`
   ADD PRIMARY KEY (`rut`),
-  ADD KEY `id_profesion` (`id_profesion`),
-  ADD KEY `id_institucion` (`id_institucion`);
+  ADD KEY `profesional_ibfk_2` (`id_profesion`),
+  ADD KEY `profesional_ibfk_3` (`id_institucion`);
 
 --
 -- Indices de la tabla `provincia`
@@ -1263,7 +1263,7 @@ ALTER TABLE `red_social`
 --
 ALTER TABLE `red_social_profesional`
   ADD PRIMARY KEY (`rut_profesional`,`id_rs`),
-  ADD KEY `id_rs` (`id_rs`);
+  ADD KEY `red_social_profesional_ibfk_2` (`id_rs`);
 
 --
 -- Indices de la tabla `region`
@@ -1276,8 +1276,8 @@ ALTER TABLE `region`
 --
 ALTER TABLE `reporte_profesional`
   ADD PRIMARY KEY (`id_reporte`),
-  ADD KEY `rut_cliente` (`rut_cliente`),
-  ADD KEY `reporte_profesional_ibfk_2` (`rut_profesional`);
+  ADD KEY `reporte_profesional_ibfk_2` (`rut_profesional`),
+  ADD KEY `reporte_profesional_ibfk_1` (`rut_cliente`);
 
 --
 -- Indices de la tabla `rol`
@@ -1310,9 +1310,9 @@ ALTER TABLE `tipo_horario`
 ALTER TABLE `usuario`
   ADD PRIMARY KEY (`rut`),
   ADD UNIQUE KEY `nombre_usuario` (`nombre_usuario`),
-  ADD KEY `usuario_ibfk_1` (`id_comuna`),
-  ADD KEY `usuario_ibfk_2` (`id_rol`),
-  ADD KEY `usuario_ibfk_3` (`id_estado_usuario`);
+  ADD KEY `usuario_ibfk_1` (`id_rol`),
+  ADD KEY `usuario_ibfk_2` (`id_estado_usuario`),
+  ADD KEY `usuario_ibfk_3` (`id_comuna`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -1422,21 +1422,21 @@ ALTER TABLE `tipo_horario`
 -- Filtros para la tabla `administrador`
 --
 ALTER TABLE `administrador`
-  ADD CONSTRAINT `administrador_ibfk_1` FOREIGN KEY (`rut`) REFERENCES `usuario` (`rut`);
+  ADD CONSTRAINT `administrador_ibfk_1` FOREIGN KEY (`rut`) REFERENCES `usuario` (`rut`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `cita`
 --
 ALTER TABLE `cita`
-  ADD CONSTRAINT `cita_ibfk_1` FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut`),
-  ADD CONSTRAINT `cita_ibfk_2` FOREIGN KEY (`rut_profesional`) REFERENCES `profesional` (`rut`),
-  ADD CONSTRAINT `cita_ibfk_3` FOREIGN KEY (`id_th`) REFERENCES `tipo_horario` (`id_th`);
+  ADD CONSTRAINT `cita_ibfk_1` FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `cita_ibfk_2` FOREIGN KEY (`rut_profesional`) REFERENCES `profesional` (`rut`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `cita_ibfk_3` FOREIGN KEY (`id_th`) REFERENCES `tipo_horario` (`id_th`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  ADD CONSTRAINT `cliente_ibfk_1` FOREIGN KEY (`rut`) REFERENCES `usuario` (`rut`);
+  ADD CONSTRAINT `cliente_ibfk_1` FOREIGN KEY (`rut`) REFERENCES `usuario` (`rut`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `comuna`
@@ -1449,7 +1449,7 @@ ALTER TABLE `comuna`
 --
 ALTER TABLE `disponibilidad`
   ADD CONSTRAINT `disponibilidad_ibfk_1` FOREIGN KEY (`rut_profesional`) REFERENCES `profesional` (`rut`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `disponibilidad_ibfk_2` FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut`);
+  ADD CONSTRAINT `disponibilidad_ibfk_2` FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `foro`
@@ -1462,7 +1462,8 @@ ALTER TABLE `foro`
 -- Filtros para la tabla `lugar_atencion_presencial`
 --
 ALTER TABLE `lugar_atencion_presencial`
-  ADD CONSTRAINT `lugar_atencion_presencial_ibfk_1` FOREIGN KEY (`rut_profesional`) REFERENCES `profesional` (`rut`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `lugar_atencion_presencial_ibfk_1` FOREIGN KEY (`rut_profesional`) REFERENCES `profesional` (`rut`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `lugar_atencion_presencial_ibfk_2` FOREIGN KEY (`id_comuna`) REFERENCES `comuna` (`id_comuna`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `lugar_atencion_virtual`
@@ -1474,23 +1475,23 @@ ALTER TABLE `lugar_atencion_virtual`
 -- Filtros para la tabla `mensaje`
 --
 ALTER TABLE `mensaje`
-  ADD CONSTRAINT `mensaje_ibfk_1` FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut`),
-  ADD CONSTRAINT `mensaje_ibfk_2` FOREIGN KEY (`rut_profesional`) REFERENCES `profesional` (`rut`);
+  ADD CONSTRAINT `mensaje_ibfk_1` FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `mensaje_ibfk_2` FOREIGN KEY (`rut_profesional`) REFERENCES `profesional` (`rut`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `permiso_rol`
 --
 ALTER TABLE `permiso_rol`
-  ADD CONSTRAINT `permiso_rol_ibfk_1` FOREIGN KEY (`id_permiso`) REFERENCES `permiso` (`id_permiso`),
-  ADD CONSTRAINT `permiso_rol_ibfk_2` FOREIGN KEY (`id_rol`) REFERENCES `rol` (`id_rol`);
+  ADD CONSTRAINT `permiso_rol_ibfk_1` FOREIGN KEY (`id_permiso`) REFERENCES `permiso` (`id_permiso`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `permiso_rol_ibfk_2` FOREIGN KEY (`id_rol`) REFERENCES `rol` (`id_rol`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `profesional`
 --
 ALTER TABLE `profesional`
   ADD CONSTRAINT `profesional_ibfk_1` FOREIGN KEY (`rut`) REFERENCES `usuario` (`rut`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `profesional_ibfk_2` FOREIGN KEY (`id_profesion`) REFERENCES `profesion` (`id_profesion`),
-  ADD CONSTRAINT `profesional_ibfk_3` FOREIGN KEY (`id_institucion`) REFERENCES `institucion` (`id_institucion`);
+  ADD CONSTRAINT `profesional_ibfk_2` FOREIGN KEY (`id_profesion`) REFERENCES `profesion` (`id_profesion`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `profesional_ibfk_3` FOREIGN KEY (`id_institucion`) REFERENCES `institucion` (`id_institucion`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `provincia`
@@ -1502,14 +1503,14 @@ ALTER TABLE `provincia`
 -- Filtros para la tabla `red_social_profesional`
 --
 ALTER TABLE `red_social_profesional`
-  ADD CONSTRAINT `red_social_profesional_ibfk_1` FOREIGN KEY (`rut_profesional`) REFERENCES `profesional` (`rut`),
-  ADD CONSTRAINT `red_social_profesional_ibfk_2` FOREIGN KEY (`id_rs`) REFERENCES `red_social` (`id_rs`);
+  ADD CONSTRAINT `red_social_profesional_ibfk_1` FOREIGN KEY (`rut_profesional`) REFERENCES `profesional` (`rut`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `red_social_profesional_ibfk_2` FOREIGN KEY (`id_rs`) REFERENCES `red_social` (`id_rs`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `reporte_profesional`
 --
 ALTER TABLE `reporte_profesional`
-  ADD CONSTRAINT `reporte_profesional_ibfk_1` FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut`),
+  ADD CONSTRAINT `reporte_profesional_ibfk_1` FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `reporte_profesional_ibfk_2` FOREIGN KEY (`rut_profesional`) REFERENCES `profesional` (`rut`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
@@ -1517,7 +1518,15 @@ ALTER TABLE `reporte_profesional`
 --
 ALTER TABLE `servicio_profesional`
   ADD CONSTRAINT `servicio_profesional_ibfk_1` FOREIGN KEY (`rut_profesional`) REFERENCES `profesional` (`rut`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `servicio_profesional_ibfk_2` FOREIGN KEY (`id_servicio`) REFERENCES `servicio` (`id_servicio`);
+  ADD CONSTRAINT `servicio_profesional_ibfk_2` FOREIGN KEY (`id_servicio`) REFERENCES `servicio` (`id_servicio`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `usuario`
+--
+ALTER TABLE `usuario`
+  ADD CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`id_rol`) REFERENCES `rol` (`id_rol`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `usuario_ibfk_2` FOREIGN KEY (`id_estado_usuario`) REFERENCES `estado_usuario` (`id_estado_usuario`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `usuario_ibfk_3` FOREIGN KEY (`id_comuna`) REFERENCES `comuna` (`id_comuna`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
