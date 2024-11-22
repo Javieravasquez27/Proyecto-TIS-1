@@ -48,30 +48,30 @@
                 .catch(error => console.error("Error al cargar regiones:", error));
         }
 
-        function cargarCiudades() {
-            fetch("utils/get_ciudad.php")
+        function cargarProvincias() {
+            fetch("utils/get_provincia.php")
                 .then(response => response.json())
                 .then(data => {
-                    const select = document.getElementById("ciudad");
+                    const select = document.getElementById("provincia");
 
                     // Vaciar el select por si tiene opciones
                     select.innerHTML = '';
 
                     // Agregar una opción por defecto
                     const defaultOption = document.createElement("option");
-                    defaultOption.textContent = "Ciudad";
+                    defaultOption.textContent = "Provincia";
                     defaultOption.value = "";
                     select.appendChild(defaultOption);
 
-                    // Rellenar el select con las ciudades recibidas
-                    data.forEach(ciudad => {
+                    // Rellenar el select con las provincias recibidas
+                    data.forEach(provincia => {
                         const option = document.createElement("option");
-                        option.value = ciudad.id_ciudad;
-                        option.textContent = ciudad.nombre_ciudad;
+                        option.value = provincia.id_provincia;
+                        option.textContent = provincia.nombre_provincia;
                         select.appendChild(option);
                     });
                 })
-                .catch(error => console.error("Error al cargar ciudades:", error));
+                .catch(error => console.error("Error al cargar provincias:", error));
         }
 
         function cargarComunas() {
@@ -173,7 +173,7 @@
         }
 
         cargarRegiones();
-        cargarCiudades();
+        cargarProvincias();
         cargarComunas();
         cargarProfesiones();
         cargarServicios();
@@ -196,7 +196,7 @@
                         </select>
                     </div>
                     <div class="col py-5 px-1 mt-4">
-                        <select id="ciudad" name="ciudad" class="form-select">
+                        <select id="provincia" name="provincia" class="form-select">
                             <!-- Las opciones se llenarán aquí con AJAX -->
                         </select>
                     </div>

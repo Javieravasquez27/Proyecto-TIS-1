@@ -1,23 +1,23 @@
 <?php
     require('../database/conexion.php');
 
-    // Consulta para obtener las ciudades
-    $sql = "SELECT id_ciudad, nombre_ciudad FROM ciudad ORDER BY nombre_ciudad";
+    // Consulta para obtener las provincias
+    $sql = "SELECT id_provincia, nombre_provincia FROM provincia ORDER BY id_provincia";
     $resultado = $conexion->query($sql);
 
-    $ciudades = [];
+    $provincias = [];
 
     if ($resultado->num_rows > 0)
     {
         while($row = $resultado->fetch_assoc())
         {
-            $ciudades[] = $row; // Se agrega cada fila de la tabla ciudad al arreglo
+            $provincias[] = $row; // Se agrega cada fila de la tabla provincia al arreglo
         }
     }
 
     // Se devuelven los datos en formato JSON
     header('Content-Type: application/json');
-    echo json_encode($ciudades);
+    echo json_encode($provincias);
 
     $conexion->close();
 ?>
