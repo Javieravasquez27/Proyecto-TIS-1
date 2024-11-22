@@ -3,7 +3,7 @@
 <script>
     const Toast = Swal.mixin({
         toast: true,
-        position: "top",
+        position: "bottom-end",
         color: "#fff",
         background: "#cf142b",
         showConfirmButton: false,
@@ -16,7 +16,7 @@
     });
     Toast.fire({
         icon: "warning",
-        html: "Para ser mostrado en la busqueda <b>Tienes que rellenar tus campos de profesional </b><a href='' style='color:#fff;'>Rellene los campos Aqui</a>"
+        html: "Para ser mostrado en la búsqueda, <b>tienes que rellenar tus campos de profesional. </b><a href='index.php?p=profesional/profile' style='color:#fff;'>Rellene los campos aqui</a>"
     });
 
 
@@ -181,7 +181,8 @@
 </script>
 
 <div class="container">
-    <div class="row py-5">
+    <div class="row py-5 text-center">
+        <p class="h4">Busca profesionales y agenda tu cita aquí</p>
         <form class="d-flex" method="POST" role="search" action="index.php?p=busqueda">
             <div class="col">
                 <div class="row py-3">
