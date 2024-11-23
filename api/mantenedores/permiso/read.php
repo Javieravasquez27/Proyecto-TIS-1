@@ -6,7 +6,7 @@
             session_start();
         }
 
-        $sql_consulta_permiso = "SELECT id_permiso, nombre_permiso FROM permiso;";
+        $sql_consulta_permiso = "SELECT id_permiso, nombre_permiso, descripcion_permiso FROM permiso;";
         $resultado = mysqli_query($conexion, $sql_consulta_permiso);
 
         if ($resultado) {
@@ -18,9 +18,10 @@
                     $fila = array();
                     $fila['id_permiso'] = $registro['id_permiso'];
                     $fila['nombre_permiso'] = $registro['nombre_permiso'];
+                    $fila['descripcion_permiso'] = $registro['descripcion_permiso'];
 
                     $fila['opciones'] = "<a id='delete' data-id=".$registro['id_permiso']." class='btn btn-sm btn-outline-danger' ><span class='material-icons'>delete</span></a>
-                                        <a id='edit' data-id=".$registro['id_permiso']." data-permiso=\"".$registro['nombre_permiso']."\" class='btn btn-sm btn-outline-primary' data-bs-toggle='modal' data-bs-target='#editPermisoModal'><span class='material-icons'>edit</span></a>";
+                                        <a id='edit' data-id=".$registro['id_permiso']." data-permiso=\"".$registro['nombre_permiso']."\" data-descripcion=\"".$registro['descripcion_permiso']."\" class='btn btn-sm btn-outline-primary' data-bs-toggle='modal' data-bs-target='#editPermisoModal'><span class='material-icons'>edit</span></a>";
 
                     $permisos[] = $fila;
                 }
