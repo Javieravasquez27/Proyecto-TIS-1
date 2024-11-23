@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 23-11-2024 a las 06:33:41
+-- Tiempo de generación: 23-11-2024 a las 20:46:02
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -708,21 +708,23 @@ CREATE TABLE `mensaje` (
 
 CREATE TABLE `permiso` (
   `id_permiso` int(11) NOT NULL,
-  `nombre_permiso` varchar(255) NOT NULL
+  `nombre_permiso` varchar(50) NOT NULL,
+  `descripcion_permiso` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `permiso`
 --
 
-INSERT INTO `permiso` (`id_permiso`, `nombre_permiso`) VALUES
-(1, 'Acceder al panel de administración'),
-(2, 'Gestionar los mantenedores de la plataforma'),
-(3, 'Gestionar roles y activación de las cuentas de usuario'),
-(4, 'Gestionar autorizaciones de profesionales'),
-(5, 'Gestionar administradores de la plataforma'),
-(6, 'Acceder a las páginas de profesionales'),
-(7, 'Acceder a las páginas de clientes');
+INSERT INTO `permiso` (`id_permiso`, `nombre_permiso`, `descripcion_permiso`) VALUES
+(1, 'admin_panel_access', 'Acceder al panel de administración'),
+(2, 'mantainers_manage', 'Gestionar los mantenedores de la plataforma'),
+(3, 'user_accounts_manage', 'Gestionar las cuentas de usuario'),
+(4, 'professional_authorization', 'Gestionar autorizaciones de profesionales'),
+(5, 'admin_manage', 'Gestionar administradores de la plataforma'),
+(6, 'professional_pages_access', 'Acceder a las páginas de profesionales'),
+(7, 'client_pages_access', 'Acceder a las páginas de clientes'),
+(8, 'permission_manage', 'Gestionar permisos para roles de usuario');
 
 -- --------------------------------------------------------
 
@@ -754,7 +756,8 @@ INSERT INTO `permiso_rol` (`id_rol`, `id_permiso`) VALUES
 (1, 7),
 (2, 7),
 (3, 7),
-(4, 7);
+(4, 7),
+(1, 8);
 
 -- --------------------------------------------------------
 
@@ -1222,7 +1225,8 @@ ALTER TABLE `mensaje`
 -- Indices de la tabla `permiso`
 --
 ALTER TABLE `permiso`
-  ADD PRIMARY KEY (`id_permiso`);
+  ADD PRIMARY KEY (`id_permiso`),
+  ADD UNIQUE KEY `nombre_permiso` (`nombre_permiso`);
 
 --
 -- Indices de la tabla `permiso_rol`
@@ -1310,6 +1314,8 @@ ALTER TABLE `tipo_horario`
 ALTER TABLE `usuario`
   ADD PRIMARY KEY (`rut`),
   ADD UNIQUE KEY `nombre_usuario` (`nombre_usuario`),
+  ADD UNIQUE KEY `rut` (`rut`),
+  ADD UNIQUE KEY `correo` (`correo`),
   ADD KEY `usuario_ibfk_1` (`id_rol`),
   ADD KEY `usuario_ibfk_2` (`id_estado_usuario`),
   ADD KEY `usuario_ibfk_3` (`id_comuna`);
@@ -1370,7 +1376,7 @@ ALTER TABLE `mensaje`
 -- AUTO_INCREMENT de la tabla `permiso`
 --
 ALTER TABLE `permiso`
-  MODIFY `id_permiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_permiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `profesion`
