@@ -18,7 +18,7 @@
             $datos_usuario = mysqli_fetch_assoc($resultado_usuario);
 
             if ($datos_usuario) {
-                if ($datos_usuario['id_estado_usuario'] == 0) {
+                if ($datos_usuario['id_estado_usuario'] == 2) {
                     $response = array(
                         'success' => false,
                         'message' => 'Su cuenta está deshabilitada. Por favor, contacte con el administrador.'

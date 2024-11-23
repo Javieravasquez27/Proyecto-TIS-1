@@ -5,11 +5,12 @@
 
 <title>Mantenedores - KindomJob's</title>
 
+<?php
+    include 'includes/admin/navbar_mantenedores.php';
+?>
+
 <body>
     <div class="container-fluid py-2 contenedorcompleto">
-        <?php
-            include 'includes/admin/navbar_mantenedores.php';
-        ?>
         <br>
         <table class="table table-striped">
             <thead>

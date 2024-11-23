@@ -29,7 +29,7 @@ try {
     } else {
         $response = array(
             'success' => false,
-            'message' => 'Error en los datos recibidos'
+            'message' => 'Error en los datos recibidos.'
         );
     }
 } catch (PDOException $e) {
