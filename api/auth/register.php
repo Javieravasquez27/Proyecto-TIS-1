@@ -63,7 +63,7 @@ try {
         // Si el rol es profesional, insertar en la tabla profesional
         if ($rol == 3) {
             $sql_ingreso_usuario = "INSERT INTO usuario (rut, nombre_usuario, nombres, apellido_p, apellido_m, correo, telefono, contrasena, fecha_nac, direccion, foto_perfil, id_comuna, id_rol, id_estado_usuario) 
-                                    VALUES ('$rut', '$nombre_usuario', '$nombres', '$apellido_p', '$apellido_m', '$correo', '$telefono', '" . md5($password) . "', '$fecha_nac', '$direccion', '$foto_perfil', '$comuna', '$rol', 0)";
+                                    VALUES ('$rut', '$nombre_usuario', '$nombres', '$apellido_p', '$apellido_m', '$correo', '$telefono', '" . md5($password) . "', '$fecha_nac', '$direccion', '$foto_perfil', '$comuna', '$rol', 2)";
             $resultado_usuario = mysqli_query($conexion, $sql_ingreso_usuario);
 
             if ($resultado_usuario)
