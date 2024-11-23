@@ -223,7 +223,7 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col text-center mb-1" style="font-size: 20px;"><span>Busqueda de profesionales cercanos</span></div>
+        <div class="col text-center mb-1" style="font-size: 20px;"><span>Búsqueda de profesionales cercanos</span></div>
     </div>
 </div>
 
