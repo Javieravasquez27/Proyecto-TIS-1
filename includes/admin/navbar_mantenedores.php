@@ -35,9 +35,6 @@
                     <a class="nav-link <?php echo (strpos($pagina, 'admin/mantenedores/rol/index') !== false) ? 'active' : null ?>" href="index.php?p=admin/mantenedores/rol/index">Roles</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <?php echo (strpos($pagina, 'admin/mantenedores/permiso_rol/index') !== false) ? 'active' : null ?>" href="index.php?p=admin/mantenedores/permiso_rol/index">Roles y Permisos</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link <?php echo (strpos($pagina, 'admin/mantenedores/servicio/index') !== false) ? 'active' : null ?>" href="index.php?p=admin/mantenedores/servicio/index">Servicios</a>
                 </li>
                 <li class="nav-item">
