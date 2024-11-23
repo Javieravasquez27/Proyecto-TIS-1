@@ -6,24 +6,24 @@
             session_start();
         }
 
-        if (isset($_POST['id_comuna'])) {
+        if (isset($_POST['id_servicio'])) {
 
-            $id_comuna = $_REQUEST['id_comuna'];
+            $id_servicio = $_REQUEST['id_servicio'];
 
-            $sql = "DELETE FROM comuna WHERE id_comuna = '$id_comuna';";
+            $sql = "DELETE FROM servicio WHERE id_servicio = '$id_servicio'";
 
             $resultado = mysqli_query($conexion, $sql);
 
             if ($resultado) {
                 $response = array(
                     'success' => true,
-                    'message' => 'Comuna eliminada exitosamente',
+                    'message' => 'Servicio eliminado exitosamente',
 
                 );
             } else {
                 $response = array(
                     'success' => false,
-                    'message' => 'Error al eliminar la comuna. Intente de nuevo'
+                    'message' => 'Error al eliminar el servicio. Intente de nuevo'
                 );
             }
         } else {

@@ -4,22 +4,21 @@
     $response = ['success' => false, 'message' => ''];
     
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $id_comuna = $_POST['id_comuna'] ?? null;
-        $nombre_comuna = $_POST['nombre_comuna'] ?? null;
-        $id_provincia = $_POST['id_provincia'] ?? null;
+        $id_rol = $_POST['id_rol'] ?? null;
+        $nombre_rol = $_POST['nombre_rol'] ?? null;
     
-        if ($id_comuna && $nombre_comuna && $id_provincia) {
-            $sql = "UPDATE comuna 
-                    SET nombre_comuna = ?, id_provincia = ?
-                    WHERE id_comuna = ?;";
+        if ($id_rol && $nombre_rol) {
+            $sql = "UPDATE rol 
+                    SET nombre_rol = ?
+                    WHERE id_rol = ?;";
             $stmt = $conexion->prepare($sql);
-            $stmt->bind_param("sii", $nombre_comuna, $id_provincia, $id_comuna);
+            $stmt->bind_param("si", $nombre_rol, $id_rol);
         
             if ($stmt->execute()) {
                 $response['success'] = true;
-                $response['message'] = 'Comuna actualizada correctamente';
+                $response['message'] = 'Rol actualizado correctamente';
             } else {
-                $response['message'] = 'Error al actualizar la comuna. Intente de nuevo';
+                $response['message'] = 'Error al actualizar el rol. Intente de nuevo';
             }
         
             $stmt->close();

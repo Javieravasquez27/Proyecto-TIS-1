@@ -6,24 +6,24 @@
             session_start();
         }
 
-        if (isset($_POST['id_comuna'])) {
+        if (isset($_POST['id_estado_usuario'])) {
 
-            $id_comuna = $_REQUEST['id_comuna'];
+            $id_estado_usuario = $_REQUEST['id_estado_usuario'];
 
-            $sql = "DELETE FROM comuna WHERE id_comuna = '$id_comuna';";
+            $sql = "DELETE FROM estado_usuario WHERE id_estado_usuario = '$id_estado_usuario'";
 
             $resultado = mysqli_query($conexion, $sql);
 
             if ($resultado) {
                 $response = array(
                     'success' => true,
-                    'message' => 'Comuna eliminada exitosamente',
+                    'message' => 'Estado de usuario eliminado exitosamente',
 
                 );
             } else {
                 $response = array(
                     'success' => false,
-                    'message' => 'Error al eliminar la comuna. Intente de nuevo'
+                    'message' => 'Error al eliminar el estado de usuario. Intente de nuevo'
                 );
             }
         } else {

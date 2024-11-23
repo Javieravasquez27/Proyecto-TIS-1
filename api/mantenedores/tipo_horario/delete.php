@@ -6,24 +6,24 @@
             session_start();
         }
 
-        if (isset($_POST['id_comuna'])) {
+        if (isset($_POST['id_th'])) {
 
-            $id_comuna = $_REQUEST['id_comuna'];
+            $id_th = $_REQUEST['id_th'];
 
-            $sql = "DELETE FROM comuna WHERE id_comuna = '$id_comuna';";
+            $sql = "DELETE FROM tipo_horario WHERE id_th = '$id_th'";
 
             $resultado = mysqli_query($conexion, $sql);
 
             if ($resultado) {
                 $response = array(
                     'success' => true,
-                    'message' => 'Comuna eliminada exitosamente',
+                    'message' => 'Tipo de horario eliminado exitosamente',
 
                 );
             } else {
                 $response = array(
                     'success' => false,
-                    'message' => 'Error al eliminar la comuna. Intente de nuevo'
+                    'message' => 'Error al eliminar el tipo de horario. Intente de nuevo'
                 );
             }
         } else {

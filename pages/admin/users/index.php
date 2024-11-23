@@ -125,7 +125,7 @@
             },
             "processing": true,
             "ajax": {
-                "url": "api/users/users.php",
+                "url": "api/users/read.php",
                 "dataType": "json",
                 "type": "POST"
             },

@@ -6,24 +6,24 @@
             session_start();
         }
 
-        if (isset($_POST['id_comuna'])) {
+        if (isset($_POST['id_profesion'])) {
 
-            $id_comuna = $_REQUEST['id_comuna'];
+            $id_profesion = $_REQUEST['id_profesion'];
 
-            $sql = "DELETE FROM comuna WHERE id_comuna = '$id_comuna';";
+            $sql = "DELETE FROM profesion WHERE id_profesion = '$id_profesion'";
 
             $resultado = mysqli_query($conexion, $sql);
 
             if ($resultado) {
                 $response = array(
                     'success' => true,
-                    'message' => 'Comuna eliminada exitosamente',
+                    'message' => 'Profesión eliminada exitosamente',
 
                 );
             } else {
                 $response = array(
                     'success' => false,
-                    'message' => 'Error al eliminar la comuna. Intente de nuevo'
+                    'message' => 'Error al eliminar la profesión. Intente de nuevo'
                 );
             }
         } else {

@@ -6,24 +6,24 @@
             session_start();
         }
 
-        if (isset($_POST['id_comuna'])) {
+        if (isset($_POST['id_permiso'])) {
 
-            $id_comuna = $_REQUEST['id_comuna'];
+            $id_permiso = $_REQUEST['id_permiso'];
 
-            $sql = "DELETE FROM comuna WHERE id_comuna = '$id_comuna';";
+            $sql = "DELETE FROM permiso WHERE id_permiso = '$id_permiso'";
 
             $resultado = mysqli_query($conexion, $sql);
 
             if ($resultado) {
                 $response = array(
                     'success' => true,
-                    'message' => 'Comuna eliminada exitosamente',
+                    'message' => 'Permiso eliminado exitosamente',
 
                 );
             } else {
                 $response = array(
                     'success' => false,
-                    'message' => 'Error al eliminar la comuna. Intente de nuevo'
+                    'message' => 'Error al eliminar el permiso. Intente de nuevo'
                 );
             }
         } else {

@@ -4,79 +4,79 @@
     include 'includes/admin/navbar_mantenedores.php';
 ?>
 
-<title>Gestión de comunas - KindomJob's</title>
+<title>Gestión de provincias - KindomJob's</title>
 
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
 
 <script>
     $(document).on('click', '#edit', function () {
-        const id_comuna = $(this).data('id'); // ID específico del botón presionado
-        const nombre_comuna = $(this).data('comuna');
-        const id_provincia = $(this).data('provincia');
+        const id_provincia = $(this).data('id'); // ID específico del botón presionado
+        const nombre_provincia = $(this).data('provincia');
+        const id_region = $(this).data('region');
 
         // Se guarda el ID en un campo oculto del formulario
-        $('#editComunaForm').data('id', id_comuna);
+        $('#editProvinciaForm').data('id', id_provincia);
 
-        // Se rellena el campo del nombre de la comuna
-        $('#nombre_comuna_edit').val(nombre_comuna);
+        // Se rellena el campo del nombre de la provincia
+        $('#nombre_provincia_edit').val(nombre_provincia);
 
-        // Se espera a que las provincias se carguen
-        fetch("utils/get_provincia.php")
+        // Se espera a que las regiones se carguen
+        fetch("utils/get_region.php")
             .then(response => response.json())
             .then(data => {
-                const select = document.getElementById("provincia_edit");
+                const select = document.getElementById("region_edit");
                 select.innerHTML = '';  // Se limpia el dropdown
 
                 const defaultOption = document.createElement("option");
-                defaultOption.textContent = "Seleccione una provincia";
+                defaultOption.textContent = "Seleccione una región";
                 defaultOption.value = "";
                 select.appendChild(defaultOption);
 
-                // Se llena el select con las provincias
-                data.forEach(provincia => {
+                // Se llena el select con las regiones
+                data.forEach(region => {
                     const option = document.createElement("option");
-                    option.value = provincia.id_provincia;
-                    option.textContent = provincia.nombre_provincia;
+                    option.value = region.id_region;
+                    option.textContent = region.nombre_region;
                     select.appendChild(option);
                 });
 
-                // Se selecciona la provincia actual
-                $('#provincia_edit').val(id_provincia).change();
+                // Se selecciona la región actual
+                $('#region_edit').val(id_region).change();
             })
-            .catch(error => console.error("Error al cargar provincias:", error));
+            .catch(error => console.error("Error al cargar regiones:", error));
     });
 
 
-    function cargarProvincias() {
-        fetch("utils/get_provincia.php")
+    function cargarRegiones() {
+        fetch("utils/get_region.php")
             .then(response => response.json())
             .then(data => {
-                const select = document.getElementById("provincia");
+                const select = document.getElementById("region");
                 select.innerHTML = '';  // Se limpia el dropdown
 
                 const defaultOption = document.createElement("option");
-                defaultOption.textContent = "Seleccione una provincia";
+                defaultOption.textContent = "Seleccione una región";
                 defaultOption.value = "";
                 select.appendChild(defaultOption);
 
-                data.forEach(provincia => {
+                data.forEach(region => {
                     const option = document.createElement("option");
-                    option.value = provincia.id_provincia;
-                    option.textContent = provincia.nombre_provincia;
+                    option.value = region.id_region;
+                    option.textContent = region.nombre_region;
                     select.appendChild(option);
                 });
             })
-            .catch(error => console.error("Error al cargar provincias:", error));
+            .catch(error => console.error("Error al cargar regiones:", error));
     }
-    cargarProvincias();
+    cargarRegiones();
 
     function guardarEdicion() {
-        const id_comuna = $('#editComunaForm').data('id'); // ID de la comuna desde el formulario
-        const nombre_comuna = $('#nombre_comuna_edit').val();
-        const id_provincia = $('#provincia_edit').val();
+        const id_provincia = $('#editProvinciaForm').data('id'); // ID de la provincia desde el formulario
+        const nombre_provincia = $('#nombre_provincia_edit').val();
+        const id_region = $('#region_edit').val();
 
         // Validar datos antes de enviar
-        if (!nombre_comuna || !id_provincia) {
+        if (!nombre_provincia || !id_region) {
             Swal.fire({
                 icon: 'error',
                 title: 'No se han completado todos los datos',
@@ -87,12 +87,12 @@
 
         // Enviar datos al servidor
         $.ajax({
-            url: "api/mantenedores/comuna/update.php",
+            url: "api/mantenedores/provincia/update.php",
             type: "POST",
             data: {
-                id_comuna: id_comuna,
-                nombre_comuna: nombre_comuna,
-                id_provincia: id_provincia
+                id_provincia: id_provincia,
+                nombre_provincia: nombre_provincia,
+                id_region: id_region
             },
             success: function (response) {
                 if (response.success) {
@@ -102,8 +102,8 @@
                         timer: 1500,
                         showConfirmButton: false
                     }).then(() => {
-                        $('#editComunaModal').modal('hide');
-                        $('#comunaTabla').DataTable().ajax.reload();
+                        $('#editProvinciaModal').modal('hide');
+                        $('#provinciaTabla').DataTable().ajax.reload();
                     });
                 } else {
                     Swal.fire({
@@ -123,7 +123,7 @@
     }
 </script>
 
-<h1 class="text-center my-5">Gestión de comunas</h1>
+<h1 class="text-center my-5">Gestión de provincias</h1>
 
 <main class="">
     <div class="card">
@@ -133,19 +133,19 @@
                 </div>
                 <div>
                     <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
-                        data-bs-target="#addComunaModal">
-                        Ingresar nueva comuna
+                        data-bs-target="#addProvinciaModal">
+                        Ingresar nueva provincia
                     </button>
                 </div>
             </div>
         </div>
         <div class="card-body table-responsive">
-            <table id="comunaTabla" class="table table-hover" style="width: 100%;">
+            <table id="provinciaTabla" class="table table-hover" style="width: 100%;">
                 <thead class="">
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Comuna</th>
                         <th scope="col">Provincia</th>
+                        <th scope="col">Región</th>
                         <th scope="col">Opciones</th>
                     </tr>
                 </thead>
@@ -155,59 +155,59 @@
 </main>
 
 <!-- Modal -->
-<div class="modal fade" id="addComunaModal" tabindex="-1" aria-labelledby="addComunaModalLabel" aria-hidden="true">
+<div class="modal fade" id="addProvinciaModal" tabindex="-1" aria-labelledby="addProvinciaModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addComunaModalLabel">Ingresar nueva comuna</h5>
+                <h5 class="modal-title" id="addProvinciaModalLabel">Ingresar nueva provincia</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="addComunaForm">
+                <form id="addProvinciaForm">
                     <div class="mb-3">
-                        <label for="nombre_comuna" class="form-label">Comuna</label>
-                        <input type="text" class="form-control" id="nombre_comuna" name="nombre_comuna"
-                            placeholder="Ingrese el nombre de la nueva comuna" required>
+                        <label for="nombre_provincia" class="form-label">Provincia</label>
+                        <input type="text" class="form-control" id="nombre_provincia" name="nombre_provincia"
+                            placeholder="Ingrese el nombre de la nueva provincia" required>
                     </div>
                     <div class="mb-3">
-                        <label for="provincia" class="form-label">Provincia</label>
-                        <select id="provincia" name="provincia" class="form-select" required>
+                        <label for="region" class="form-label">Región</label>
+                        <select id="region" name="region" class="form-select" required>
                             <!-- Las opciones se llenarán aquí con AJAX -->
                         </select>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="submit" form="addComunaForm" class="btn btn-primary">Guardar</button>
+                <button type="submit" form="addProvinciaForm" class="btn btn-primary">Guardar</button>
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Salir</button>
             </div>
         </div>
     </div>
 </div>
-<div class="modal fade" id="editComunaModal" tabindex="-1" aria-labelledby="editComunaModalLabel" aria-hidden="true">
+<div class="modal fade" id="editProvinciaModal" tabindex="-1" aria-labelledby="editProvinciaModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editComunaModalLabel">Editar comuna</h5>
+                <h5 class="modal-title" id="editProvinciaModalLabel">Editar provincia</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="editComunaForm">
+                <form id="editProvinciaForm">
                     <div class="mb-3">
-                        <label for="nombre_comuna_edit" class="form-label">Comuna</label>
-                        <input type="text" class="form-control" id="nombre_comuna_edit" name="nombre_comuna_edit"
-                            placeholder="Ingrese el nuevo nombre para la comuna" required>
+                        <label for="nombre_provincia_edit" class="form-label">Provincia</label>
+                        <input type="text" class="form-control" id="nombre_provincia_edit" name="nombre_provincia_edit"
+                            placeholder="Ingrese el nuevo nombre para la provincia" required>
                     </div>
                     <div class="mb-3">
-                        <label for="provincia_edit" class="form-label">Provincia</label>
-                        <select id="provincia_edit" name="provincia_edit" class="form-select" required>
+                        <label for="region_edit" class="form-label">Región</label>
+                        <select id="region_edit" name="region_edit" class="form-select" required>
                             <!-- Las opciones se llenarán aquí con AJAX -->
                         </select>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="submit" form="editComunaForm" class="btn btn-primary">Guardar</button>
+                <button type="submit" form="editProvinciaForm" class="btn btn-primary">Guardar</button>
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Salir</button>
             </div>
         </div>
@@ -220,24 +220,24 @@
 
 <script>
     $(document).ready(function () {
-        const table = $('#comunaTabla').DataTable({
+        const table = $('#provinciaTabla').DataTable({
             "language": {
                 "url": '//cdn.datatables.net/plug-ins/2.1.8/i18n/es-CL.json',
             },
             "processing": true,
             "ajax": {
-                "url": "api/mantenedores/comuna/read.php",
+                "url": "api/mantenedores/provincia/read.php",
                 "dataType": "json",
                 "type": "POST"
             },
             "columns": [{
-                "data": "id_comuna"
+                "data": "id_provincia"
             },
             {
-                "data": "nombre_comuna"
+                "data": "nombre_provincia"
             },
             {
-                "data": "provincia"
+                "data": "region"
             },
             {
                 "data": "opciones"
@@ -247,10 +247,10 @@
     });
 
     $(document).on('click', '#delete', function () {
-        const id_comuna = $(this).data("id");
+        const id_provincia = $(this).data("id");
 
         Swal.fire({
-            title: "¿Estás seguro de eliminar esta comuna?",
+            title: "¿Estás seguro de eliminar esta provincia?",
             text: "¡No podrás revertir esta acción!",
             icon: "warning",
             showCancelButton: true,
@@ -261,10 +261,10 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: "api/mantenedores/comuna/delete.php",
+                    url: "api/mantenedores/provincia/delete.php",
                     type: "POST",
                     data: {
-                        id_comuna: id_comuna
+                        id_provincia: id_provincia
                     },
                     success: function (response) {
                         const result = JSON.parse(response);
@@ -277,7 +277,7 @@
                                 showConfirmButton: false,
                                 allowOutsideClick: false
                             }).then(() => {
-                                $('#comunaTabla').DataTable().ajax.reload();
+                                $('#provinciaTabla').DataTable().ajax.reload();
                             });
 
                         } else {
@@ -294,20 +294,20 @@
         });
     });
 
-    const addComunaForm = document.querySelector("#addComunaForm");
+    const addProvinciaForm = document.querySelector("#addProvinciaForm");
 
-    addComunaForm.addEventListener("submit", (event) => {
+    addProvinciaForm.addEventListener("submit", (event) => {
         event.preventDefault();
 
-        const nombre_comuna = document.querySelector("#nombre_comuna").value;
-        const id_provincia = document.querySelector("#provincia").value;
+        const nombre_provincia = document.querySelector("#nombre_provincia").value;
+        const id_region = document.querySelector("#region").value;
 
         $.ajax({
-            url: "api/mantenedores/comuna/create.php",
+            url: "api/mantenedores/provincia/create.php",
             type: "POST",
             data: {
-                nombre_comuna: nombre_comuna,
-                id_provincia: id_provincia
+                nombre_provincia: nombre_provincia,
+                id_region: id_region
             },
             success: function (response) {
                 const result = JSON.parse(response);
@@ -322,9 +322,9 @@
                         confirmButtonText: "Aceptar",
                         allowOutsideClick: false
                     }).then(() => {
-                        $('#addComunaModal').modal('hide');
-                        addComunaForm.reset();
-                        $('#comunaTabla').DataTable().ajax.reload();
+                        $('#addProvinciaModal').modal('hide');
+                        addProvinciaForm.reset();
+                        $('#provinciaTabla').DataTable().ajax.reload();
                     });
 
                 } else {
@@ -339,7 +339,7 @@
         });
     });
 
-    $('#editComunaForm').on('submit', function (event) {
+    $('#editProvinciaForm').on('submit', function (event) {
         event.preventDefault();
         guardarEdicion();
     });

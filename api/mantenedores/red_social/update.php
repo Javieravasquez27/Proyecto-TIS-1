@@ -4,22 +4,21 @@
     $response = ['success' => false, 'message' => ''];
     
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $id_comuna = $_POST['id_comuna'] ?? null;
-        $nombre_comuna = $_POST['nombre_comuna'] ?? null;
-        $id_provincia = $_POST['id_provincia'] ?? null;
+        $id_rs = $_POST['id_rs'] ?? null;
+        $nombre_rs = $_POST['nombre_rs'] ?? null;
     
-        if ($id_comuna && $nombre_comuna && $id_provincia) {
-            $sql = "UPDATE comuna 
-                    SET nombre_comuna = ?, id_provincia = ?
-                    WHERE id_comuna = ?;";
+        if ($id_rs && $nombre_rs) {
+            $sql = "UPDATE red_social 
+                    SET nombre_rs = ?
+                    WHERE id_rs = ?;";
             $stmt = $conexion->prepare($sql);
-            $stmt->bind_param("sii", $nombre_comuna, $id_provincia, $id_comuna);
+            $stmt->bind_param("si", $nombre_rs, $id_rs);
         
             if ($stmt->execute()) {
                 $response['success'] = true;
-                $response['message'] = 'Comuna actualizada correctamente';
+                $response['message'] = 'Red social actualizada correctamente';
             } else {
-                $response['message'] = 'Error al actualizar la comuna. Intente de nuevo';
+                $response['message'] = 'Error al actualizar la red social. Intente de nuevo';
             }
         
             $stmt->close();
