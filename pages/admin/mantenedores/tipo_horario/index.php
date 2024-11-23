@@ -1,5 +1,5 @@
 <?php
-    define('PERMISO_REQUERIDO', 'Gestionar los mantenedores de la plataforma');
+    define('PERMISO_REQUERIDO', 'mantainers_manage');
     include("middleware/auth.php");
     include 'includes/admin/navbar_mantenedores.php';
 ?>

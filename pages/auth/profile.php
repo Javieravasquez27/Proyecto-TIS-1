@@ -1,5 +1,5 @@
 <?php 
-    define('PERMISO_REQUERIDO', 'Acceder a las páginas de clientes');
+    define('PERMISO_REQUERIDO', 'client_pages_access');
     include("middleware/auth.php");
 ?>
 

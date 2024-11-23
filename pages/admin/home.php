@@ -1,5 +1,5 @@
 <?php 
-    define('PERMISO_REQUERIDO', 'Acceder al panel de administración');
+    define('PERMISO_REQUERIDO', 'admin_panel_access');
     include("middleware/auth.php");
 ?>
 

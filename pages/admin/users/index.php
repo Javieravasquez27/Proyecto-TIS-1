@@ -1,5 +1,5 @@
 <?php 
-    define('PERMISO_REQUERIDO', 'Gestionar roles y activación de las cuentas de usuario');
+    define('PERMISO_REQUERIDO', 'user_accounts_manage');
     include("middleware/auth.php");
 ?>
 
@@ -232,56 +232,4 @@
             }
         });
     });
-
-
-/*
-    $(document).on('click', '#delete', function() {
-        const rut = $(this).data("id");
-
-        Swal.fire({
-            title: "¿Estás seguro de eliminar este usuario?",
-            text: "¡No podrás revertir esta accion!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Eliminar",
-            cancelButtonText: "Cancelar"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: "api/users/delete.php",
-                    type: "POST",
-                    data: {
-                        rut: rut
-                    },
-                    success: function(response) {
-                        const result = JSON.parse(response);
-                        if (result.success) {
-                            Swal.fire({
-                                icon: 'success',
-                                title: result.message,
-                                timer: 1500,
-                                showCancelButton: false,
-                                confirmButtonColor: "#3085d6",
-                                confirmButtonText: "Aceptar",
-                                allowOutsideClick: false,
-                            }).then(() => {
-                                $('#userTable').DataTable().ajax.reload();
-                            });
-
-                        } else {
-                            Swal.fire({
-                                icon: 'error',
-                                title: result.message,
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
-                        }
-                    }
-                });
-            }
-        });
-    });
-*/
 </script>

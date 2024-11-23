@@ -1,5 +1,5 @@
 <?php
-    define('PERMISO_REQUERIDO', 'Acceder a las páginas de profesionales');
+    define('PERMISO_REQUERIDO', 'professional_pages_access');
     include("middleware/auth.php");
     include("database/conexion.php");
     $consulta = "SELECT * FROM usuario

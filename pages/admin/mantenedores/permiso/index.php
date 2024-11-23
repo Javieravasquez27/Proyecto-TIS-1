@@ -1,5 +1,5 @@
 <?php
-    define('PERMISO_REQUERIDO', 'Gestionar los mantenedores de la plataforma');
+    define('PERMISO_REQUERIDO', 'mantainers_manage');
     include("middleware/auth.php");
     include 'includes/admin/navbar_mantenedores.php';
 ?>
@@ -12,20 +12,25 @@
     $(document).on('click', '#edit', function () {
         const id_permiso = $(this).data('id'); // ID específico del botón presionado
         const nombre_permiso = $(this).data('permiso');
+        const descripcion_permiso = $(this).data('descripcion');
 
         // Se guarda el ID en un campo oculto del formulario
         $('#editPermisoForm').data('id', id_permiso);
 
         // Se rellena el campo del nombre del permiso
         $('#nombre_permiso_edit').val(nombre_permiso);
+
+        // Se rellena el campo de la descripción del permiso
+        $('#descripcion_permiso_edit').val(descripcion_permiso);
     });
 
     function guardarEdicion() {
         const id_permiso = $('#editPermisoForm').data('id'); // ID del permiso desde el formulario
         const nombre_permiso = $('#nombre_permiso_edit').val();
+        const descripcion_permiso = $('#descripcion_permiso_edit').val();
 
         // Se validan datos antes de enviar
-        if (!nombre_permiso) {
+        if (!nombre_permiso || !descripcion_permiso) {
             Swal.fire({
                 icon: 'error',
                 title: 'No se han completado todos los datos',
@@ -40,7 +45,8 @@
             type: "POST",
             data: {
                 id_permiso: id_permiso,
-                nombre_permiso: nombre_permiso
+                nombre_permiso: nombre_permiso,
+                descripcion_permiso: descripcion_permiso
             },
             success: function (response) {
                 if (response.success) {
@@ -93,6 +99,7 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Permiso</th>
+                        <th scope="col">Descripción</th>
                         <th scope="col">Opciones</th>
                     </tr>
                 </thead>
@@ -114,7 +121,12 @@
                     <div class="mb-3">
                         <label for="nombre_permiso" class="form-label">Permiso</label>
                         <input type="text" class="form-control" id="nombre_permiso" name="nombre_permiso"
-                            placeholder="Ingrese el nombre del nuevo permiso" required>
+                            placeholder="Ejemplo: mantainers_manage" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="descripcion_permiso" class="form-label">Descripción</label>
+                        <input type="text" class="form-control" id="descripcion_permiso" name="descripcion_permiso"
+                            placeholder="Ejemplo: Gestionar los mantenedores de la plataforma" required>
                     </div>
                 </form>
             </div>
@@ -134,10 +146,17 @@
             </div>
             <div class="modal-body">
                 <form id="editPermisoForm">
+                    <fieldset disabled>
+                        <div class="mb-3">
+                            <label for="nombre_permiso_edit" class="form-label">Permiso</label>
+                            <input type="text" class="form-control" id="nombre_permiso_edit" name="nombre_permiso_edit"
+                                placeholder="Ejemplo: mantainers_manage" readonly required>
+                        </div>
+                    </fieldset>
                     <div class="mb-3">
-                        <label for="nombre_permiso_edit" class="form-label">Permiso</label>
-                        <input type="text" class="form-control" id="nombre_permiso_edit" name="nombre_permiso_edit"
-                            placeholder="Ingrese el nuevo nombre para el permiso" required>
+                        <label for="descripcion_permiso_edit" class="form-label">Descripción</label>
+                        <input type="text" class="form-control" id="descripcion_permiso_edit" name="descripcion_permiso_edit"
+                            placeholder="Ejemplo: Gestionar los mantenedores de la plataforma" required>
                     </div>
                 </form>
             </div>
@@ -170,6 +189,9 @@
             },
             {
                 "data": "nombre_permiso"
+            },
+            {
+                "data": "descripcion_permiso"
             },
             {
                 "data": "opciones"
@@ -232,12 +254,14 @@
         event.preventDefault();
 
         const nombre_permiso = document.querySelector("#nombre_permiso").value;
+        const descripcion_permiso = document.querySelector("#descripcion_permiso").value;
 
         $.ajax({
             url: "api/mantenedores/permiso/create.php",
             type: "POST",
             data: {
-                nombre_permiso: nombre_permiso
+                nombre_permiso: nombre_permiso,
+                descripcion_permiso: descripcion_permiso
             },
             success: function (response) {
                 const result = JSON.parse(response);

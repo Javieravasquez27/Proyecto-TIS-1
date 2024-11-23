@@ -1,5 +1,5 @@
-<?php 
-    define('PERMISO_REQUERIDO', 'Gestionar los mantenedores de la plataforma');
+<?php
+    define('PERMISO_REQUERIDO', 'mantainers_manage');
     include("middleware/auth.php");
 ?>
 
@@ -58,14 +58,10 @@
                 </tr>
                 <tr>
                     <th scope="row">9</th>
-                    <td>Roles y Permisos</td>
-                </tr>
-                <tr>
-                    <th scope="row">10</th>
                     <td>Servicios</td>
                 </tr>
                 <tr>
-                    <th scope="row">11</th>
+                    <th scope="row">10</th>
                     <td>Tipos de Horario</td>
                 </tr>
             </tbody>

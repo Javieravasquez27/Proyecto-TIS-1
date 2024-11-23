@@ -1,5 +1,5 @@
 <?php 
-    define('PERMISO_REQUERIDO', 'Gestionar autorizaciones de profesionales');
+    define('PERMISO_REQUERIDO', 'professional_authorization');
     include("middleware/auth.php");
 ?>
 
