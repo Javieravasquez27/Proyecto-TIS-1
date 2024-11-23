@@ -24,15 +24,17 @@ body {
     height: 80px;
 }
 .nav-tabs .nav-link {
-    border: 1px solid #ddd;
+    background-color: #f8f8f8;
+    border: 1px solid #f8f8f8;
     border-radius: 0;
     color: black;
 }
 .nav-tabs .nav-link.active {
-    background-color: #ddd;
+    background-color: #f8f8f8;
     color: black;
 }
 .tab-content {
+    background-color: #f8f8f8;
     border: 1px solid #ddd;
     padding: 20px;
 }

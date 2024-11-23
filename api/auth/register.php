@@ -34,7 +34,7 @@ try {
         // Procesar la foto de perfil si el rol es Profesional (id_rol = 3)
         $foto_perfil = null;
         if ($rol == 3 && isset($_FILES['foto_perfil'])) {
-            $directorio_foto_perfil = "../../uploads/foto_perfil/";
+            $directorio_foto_perfil = "uploads/foto_perfil/";
             $localizacion_foto_perfil = $directorio_foto_perfil . basename($_FILES["foto_perfil"]["name"]);
             $subida_correcta_fp = 1;
             $extension_fp = strtolower(pathinfo($localizacion_foto_perfil, PATHINFO_EXTENSION));

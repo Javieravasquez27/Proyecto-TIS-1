@@ -4,9 +4,6 @@
     include("database/conexion.php");
     $rut = $_GET['rut'];
 ?>
-<!--ARREGLAR EL STYLE del perfil de los profesionales que no los pesca -->
-<link rel="stylesheet" href="../public/css/profile_profesional.css">
-
 <div class="container my-5">
     <?php
     $query = "SELECT * FROM comuna, institucion, usuario join profesional using (rut) join profesion using (id_profesion)
@@ -18,7 +15,7 @@
     ?>
     
     <div class="profile-header">
-        <img src="../<?php echo $row_prof['foto_perfil']?>" alt="Foto de perfil" class="rounded-circle mb-3">
+        <img src="<?php  echo $row_prof['foto_perfil'] ?>" alt="Foto de perfil" class="rounded-circle mb-3">
         <h2><?php echo $row_prof['nombres']?> <?php echo $row_prof['apellido_p']?> <?php echo $row_prof['apellido_m']?></h2>
         <p><?php echo $row_prof['nombre_profesion']?></p>
         <p><?php echo $row_prof['nombre_comuna']?></p>
@@ -58,12 +55,12 @@
                 <div class="tab-pane fade" id="direcciones" role="tabpanel">
                     <h5>Direcciones</h5>
                     <?php
-                    $query = "SELECT nombre_comuna, nombre_ciudad,nombre_region from lugar_atencion_presencial join comuna using (id_comuna) join ciudad using (id_ciudad) join region using (id_region)
-                    where rut = '$rut'";
+                    $query = "SELECT nombre_comuna, nombre_provincia,nombre_region from lugar_atencion_presencial join comuna using (id_comuna) join provincia using (id_provincia) join region using (id_region)
+                    where rut_profesional = '$rut'";
                     $resultado_prof = mysqli_query($conexion, $query);
                     while($row_prof = mysqli_fetch_assoc($resultado_prof)){
                     ?>
-                    <div class="service-item"><span><b>Direccion: </b><?php echo $row_prof['nombre_comuna'] ?> , <?php echo $row_prof['nombre_ciudad'] ?> , <?php echo $row_prof['nombre_region'] ?></div>
+                    <div class="service-item"><span><b>Direccion: </b><?php echo $row_prof['nombre_comuna'] ?> , <?php echo $row_prof['nombre_provincia'] ?> , <?php echo $row_prof['nombre_region'] ?></div>
                     <?php
                     }
                     ?>
@@ -84,6 +81,7 @@
             <form action="" method="POST"></form>
             <div class="calendar">
                 <h5 class="mb-3">Reservar Cita</h5>
+                <input type="hidden" id="rut_prof" value="<?php echo $rut?>">
                 <select class="form-select mb-3">
                     <option value="" selected>Servicio</option>
                     <?php
@@ -107,11 +105,13 @@
     // Detecta cuando cambia la fecha y hace una solicitud AJAX
     $('#fecha').on('change', function () {
         const fechaSeleccionada = $(this).val();
+        const rut = document.querySelector("#rut_prof").value;
         if (fechaSeleccionada) {
             $.ajax({
-                url: 'consultar_disponibilidad.php', // Archivo PHP que manejará la solicitud
+                url: 'pages/profesional/consultar_disponibilidad.php', // Archivo PHP que manejará la solicitud
                 type: 'POST',
-                data: { fecha: fechaSeleccionada },
+                data: { rut:rut,fecha: fechaSeleccionada
+                },
                 success: function (data) {
                     // Actualiza la lista de horas disponibles
                     $('#horas-disponibles').html(data);

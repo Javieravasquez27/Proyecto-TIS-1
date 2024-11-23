@@ -104,7 +104,7 @@
             <h3>Perfil de Usuario</h3>
         </div>
         <div class="card-body text-center">
-            <img src="../<?php echo $user['foto_perfil']; ?>" class="rounded-circle mb-3" alt="Foto de Perfil" width="120" height="120">
+            <img src="<?php echo $user['foto_perfil']?>" class="rounded-circle mb-3" alt="Foto de Perfil" width="120" height="120">
             <h4 class="text-dark"><?php echo $user['nombres']; ?></h4>
             <p class="text-muted"><?php echo $user['correo']; ?></p>
             <button class="btn btn-custom">Editar Perfil</button>
