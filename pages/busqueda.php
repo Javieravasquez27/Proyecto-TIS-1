@@ -75,7 +75,7 @@
                     <div class="profile-section">
                         <img src="<?php echo $row_prof['foto_perfil'] ?>" alt="Foto de perfil">
                         <div>
-                            <h5 class="mt-2"><a href="index.php?p=profesional/profile_cita&rut=<?php echo $row_prof['rut']; ?>" class="no-style-link"><b><?php echo $row_prof['nombres']; ?></b></a></h5>
+                            <h5 class="mt-2"><a href="index.php?p=profesional/profile_cita&rut=<?php echo $row_prof['rut']; ?>" class="text-decoration-none"><b><?php echo $row_prof['nombres']; ?></b></a></h5>
                             <p class="text-muted"><?php echo $row_prof['nombre_profesion']; ?></p>
                         </div>
                     </div>
