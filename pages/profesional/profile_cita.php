@@ -16,28 +16,44 @@
     $resultado = mysqli_query($conexion,$query);
     $row_prof = mysqli_fetch_assoc($resultado);
     ?>
-    
+
+    <title>Reservar cita profesional con
+        <?php echo $row_prof['nombres']; ?> - KindomJob's
+    </title>
+
     <div class="profile-header">
         <img src="<?php  echo $row_prof['foto_perfil'] ?>" alt="Foto de perfil" class="rounded-circle mb-3">
-        <h2><?php echo $row_prof['nombres']?> <?php echo $row_prof['apellido_p']?> <?php echo $row_prof['apellido_m']?></h2>
-        <p><?php echo $row_prof['nombre_profesion']?></p>
-        <p><?php echo $row_prof['nombre_comuna']?></p>
+        <h2>
+            <?php echo $row_prof['nombres']?>
+            <?php echo $row_prof['apellido_p']?>
+            <?php echo $row_prof['apellido_m']?>
+        </h2>
+        <p>
+            <?php echo $row_prof['nombre_profesion']?>
+        </p>
+        <p>
+            <?php echo $row_prof['nombre_comuna']?>
+        </p>
     </div>
     <div class="row mt-4">
         <!-- Sección de información y servicios -->
         <div class="col-md-8">
             <ul class="nav nav-tabs mb-3" id="profileTabs" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="services-tab" data-bs-toggle="tab" data-bs-target="#services" type="button">Servicios y precios</button>
+                    <button class="nav-link active" id="services-tab" data-bs-toggle="tab" data-bs-target="#services"
+                        type="button">Servicios y precios</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="experience-tab" data-bs-toggle="tab" data-bs-target="#experience" type="button">Experiencia</button>
+                    <button class="nav-link" id="experience-tab" data-bs-toggle="tab" data-bs-target="#experience"
+                        type="button">Experiencia</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="opinions-tab" data-bs-toggle="tab" data-bs-target="#opinions" type="button">Opiniones</button>
+                    <button class="nav-link" id="opinions-tab" data-bs-toggle="tab" data-bs-target="#opinions"
+                        type="button">Opiniones</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="services-tab" data-bs-toggle="tab" data-bs-target="#direcciones" type="button">Direcciones</button>
+                    <button class="nav-link" id="services-tab" data-bs-toggle="tab" data-bs-target="#direcciones"
+                        type="button">Direcciones</button>
                 </li>
             </ul>
             <div class="tab-content" id="profileTabContent">
@@ -49,7 +65,11 @@
                     $resultado_prof = mysqli_query($conexion, $query);
                     while($row_prof = mysqli_fetch_assoc($resultado_prof)){
                     ?>
-                    <div class="service-item"><span><?php echo $row_prof['nombre_servicio'] ?></span><span>$<?php echo $row_prof['precio_serv_prof'] ?></span></div>
+                    <div class="service-item"><span>
+                            <?php echo $row_prof['nombre_servicio'] ?>
+                        </span><span>$
+                            <?php echo $row_prof['precio_serv_prof'] ?>
+                        </span></div>
                     <?php
                     }
                     ?>
@@ -63,7 +83,11 @@
                     $resultado_prof = mysqli_query($conexion, $query);
                     while($row_prof = mysqli_fetch_assoc($resultado_prof)){
                     ?>
-                    <div class="service-item"><span><b>Direccion: </b><?php echo $row_prof['nombre_comuna'] ?> , <?php echo $row_prof['nombre_provincia'] ?> , <?php echo $row_prof['nombre_region'] ?></div>
+                    <div class="service-item"><span><b>Direccion: </b>
+                            <?php echo $row_prof['nombre_comuna'] ?> ,
+                            <?php echo $row_prof['nombre_provincia'] ?> ,
+                            <?php echo $row_prof['nombre_region'] ?>
+                    </div>
                     <?php
                     }
                     ?>

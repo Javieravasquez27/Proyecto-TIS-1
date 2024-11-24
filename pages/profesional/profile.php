@@ -26,7 +26,7 @@
             <img src="<?php echo $usuario['foto_perfil']?>" class="rounded-circle mb-3" alt="Foto de Perfil" width="120"
                 height="120">
             <h4 class="text-dark">
-                <?php echo $usuario['nombres']; ?>
+                <?php echo $usuario['nombres']; ?> <?php echo $usuario['apellido_p']; ?> <?php echo $usuario['apellido_m']; ?>
             </h4>
             <p class="text-muted">
                 <?php echo $usuario['correo']; ?>
