@@ -20,8 +20,6 @@
         html: "Para ser mostrado en la búsqueda, <b>tiene que rellenar sus campos de profesional.</b><br><a href='index.php?p=profesional/profile' style='color:#fff;'>Rellene los campos aquí</a>"
     });
 
-
-
     document.addEventListener("DOMContentLoaded", function () {
         function cargarRegiones() {
             fetch("utils/get_region.php")
@@ -183,7 +181,7 @@
 
 <div class="container">
     <div class="row py-5 text-center">
-    <p class="h4">Busca profesionales y agenda tu cita aquí</p>
+    <p class="h1">Busca profesionales y agenda tu cita aquí</p>
         <form class="d-flex" method="POST" role="search" action="index.php?p=busqueda">
             <div class="col">
                 <div class="row py-3">
