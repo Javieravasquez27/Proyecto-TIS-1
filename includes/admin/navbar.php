@@ -1,14 +1,14 @@
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    const currentPath = window.location.pathname.split("/").pop(); // Obtiene el nombre del archivo actual
-    const navLinks = document.querySelectorAll(".navbar-nav .nav-link");
+    document.addEventListener("DOMContentLoaded", function() {
+        const currentPath = window.location.pathname.split("/").pop(); // Obtiene el nombre del archivo actual
+        const navLinks = document.querySelectorAll(".navbar-nav .nav-link");
 
-    navLinks.forEach(link => {
-        if (link.getAttribute("href") === currentPath) {
-            link.classList.add("active");
-        }
+        navLinks.forEach(link => {
+            if (link.getAttribute("href") === currentPath) {
+                link.classList.add("active");
+            }
+        });
     });
-});
 </script>
 
 <body style="background-color: rgb(240, 223, 255);">
@@ -33,9 +33,11 @@ document.addEventListener("DOMContentLoaded", function() {
                     <li class="nav-item">
                         <a class="nav-link <?php echo ($pagina == 'admin/home') ? 'active' : null ?>" aria-current="page" href="index.php?p=admin/home">Inicio</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link <?php echo (strpos($pagina, 'admin/mantenedores') !== false) ? 'active' : null ?>" href="index.php?p=admin/mantenedores/index">Mantenedores</a>
-                    </li>
+                    <?php if ($_SESSION['id_rol'] == 1): ?>
+                        <li class="nav-item">
+                            <a class="nav-link <?php echo (strpos($pagina, 'admin/mantenedores') !== false) ? 'active' : null ?>" href="index.php?p=admin/mantenedores/index">Mantenedores</a>
+                        </li>
+                    <?php endif; ?>
                     <li class="nav-item">
                         <a class="nav-link <?php echo (strpos($pagina, 'admin/users') !== false) ? 'active' : null ?>" href="index.php?p=admin/users/index">Usuarios</a>
                     </li>
@@ -52,7 +54,15 @@ document.addEventListener("DOMContentLoaded", function() {
                             <b><?php echo $_SESSION['nombre_usuario']; ?></b>
                         </a>
                         <ul class="dropdown-menu" style="margin-left: -80px;">
-                            <li><a class="dropdown-item <?php echo ($pagina == 'auth/profile') ? 'active' : null ?>" aria-current="page" href="index.php?p=auth/profile">Perfil</a></li>
+                            <?php if ($_SESSION['id_rol'] == 1 || $_SESSION['id_rol'] == 2 || $_SESSION['id_rol'] == 3): ?>
+                                <li><a class="dropdown-item <?php echo ($pagina == 'profesional/profile') ? 'active' : null ?>" aria-current="page" href="index.php?p=profesional/profile">Perfil</a></li>
+                            <?php endif; ?>
+                            <?php if ($_SESSION['id_rol'] == 4): ?>
+                                <li><a class="dropdown-item <?php echo ($pagina == 'cliente/profile') ? 'active' : null ?>" aria-current="page" href="index.php?p=cliente/profile">Perfil</a></li>
+                            <?php endif; ?>
+                            <?php if ($_SESSION['id_rol'] == 1 || $_SESSION['id_rol'] == 2): ?>
+                                <li><a class="dropdown-item <?php echo ($pagina == 'admin/home') ? 'active' : null ?>" aria-current="page" href="index.php?p=admin/home">Panel Admin</a></li>
+                            <?php endif; ?>
                             <li><a class="dropdown-item" id="logout" href="#">Cerrar Sesión</a></li>
                         </ul>
                     </li>

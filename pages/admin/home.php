@@ -8,15 +8,17 @@
 <div class="container">
     <h1 class="text-center my-5">Panel de Administradores</h1>
     <div class="row">
-        <div class="col-md-6 mb-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Mantenedores</h5>
-                    <p class="card-text">Administra los mantenedores de la plataforma.</p>
-                    <a href="index.php?p=admin/mantenedores/index" class="btn btn-primary">Entrar</a>
+        <?php if ($_SESSION['id_rol'] == 1): ?>
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Mantenedores</h5>
+                        <p class="card-text">Administra los mantenedores de la plataforma.</p>
+                        <a href="index.php?p=admin/mantenedores/index" class="btn btn-primary">Entrar</a>
+                    </div>
                 </div>
             </div>
-        </div>
+        <?php endif; ?>
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
