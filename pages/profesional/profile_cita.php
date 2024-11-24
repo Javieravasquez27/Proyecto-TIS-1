@@ -5,6 +5,8 @@
     $rut = $_GET['rut'];
 ?>
 
+<link rel="stylesheet" href="public/css/profile_cita.css">
+
 <div class="container my-5">
     <?php
     $query = "SELECT * FROM comuna, institucion, usuario join profesional using (rut) join profesion using (id_profesion)
