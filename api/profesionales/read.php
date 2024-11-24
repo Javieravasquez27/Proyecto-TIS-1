@@ -44,14 +44,14 @@
 
             $response = array(
                 'success' => true,
-                'message' => 'Usuarios obtenidos correctamente',
+                'message' => 'Profesionales obtenidos correctamente',
                 'data' => $usuarios
             );
 
         } else {
             $response = array(
                 'success' => false,
-                'message' => 'Error al obtener los usuarios. Intente de nuevo.'
+                'message' => 'Error al obtener los profesionales. Intente de nuevo.'
             );
         }
     } catch (PDOException $e) {

@@ -42,6 +42,9 @@ document.addEventListener("DOMContentLoaded", function() {
                     <li class="nav-item">
                         <a class="nav-link <?php echo (strpos($pagina, 'admin/profesionales') !== false) ? 'active' : null ?>" href="index.php?p=admin/profesionales/index">Profesionales</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link <?php echo (strpos($pagina, 'admin/permiso_rol') !== false) ? 'active' : null ?>" href="index.php?p=admin/permiso_rol/index">Permisos para Roles</a>
+                    </li>
                 </ul>
                 <ul class="navbar-nav mr-auto mb-5 mb-lg-0">
                     <li class="nav-item dropdown">
