@@ -4,28 +4,26 @@
 
     include 'database/conexion.php';
 
-
     $pagina = isset($_GET['p']) ? strtolower($_GET['p']) : 'home';
-
     $esPaginaAdmin = strpos($pagina, "admin") === 0;
 
-    if ($esPaginaAdmin)
-    {
-        require_once 'includes/admin/header.php';
+    $ruta = 'pages/' . $pagina . '.php';
+
+    if (!file_exists($ruta)) {
+        $ruta = 'pages/error/pagina_no_existe.php';
     }
-    else
-    {
+
+    if ($esPaginaAdmin) {
+        require_once 'includes/admin/header.php';
+    } else {
         require_once 'includes/header.php';
     }
 
-    require_once 'pages/' . $pagina . '.php';
+    require_once $ruta;
 
-    if ($esPaginaAdmin)
-    {
+    if ($esPaginaAdmin) {
         require_once 'includes/admin/footer.php';
-    }
-    else
-    {
+    } else {
         require_once 'includes/footer.php';
     }
 
