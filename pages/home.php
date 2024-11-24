@@ -7,6 +7,7 @@
         color: "#fff",
         background: "#cf142b",
         showConfirmButton: false,
+        showCloseButton: true,
         timer: 10000,
         timerProgressBar: true,
         didOpen: (toast) => {
@@ -16,7 +17,7 @@
     });
     Toast.fire({
         icon: "warning",
-        html: "Para ser mostrado en la búsqueda, <b>tienes que rellenar tus campos de profesional. </b><a href='index.php?p=profesional/profile' style='color:#fff;'>Rellene los campos aqui</a>"
+        html: "Para ser mostrado en la búsqueda, <b>tiene que rellenar sus campos de profesional.</b><br><a href='index.php?p=profesional/profile' style='color:#fff;'>Rellene los campos aquí</a>"
     });
 
 
