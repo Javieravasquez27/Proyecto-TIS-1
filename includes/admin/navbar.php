@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <body style="background-color: rgb(240, 223, 255);">
     <nav class="navbar sticky-top navbar-expand-lg bg-gradient bg-opacity-50" style="background-color: rgb(150, 120, 182);">
         <div class="container-fluid ">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="index.php?p=home">
                 <img src="public/images/logo.png" alt="Logo KindomJobs" height="50" class="imagen d-inline-block">
                 <span class="h3 align-middle" style="color: black;">KindomJob's</span>
             </a>
@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function() {
             if (isset($_SESSION["rut"])) {
             ?>
                 <a class="navbar-brand"><b>Administrador</b></a>
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
                     <li class="nav-item">
                         <a class="nav-link <?php echo ($pagina == 'admin/home') ? 'active' : null ?>" aria-current="page" href="index.php?p=admin/home">Inicio</a>
                     </li>
@@ -60,9 +60,15 @@ document.addEventListener("DOMContentLoaded", function() {
             <?php
             } else {
             ?>
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
                     <li class="nav-item">
                         <a class="nav-link <?php echo ($pagina == 'home') ? 'active' : null ?>" aria-current="page" href="index.php?p=home">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <?php echo ($pagina == 'profesiones') ? 'active' : null ?>" aria-current="page" href="index.php?p=profesiones">Profesiones</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <?php echo ($pagina == 'servicios') ? 'active' : null ?>" aria-current="page" href="index.php?p=servicios">Servicios</a>
                     </li>
                 </ul>
                 <div class="d-flex">

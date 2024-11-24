@@ -33,10 +33,10 @@ document.addEventListener("DOMContentLoaded", function() {
                         <a class="nav-link <?php echo ($pagina == 'home') ? 'active' : null ?>" aria-current="page" href="index.php?p=home">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo ($pagina == 'home') ? 'active' : null ?>" aria-current="page" href="#">Profesiones</a>
+                        <a class="nav-link <?php echo ($pagina == 'profesiones') ? 'active' : null ?>" aria-current="page" href="index.php?p=profesiones">Profesiones</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo ($pagina == 'home') ? 'active' : null ?>" aria-current="page" href="#">Servicios</a>
+                        <a class="nav-link <?php echo ($pagina == 'servicios') ? 'active' : null ?>" aria-current="page" href="index.php?p=servicios">Servicios</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav mr-auto mb-5 mb-lg-0">
@@ -58,10 +58,10 @@ document.addEventListener("DOMContentLoaded", function() {
                         <a class="nav-link <?php echo ($pagina == 'home') ? 'active' : null ?>" aria-current="page" href="index.php?p=home">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo ($pagina == 'pages/profesiones') ? 'active' : null ?>" aria-current="page" href="#">Profesiones</a>
+                        <a class="nav-link <?php echo ($pagina == 'profesiones') ? 'active' : null ?>" aria-current="page" href="index.php?p=profesiones">Profesiones</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo ($pagina == 'pages/servicios') ? 'active' : null ?>" aria-current="page" href="#">Servicios</a>
+                        <a class="nav-link <?php echo ($pagina == 'servicios') ? 'active' : null ?>" aria-current="page" href="index.php?p=servicios">Servicios</a>
                     </li>
                 </ul>
                 <div class="d-flex">
