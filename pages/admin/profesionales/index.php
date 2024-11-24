@@ -45,7 +45,7 @@
             },
             "processing": true,
             "ajax": {
-                "url": "api/profesionales/profesional.php",
+                "url": "api/profesionales/read.php",
                 "dataType": "json",
                 "type": "POST"
             },
