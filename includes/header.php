@@ -51,7 +51,10 @@
 <?php global $sinNavbarFooter; ?>
 
 <body style="background-color: rgb(240, 223, 255);">
+<?php if (empty($sinNavbarFooter)): ?>
 	<div class="min-vh-100">
-		<?php if (empty($sinNavbarFooter)): ?>
+<?php endif; ?>
+	<?php if (empty($sinNavbarFooter)): ?>
+		<div class="min-vh-10">
     		<?php require_once 'includes/navbar.php'; ?>
-		<?php endif; ?>
+	<?php endif; ?>
