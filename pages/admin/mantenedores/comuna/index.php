@@ -240,7 +240,7 @@
                 "data": "provincia"
             },
             {
-                "data": "opciones"
+                "data": "opciones", orderable: false, searchable: false
             }
             ]
         });

@@ -172,7 +172,7 @@
                 "data": "nombre_estado_usuario"
             },
             {
-                "data": "opciones"
+                "data": "opciones", orderable: false, searchable: false
             }
             ]
         });

@@ -172,7 +172,7 @@
                 "data": "nombre_region"
             },
             {
-                "data": "opciones"
+                "data": "opciones", orderable: false, searchable: false
             }
             ]
         });

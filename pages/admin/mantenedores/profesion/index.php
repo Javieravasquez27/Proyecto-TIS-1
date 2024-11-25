@@ -172,7 +172,7 @@
                 "data": "nombre_profesion"
             },
             {
-                "data": "opciones"
+                "data": "opciones", orderable: false, searchable: false
             }
             ]
         });
