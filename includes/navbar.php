@@ -11,7 +11,7 @@
     });
 </script>
 
-<body style="background-color: rgb(240, 223, 255);">
+<body>
     <nav class="navbar sticky-top navbar-expand-lg bg-gradient bg-opacity-50" style="background-color: rgb(150, 120, 182);">
         <div class="container-fluid ">
             <a class="navbar-brand" href="index.php?p=home">
