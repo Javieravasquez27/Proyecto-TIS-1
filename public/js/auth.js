@@ -84,43 +84,81 @@ if (loginForm) {
 document.addEventListener("DOMContentLoaded", () => {
     const registrationForm = document.querySelector("#registration-form");
 
-    // Se muestran u ocultan campos adicionales según el rol seleccionado
-    const camposProfesional = document.getElementById("campos_profesional");
-    const rolInputs = document.querySelectorAll('input[name="rol"]');
+    // Se valida RUT (restricción de carácteres, distinto a función validarRut de más arriba)
+    function validarRutInput(rut) {
+        const regex = /^[0-9]+[kK0-9]$/; // Solo números y 'K'/'k'
+        return regex.test(rut);
+    }
 
-    if (rolInputs) {
-        rolInputs.forEach((input) => {
-            input.addEventListener("change", (event) => {
-                if (event.target.value === "3") {
-                    camposProfesional.style.display = "block";
-                } else {
-                    camposProfesional.style.display = "none";
-                }
-            });
-        });
+    // Se valida teléfono
+    function validarTelefonoInput(telefono) {
+        const regex = /^[0-9]+$/; // Solo números
+        return regex.test(telefono);
+    }
+
+    // Se valida nombre de usuario
+    function validarNombreUsuarioInput(nombreUsuario) {
+        const regex = /^[a-zA-Z0-9_]+$/; // Solo letras, números y guion bajo
+        return regex.test(nombreUsuario);
+    }
+
+    // Se valida contraseña
+    function validarPasswordInput(password) {
+        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/; // Mínimo 8 caracteres, 1 minúscula, 1 mayúscula, 1 número
+        return regex.test(password);
     }
 
     if (registrationForm) {
         registrationForm.addEventListener("submit", async (event) => {
             event.preventDefault();
 
-            const formData = new FormData(registrationForm);
+            const rut = document.getElementById("rut").value.trim();
+            const telefono = document.getElementById("telefono").value.trim();
+            const nombreUsuario = document.getElementById("nombre_usuario").value.trim();
+            const password = document.getElementById("password").value.trim();
+            const confirmarPassword = document.getElementById("confirmar_password").value.trim();
 
-            // Se valida el RUT
-            const rutInput = document.getElementById("rut");
-            if (!validarRut(rutInput.value)) {
+            // Validaciones
+            if (!validarRut(rut) || !validarRutInput(rut)) {
                 Swal.fire({
                     title: "Error",
-                    text: "El RUT ingresado no es válido.",
+                    text: "El RUT ingresado no es válido. Debe contener solo números y una 'K' si corresponde.",
                     icon: "error",
                     button: "Aceptar",
                 });
                 return;
             }
 
-            // Se verifican las contraseñas
-            const password = document.getElementById("password").value;
-            const confirmarPassword = document.getElementById("confirmar_password").value;
+            if (!validarTelefonoInput(telefono)) {
+                Swal.fire({
+                    title: "Error",
+                    text: "El teléfono solo puede contener números.",
+                    icon: "error",
+                    button: "Aceptar",
+                });
+                return;
+            }
+
+            if (!validarNombreUsuarioInput(nombreUsuario)) {
+                Swal.fire({
+                    title: "Error",
+                    text: "El nombre de usuario solo puede contener letras, números y guion bajo (_).",
+                    icon: "error",
+                    button: "Aceptar",
+                });
+                return;
+            }
+
+            if (!validarPasswordInput(password)) {
+                Swal.fire({
+                    title: "Error",
+                    text: "La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula y un número.",
+                    icon: "error",
+                    button: "Aceptar",
+                });
+                return;
+            }
+
             if (password !== confirmarPassword) {
                 Swal.fire({
                     title: "Error",
@@ -131,25 +169,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            // Se verifican archivos si el rol es profesional
-            const rol = formData.get("rol");
-            if (rol === "3") {
-                const fotoPerfil = document.getElementById("foto_perfil").files[0];
-                const tituloProfesional = document.getElementById("titulo_profesional").files[0];
-
-                if (!fotoPerfil || !tituloProfesional) {
-                    Swal.fire({
-                        title: "Error",
-                        text: "Debe cargar la foto de perfil y el título profesional.",
-                        icon: "error",
-                        button: "Aceptar",
-                    });
-                    return;
-                }
-            }
-
+            // Se envían los datos del formulario al servidor
             try {
-                // Se envían los datos del formulario al servidor
+                const formData = new FormData(registrationForm);
                 const response = await fetch("api/auth/register.php", {
                     method: "POST",
                     body: formData,
@@ -162,14 +184,10 @@ document.addEventListener("DOMContentLoaded", () => {
                         title: "Registro exitoso",
                         text: data.message,
                         icon: "success",
-                        showCancelButton: false,
-                        confirmButtonColor: "#3085d6",
                         confirmButtonText: "Aceptar",
                         allowOutsideClick: false,
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            window.location.href = "index.php?p=auth/login";
-                        }
+                    }).then(() => {
+                        window.location.href = "index.php?p=auth/login";
                     });
                 } else {
                     Swal.fire({

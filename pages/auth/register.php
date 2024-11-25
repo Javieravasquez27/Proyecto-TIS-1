@@ -146,35 +146,35 @@
                         <div class="row mb-3">
                             <div class="col">
                                 <label for="rut" class="form-label">RUT</label>
-                                <input type="text" class="form-control" id="rut" name="rut" placeholder="RUT sin guión y con digito verificador (ej: 13799304K o 13799304k)" required>
+                                <input type="text" class="form-control" id="rut" name="rut" placeholder="RUT sin guión y con digito verificador (ej: 13799304K o 13799304k)" maxlength="9" required>
                             </div>
                             <div class="col">
                                 <label for="nombre_usuario" class="form-label">Nombre de Usuario</label>
-                                <input type="text" class="form-control" id="nombre_usuario" placeholder="Sin espacios ni carácteres especiales (ej: JuanPerez)" name="nombre_usuario" required>
+                                <input type="text" class="form-control" id="nombre_usuario" placeholder="Sin espacios ni carácteres especiales (ej: JuanPerez)" name="nombre_usuario" maxlength="20" required>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col">
                                 <label for="nombres" class="form-label">Nombres</label>
-                                <input type="text" class="form-control" id="nombres" name="nombres" placeholder="Ejemplo: Juan Carlos" required>
+                                <input type="text" class="form-control" id="nombres" name="nombres" placeholder="Ejemplo: Juan Carlos" maxlength="50" required>
                             </div>
                             <div class="col">
                                 <label for="apellido_p" class="form-label">Apellido Paterno</label>
-                                <input type="text" class="form-control" id="apellido_p" name="apellido_p" placeholder="Ejemplo: Pérez" required>
+                                <input type="text" class="form-control" id="apellido_p" name="apellido_p" placeholder="Ejemplo: Pérez" maxlength="50" required>
                             </div>
                             <div class="col">
                                 <label for="apellido_m" class="form-label">Apellido Materno</label>
-                                <input type="text" class="form-control" id="apellido_m" name="apellido_m" placeholder="Ejemplo: García" required>
+                                <input type="text" class="form-control" id="apellido_m" name="apellido_m" placeholder="Ejemplo: García" maxlength="50" required>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col">
                                 <label for="correo" class="form-label">Correo</label>
-                                <input type="email" class="form-control" id="correo" name="correo" placeholder="Ejemplo: juan@email.com" required>
+                                <input type="email" class="form-control" id="correo" name="correo" placeholder="Ejemplo: juan@email.com" maxlength="50" required>
                             </div>
                             <div class="col">
                                 <label for="telefono" class="form-label">Teléfono</label>
-                                <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="Ejemplo: 912345678" required>
+                                <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="Ejemplo: 912345678" maxlength="9" required>
                             </div>
                             <div class="col">
                                 <label for="fecha_nac" class="form-label">Fecha de Nacimiento</label>
@@ -184,7 +184,7 @@
                         <div class="row mb-3">
                             <div class="col">
                                 <label for="direccion" class="form-label">Dirección</label>
-                                <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Ejemplo: Avenida Las Golondrinas 2456" required>
+                                <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Ejemplo: Avenida Las Golondrinas 2456" maxlength="50" required>
                             </div>
                             <div class="col">
                                 <label for="comuna" class="form-label">Comuna</label>
@@ -196,11 +196,11 @@
                         <div class="row mb-3">
                             <div class="col">
                                 <label for="password" class="form-label">Contraseña</label>
-                                <input type="password" class="form-control" id="password" name="password" placeholder="Debe contener al menos 8 carácteres" required>
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Debe contener al menos 8 carácteres" maxlength="100" required>
                             </div>
                             <div class="col">
                                 <label for="confirmar_password" class="form-label">Confirmar Contraseña</label>
-                                <input type="password" class="form-control" id="confirmar_password" name="confirmar_password" placeholder="Reingrese la contraseña" required>
+                                <input type="password" class="form-control" id="confirmar_password" name="confirmar_password" placeholder="Reingrese la contraseña" maxlength="100" required>
                             </div>
                         </div>
                         <!-- Campos adicionales para "Profesional" -->
@@ -232,7 +232,7 @@
                             <div class="row mb-3">
                                 <div class="col">
                                     <label for="experiencia" class="form-label">Experiencia</label>
-                                    <input type="text" class="form-control" id="experiencia" name="experiencia" placeholder="Breve resumen de su experiencia (ej: Soy Ingeniero Civil Informático, me dedicó al análisis de datos y...)">
+                                    <input type="text" class="form-control" id="experiencia" name="experiencia" placeholder="Breve resumen de su experiencia (ej: Soy Ingeniero Civil Informático, Magíster en Ciencias de la Computación...)" maxlength="500">
                                 </div>
                             </div>
                         </div>
@@ -252,4 +252,4 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
         
-        <script src="public/js/app.js" ></script>
+        <script src="public/js/auth.js" ></script>
