@@ -1,19 +1,24 @@
-<?php  
+<?php
     include '../../database/conexion.php';
 
     try {
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
-        }   
+        }
 
         if (isset($_POST['rut']) && isset($_POST['password'])) {
+            // Se separa el número del RUT y el dígito verificador
+            $rutCompleto = strtoupper($_POST['rut']); // Se asegura que el dígito verificador esté en mayúsculas si es K
+            $rutSinDv = substr($rutCompleto, 0, -1); // RUT sin digito verificador (ejemplo: 102083237 acá queda 10208323)
+            $digitoVerificador = substr($rutCompleto, -1); // Dígito verificador (ejemplo: 102083237 acá queda 7)
 
-            $rut = stripslashes($_REQUEST['rut']);
-            $rut = mysqli_real_escape_string($conexion, $rut);
-            $password = stripslashes($_REQUEST['password']);
-            $password = mysqli_real_escape_string($conexion, $password);
+            $rutSinDv = mysqli_real_escape_string($conexion, $rutSinDv);
+            $digitoVerificador = mysqli_real_escape_string($conexion, $digitoVerificador);
+            $password = mysqli_real_escape_string($conexion, $_POST['password']);
 
-            $sql_usuario = "SELECT * FROM usuario WHERE rut='$rut' and contrasena='" . md5($password) . "'";
+            $sql_usuario = "SELECT * FROM usuario 
+                            WHERE rut = '$rutSinDv' AND dv = '$digitoVerificador' 
+                            AND contrasena = '" . md5($password) . "'";
             $resultado_usuario = mysqli_query($conexion, $sql_usuario);
             $datos_usuario = mysqli_fetch_assoc($resultado_usuario);
 
@@ -24,8 +29,9 @@
                         'message' => 'Su cuenta está deshabilitada. Por favor, contacte con el administrador.'
                     );
                 } else {
-                    // Guardar los datos del usuario en la sesión
+                    // Se guardan los datos del usuario en la sesión
                     $_SESSION['rut'] = $datos_usuario['rut'];
+                    $_SESSION['dv'] = $datos_usuario['dv'];
                     $_SESSION['nombre_usuario'] = $datos_usuario['nombre_usuario'];
                     $_SESSION['nombres'] = $datos_usuario['nombres'];
                     $_SESSION['apellido_p'] = $datos_usuario['apellido_p'];
@@ -45,7 +51,7 @@
             } else {
                 $response = array(
                     'success' => false,
-                    'message' => 'Nombre de usuario o contraseña incorrectos. Por favor, intente de nuevo.'
+                    'message' => 'RUT o contraseña incorrectos. Por favor, intente de nuevo.'
                 );
             }
         } else {

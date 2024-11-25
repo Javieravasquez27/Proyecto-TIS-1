@@ -3,20 +3,52 @@
  * además de manejar el logout, por medio de AJAX.
  **/
 
+// Función para validar el RUT
+function validarRut(rut) {
+    rut = rut.replace(/\./g, "").toUpperCase(); // Se quitan puntos y pasa "K" a mayúsculas si no lo está
+    const regex = /^[0-9]+[K0-9]$/; // Se valida el formato del RUT (13799304K o 13799304k)
+    if (!regex.test(rut)) return false;
+
+    const cuerpo = rut.slice(0, -1);
+    const dv = rut.slice(-1);
+
+    let suma = 0;
+    let multiplo = 2;
+
+    for (let i = cuerpo.length - 1; i >= 0; i--) {
+        suma += multiplo * parseInt(cuerpo[i]);
+        multiplo = multiplo === 7 ? 2 : multiplo + 1;
+    }
+
+    const dvEsperado = 11 - (suma % 11);
+    const dvCalculado = dvEsperado === 11 ? "0" : dvEsperado === 10 ? "K" : dvEsperado.toString();
+
+    return dv === dvCalculado;
+}
+
 const loginForm = document.querySelector("#login-form");
 
 if (loginForm) {
     loginForm.addEventListener("submit", (event) => {
-        // Prevenir el comportamiento predeterminado del formulario al enviarlo
         event.preventDefault();
 
-        // Obtener los valores del formulario
-        const rut = document.querySelector("#rut").value;
+        // Se obtienen los valores del formulario
+        const rut = document.querySelector("#rut").value.trim();
         const password = document.querySelector("#password").value;
 
-        console.log(rut, password);
+        // Se valida el formato del RUT
+        if (!validarRut(rut)) {
+            Swal.fire({
+                icon: "error",
+                title: "RUT inválido",
+                text: "Por favor, ingresa un RUT válido.",
+                showConfirmButton: false,
+                timer: 1500,
+            });
+            return;
+        }
 
-        // Enviar los datos del formulario al servidor
+        // Se envían los datos del formulario al servidor
         $.ajax({
             url: "api/auth/login.php",
             method: "POST",
@@ -49,45 +81,82 @@ if (loginForm) {
     });
 }
 
-const registrationForm = document.querySelector("#registration-form");
+document.addEventListener("DOMContentLoaded", () => {
+    const registrationForm = document.querySelector("#registration-form");
 
-if (registrationForm) {
-    registrationForm.addEventListener("submit", (event) => {
-        event.preventDefault();
+    // Se muestran u ocultan campos adicionales según el rol seleccionado
+    const camposProfesional = document.getElementById("campos_profesional");
+    const rolInputs = document.querySelectorAll('input[name="rol"]');
 
-        // Crear un objeto FormData para enviar los datos del formulario
-        const formData = new FormData(registrationForm);
+    if (rolInputs) {
+        rolInputs.forEach((input) => {
+            input.addEventListener("change", (event) => {
+                if (event.target.value === "3") {
+                    camposProfesional.style.display = "block";
+                } else {
+                    camposProfesional.style.display = "none";
+                }
+            });
+        });
+    }
 
-        // Obtener el rol seleccionado y agregarlo a FormData
-        const rolSeleccionado = document.querySelector('input[name="rol"]:checked');
-        const rol = rolSeleccionado ? rolSeleccionado.value : null;
-        formData.append("rol", rol);
+    if (registrationForm) {
+        registrationForm.addEventListener("submit", async (event) => {
+            event.preventDefault();
 
-        // Verificar si el rol es "Profesional" (ejemplo: ID = "3")
-        if (rol === "3") {
-            // Obtener los archivos de foto_perfil y titulo_profesional y agregarlos a FormData
-            const fotoPerfilInput = document.querySelector("#foto_perfil");
-            const tituloProfesionalInput = document.querySelector("#titulo_profesional");
+            const formData = new FormData(registrationForm);
 
-            if (fotoPerfilInput.files.length > 0) {
-                formData.append("foto_perfil", fotoPerfilInput.files[0]);
+            // Se valida el RUT
+            const rutInput = document.getElementById("rut");
+            if (!validarRut(rutInput.value)) {
+                Swal.fire({
+                    title: "Error",
+                    text: "El RUT ingresado no es válido.",
+                    icon: "error",
+                    button: "Aceptar",
+                });
+                return;
             }
 
-            if (tituloProfesionalInput.files.length > 0) {
-                formData.append("titulo_profesional", tituloProfesionalInput.files[0]);
+            // Se verifican las contraseñas
+            const password = document.getElementById("password").value;
+            const confirmarPassword = document.getElementById("confirmar_password").value;
+            if (password !== confirmarPassword) {
+                Swal.fire({
+                    title: "Error",
+                    text: "Las contraseñas no coinciden.",
+                    icon: "error",
+                    button: "Aceptar",
+                });
+                return;
             }
-        }
 
-        // Enviar los datos del formulario al servidor
-        $.ajax({
-            url: "api/auth/register.php",
-            method: "POST",
-            data: formData,
-            processData: false, // Evita que jQuery procese los datos (porque es FormData)
-            contentType: false, // Evita que jQuery configure el contentType
-        })
-            .done(function (response) {
-                const data = JSON.parse(response);
+            // Se verifican archivos si el rol es profesional
+            const rol = formData.get("rol");
+            if (rol === "3") {
+                const fotoPerfil = document.getElementById("foto_perfil").files[0];
+                const tituloProfesional = document.getElementById("titulo_profesional").files[0];
+
+                if (!fotoPerfil || !tituloProfesional) {
+                    Swal.fire({
+                        title: "Error",
+                        text: "Debe cargar la foto de perfil y el título profesional.",
+                        icon: "error",
+                        button: "Aceptar",
+                    });
+                    return;
+                }
+            }
+
+            try {
+                // Se envían los datos del formulario al servidor
+                const response = await fetch("api/auth/register.php", {
+                    method: "POST",
+                    body: formData,
+                });
+
+                const data = await response.json();
+
                 if (data.success) {
                     Swal.fire({
                         title: "Registro exitoso",
@@ -110,17 +179,17 @@ if (registrationForm) {
                         button: "Aceptar",
                     });
                 }
-            })
-            .fail(function () {
+            } catch (error) {
                 Swal.fire({
                     title: "Error",
-                    text: "Error en el servidor. Intente de nuevo más tarde.",
+                    text: "Ocurrió un error en el servidor. Intente más tarde.",
                     icon: "error",
                     button: "Aceptar",
                 });
-            });
-    });
-}
+            }
+        });
+    }
+});
 
 const logout = document.querySelector("#logout");
 
