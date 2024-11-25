@@ -1,17 +1,17 @@
 <title>Iniciar Sesión - KindomJob's</title>
 
-<div class="container mt-5">
+<div class="container" style="margin-top: 145px; margin-bottom: 115px;">
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
-                    <h1 class="text-center"><img src="public/images/logo.png" alt="Logo"><br>Inicia Sesión</h1>
+                    <h1 class="text-center"><img src="public/images/logo.png" width="100" alt="Logo"><br>Inicia Sesión</h1>
                 </div>
-                <div class="card-body">
+                <div class="card-body" style="margin-bottom: -15px;">
                     <form action="" method="post" name="login" id="login-form">
                         <div class="form-group mb-3">
                             <label for="rut">RUT</label>
-                            <input type="text" id="rut" name="rut" class="form-control" placeholder="Sin puntos ni guión (ejemplo: 123456789)" required />
+                            <input type="text" id="rut" name="rut" class="form-control" placeholder="RUT sin guión y con digito verificador (ej: 13799304K o 13799304k)" required />
                         </div>
                         <div class="form-group mb-3">
                             <label for="password">Contraseña</label>
@@ -21,11 +21,13 @@
                             <button name="submit" type="submit" class="btn btn-primary btn-block">Entrar</button>
                         </div>
                     </form>
-                    <p class="text-center">¿No estás registrado aún? <a href='index.php?p=auth/register'>Regístrate aquí</a></p>
+                    <p class="text-center mt-3">¿Olvidaste tu contraseña? <a href='#'>Recuperala aquí</a><br>
+                                           ¿No estás registrado aún? <a href='index.php?p=auth/register'>Regístrate aquí</a></p>
                 </div>
             </div>
         </div>
     </div>
+    <p class="text-center mt-2"><a href='index.php?p=home'>Volver al inicio</a></p>
 </div>
 
 <!-- Scripts de Bootstrap -->

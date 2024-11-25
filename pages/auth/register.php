@@ -126,14 +126,14 @@
     });
 </script>
 
-<div class="container mt-5">
+<div class="container" style="margin-top: 10px; margin-bottom: 47px;">
     <div class="row justify-content-sm-center mt-5">
         <div class="col-lg-8 col-sm-10">
             <div class="card">
                 <div class="card-header">
-                    <h1 class="text-center"><img src="public/images/logo.png" alt="Logo"><br>Registrate Aquí</h1>
+                    <h1 class="text-center"><img src="public/images/logo.png" width="100" alt="Logo"><br>Registrate Aquí</h1>
                 </div>
-                <div class="card-body">
+                <div class="card-body" style="margin-bottom: -15px;">
                     <form name="registration" id="registration-form" action="" method="post" enctype="multipart/form-data">
                         <div class="row mb-3">
                             <div class="col">
@@ -146,35 +146,35 @@
                         <div class="row mb-3">
                             <div class="col">
                                 <label for="rut" class="form-label">RUT</label>
-                                <input type="text" class="form-control" id="rut" name="rut" required>
+                                <input type="text" class="form-control" id="rut" name="rut" placeholder="RUT sin guión y con digito verificador (ej: 13799304K o 13799304k)" required>
                             </div>
                             <div class="col">
                                 <label for="nombre_usuario" class="form-label">Nombre de Usuario</label>
-                                <input type="text" class="form-control" id="nombre_usuario" name="nombre_usuario" required>
+                                <input type="text" class="form-control" id="nombre_usuario" placeholder="Sin espacios ni carácteres especiales (ej: JuanPerez)" name="nombre_usuario" required>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col">
                                 <label for="nombres" class="form-label">Nombres</label>
-                                <input type="text" class="form-control" id="nombres" name="nombres" required>
+                                <input type="text" class="form-control" id="nombres" name="nombres" placeholder="Ejemplo: Juan Carlos" required>
                             </div>
                             <div class="col">
                                 <label for="apellido_p" class="form-label">Apellido Paterno</label>
-                                <input type="text" class="form-control" id="apellido_p" name="apellido_p" required>
+                                <input type="text" class="form-control" id="apellido_p" name="apellido_p" placeholder="Ejemplo: Pérez" required>
                             </div>
                             <div class="col">
                                 <label for="apellido_m" class="form-label">Apellido Materno</label>
-                                <input type="text" class="form-control" id="apellido_m" name="apellido_m" required>
+                                <input type="text" class="form-control" id="apellido_m" name="apellido_m" placeholder="Ejemplo: García" required>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col">
                                 <label for="correo" class="form-label">Correo</label>
-                                <input type="email" class="form-control" id="correo" name="correo" required>
+                                <input type="email" class="form-control" id="correo" name="correo" placeholder="Ejemplo: juan@email.com" required>
                             </div>
                             <div class="col">
                                 <label for="telefono" class="form-label">Teléfono</label>
-                                <input type="tel" class="form-control" id="telefono" name="telefono" required>
+                                <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="Ejemplo: 912345678" required>
                             </div>
                             <div class="col">
                                 <label for="fecha_nac" class="form-label">Fecha de Nacimiento</label>
@@ -184,7 +184,7 @@
                         <div class="row mb-3">
                             <div class="col">
                                 <label for="direccion" class="form-label">Dirección</label>
-                                <input type="text" class="form-control" id="direccion" name="direccion" required>
+                                <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Ejemplo: Avenida Las Golondrinas 2456" required>
                             </div>
                             <div class="col">
                                 <label for="comuna" class="form-label">Comuna</label>
@@ -196,11 +196,11 @@
                         <div class="row mb-3">
                             <div class="col">
                                 <label for="password" class="form-label">Contraseña</label>
-                                <input type="password" class="form-control" id="password" name="password" required>
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Debe contener al menos 8 carácteres" required>
                             </div>
                             <div class="col">
                                 <label for="confirmar_password" class="form-label">Confirmar Contraseña</label>
-                                <input type="password" class="form-control" id="confirmar_password" name="confirmar_password" required>
+                                <input type="password" class="form-control" id="confirmar_password" name="confirmar_password" placeholder="Reingrese la contraseña" required>
                             </div>
                         </div>
                         <!-- Campos adicionales para "Profesional" -->
@@ -232,7 +232,7 @@
                             <div class="row mb-3">
                                 <div class="col">
                                     <label for="experiencia" class="form-label">Experiencia</label>
-                                    <input type="text" class="form-control" id="experiencia" name="experiencia">
+                                    <input type="text" class="form-control" id="experiencia" name="experiencia" placeholder="Breve resumen de su experiencia (ej: Soy Ingeniero Civil Informático, me dedicó al análisis de datos y...)">
                                 </div>
                             </div>
                         </div>
@@ -240,7 +240,7 @@
                             <button type="submit" name="submit" class="btn btn-primary">Registrarse</button>
                         </div>
                     </form>
-                    <p class="text-center">¿Ya tienes una cuenta? <a href='index.php?p=auth/login'>Inicia sesión aquí</a></p>
+                    <p class="text-center mt-3">¿Ya tienes una cuenta? <a href='index.php?p=auth/login'>Inicia sesión aquí</a></p>
                 </div>
             </div>
         </div>
