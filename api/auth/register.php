@@ -65,7 +65,7 @@ try {
             // Procesar la foto de perfil si el rol es Profesional (id_rol = 3)
             $foto_perfil = null;
             if ($rol == 3 && isset($_FILES['foto_perfil'])) {
-                $directorio_foto_perfil = "../../uploads/foto_perfil/";
+                $directorio_foto_perfil = "uploads/foto_perfil/";
                 $localizacion_foto_perfil = $directorio_foto_perfil . basename($_FILES["foto_perfil"]["name"]);
                 $subida_correcta_fp = 1;
                 $extension_fp = strtolower(pathinfo($localizacion_foto_perfil, PATHINFO_EXTENSION));
@@ -84,7 +84,7 @@ try {
                 } else {
                     $response = array(
                         'success' => false,
-                        'message' => 'Error al cargar la foto de perfil.'
+                        'message' => 'Error al cargar la foto de perfil'
                     );
                     echo json_encode($response);
                     exit();
@@ -119,7 +119,7 @@ try {
                         } else {
                             $response = array(
                                 'success' => false,
-                                'message' => 'Error al cargar título profesional.'
+                                'message' => 'Error al cargar título profesional'
                             );
                             echo json_encode($response);
                             exit();
@@ -135,15 +135,10 @@ try {
 
             elseif ($rol == 4)
             {
-                $sql_ingreso_usuario = "INSERT INTO usuario (rut, nombre_usuario, nombres, apellido_p, apellido_m, correo, telefono, contrasena, fecha_nac, direccion, foto_perfil, id_comuna, id_rol, id_estado_usuario) 
-                                        VALUES ('$rut', '$nombre_usuario', '$nombres', '$apellido_p', '$apellido_m', '$correo', '$telefono', '" . md5($password) . "', '$fecha_nac', '$direccion', '$foto_perfil', '$comuna', '$rol', 1)";
+                $sql_ingreso_usuario = "INSERT INTO usuario (rut, nombre_usuario, nombres, apellido_p, apellido_m, correo, telefono, contrasena, fecha_nac, direccion, id_comuna, id_rol, id_estado_usuario) 
+                                        VALUES ('$rut', '$nombre_usuario', '$nombres', '$apellido_p', '$apellido_m', '$correo', '$telefono', '" . md5($password) . "', '$fecha_nac', '$direccion', '$comuna', '$rol', 1)";
                 $resultado_usuario = mysqli_query($conexion, $sql_ingreso_usuario);
 
-                if ($resultado_usuario)
-                {
-                    $sql_ingreso_cliente = "INSERT INTO cliente (rut) VALUES ('$rut')";
-                    $resultado_cliente = mysqli_query($conexion, $sql_ingreso_cliente);
-                }
                 $message = 'Registro exitoso';
             }
 
@@ -155,14 +150,14 @@ try {
     } else {
         $response = array(
             'success' => false,
-            'message' => 'Error en los datos recibidos.'
+            'message' => 'Error en los datos recibidos'
         );
     }
     
     } catch (PDOException $e) {
         $response = array(
             'success' => false,
-            'message' => 'Error en el servidor. Intente de nuevo más tarde.'
+            'message' => 'Error en el servidor. Intente de nuevo más tarde'
         );
     }
     
