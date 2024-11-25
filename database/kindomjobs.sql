@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-11-2024 a las 02:36:13
+-- Tiempo de generación: 25-11-2024 a las 06:16:18
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -880,7 +880,8 @@ INSERT INTO `permiso` (`id_permiso`, `nombre_permiso`, `descripcion_permiso`) VA
 (5, 'admin_manage', 'Gestionar administradores de la plataforma'),
 (6, 'professional_pages_access', 'Acceder a las páginas de profesionales'),
 (7, 'client_pages_access', 'Acceder a las páginas de clientes'),
-(8, 'permission_manage', 'Gestionar permisos para roles de usuario');
+(8, 'permission_manage', 'Gestionar permisos para roles de usuario'),
+(9, 'servicio_profesion_manage', 'Gestionar servicios disponibles para cada profesión');
 
 -- --------------------------------------------------------
 
@@ -913,7 +914,8 @@ INSERT INTO `permiso_rol` (`id_rol`, `id_permiso`) VALUES
 (2, 7),
 (3, 7),
 (4, 7),
-(1, 8);
+(1, 8),
+(1, 9);
 
 -- --------------------------------------------------------
 
@@ -1460,10 +1462,10 @@ CREATE TABLE `usuario` (
 
 INSERT INTO `usuario` (`rut`, `nombre_usuario`, `nombres`, `apellido_p`, `apellido_m`, `correo`, `telefono`, `fecha_nac`, `direccion`, `contrasena`, `foto_perfil`, `id_comuna`, `id_rol`, `id_estado_usuario`) VALUES
 (10208323, 'Guillermo', 'Guillermo', 'Pacheco', 'Cereceda', 'guillermo@gmail.com', 982776382, '1994-02-25', 'ABC 123', '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 192, 4, 1),
-(10286235, 'Profesional456', 'ProfesionalP', 'PPP', 'ProfPP', 'profprof@gmail.com', 986372773, '2002-01-12', 'Calle Nueva 343', '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/IMG_20240831_181353881.jpg', 37, 3, 2),
-(11022434, 'Profesional123', 'Profesional', 'Prof', 'ProfProf', 'profesional@gmail.com', 987875646, '1999-12-12', 'Avenida Portales 1234', '81dc9bdb52d04dc20036dbd8313ed055', 'uploads/foto_perfil/IMG_20240831_175406455.jpg', 78, 3, 2),
+(10286235, 'Profesional456', 'ProfesionalP', 'PPP', 'ProfPP', 'profprof@gmail.com', 986372773, '2002-01-12', 'Calle Nueva 343', '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 37, 3, 2),
+(11022434, 'Profesional123', 'Profesional', 'Prof', 'ProfProf', 'profesional@gmail.com', 987875646, '1999-12-12', 'Avenida Portales 1234', '81dc9bdb52d04dc20036dbd8313ed055', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 78, 3, 2),
 (11086788, 'Lorena', 'Lorena', 'Lagos', 'Sanhueza', 'lorena@gmail.com', 998876565, '1998-08-25', 'Avenida Bernardo O\'Higgins 3272', '827ccb0eea8a706c4c34a16891f84e7b', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 65, 4, 1),
-(12323424, 'AAASSD', 'Alvaro', 'Molina', 'Jara', 'profprofprof@gmail.com', 982878273, '2000-08-12', 'Calle 101, 1855', '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/IMG_20240817_182910109.jpg', 32, 3, 2),
+(12323424, 'AAASSD', 'Orlando', 'Salazar', 'Urrutia', 'profprofprof@gmail.com', 982878273, '2000-08-12', 'Francisco Pérez 123', '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/IMG_20240817_182910109.jpg', 32, 3, 2),
 (12345678, 'Cliente', 'Cliente', 'Pérez', 'García', 'cliente@gmail.com', 999999999, '1999-08-25', 'Calle DEF, 321', '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 1, 4, 1),
 (13082637, 'Admin', 'Admin', 'Prueba', 'Prueba', 'admin@gmail.com', 982872637, '1995-08-08', 'Calle Nueva 123', '81dc9bdb52d04dc20036dbd8313ed055', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 1, 4, 1),
 (14565656, 'Hector', 'Héctor', 'Jiménez', 'Suazo', 'hector@gmail.com', 965656565, '2002-07-08', 'Avenida Arturo Prat 234', '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/IMG_20240831_163740121.jpg', 1, 3, 1),
@@ -1501,7 +1503,7 @@ CREATE TRIGGER `actualiza_usuario_cliente` BEFORE UPDATE ON `usuario` FOR EACH R
     END IF;
 
     -- Si el nuevo id_estado_usuario no es 1 y estaba previamente, eliminar
-    IF NEW.id_rol NOT IN (1) AND OLD.id_rol IN (1) THEN
+    IF NEW.id_estado_usuario NOT IN (1) AND OLD.id_estado_usuario IN (1) THEN
         DELETE FROM cliente
         WHERE rut = OLD.rut;
     END IF;
@@ -1785,7 +1787,7 @@ ALTER TABLE `mensaje`
 -- AUTO_INCREMENT de la tabla `permiso`
 --
 ALTER TABLE `permiso`
-  MODIFY `id_permiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_permiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `profesion`
