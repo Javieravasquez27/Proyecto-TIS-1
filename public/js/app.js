@@ -1,3 +1,8 @@
+/**
+ * Archivo que se encarga de enviar los datos de los formularios de login y registro,
+ * además de manejar el logout, por medio de AJAX.
+ **/
+
 const loginForm = document.querySelector("#login-form");
 
 if (loginForm) {
@@ -20,9 +25,7 @@ if (loginForm) {
                 password: password,
             },
         }).done(function (response) {
-            // console.log(response);
             const result = JSON.parse(response);
-            // console.log(result);
             if (result.success) {
                 Swal.fire({
                     icon: "success",
@@ -83,39 +86,39 @@ if (registrationForm) {
             processData: false, // Evita que jQuery procese los datos (porque es FormData)
             contentType: false, // Evita que jQuery configure el contentType
         })
-        .done(function (response) {
-            const data = JSON.parse(response);
-            if (data.success) {
-                Swal.fire({
-                    title: "Registro exitoso",
-                    text: data.message,
-                    icon: "success",
-                    showCancelButton: false,
-                    confirmButtonColor: "#3085d6",
-                    confirmButtonText: "Aceptar",
-                    allowOutsideClick: false,
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.href = "index.php?p=auth/login";
-                    }
-                });
-            } else {
+            .done(function (response) {
+                const data = JSON.parse(response);
+                if (data.success) {
+                    Swal.fire({
+                        title: "Registro exitoso",
+                        text: data.message,
+                        icon: "success",
+                        showCancelButton: false,
+                        confirmButtonColor: "#3085d6",
+                        confirmButtonText: "Aceptar",
+                        allowOutsideClick: false,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = "index.php?p=auth/login";
+                        }
+                    });
+                } else {
+                    Swal.fire({
+                        title: "Error",
+                        text: data.message,
+                        icon: "error",
+                        button: "Aceptar",
+                    });
+                }
+            })
+            .fail(function () {
                 Swal.fire({
                     title: "Error",
-                    text: data.message,
+                    text: "Error en el servidor. Intente de nuevo más tarde.",
                     icon: "error",
                     button: "Aceptar",
                 });
-            }
-        })
-        .fail(function () {
-            Swal.fire({
-                title: "Error",
-                text: "Error en el servidor. Intente de nuevo más tarde.",
-                icon: "error",
-                button: "Aceptar",
             });
-        });
     });
 }
 
