@@ -1,5 +1,5 @@
 <?php
-    define('PERMISO_REQUERIDO', 'professional_pages_access');
+    define('PERMISO_REQUERIDO', 'client_pages_access');
     include("middleware/auth.php");
     include("database/conexion.php");
     $consulta = "SELECT * FROM usuario
@@ -12,7 +12,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<title>Perfil Profesional de
+<title>Perfil <?php if ($_SESSION['id_rol'] == 1 || $_SESSION['id_rol'] == 2 || $_SESSION['id_rol'] == 3): ?> Profesional <?php endif; ?> de
     <?php echo $_SESSION['nombre_usuario']; ?> - KindomJob's
 </title>
 
@@ -36,6 +36,7 @@
     </div>
 
     <!-- Sección de Direcciones -->
+    <?php if ($_SESSION['id_rol'] == 1 || $_SESSION['id_rol'] == 2 || $_SESSION['id_rol'] == 3): ?>
     <div class="card mb-4">
         <form id="form-disponibilidad">
             <div class="card-header header-bg text-center" style=" background-color: RGB(204, 204, 255);">
@@ -135,6 +136,7 @@
                 });
             });
         </script>
+        <?php endif; ?>
     </div>
 
     <!-- Sección de Métodos de Pago -->

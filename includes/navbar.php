@@ -44,12 +44,7 @@
                             <b><?php echo $_SESSION['nombre_usuario']; ?></b>
                         </a>
                         <ul class="dropdown-menu" style="margin-left: -80px;">
-                            <?php if ($_SESSION['id_rol'] == 1 || $_SESSION['id_rol'] == 2 || $_SESSION['id_rol'] == 3): ?>
-                                <li><a class="dropdown-item <?php echo ($pagina == 'profesional/profile') ? 'active' : null ?>" aria-current="page" href="index.php?p=profesional/profile">Perfil</a></li>
-                            <?php endif; ?>
-                            <?php if ($_SESSION['id_rol'] == 4): ?>
-                                <li><a class="dropdown-item <?php echo ($pagina == 'cliente/profile') ? 'active' : null ?>" aria-current="page" href="index.php?p=cliente/profile">Perfil</a></li>
-                            <?php endif; ?>
+                            <li><a class="dropdown-item <?php echo ($pagina == 'profile') ? 'active' : null ?>" aria-current="page" href="index.php?p=profile">Perfil</a></li>
                             <?php if ($_SESSION['id_rol'] == 1 || $_SESSION['id_rol'] == 2): ?>
                                 <li><a class="dropdown-item <?php echo ($pagina == 'admin/home') ? 'active' : null ?>" aria-current="page" href="index.php?p=admin/home">Panel Admin</a></li>
                             <?php endif; ?>
