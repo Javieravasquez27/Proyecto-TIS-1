@@ -44,9 +44,16 @@
                     <li class="nav-item">
                         <a class="nav-link <?php echo (strpos($pagina, 'admin/profesionales') !== false) ? 'active' : null ?>" href="index.php?p=admin/profesionales/index">Profesionales</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link <?php echo (strpos($pagina, 'admin/permiso_rol') !== false) ? 'active' : null ?>" href="index.php?p=admin/permiso_rol/index">Permisos para Roles</a>
-                    </li>
+                    <?php if ($_SESSION['id_rol'] == 1): ?>
+                        <li class="nav-item">
+                            <a class="nav-link <?php echo (strpos($pagina, 'admin/permiso_rol') !== false) ? 'active' : null ?>" href="index.php?p=admin/permiso_rol/index">Permisos para Roles</a>
+                        </li>
+                    <?php endif; ?>
+                    <?php if ($_SESSION['id_rol'] == 1): ?>
+                        <li class="nav-item">
+                            <a class="nav-link <?php echo (strpos($pagina, 'admin/servicio_profesion') !== false) ? 'active' : null ?>" href="index.php?p=admin/servicio_profesion/index">Servicios para Profesiones</a>
+                        </li>
+                    <?php endif; ?>
                 </ul>
                 <ul class="navbar-nav mr-auto mb-5 mb-lg-0">
                     <li class="nav-item dropdown">
@@ -54,12 +61,7 @@
                             <b><?php echo $_SESSION['nombre_usuario']; ?></b>
                         </a>
                         <ul class="dropdown-menu" style="margin-left: -80px;">
-                            <?php if ($_SESSION['id_rol'] == 1 || $_SESSION['id_rol'] == 2 || $_SESSION['id_rol'] == 3): ?>
-                                <li><a class="dropdown-item <?php echo ($pagina == 'profesional/profile') ? 'active' : null ?>" aria-current="page" href="index.php?p=profesional/profile">Perfil</a></li>
-                            <?php endif; ?>
-                            <?php if ($_SESSION['id_rol'] == 4): ?>
-                                <li><a class="dropdown-item <?php echo ($pagina == 'cliente/profile') ? 'active' : null ?>" aria-current="page" href="index.php?p=cliente/profile">Perfil</a></li>
-                            <?php endif; ?>
+                            <li><a class="dropdown-item <?php echo ($pagina == 'profile') ? 'active' : null ?>" aria-current="page" href="index.php?p=profile">Perfil</a></li>
                             <?php if ($_SESSION['id_rol'] == 1 || $_SESSION['id_rol'] == 2): ?>
                                 <li><a class="dropdown-item <?php echo ($pagina == 'admin/home') ? 'active' : null ?>" aria-current="page" href="index.php?p=admin/home">Panel Admin</a></li>
                             <?php endif; ?>

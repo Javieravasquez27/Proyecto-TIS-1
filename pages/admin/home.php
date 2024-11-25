@@ -23,7 +23,8 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Usuarios</h5>
-                    <p class="card-text">Administra los usuarios de la plataforma, activando o desactivando sus cuentas.</p>
+                    <p class="card-text">Administra los usuarios de la plataforma, activando o desactivando sus cuentas.
+                                         <?php if ($_SESSION['id_rol'] == 1): ?>También puedes cambiar sus roles dentro de la página.<?php endif; ?></p>
                     <a href="index.php?p=admin/users/index" class="btn btn-primary">Entrar</a>
                 </div>
             </div>
@@ -37,15 +38,28 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Permisos para Roles</h5>
-                    <p class="card-text">Gestiona los permisos que tienen cada uno de los roles de usuario dentro de la plataforma.</p>
-                    <a href="index.php?p=admin/profesionales/index" class="btn btn-primary">Entrar</a>
+        <?php if ($_SESSION['id_rol'] == 1): ?>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Permisos para Roles</h5>
+                        <p class="card-text">Gestiona los permisos que tienen cada uno de los roles de usuario dentro de la plataforma.</p>
+                        <a href="index.php?p=admin/profesionales/index" class="btn btn-primary">Entrar</a>
+                    </div>
                 </div>
             </div>
-        </div>
+        <?php endif; ?>
+        <?php if ($_SESSION['id_rol'] == 1): ?>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Servicios para Profesiones</h5>
+                        <p class="card-text">Gestiona los servicios que pueden prestar los profesionales de acuerdo a su profesión.</p>
+                        <a href="index.php?p=admin/profesionales/index" class="btn btn-primary">Entrar</a>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
