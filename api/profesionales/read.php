@@ -6,7 +6,7 @@
             session_start();
         }
 
-        $sql = "SELECT p.rut, u.nombres, u.apellido_p, u.apellido_m, u.correo, u.telefono,
+        $sql = "SELECT p.rut, u.nombres, u.apellido_p, u.apellido_m, u.correo, u.telefono, u.foto_perfil,
                        pr.nombre_profesion AS profesion, i.nombre_institucion AS institucion,
                        p.experiencia, p.titulo_profesional, p.id_profesion, p.id_institucion, u.id_estado_usuario
                 FROM profesional p JOIN profesion pr ON p.id_profesion = pr.id_profesion
@@ -22,6 +22,7 @@
                 while ($record = $resultado->fetch_array()) {
                     $row = array();
                     $row['rut'] = $record['rut'];
+                    $row['foto_perfil'] = "<img src='{$record['foto_perfil']}' alt='Foto de Perfil' class='rounded-circle' style='width: 50px; height: 50px; object-fit: cover;'>";
                     $row['nombres'] = $record['nombres'];
                     $row['apellido_p'] = $record['apellido_p'];
                     $row['apellido_m'] = $record['apellido_m'];
@@ -36,7 +37,7 @@
                     $clase_boton = $estado_usuario == 1 ? 'btn-outline-danger' : 'btn-outline-success';
                     $texto_boton = $estado_usuario == 1 ? 'Desautorizar' : 'Autorizar';
 
-                    $row['options'] = "<a data-id='{$record['rut']}' data-status='{$estado_usuario}' class='btn btn-sm {$clase_boton} toggle-status'>{$texto_boton}</a>";
+                    $row['opciones'] = "<a data-id='{$record['rut']}' data-status='{$estado_usuario}' class='btn btn-sm {$clase_boton} toggle-status'>{$texto_boton}</a>";
 
                     $usuarios[] = $row;
                 }

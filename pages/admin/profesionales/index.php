@@ -15,6 +15,7 @@
             <table id="professionalTable" class="table table-hover" style="width: 100%;">
                 <thead class="">
                     <tr>
+                        <th scope="col">Foto</th>
                         <th scope="col">RUT</th>
                         <th scope="col">Nombres</th>
                         <th scope="col">Apellido P.</th>
@@ -49,7 +50,11 @@
                 "dataType": "json",
                 "type": "POST"
             },
-            "columns": [{
+            "columns": [
+                {
+                    "data": "foto_perfil", orderable: false, searchable: false
+                },
+                {
                     "data": "rut"
                 },
                 {
@@ -74,15 +79,15 @@
                     "data": "institucion"
                 },
                 {
-                    "data": "titulo_profesional"
+                    "data": "titulo_profesional", orderable: false, searchable: false
                 },
                 {
-                    "data": "options"
+                    "data": "opciones", orderable: false, searchable: false
                 }
             ],
             "columnDefs": [
             {
-                "targets": 8, // Índice de la columna "titulo_profesional"
+                "targets": 9, // Índice de la columna "titulo_profesional"
                 "render": function(data, type, row, meta) {
                     if (data) {
                         // Crea el enlace HTML para el archivo PDF
@@ -95,56 +100,6 @@
         ]
         });
     });
-/*
-    $(document).on('click', '#delete', function() {
-        const rut = $(this).data("id");
-
-        Swal.fire({
-            title: "¿Estás seguro de eliminar este usuario?",
-            text: "¡No podrás revertir esta accion!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Eliminar",
-            cancelButtonText: "Cancelar"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: "api/users/delete.php",
-                    type: "POST",
-                    data: {
-                        rut: rut
-                    },
-                    success: function(response) {
-                        const result = JSON.parse(response);
-                        if (result.success) {
-                            Swal.fire({
-                                icon: 'success',
-                                title: result.message,
-                                timer: 1500,
-                                showCancelButton: false,
-                                confirmButtonColor: "#3085d6",
-                                confirmButtonText: "Aceptar",
-                                allowOutsideClick: false,
-                            }).then(() => {
-                                $('#professionalTable').DataTable().ajax.reload();
-                            });
-
-                        } else {
-                            Swal.fire({
-                                icon: 'error',
-                                title: result.message,
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
-                        }
-                    }
-                });
-            }
-        });
-    });
-*/
 </script>
 
 <script>

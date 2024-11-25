@@ -33,10 +33,10 @@
                 // Filtrar roles según el rol actual
                 data.forEach(rol => {
                     if (
-                        (currentRol == 1) && (rol.id_rol == 2 || rol.id_rol == 4) ||
-                        (currentRol == 2) && (rol.id_rol == 4) ||
+                        (currentRol == 1) && (rol.id_rol == 2 || rol.id_rol == 3 || rol.id_rol == 4) ||
+                        (currentRol == 2) && (rol.id_rol == 3 || rol.id_rol == 4) ||
                         (currentRol == 3) && (rol.id_rol == 2 || rol.id_rol == 4) ||
-                        (currentRol == 4) && (rol.id_rol == 2)
+                        (currentRol == 4) && (rol.id_rol == 2 || rol.id_rol == 3)
                     ) {
                         const option = document.createElement("option");
                         option.value = rol.id_rol;
@@ -56,22 +56,22 @@
         <div class="card-body table-responsive">
             <table id="userTable" class="table table-hover" style="width: 100%;">
                 <thead class="">
-                    <tr>
-                        <th scope="col">RUT</th>
-                        <th scope="col">Usuario</th>
-                        <th scope="col">Nombres</th>
-                        <th scope="col">Apellido P.</th>
-                        <th scope="col">Apellido M.</th>
-                        <th scope="col">Correo</th>
-                        <th scope="col">Teléfono</th>
-                        <th scope="col">Fecha Nac.</th>
-                        <th scope="col">Dirección</th>
-                        <th scope="col">Comuna</th>
-                        <th scope="col">Rol</th>
-                        <th scope="col">Acciones</th>
-                    </tr>
+                <tr>
+                    <th scope="col">Foto</th>
+                    <th scope="col">RUT</th>
+                    <th scope="col">Usuario</th>
+                    <th scope="col">Nombres</th>
+                    <th scope="col">Apellido P.</th>
+                    <th scope="col">Apellido M.</th>
+                    <th scope="col">Correo</th>
+                    <th scope="col">Teléfono</th>
+                    <th scope="col">Fecha Nac.</th>
+                    <th scope="col">Dirección</th>
+                    <th scope="col">Comuna</th>
+                    <th scope="col">Rol</th>
+                    <th scope="col">Acciones</th>
+                </tr>
                 </thead>
-
             </table>
         </div>
     </div>
@@ -129,7 +129,11 @@
                 "dataType": "json",
                 "type": "POST"
             },
-            "columns": [{
+            "columns": [
+                {
+                    "data": "foto_perfil", orderable: false, searchable: false
+                },
+                {
                     "data": "rut"
                 },
                 {
@@ -163,7 +167,7 @@
                     "data": "rol"
                 },
                 {
-                    "data": "options"
+                    "data": "opciones", orderable: false, searchable: false
                 }
             ]
         });
