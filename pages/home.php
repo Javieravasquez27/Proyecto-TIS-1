@@ -1,26 +1,28 @@
 <title>KindomJob's</title>
 
 <script>
-    const Toast = Swal.mixin({
-        toast: true,
-        position: "bottom-end",
-        color: "#fff",
-        background: "#cf142b",
-        showConfirmButton: false,
-        timer: 10000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-            toast.onmouseenter = Swal.stopTimer;
-            toast.onmouseleave = Swal.resumeTimer;
-        }
-    });
-    Toast.fire({
-        icon: "warning",
-        html: "Para ser mostrado en la búsqueda, <b>tienes que rellenar tus campos de profesional. </b><a href='index.php?p=profesional/profile' style='color:#fff;'>Rellene los campos aqui</a>"
-    });
-
-
-
+    <?php if ($_SESSION['id_rol'] == 1 || $_SESSION['id_rol'] == 2 || $_SESSION['id_rol'] == 3): ?>
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "bottom-end",
+            color: "#fff",
+            background: "#cf142b",
+            showConfirmButton: false,
+            showCloseButton: true,
+            timer: 10000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            }
+        });
+        Toast.fire({
+            icon: "warning",
+            html: "Para ser mostrado en la búsqueda, <b>tiene que rellenar sus campos de profesional.</b><br><a href='index.php?p=profile' style='color:#fff;'>Rellene los campos aquí</a>"
+        });
+    <?php endif; ?>
+</script>
+<script>
     document.addEventListener("DOMContentLoaded", function () {
         function cargarRegiones() {
             fetch("utils/get_region.php")
@@ -182,7 +184,7 @@
 
 <div class="container">
     <div class="row py-5 text-center">
-        <p class="h4">Busca profesionales y agenda tu cita aquí</p>
+    <p class="h1">Busca profesionales y agenda tu cita aquí</p>
         <form class="d-flex" method="POST" role="search" action="index.php?p=busqueda">
             <div class="col">
                 <div class="row py-3">

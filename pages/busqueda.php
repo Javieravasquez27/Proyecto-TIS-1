@@ -55,16 +55,18 @@
     // Ejecutar la consulta
     $resultado_prof = mysqli_query($conexion, $query);
 ?>
+
 <style>
-        .no-style-link { color: inherit; text-decoration: none; }
-        .card { max-width: 900px; margin: 20px auto; border: 1px solid #ddd; border-radius: 8px; }
-        .profile-section { display: flex; align-items: center; margin-bottom: 15px; }
-        .profile-section img { border-radius: 50%; width: 100px; height: 100px; margin-right: 15px; border: 2px solid #ddd; }
-        .badge { background-color: #e6f4ea; color: #28a745; font-size: 0.8rem; padding: 5px 10px; border-radius: 5px; }
-        .text-muted { font-size: 0.9rem; }
-        .nav-tabs .nav-link.active { font-weight: bold; color: #000; }
-        .nav-tabs .nav-link { color: #666; }
-    </style>
+    .no-style-link { color: inherit; text-decoration: none; }
+    .card { max-width: 900px; margin: 20px auto; border: 1px solid #ddd; border-radius: 8px; }
+    .profile-section { display: flex; align-items: center; margin-bottom: 15px; }
+    .profile-section img { border-radius: 50%; width: 100px; height: 100px; margin-right: 15px; border: 2px solid #ddd; }
+    .badge { background-color: #e6f4ea; color: #28a745; font-size: 0.8rem; padding: 5px 10px; border-radius: 5px; }
+    .text-muted { font-size: 0.9rem; }
+    .nav-tabs .nav-link.active { font-weight: bold; color: #000; }
+    .nav-tabs .nav-link { color: #666; }
+</style>
+
     <div class="container mt-3">
         <div class="text-center mb-4" style="font-size: 20px;">Resultado búsqueda de profesionales</div>
         <?php while ($row_prof = mysqli_fetch_assoc($resultado_prof)): ?>

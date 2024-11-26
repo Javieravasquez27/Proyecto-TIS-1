@@ -2,11 +2,11 @@
     include 'database/conexion.php';
 
     session_start();
-    $query = "SELECT nombre_usuario FROM usuario WHERE rut = '$_SESSION[rut]'";
-    $resultado = mysqli_query($conexion, $query);
-    $user = mysqli_fetch_assoc($resultado);
+    $sql_consulta_usuario = "SELECT nombre_usuario FROM usuario WHERE rut = '$_SESSION[rut]'";
+    $resultado = mysqli_query($conexion, $sql_consulta_usuario);
+    $usuario = mysqli_fetch_assoc($resultado);
 
-    $nombre_usuario = $user["nombre_usuario"]; // Cambia este ID según el profesional
+    $nombre_usuario = $usuario["nombre_usuario"]; // Cambia este ID según el profesional
     $consulta = "SELECT fecha, hora FROM disponibilidad WHERE nombre_usuario = '$nombre_usuario' AND disponible = TRUE ORDER BY fecha, hora";
     $resultado = $conexion->query($consulta);
 

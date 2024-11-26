@@ -6,13 +6,14 @@
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $id_permiso = $_POST['id_permiso'] ?? null;
         $nombre_permiso = $_POST['nombre_permiso'] ?? null;
+        $descripcion_permiso = $_POST['descripcion_permiso'] ?? null;
     
         if ($id_permiso && $nombre_permiso) {
             $sql = "UPDATE permiso 
-                    SET nombre_permiso = ?
+                    SET nombre_permiso = ?, descripcion_permiso = ?
                     WHERE id_permiso = ?;";
             $stmt = $conexion->prepare($sql);
-            $stmt->bind_param("si", $nombre_permiso, $id_permiso);
+            $stmt->bind_param("ssi", $nombre_permiso, $descripcion_permiso, $id_permiso);
         
             if ($stmt->execute()) {
                 $response['success'] = true;

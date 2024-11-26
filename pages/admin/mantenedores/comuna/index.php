@@ -1,5 +1,5 @@
-<?php 
-    define('PERMISO_REQUERIDO', 'Gestionar los mantenedores de la plataforma');
+<?php
+    define('PERMISO_REQUERIDO', 'mantainers_manage');
     include("middleware/auth.php");
     include 'includes/admin/navbar_mantenedores.php';
 ?>
@@ -240,7 +240,7 @@
                 "data": "provincia"
             },
             {
-                "data": "opciones"
+                "data": "opciones", orderable: false, searchable: false
             }
             ]
         });

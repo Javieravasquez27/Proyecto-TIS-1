@@ -15,56 +15,79 @@ body {
     border-radius: 10px;
     margin-bottom: 20px;
 }
-.profile-header {
-    text-align: center;
+
+/* Perfil */
+.profile-section { 
+    display: flex; 
+    align-items: center; 
+    margin-bottom: 15px; 
 }
-.profile-header img {
-    border-radius: 50%;
-    width: 80px;
-    height: 80px;
+.profile-section img { 
+    border-radius: 50%; 
+    width: 100px; 
+    height: 100px; 
+    margin-right: 15px; 
+    border: 2px solid #ddd;
 }
-.nav-tabs .nav-link {
-    background-color: #f8f8f8;
-    border: 1px solid #f8f8f8;
-    border-radius: 0;
-    color: black;
+.badge { 
+    background-color: #e6f4ea; 
+    color: #28a745; 
+    font-size: 0.8rem; 
+    padding: 5px 10px; 
+    border-radius: 5px; 
+}
+
+/* Texto */
+.text-muted { 
+    font-size: 0.9rem; 
+}
+.price-info { 
+    font-weight: bold; 
+    font-size: 1.1rem; 
+    color: #333; 
+}
+
+/* Disponibilidad */
+.availability { 
+    margin-top: 20px; 
+}
+.day-column { 
+    text-align: center; 
+    margin: 10px 0; 
+}
+.day-column strong { 
+    display: block; 
+    font-weight: 600; 
+    margin-bottom: 10px; 
+    font-size: 0.9rem; 
+}
+.day-column input { 
+    width: 100%; 
+    margin: 5px 0; 
+    font-size: 0.9rem; 
+}
+
+/* Ajustes responsivos */
+@media (max-width: 768px) {
+    .profile-section { 
+        flex-direction: column; 
+        align-items: flex-start; 
+        text-align: left; 
+    }
+    .profile-section img { 
+        margin-bottom: 10px; 
+    }
+    .day-column button { 
+        width: 100%; 
+    }
 }
 .nav-tabs .nav-link.active {
-    background-color: #f8f8f8;
-    color: black;
-}
-.tab-content {
-    background-color: #f8f8f8;
-    border: 1px solid #ddd;
-    padding: 20px;
-}
-.service-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 8px 0;
-    border-bottom: 1px solid #ddd;
-}
-.graph-placeholder {
-    height: 150px;
-    border: 1px solid #ddd;
-    margin-top: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #999;
-}
-.calendar select, .calendar input {
-    margin: 5px 0;
-    width: 100%;
-    padding: 5px;
-}
-.calendar .btn-time {
-    background-color: rgb(153, 102, 255);
-    color: white;
+    font-weight: bold; /* Texto en negrita */
     border: none;
-    margin: 5px 0;
-    width: 100%;
+    border-bottom: 3px solid #000; /* Línea inferior en negrita */
+    color: #000; /* Color del texto */
 }
-.calendar .btn-time:hover {
-    background-color: rgb(128, 0, 128);
+/* Estilo para las pestañas inactivas */
+.nav-tabs .nav-link {
+    color: #666; /* Color del texto inactivo */
 }

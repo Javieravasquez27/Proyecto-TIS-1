@@ -1,5 +1,5 @@
 <?php 
-    define('PERMISO_REQUERIDO', 'Gestionar roles y activación de las cuentas de usuario');
+    define('PERMISO_REQUERIDO', 'user_accounts_manage');
     include("middleware/auth.php");
 ?>
 
@@ -33,10 +33,10 @@
                 // Filtrar roles según el rol actual
                 data.forEach(rol => {
                     if (
-                        (currentRol == 1) && (rol.id_rol == 2 || rol.id_rol == 4) ||
-                        (currentRol == 2) && (rol.id_rol == 4) ||
+                        (currentRol == 1) && (rol.id_rol == 2 || rol.id_rol == 3 || rol.id_rol == 4) ||
+                        (currentRol == 2) && (rol.id_rol == 3 || rol.id_rol == 4) ||
                         (currentRol == 3) && (rol.id_rol == 2 || rol.id_rol == 4) ||
-                        (currentRol == 4) && (rol.id_rol == 2)
+                        (currentRol == 4) && (rol.id_rol == 2 || rol.id_rol == 3)
                     ) {
                         const option = document.createElement("option");
                         option.value = rol.id_rol;
@@ -56,22 +56,22 @@
         <div class="card-body table-responsive">
             <table id="userTable" class="table table-hover" style="width: 100%;">
                 <thead class="">
-                    <tr>
-                        <th scope="col">RUT</th>
-                        <th scope="col">Usuario</th>
-                        <th scope="col">Nombres</th>
-                        <th scope="col">Apellido P.</th>
-                        <th scope="col">Apellido M.</th>
-                        <th scope="col">Correo</th>
-                        <th scope="col">Teléfono</th>
-                        <th scope="col">Fecha Nac.</th>
-                        <th scope="col">Dirección</th>
-                        <th scope="col">Comuna</th>
-                        <th scope="col">Rol</th>
-                        <th scope="col">Acciones</th>
-                    </tr>
+                <tr>
+                    <th scope="col">Foto</th>
+                    <th scope="col">RUT</th>
+                    <th scope="col">Usuario</th>
+                    <th scope="col">Nombres</th>
+                    <th scope="col">Apellido P.</th>
+                    <th scope="col">Apellido M.</th>
+                    <th scope="col">Correo</th>
+                    <th scope="col">Teléfono</th>
+                    <th scope="col">Fecha Nac.</th>
+                    <th scope="col">Dirección</th>
+                    <th scope="col">Comuna</th>
+                    <th scope="col">Rol</th>
+                    <th scope="col">Acciones</th>
+                </tr>
                 </thead>
-
             </table>
         </div>
     </div>
@@ -129,7 +129,11 @@
                 "dataType": "json",
                 "type": "POST"
             },
-            "columns": [{
+            "columns": [
+                {
+                    "data": "foto_perfil", orderable: false, searchable: false
+                },
+                {
                     "data": "rut"
                 },
                 {
@@ -163,7 +167,7 @@
                     "data": "rol"
                 },
                 {
-                    "data": "options"
+                    "data": "opciones", orderable: false, searchable: false
                 }
             ]
         });
@@ -171,7 +175,7 @@
         $(document).on('click', '.toggle-status', function() {
             var rut = $(this).data('id');
             var actual_estado_usuario = $(this).data('status');
-            var nuevo_estado_usuario = actual_estado_usuario == 1 ? 0 : 1;
+            var nuevo_estado_usuario = actual_estado_usuario == 1 ? 2 : 1;
             var button = $(this);
 
             $.ajax({
@@ -192,7 +196,7 @@
                                 .removeClass('btn-outline-danger')
                                 .addClass('btn-outline-success')
                                 .text('Activar')
-                                .data('status', 0);
+                                .data('status', 2);
                         }
                     } else {
                         console.log("Error al cambiar el estado.");
@@ -232,56 +236,4 @@
             }
         });
     });
-
-
-/*
-    $(document).on('click', '#delete', function() {
-        const rut = $(this).data("id");
-
-        Swal.fire({
-            title: "¿Estás seguro de eliminar este usuario?",
-            text: "¡No podrás revertir esta accion!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Eliminar",
-            cancelButtonText: "Cancelar"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: "api/users/delete.php",
-                    type: "POST",
-                    data: {
-                        rut: rut
-                    },
-                    success: function(response) {
-                        const result = JSON.parse(response);
-                        if (result.success) {
-                            Swal.fire({
-                                icon: 'success',
-                                title: result.message,
-                                timer: 1500,
-                                showCancelButton: false,
-                                confirmButtonColor: "#3085d6",
-                                confirmButtonText: "Aceptar",
-                                allowOutsideClick: false,
-                            }).then(() => {
-                                $('#userTable').DataTable().ajax.reload();
-                            });
-
-                        } else {
-                            Swal.fire({
-                                icon: 'error',
-                                title: result.message,
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
-                        }
-                    }
-                });
-            }
-        });
-    });
-*/
 </script>

@@ -1,11 +1,11 @@
 <nav class="navbar navbar-expand-lg bg-gradient bg-opacity-50" data-bs-theme="dark" style="background-color: rgb(150, 120, 182);">
     <div class="container-fluid mt-2 mb-2">
     <a class="navbar-brand <?php echo (strpos($pagina, 'admin/mantenedores/index') !== false) ? 'active' : null ?>" href="index.php?p=admin/mantenedores/index"><b>Mantenedores</b></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavMantenedores"
+            aria-controls="navbarNavMantenedores" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="collapse navbar-collapse" id="navbarNavMantenedores">
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link <?php echo (strpos($pagina, 'admin/mantenedores/comuna/index') !== false) ? 'active' : null ?>" href="index.php?p=admin/mantenedores/comuna/index">Comunas</a>
@@ -33,9 +33,6 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link <?php echo (strpos($pagina, 'admin/mantenedores/rol/index') !== false) ? 'active' : null ?>" href="index.php?p=admin/mantenedores/rol/index">Roles</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link <?php echo (strpos($pagina, 'admin/mantenedores/permiso_rol/index') !== false) ? 'active' : null ?>" href="index.php?p=admin/mantenedores/permiso_rol/index">Roles y Permisos</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link <?php echo (strpos($pagina, 'admin/mantenedores/servicio/index') !== false) ? 'active' : null ?>" href="index.php?p=admin/mantenedores/servicio/index">Servicios</a>
