@@ -2,10 +2,15 @@
     define('PERMISO_REQUERIDO', 'client_pages_access');
     include("middleware/auth.php");
     include("database/conexion.php");
-    $consulta = "SELECT * FROM usuario
-                 WHERE rut = '$_SESSION[rut]'";
-    $resultado = mysqli_query($conexion, $consulta);
-    $usuario = mysqli_fetch_assoc($resultado);
+    $consulta_usuario = "SELECT u.rut, u.dv, u.nombre_usuario, u.nombres, u.apellido_p, u.apellido_m, u.correo,
+                                u.telefono, u.fecha_nac, u.direccion, u.foto_perfil, c.nombre_comuna AS comuna,
+                                r.nombre_rol AS rol
+                         FROM usuario u LEFT JOIN comuna c ON u.id_comuna = c.id_comuna
+                                        LEFT JOIN usuario ON c.id_comuna = u.id_comuna
+                                        LEFT JOIN rol r ON u.id_rol = r.id_rol
+                         WHERE u.rut = '$_SESSION[rut]'";
+    $resultado_usuario = mysqli_query($conexion, $consulta_usuario);
+    $usuario = mysqli_fetch_assoc($resultado_usuario);
 ?>
 
 <link rel="stylesheet" href="public/css/profile_profesional.css">
@@ -29,7 +34,8 @@
                 <?php echo $usuario['nombres']; ?> <?php echo $usuario['apellido_p']; ?> <?php echo $usuario['apellido_m']; ?>
             </h4>
             <p class="text-muted">
-                <?php echo $usuario['correo']; ?>
+                <i class="bi bi-geo-alt"></i> <?php echo $usuario['comuna']; ?><br>
+                <i class="bi bi-envelope"></i> <?php echo $usuario['correo']; ?> - <i class="bi bi-telephone"></i> <?php echo $usuario['telefono']; ?>
             </p>
             <button class="btn btn-custom">Editar Perfil</button>
         </div>
