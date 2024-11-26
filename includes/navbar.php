@@ -22,7 +22,6 @@
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon text-white"></span>
             </button>
-        
         <div class="collapse navbar-collapse" id="navbarNav">
             <?php
             if (isset($_SESSION["rut"])) {
@@ -43,7 +42,7 @@
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <b><?php echo $_SESSION['nombre_usuario']; ?></b>
                         </a>
-                        <ul class="dropdown-menu " style="margin-left: -80px;">
+                        <ul class="dropdown-menu dropdown-menu-lg-end">
                             <li><a class="dropdown-item <?php echo ($pagina == 'profile') ? 'active' : null ?>" aria-current="page" href="index.php?p=profile">Perfil</a></li>
                             <?php if ($_SESSION['id_rol'] == 1 || $_SESSION['id_rol'] == 2): ?>
                                 <li><a class="dropdown-item <?php echo ($pagina == 'admin/home') ? 'active' : null ?>" aria-current="page" href="index.php?p=admin/home">Panel Admin</a></li>
@@ -68,13 +67,12 @@
                 </ul>
                 <ul class=" navbar-nav mr-auto ">
                     <li class="nav-item">
-                        <a class="nav-link" href="index.php?p=auth/login"><button type="button" class="btn btn-light">Inicio Sesión</button></a>
+                        <a class="nav-link" href="index.php?p=auth/login"><button type="button" class="btn btn-light">Iniciar Sesión</button></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="index.php?p=auth/register"><button type="button" class="btn btn-light">Registrarse</button></a>
                     </li>
                 </ul>
-                
             <?php
             }
             ?>
