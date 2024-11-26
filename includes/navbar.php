@@ -16,34 +16,34 @@
         <div class="container-fluid ">
             <a class="navbar-brand" href="index.php?p=home">
                 <img src="public/images/logo.png" alt="Logo KindomJobs" height="50" class="imagen d-inline-block">
-                <span class="h3 align-middle" style="color: black;">KindomJob's</span>
+                <span class="h3 align-bottom text-black" style="font-size: 30px;" >KindomJob's</span>
             </a>
             <button class="navbar-toggler me-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon text-white"></span>
             </button>
         
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+        <div class="collapse navbar-collapse" id="navbarNav">
             <?php
             if (isset($_SESSION["rut"])) {
             ?>
                 <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
+                    <li class="nav-item px-1">
                         <a class="nav-link <?php echo ($pagina == 'home') ? 'active' : null ?>" aria-current="page" href="index.php?p=home">Inicio</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item px-1">
                         <a class="nav-link <?php echo ($pagina == 'profesiones') ? 'active' : null ?>" aria-current="page" href="index.php?p=profesiones">Profesiones</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item px-1">
                         <a class="nav-link <?php echo ($pagina == 'servicios') ? 'active' : null ?>" aria-current="page" href="index.php?p=servicios">Servicios</a>
                     </li>
                 </ul>
-                <ul class="navbar-nav mr-auto mb-5 mb-lg-0">
-                    <li class="nav-item dropdown">
+                <ul class="navbar-nav mr-auto mb-5 mb-lg-0 ">
+                    <li class="nav-item dropdown ">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <b><?php echo $_SESSION['nombre_usuario']; ?></b>
                         </a>
-                        <ul class="dropdown-menu" style="margin-left: -80px;">
+                        <ul class="dropdown-menu " style="margin-left: -80px;">
                             <li><a class="dropdown-item <?php echo ($pagina == 'profile') ? 'active' : null ?>" aria-current="page" href="index.php?p=profile">Perfil</a></li>
                             <?php if ($_SESSION['id_rol'] == 1 || $_SESSION['id_rol'] == 2): ?>
                                 <li><a class="dropdown-item <?php echo ($pagina == 'admin/home') ? 'active' : null ?>" aria-current="page" href="index.php?p=admin/home">Panel Admin</a></li>
@@ -56,20 +56,25 @@
             } else {
             ?>
                 <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link <?php echo ($pagina == 'home') ? 'active' : null ?>" aria-current="page" href="index.php?p=home">Inicio</a>
+                    <li class="nav-item px-1">
+                        <a class="nav-link <?php echo ($pagina == 'home') ? 'active' : null ?>" aria-current="page" href="index.php?p=home"><b>Inicio</b></a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link <?php echo ($pagina == 'profesiones') ? 'active' : null ?>" aria-current="page" href="index.php?p=profesiones">Profesiones</a>
+                    <li class="nav-item px-1">
+                        <a class="nav-link <?php echo ($pagina == 'profesiones') ? 'active' : null ?>" aria-current="page" href="index.php?p=profesiones"><b>Profesiones</b></a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link <?php echo ($pagina == 'servicios') ? 'active' : null ?>" aria-current="page" href="index.php?p=servicios">Servicios</a>
+                    <li class="nav-item px-1">
+                        <a class="nav-link <?php echo ($pagina == 'servicios') ? 'active' : null ?>" aria-current="page" href="index.php?p=servicios"><b>Servicios</b></a>
                     </li>
                 </ul>
-                <div class="d-flex">
-                    <a href="index.php?p=auth/login" class="btn btn-sm btn-light me-2">Iniciar Sesión</a>
-                    <a href="index.php?p=auth/register" class="btn btn-sm btn-light">Registrarse</a>
-                </div>
+                <ul class=" navbar-nav mr-auto ">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.php?p=auth/login"><button type="button" class="btn btn-light">Inicio Sesión</button></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.php?p=auth/register"><button type="button" class="btn btn-light">Registrarse</button></a>
+                    </li>
+                </ul>
+                
             <?php
             }
             ?>
