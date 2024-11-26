@@ -1,26 +1,28 @@
 <title>KindomJob's</title>
 
 <script>
-    const Toast = Swal.mixin({
-        toast: true,
-        position: "top",
-        color: "#fff",
-        background: "#cf142b",
-        showConfirmButton: false,
-        timer: 10000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-            toast.onmouseenter = Swal.stopTimer;
-            toast.onmouseleave = Swal.resumeTimer;
-        }
-    });
-    Toast.fire({
-        icon: "warning",
-        html: "Para ser mostrado en la busqueda <b>Tienes que rellenar tus campos de profesional </b><a href='' style='color:#fff;'>Rellene los campos Aqui</a>"
-    });
-
-
-
+    <?php if ($_SESSION['id_rol'] == 1 || $_SESSION['id_rol'] == 2 || $_SESSION['id_rol'] == 3): ?>
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "bottom-end",
+            color: "#fff",
+            background: "#cf142b",
+            showConfirmButton: false,
+            showCloseButton: true,
+            timer: 10000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            }
+        });
+        Toast.fire({
+            icon: "warning",
+            html: "Para ser mostrado en la búsqueda, <b>tiene que rellenar sus campos de profesional.</b><br><a href='index.php?p=profile' style='color:#fff;'>Rellene los campos aquí</a>"
+        });
+    <?php endif; ?>
+</script>
+<script>
     document.addEventListener("DOMContentLoaded", function () {
         function cargarRegiones() {
             fetch("utils/get_region.php")
@@ -48,30 +50,30 @@
                 .catch(error => console.error("Error al cargar regiones:", error));
         }
 
-        function cargarCiudades() {
-            fetch("utils/get_ciudad.php")
+        function cargarProvincias() {
+            fetch("utils/get_provincia.php")
                 .then(response => response.json())
                 .then(data => {
-                    const select = document.getElementById("ciudad");
+                    const select = document.getElementById("provincia");
 
                     // Vaciar el select por si tiene opciones
                     select.innerHTML = '';
 
                     // Agregar una opción por defecto
                     const defaultOption = document.createElement("option");
-                    defaultOption.textContent = "Ciudad";
+                    defaultOption.textContent = "Provincia";
                     defaultOption.value = "";
                     select.appendChild(defaultOption);
 
-                    // Rellenar el select con las ciudades recibidas
-                    data.forEach(ciudad => {
+                    // Rellenar el select con las provincias recibidas
+                    data.forEach(provincia => {
                         const option = document.createElement("option");
-                        option.value = ciudad.id_ciudad;
-                        option.textContent = ciudad.nombre_ciudad;
+                        option.value = provincia.id_provincia;
+                        option.textContent = provincia.nombre_provincia;
                         select.appendChild(option);
                     });
                 })
-                .catch(error => console.error("Error al cargar ciudades:", error));
+                .catch(error => console.error("Error al cargar provincias:", error));
         }
 
         function cargarComunas() {
@@ -173,7 +175,7 @@
         }
 
         cargarRegiones();
-        cargarCiudades();
+        cargarProvincias();
         cargarComunas();
         cargarProfesiones();
         cargarServicios();
@@ -181,7 +183,8 @@
 </script>
 
 <div class="container">
-    <div class="row py-5">
+    <div class="row py-5 text-center">
+    <p class="h1">Busca profesionales y agenda tu cita aquí</p>
         <form class="d-flex" method="POST" role="search" action="index.php?p=busqueda">
             <div class="col">
                 <div class="row py-3">
@@ -196,7 +199,7 @@
                         </select>
                     </div>
                     <div class="col py-5 px-1 mt-4">
-                        <select id="ciudad" name="ciudad" class="form-select">
+                        <select id="provincia" name="provincia" class="form-select">
                             <!-- Las opciones se llenarán aquí con AJAX -->
                         </select>
                     </div>
@@ -223,7 +226,7 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col text-center mb-1" style="font-size: 20px;"><span>Busqueda de profesionales cercanos</span></div>
+        <div class="col text-center mb-1" style="font-size: 20px;"><span>Búsqueda de profesionales cercanos</span></div>
     </div>
 </div>
 

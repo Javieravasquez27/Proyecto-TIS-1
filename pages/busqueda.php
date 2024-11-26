@@ -56,15 +56,26 @@
     $resultado_prof = mysqli_query($conexion, $query);
 ?>
 
+<style>
+    .no-style-link { color: inherit; text-decoration: none; }
+    .card { max-width: 900px; margin: 20px auto; border: 1px solid #ddd; border-radius: 8px; }
+    .profile-section { display: flex; align-items: center; margin-bottom: 15px; }
+    .profile-section img { border-radius: 50%; width: 100px; height: 100px; margin-right: 15px; border: 2px solid #ddd; }
+    .badge { background-color: #e6f4ea; color: #28a745; font-size: 0.8rem; padding: 5px 10px; border-radius: 5px; }
+    .text-muted { font-size: 0.9rem; }
+    .nav-tabs .nav-link.active { font-weight: bold; color: #000; }
+    .nav-tabs .nav-link { color: #666; }
+</style>
+
     <div class="container mt-3">
         <div class="text-center mb-4" style="font-size: 20px;">Resultado búsqueda de profesionales</div>
         <?php while ($row_prof = mysqli_fetch_assoc($resultado_prof)): ?>
             <div class="card shadow-sm mb-3">
                 <div class="card-body">
                     <div class="profile-section">
-                        <img src="../uploads/foto_perfil/foto_perfil_predeterminado.jpg" alt="Foto de perfil">
+                        <img src="<?php echo $row_prof['foto_perfil'] ?>" alt="Foto de perfil">
                         <div>
-                            <h5 class="mt-2"><a href="index.php?p=profesional/profile_cita&rut=<?php echo $row_prof['rut']; ?>" class="no-style-link"><b><?php echo $row_prof['nombres']; ?></b></a></h5>
+                            <h5 class="mt-2"><a href="index.php?p=profesional/profile_cita&rut=<?php echo $row_prof['rut']; ?>" class="text-decoration-none"><b><?php echo $row_prof['nombres']; ?></b></a></h5>
                             <p class="text-muted"><?php echo $row_prof['nombre_profesion']; ?></p>
                         </div>
                     </div>
