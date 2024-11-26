@@ -1,3 +1,11 @@
+<?php
+    if (isset($_SESSION["rut"]))
+    {
+        header("Location: index.php?p=home");
+        exit();
+    }
+?>
+
 <title>Registrarse - KindomJob's</title>
 
 <script>

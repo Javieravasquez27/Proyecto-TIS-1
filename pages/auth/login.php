@@ -1,3 +1,11 @@
+<?php
+    if (isset($_SESSION["rut"]))
+    {
+        header("Location: index.php?p=home");
+        exit();
+    }
+?>
+
 <title>Iniciar Sesión - KindomJob's</title>
 
 <div class="container" style="margin-top: 145px; margin-bottom: 115px;">
