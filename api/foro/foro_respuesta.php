@@ -21,7 +21,7 @@
             // Se obtienen los detalles de la respuesta recién insertada
             $id_respuesta = mysqli_insert_id($conexion);
         
-            $sql_consulta_foro_respuesta_1 = "SELECT fr.contenido_respuesta, fr.fecha_respuesta, 
+            $sql_consulta_foro_respuesta_1 = "SELECT fr.id_respuesta, fr.contenido_respuesta, fr.fecha_respuesta, 
                                                      fr.votos_positivos, fr.votos_negativos, u.nombres,
                                                      r.nombre_rol, u.foto_perfil
                                               FROM foro_respuesta fr
