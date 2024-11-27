@@ -38,6 +38,7 @@
                     $_SESSION['apellido_m'] = $datos_usuario['apellido_m'];
                     $_SESSION['correo'] = $datos_usuario['correo'];
                     $_SESSION['telefono'] = $datos_usuario['telefono'];
+                    $_SESSION['foto_perfil'] = $datos_usuario['foto_perfil'];
                     $_SESSION['fecha_nac'] = $datos_usuario['fecha_nac'];
                     $_SESSION['id_rol'] = $datos_usuario['id_rol'];
                     $_SESSION['id_estado_usuario'] = $datos_usuario['id_estado_usuario'];
