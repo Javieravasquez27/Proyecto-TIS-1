@@ -1,7 +1,4 @@
 <?php
-    require_once 'middleware/auth.php';
-    // define('PERMISO_REQUERIDO', 'foro_access');
-
     $id_tema = intval($_GET['id_tema']);
 
     // Se obtienen los detalles del tema
@@ -14,16 +11,9 @@
     $resultado_consulta_foro_tema = mysqli_query($conexion, $sql_consulta_foro_tema);
     $fila_foro_tema = mysqli_fetch_assoc($resultado_consulta_foro_tema);
 
-    // Se obtienen las respuestas del tema
-    $sql_consulta_foro_respuesta = "SELECT fr.id_respuesta, fr.contenido_respuesta, fr.fecha_respuesta, 
-                                           fr.mejor_respuesta, fr.votos_positivos, fr.votos_negativos,
-                                           u.nombres, u.foto_perfil, r.nombre_rol
-                                    FROM foro_respuesta fr
-                                    JOIN usuario u ON fr.rut_usuario = u.rut
-                                    JOIN rol r ON u.id_rol = r.id_rol
-                                    WHERE fr.id_tema = $id_tema
-                                    ORDER BY fr.votos_positivos DESC, fr.fecha_respuesta ASC;";
-    $resultado_consulta_foro_respuesta = mysqli_query($conexion, $sql_consulta_foro_respuesta);
+    if (!$fila_foro_tema) {
+        header('Location: index.php?p=error/pagina_no_existe.php');
+    }
 ?>
 
 <title>
@@ -41,24 +31,31 @@
     <small>
         <img src="<?php echo $fila_foro_tema['foto_perfil']; ?>" alt="Perfil" width="30" height="30"
             class="rounded-circle">
-        <?php echo htmlspecialchars($fila_foro_tema['nombres']); ?> (
-        <?php echo htmlspecialchars($fila_foro_tema['nombre_rol']); ?>)
+        <?php echo htmlspecialchars($fila_foro_tema['nombres']); ?> (<?php echo htmlspecialchars($fila_foro_tema['nombre_rol']); ?>)
+        <?php if (!isset($_SESSION['rut'])): ?>
+            <div class="mt-3"></div>
+        <?php endif; ?>
     </small>
 
-    <div class="mt-4">
-        <!-- Select para cambiar el estado del tema -->
-        <h4>Estado del Tema: <span id="estado-actual">
-                <?php echo ucfirst(htmlspecialchars($fila_foro_tema['estado_tema'])); ?>
-            </span></h4>
-        <select id="nuevo-estado" class="form-select">
-            <option value="abierto" <?php if ($fila_foro_tema['estado_tema']==='abierto' ) echo 'selected' ; ?>>Abierto
-            </option>
-            <option value="resuelto" <?php if ($fila_foro_tema['estado_tema']==='resuelto' ) echo 'selected' ; ?>
-                >Resuelto</option>
-            <option value="cerrado" <?php if ($fila_foro_tema['estado_tema']==='cerrado' ) echo 'selected' ; ?>>Cerrado
-            </option>
-        </select>
-    </div>
+    <?php if (isset($_SESSION['rut'])): ?>
+        <div class="mt-4">
+            <!-- Select para cambiar el estado del tema -->
+            <h4>Estado del Tema: <span id="estado-actual">
+                    <?php echo ucfirst(htmlspecialchars($fila_foro_tema['estado_tema'])); ?>
+                </span></h4>
+            <select id="nuevo-estado" class="form-select">
+                <option value="abierto" <?php if ($fila_foro_tema['estado_tema']==='abierto' ) echo 'selected' ; ?>>
+                    Abierto
+                </option>
+                <option value="resuelto" <?php if ($fila_foro_tema['estado_tema']==='resuelto' ) echo 'selected' ; ?>>
+                    Resuelto
+                </option>
+                <option value="cerrado" <?php if ($fila_foro_tema['estado_tema']==='cerrado' ) echo 'selected' ; ?>>
+                    Cerrado
+                </option>
+            </select>
+        </div>
+    <?php endif; ?>
 
     <script>
         document.getElementById('nuevo-estado').addEventListener('change', function () {
@@ -81,15 +78,22 @@
         });
     </script>
 
-    <div class="mt-4">
-        <!-- Formulario para agregar respuesta -->
-        <h4>Agregar Respuesta</h4>
-        <form id="form-respuesta">
-            <textarea id="contenido_respuesta" class="form-control" rows="3" placeholder="Escribe tu respuesta aquí..."
-                required></textarea>
-            <button type="submit" class="btn btn-primary mt-2">Enviar Respuesta</button>
-        </form>
-    </div>
+    <?php if (isset($_SESSION['rut'])): ?>
+        <div class="mt-4">
+            <!-- Formulario para agregar respuesta -->
+            <h4>Agregar Respuesta</h4>
+            <form id="form-respuesta">
+                <textarea id="contenido_respuesta" class="form-control" rows="3" placeholder="Escribe tu respuesta aquí..."
+                    required></textarea>
+                <button type="submit" class="btn btn-primary mt-2">Enviar Respuesta</button>
+            </form>
+        </div>
+    <?php endif; ?>
+    <?php if (!isset($_SESSION['rut'])): ?>
+        <div class="alert alert-primary text-center" role="alert">
+            <i class="bi bi-info-circle-fill"></i> Debes <a class="alert-link" href="index.php?p=auth/login">iniciar sesión</a> o <a class="alert-link" href="index.php?p=auth/register">registrarte</a> para poder enviar una respuesta a este tema.
+        </div>
+    <?php endif; ?>
 
     <script>
         document.getElementById('form-respuesta').addEventListener('submit', function (event) {
@@ -117,7 +121,7 @@
                                 <p>${nuevaRespuesta.contenido_respuesta}</p>
                                 <small>
                                     <img src="${nuevaRespuesta.foto_perfil}" alt="Perfil" width="30" height="30" class="rounded-circle">
-                                    ${nuevaRespuesta.nombre_usuario} (${nuevaRespuesta.nombre_rol}) · ${nuevaRespuesta.fecha_respuesta}
+                                    ${nuevaRespuesta.nombres} (${nuevaRespuesta.nombre_rol}) · ${nuevaRespuesta.fecha_respuesta}
                                 </small>
                                 <div class="votos mt-3">
                                     <button class="btn btn-success btn-sm votar" data-id="${nuevaRespuesta.id_respuesta}" data-tipo="positivo">
@@ -154,103 +158,179 @@
 
     <hr>
     <!-- Respuestas del tema -->
-    <h3>Respuestas (<span id="cantidad-respuestas">
-            <?php echo $resultado_consulta_foro_respuesta->num_rows; ?>
-        </span>)</h3>
-    <div class="respuestas">
-        <?php while ($fila_foro_respuesta = mysqli_fetch_assoc($resultado_consulta_foro_respuesta)): ?>
-        <div class="card mb-3">
-            <div class="card-body">
-                <p>
-                    <?php echo htmlspecialchars($fila_foro_respuesta['contenido_respuesta']); ?>
-                </p>
-                <small>
-                    <img src="<?php echo $fila_foro_respuesta['foto_perfil']; ?>" alt="Perfil" width="30" height="30"
-                        class="rounded-circle">
-                    <?php echo htmlspecialchars($fila_foro_respuesta['nombres']); ?> (
-                    <?php echo htmlspecialchars($fila_foro_respuesta['nombre_rol']); ?>) ·
-                    <?php echo date('d-m-Y H:i', strtotime($fila_foro_respuesta['fecha_respuesta'])); ?>
-                </small>
-                <div class="votos mt-3">
-                    <button class="btn btn-success btn-sm votar"
-                        data-id="<?php echo $fila_foro_respuesta['id_respuesta']; ?>" data-tipo="positivo">
-                        👍
-                        <?php echo $fila_foro_respuesta['votos_positivos']; ?>
-                    </button>
-                    <button class="btn btn-danger btn-sm votar"
-                        data-id="<?php echo $fila_foro_respuesta['id_respuesta']; ?>" data-tipo="negativo">
-                        👎
-                        <?php echo $fila_foro_respuesta['votos_negativos']; ?>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <?php endwhile; ?>
+    <h3>Respuestas (<span id="cantidad-respuestas">0</span>)</h3>
+    <div id="lista-respuestas" class="respuestas"></div>
+    <div class="text-center mt-3">
+        <button id="cargarMas" class="btn btn-primary">Cargar más</button>
     </div>
+</div>
 
-    <script>
-        document.querySelectorAll('.marcar-mejor-respuesta').forEach(button => {
-            button.addEventListener('click', function () {
-                const id_respuesta = this.getAttribute('data-id');
-                const id_tema = <?php echo $id_tema; ?>;
+<script>
+    let offset = 0; // Control de paginación
+    const limit = 10; // Número máximo de respuestas por carga
+    const idTema = <?php echo $id_tema; ?>;
 
-                fetch('api/foro/foro_mejor_respuesta.php', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: new URLSearchParams({ id_respuesta, id_tema })
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            // Se actualiza la interfaz: resaltar la mejor respuesta
-                            document.querySelectorAll('.badge.bg-success').forEach(badge => badge.remove());
-                            this.parentNode.innerHTML += `<span class="badge bg-success mt-2">Mejor Respuesta</span>`;
-                        } else {
-                            alert(data.mensaje);
-                        }
+    function cargarRespuestas() {
+        fetch(`api/foro/foro_respuesta.php?id_tema=${idTema}&offset=${offset}&limit=${limit}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const respuestas = data.respuestas;
+                    const listaRespuestas = document.getElementById('lista-respuestas');
+
+                    respuestas.forEach(respuesta => {
+                        const nuevaRespuestaHTML = `
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <p>${respuesta.contenido_respuesta}</p>
+                                        <small>
+                                            <img src="${respuesta.foto_perfil}" alt="Perfil" width="30" height="30" class="rounded-circle">
+                                            ${respuesta.nombres} (${respuesta.nombre_rol}) · ${respuesta.fecha_respuesta}
+                                        </small>
+                                        <div class="votos mt-3">
+                                            <button class="btn btn-success btn-sm votar" data-id="${respuesta.id_respuesta}" data-tipo="positivo">
+                                                👍 ${respuesta.votos_positivos}
+                                            </button>
+                                            <button class="btn btn-danger btn-sm votar" data-id="${respuesta.id_respuesta}" data-tipo="negativo">
+                                                👎 ${respuesta.votos_negativos}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        listaRespuestas.insertAdjacentHTML('beforeend', nuevaRespuestaHTML);
                     });
+
+                    // Se incrementa el offset
+                    offset += respuestas.length;
+
+                    // Se actualiza contador de respuestas
+                    const cantidadRespuestas = document.getElementById('cantidad-respuestas');
+                    cantidadRespuestas.textContent = parseInt(cantidadRespuestas.textContent) + respuestas.length;
+
+                    // Se oculta el botón si no hay más respuestas
+                    if (respuestas.length < limit) {
+                        document.getElementById('cargarMas').style.display = 'none';
+                    }
+                } else {
+                    alert('Error al cargar las respuestas.');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    // Se cargan respuestas iniciales
+    cargarRespuestas();
+
+    // Event listener para "Cargar más"
+    document.getElementById('cargarMas').addEventListener('click', cargarRespuestas);
+</script>
+
+<script>
+    document.querySelectorAll('.marcar-mejor-respuesta').forEach(button => {
+        button.addEventListener('click', function () {
+            const id_respuesta = this.getAttribute('data-id');
+            const id_tema = <?php echo $id_tema; ?>;
+
+            fetch('api/foro/foro_mejor_respuesta.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({ id_respuesta, id_tema })
+            })
+
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Se actualiza la interfaz, resaltando la mejor respuesta
+                    document.querySelectorAll('.badge.bg-success').forEach(badge => badge.remove());
+                    this.parentNode.innerHTML += `<span class="badge bg-success mt-2">Mejor Respuesta</span>`;
+                } else {
+                    alert(data.mensaje);
+                }
             });
         });
-    </script>
+    });
+</script>
 
-    <script>
-        document.querySelectorAll('.votar').forEach(button => {
-            button.addEventListener('click', function () {
-                const id_respuesta = this.getAttribute('data-id');
-                const tipo_voto = this.getAttribute('data-tipo');
+<script>
+    document.querySelectorAll('.votar').forEach(button => {
+        button.addEventListener('click', function () {
+            const id_respuesta = this.getAttribute('data-id');
+            const tipo_voto = this.getAttribute('data-tipo');
 
-                fetch('api/foro/foro_voto_respuesta.php', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: new URLSearchParams({ id_respuesta, tipo_voto })
+            fetch('api/foro/foro_voto_respuesta.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({ id_respuesta, tipo_voto })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Se actualizan los contadores de votos dinámicamente
+                        const votos = data.votos;
+
+                        // Se actualiza la UI de los botones al presionarlos (se restablece al recargar la página)
+                        const botonesVotos = document.querySelectorAll(`[data-id="${id_respuesta}"]`);
+                        botonesVotos.forEach(btn => {
+                            if (btn.getAttribute('data-tipo') === 'positivo') {
+                                btn.innerHTML = `👍 ${votos.votos_positivos}`;
+                            } else if (btn.getAttribute('data-tipo') === 'negativo') {
+                                btn.innerHTML = `👎 ${votos.votos_negativos}`;
+                            }
+                            btn.classList.remove('active'); // Se quitan estilos previos
+                            if (btn.getAttribute('data-tipo') === tipo_voto) {
+                                btn.classList.add('active'); // Se destaca el voto actual
+                            }
+                        });
+                    } else {
+                        alert(data.mensaje);
+                    }
                 })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            // Se actualizan los contadores de votos dinámicamente
-                            const votos = data.votos;
-
-                            // Se actualiza la UI de los botones al presionarlos (se restablece al recargar la página)
-                            const botonesVotos = document.querySelectorAll(`[data-id="${id_respuesta}"]`);
-                            botonesVotos.forEach(btn => {
-                                if (btn.getAttribute('data-tipo') === 'positivo') {
-                                    btn.innerHTML = `👍 ${votos.votos_positivos}`;
-                                } else if (btn.getAttribute('data-tipo') === 'negativo') {
-                                    btn.innerHTML = `👎 ${votos.votos_negativos}`;
-                                }
-                                btn.classList.remove('active'); // Se quitan estilos previos
-                                if (btn.getAttribute('data-tipo') === tipo_voto) {
-                                    btn.classList.add('active'); // Se destaca el voto actual
-                                }
-                            });
-                        } else {
-                            alert(data.mensaje);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        alert('Hubo un problema al procesar el voto. Inténtalo de nuevo.');
-                    });
-            });
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Hubo un problema al procesar el voto. Inténtalo de nuevo.');
+                });
         });
-    </script>
+    });
+</script>
+
+<script>
+    document.getElementById('lista-respuestas').addEventListener('click', function (event) {
+        if (event.target.classList.contains('votar')) {
+            const button = event.target;
+            const id_respuesta = button.getAttribute('data-id');
+            const tipo_voto = button.getAttribute('data-tipo');
+        
+            fetch('api/foro/foro_voto_respuesta.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({ id_respuesta, tipo_voto })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const votos = data.votos;
+                    document.querySelector(`[data-id="${id_respuesta}"][data-tipo="positivo"]`).innerHTML = `👍 ${votos.votos_positivos}`;
+                    document.querySelector(`[data-id="${id_respuesta}"][data-tipo="negativo"]`).innerHTML = `👎 ${votos.votos_negativos}`;
+
+                    // Se actualiza la UI de los botones al presionarlos (se restablece al recargar la página)
+                    const botonesVotos = document.querySelectorAll(`[data-id="${id_respuesta}"]`);
+                        botonesVotos.forEach(btn => {
+                            if (btn.getAttribute('data-tipo') === 'positivo') {
+                                btn.innerHTML = `👍 ${votos.votos_positivos}`;
+                            } else if (btn.getAttribute('data-tipo') === 'negativo') {
+                                btn.innerHTML = `👎 ${votos.votos_negativos}`;
+                            }
+                            btn.classList.remove('active'); // Se quitan estilos previos
+                            if (btn.getAttribute('data-tipo') === tipo_voto) {
+                                btn.classList.add('active'); // Se destaca el voto actual
+                            }
+                        });
+                } else {
+                    alert(data.mensaje);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    });
+</script>

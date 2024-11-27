@@ -1,6 +1,6 @@
 <?php
-    require_once 'middleware/auth.php';
-    // define('PERMISO_REQUERIDO', 'foro_topic_create');
+    define('PERMISO_REQUERIDO', 'foro_topic_create');
+    include("middleware/auth.php");
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $titulo_tema = mysqli_real_escape_string($conexion, $_POST['titulo_tema']);

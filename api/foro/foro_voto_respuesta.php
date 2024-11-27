@@ -12,37 +12,36 @@
             exit;
         }
 
-        // Verificar si el usuario ya votó
-        $sql_verificar_voto = "SELECT tipo_voto FROM foro_voto_respuesta WHERE id_respuesta = $id_respuesta AND rut_usuario = '$rut_usuario'";
-        $resultado = mysqli_query($conexion, $sql_verificar_voto);
+        // Se verifica si el usuario ya votó
+        $sql_consulta_foro_voto_respuesta = "SELECT tipo_voto FROM foro_voto_respuesta WHERE id_respuesta = $id_respuesta AND rut_usuario = '$rut_usuario';";
+        $resultado_consulta_foro_voto_respuesta = mysqli_query($conexion, $sql_consulta_foro_voto_respuesta);
 
-        if (mysqli_num_rows($resultado) > 0) {
-            $fila = mysqli_fetch_assoc($resultado);
+        if (mysqli_num_rows($resultado_consulta_foro_voto_respuesta) > 0) {
+            $fila = mysqli_fetch_assoc($resultado_consulta_foro_voto_respuesta);
 
             if ($fila['tipo_voto'] === $tipo_voto) {
-                // Anular voto si ya existe
-                $sql_anular_voto = "DELETE FROM foro_voto_respuesta WHERE id_respuesta = $id_respuesta AND rut_usuario = '$rut_usuario'";
-                mysqli_query($conexion, $sql_anular_voto);
+                // Se anula el voto si ya existe
+                $sql_borrado_foro_voto_respuesta = "DELETE FROM foro_voto_respuesta WHERE id_respuesta = $id_respuesta AND rut_usuario = '$rut_usuario';";
+                mysqli_query($conexion, $sql_borrado_foro_voto_respuesta);
             } else {
-                // Cambiar el voto
-                $sql_cambiar_voto = "UPDATE foro_voto_respuesta SET tipo_voto = '$tipo_voto' WHERE id_respuesta = $id_respuesta AND rut_usuario = '$rut_usuario'";
-                mysqli_query($conexion, $sql_cambiar_voto);
+                // Se cambia el voto
+                $sql_actualiza_foro_voto_respuesta = "UPDATE foro_voto_respuesta SET tipo_voto = '$tipo_voto' WHERE id_respuesta = $id_respuesta AND rut_usuario = '$rut_usuario';";
+                mysqli_query($conexion, $sql_actualiza_foro_voto_respuesta);
             }
         } else {
-            // Insertar nuevo voto
-            $sql_insertar_voto = "INSERT INTO foro_voto_respuesta (id_respuesta, rut_usuario, tipo_voto) VALUES ($id_respuesta, '$rut_usuario', '$tipo_voto')";
-            mysqli_query($conexion, $sql_insertar_voto);
+            // Se inserta nuevo voto
+            $sql_ingreso_foro_voto_respuesta = "INSERT INTO foro_voto_respuesta (id_respuesta, rut_usuario, tipo_voto) VALUES ($id_respuesta, '$rut_usuario', '$tipo_voto');";
+            mysqli_query($conexion, $sql_ingreso_foro_voto_respuesta);
         }
 
-        // Actualizar conteo de votos
-        $sql_actualizar_conteo = "
-            UPDATE foro_respuesta
-            SET votos_positivos = (SELECT COUNT(*) FROM foro_voto_respuesta WHERE id_respuesta = $id_respuesta AND tipo_voto = 'positivo'),
-                votos_negativos = (SELECT COUNT(*) FROM foro_voto_respuesta WHERE id_respuesta = $id_respuesta AND tipo_voto = 'negativo')
-            WHERE id_respuesta = $id_respuesta";
-        mysqli_query($conexion, $sql_actualizar_conteo);
+        // Se actualiza conteo de votos
+        $sql_actualiza_foro_voto_respuesta = "UPDATE foro_respuesta
+                                              SET votos_positivos = (SELECT COUNT(*) FROM foro_voto_respuesta WHERE id_respuesta = $id_respuesta AND tipo_voto = 'positivo'),
+                                                  votos_negativos = (SELECT COUNT(*) FROM foro_voto_respuesta WHERE id_respuesta = $id_respuesta AND tipo_voto = 'negativo')
+                                              WHERE id_respuesta = $id_respuesta;";
+        mysqli_query($conexion, $sql_actualiza_foro_voto_respuesta);
 
-        // Obtener nuevos valores de votos
+        // Se obtienen nuevos valores de votos
         $sql_nuevos_votos = "SELECT votos_positivos, votos_negativos FROM foro_respuesta WHERE id_respuesta = $id_respuesta";
         $resultado_votos = mysqli_query($conexion, $sql_nuevos_votos);
         $votos = mysqli_fetch_assoc($resultado_votos);
