@@ -21,7 +21,13 @@ body {
     background-color: rgb(234, 228, 246)
 }
 
-#imagen{
+.votar.active {
+    background-color: #fffb00;
+    border-color: #fffb00;
+    color: black;
+}
+
+#imagen {
     margin: 0;
     padding: 0;
 }
