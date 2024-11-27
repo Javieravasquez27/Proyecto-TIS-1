@@ -28,13 +28,16 @@
             ?>
                 <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
                     <li class="nav-item px-1">
-                        <a class="nav-link <?php echo ($pagina == 'home') ? 'active' : null ?>" aria-current="page" href="index.php?p=home">Inicio</a>
+                        <a class="nav-link <?php echo ($pagina == 'home') ? 'active' : null ?>" aria-current="page" href="index.php?p=home"><b>Inicio</b></a>
                     </li>
                     <li class="nav-item px-1">
-                        <a class="nav-link <?php echo ($pagina == 'profesiones') ? 'active' : null ?>" aria-current="page" href="index.php?p=profesiones">Profesiones</a>
+                        <a class="nav-link <?php echo ($pagina == 'profesiones') ? 'active' : null ?>" aria-current="page" href="index.php?p=profesiones"><b>Profesiones</b></a>
                     </li>
                     <li class="nav-item px-1">
-                        <a class="nav-link <?php echo ($pagina == 'servicios') ? 'active' : null ?>" aria-current="page" href="index.php?p=servicios">Servicios</a>
+                        <a class="nav-link <?php echo ($pagina == 'servicios') ? 'active' : null ?>" aria-current="page" href="index.php?p=servicios"><b>Servicios</b></a>
+                    </li>
+                    <li class="nav-item px-1">
+                        <a class="nav-link <?php echo ($pagina == 'foro/index') ? 'active' : null ?>" aria-current="page" href="index.php?p=foro/index"><b>Pregunta al Experto</b></a>
                     </li>
                 </ul>
                 <ul class="navbar-nav mr-auto mb-5 mb-lg-0 ">
@@ -63,6 +66,9 @@
                     </li>
                     <li class="nav-item px-1">
                         <a class="nav-link <?php echo ($pagina == 'servicios') ? 'active' : null ?>" aria-current="page" href="index.php?p=servicios"><b>Servicios</b></a>
+                    </li>
+                    <li class="nav-item px-1">
+                        <a class="nav-link <?php echo ($pagina == 'foro/index') ? 'active' : null ?>" aria-current="page" href="index.php?p=foro/index"><b>Pregunta al Experto</b></a>
                     </li>
                 </ul>
                 <ul class=" navbar-nav mr-auto ">

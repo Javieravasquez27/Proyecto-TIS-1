@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-11-2024 a las 03:00:04
+-- Tiempo de generación: 27-11-2024 a las 03:31:10
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -654,16 +654,98 @@ INSERT INTO `estado_usuario` (`id_estado_usuario`, `nombre_estado_usuario`) VALU
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `foro`
+-- Estructura de tabla para la tabla `foro_respuesta`
 --
 
-CREATE TABLE `foro` (
-  `id_foro` int(11) NOT NULL,
-  `rut_cliente` int(11) NOT NULL,
-  `pregunta_foro` varchar(255) NOT NULL,
-  `rut_profesional` int(11) NOT NULL,
-  `respuesta_foro` varchar(255) NOT NULL
+CREATE TABLE `foro_respuesta` (
+  `id_respuesta` int(11) NOT NULL,
+  `id_tema` int(11) NOT NULL,
+  `rut_usuario` int(11) NOT NULL,
+  `contenido_respuesta` text NOT NULL,
+  `mejor_respuesta` tinyint(1) DEFAULT 0,
+  `fecha_respuesta` timestamp NOT NULL DEFAULT current_timestamp(),
+  `votos_positivos` int(11) DEFAULT 0,
+  `votos_negativos` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `foro_respuesta`
+--
+
+INSERT INTO `foro_respuesta` (`id_respuesta`, `id_tema`, `rut_usuario`, `contenido_respuesta`, `mejor_respuesta`, `fecha_respuesta`, `votos_positivos`, `votos_negativos`) VALUES
+(3, 1, 20786387, 'Y también puedo escribir las respuestas que quiero...', 0, '2024-11-27 00:03:27', 1, 0),
+(4, 1, 20786387, 'Una y otra vez...', 0, '2024-11-27 00:05:06', 0, 0),
+(5, 1, 20786387, 'Probando probando', 0, '2024-11-27 00:08:09', 0, 0),
+(6, 1, 20786387, '123 123', 0, '2024-11-27 00:23:41', 0, 1),
+(7, 1, 20786387, '456 456', 0, '2024-11-27 00:58:17', 0, 0),
+(8, 1, 20786387, 'Parece que la cosa funciona...', 0, '2024-11-27 01:13:35', 0, 0),
+(9, 1, 20786387, 'Y sigue funcionado :O', 0, '2024-11-27 01:46:39', 0, 0),
+(10, 1, 20786387, 'Sigamos probando', 0, '2024-11-27 01:47:26', 0, 0),
+(11, 1, 20786387, 'Probandooooo', 0, '2024-11-27 01:53:25', 0, 0),
+(12, 1, 20786387, 'Seguimos probando', 0, '2024-11-27 01:54:47', 0, 0),
+(13, 1, 20786387, 'Y seguimos, y seguimos probando...', 0, '2024-11-27 01:56:11', 0, 0),
+(14, 1, 20786387, 'Una vez más, probando...', 0, '2024-11-27 01:56:26', 0, 0),
+(15, 1, 20786387, 'Vamos bien, vamos bien', 0, '2024-11-27 01:57:13', 0, 0),
+(16, 1, 20786387, 'Vamos vamosss', 0, '2024-11-27 01:57:32', 0, 0),
+(17, 1, 20786387, 'Ahora tiene colores cuando se envía una nueva respuesta', 0, '2024-11-27 01:58:21', 0, 0),
+(18, 1, 20786387, 'Otra prueba más', 0, '2024-11-27 02:19:04', 0, 0),
+(19, 1, 11086788, 'Hola hola', 0, '2024-11-27 02:21:20', 0, 0),
+(20, 2, 11086788, 'Dame ideas para preguntar...', 0, '2024-11-27 02:21:47', 2, 0),
+(21, 1, 12345678, 'Finally, problema solucionado...', 0, '2024-11-27 02:22:52', 0, 0),
+(22, 1, 12345678, 'Y cerrado', 0, '2024-11-27 02:23:15', 0, 0),
+(23, 1, 12345678, 'And solved', 0, '2024-11-27 02:23:30', 0, 0),
+(24, 2, 12345678, 'No sé, dime tú...', 0, '2024-11-27 02:23:55', 0, 1),
+(25, 4, 20786387, 'Y cuando el tema ya no sea tema, entonces el tema será tema cuando la gente quiere que sea tema, o sea nunca... Mucho gusto estimado', 0, '2024-11-27 02:28:53', 0, 0),
+(26, 3, 20786387, 'Ideas de qué, solo si es que se puede saber?', 0, '2024-11-27 02:29:22', 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `foro_tema`
+--
+
+CREATE TABLE `foro_tema` (
+  `id_tema` int(11) NOT NULL,
+  `titulo_tema` varchar(255) NOT NULL,
+  `contenido_tema` text NOT NULL,
+  `rut_cliente` int(11) NOT NULL,
+  `estado_tema` enum('abierto','cerrado','resuelto','no_resuelto') DEFAULT 'abierto',
+  `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `foro_tema`
+--
+
+INSERT INTO `foro_tema` (`id_tema`, `titulo_tema`, `contenido_tema`, `rut_cliente`, `estado_tema`, `fecha_creacion`) VALUES
+(1, 'Tema de prueba', 'Aquí hago las preguntas que quiero', 20786387, 'resuelto', '2024-11-26 23:35:00'),
+(2, 'Otro tema de prueba', 'Esto está interesante... A ver, qué puedo preguntar aquí...', 20786387, 'abierto', '2024-11-26 23:43:09'),
+(3, 'Ideas, ideas', 'Ideaaaas, necesito ideaaaas', 12345678, 'cerrado', '2024-11-27 02:24:29'),
+(4, 'Otro temita', 'Y el tema es tema cuando el tema ya no es tema :O', 14565656, 'resuelto', '2024-11-27 02:27:12');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `foro_voto_respuesta`
+--
+
+CREATE TABLE `foro_voto_respuesta` (
+  `id_voto` int(11) NOT NULL,
+  `id_respuesta` int(11) NOT NULL,
+  `rut_usuario` int(11) NOT NULL,
+  `tipo_voto` enum('positivo','negativo') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `foro_voto_respuesta`
+--
+
+INSERT INTO `foro_voto_respuesta` (`id_voto`, `id_respuesta`, `rut_usuario`, `tipo_voto`) VALUES
+(5, 3, 11086788, 'positivo'),
+(7, 6, 11086788, 'negativo'),
+(8, 20, 12345678, 'positivo'),
+(10, 20, 20786387, 'positivo'),
+(11, 24, 20786387, 'negativo');
 
 -- --------------------------------------------------------
 
@@ -886,7 +968,9 @@ INSERT INTO `permiso` (`id_permiso`, `nombre_permiso`, `descripcion_permiso`) VA
 (6, 'professional_pages_access', 'Acceder a las páginas de profesionales'),
 (7, 'client_pages_access', 'Acceder a las páginas de clientes'),
 (8, 'permission_manage', 'Gestionar permisos para roles de usuario'),
-(9, 'servicio_profesion_manage', 'Gestionar servicios disponibles para cada profesión');
+(9, 'servicio_profesion_manage', 'Gestionar servicios disponibles para cada profesión'),
+(10, 'foro_access', 'Acceder a los foros disponibles de la plataforma'),
+(11, 'foro_topic_create', 'Crear temas en los foros disponibles de la plataforma');
 
 -- --------------------------------------------------------
 
@@ -920,7 +1004,11 @@ INSERT INTO `permiso_rol` (`id_rol`, `id_permiso`) VALUES
 (3, 7),
 (4, 7),
 (1, 8),
-(1, 9);
+(1, 9),
+(1, 10),
+(2, 10),
+(3, 10),
+(4, 10);
 
 -- --------------------------------------------------------
 
@@ -1150,7 +1238,7 @@ INSERT INTO `region` (`id_region`, `nombre_region`) VALUES
 (3, 'Antofagasta'),
 (4, 'Atacama'),
 (5, 'Coquimbo'),
-(6, 'Valparaiso'),
+(6, 'Valparaíso'),
 (7, 'Metropolitana de Santiago'),
 (8, 'Libertador General Bernardo O\'Higgins'),
 (9, 'Maule'),
@@ -1603,12 +1691,27 @@ ALTER TABLE `estado_usuario`
   ADD PRIMARY KEY (`id_estado_usuario`);
 
 --
--- Indices de la tabla `foro`
+-- Indices de la tabla `foro_respuesta`
 --
-ALTER TABLE `foro`
-  ADD PRIMARY KEY (`id_foro`),
-  ADD KEY `rut_cliente` (`rut_cliente`),
-  ADD KEY `rut_profesional` (`rut_profesional`);
+ALTER TABLE `foro_respuesta`
+  ADD PRIMARY KEY (`id_respuesta`),
+  ADD KEY `foro_respuesta_ibfk_1` (`id_tema`),
+  ADD KEY `foro_respuesta_ibfk_2` (`rut_usuario`);
+
+--
+-- Indices de la tabla `foro_tema`
+--
+ALTER TABLE `foro_tema`
+  ADD PRIMARY KEY (`id_tema`),
+  ADD KEY `foro_tema_ibfk_1` (`rut_cliente`);
+
+--
+-- Indices de la tabla `foro_voto_respuesta`
+--
+ALTER TABLE `foro_voto_respuesta`
+  ADD PRIMARY KEY (`id_voto`),
+  ADD UNIQUE KEY `id_respuesta` (`id_respuesta`,`rut_usuario`),
+  ADD KEY `rut_usuario` (`rut_usuario`);
 
 --
 -- Indices de la tabla `institucion`
@@ -1773,10 +1876,22 @@ ALTER TABLE `estado_usuario`
   MODIFY `id_estado_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT de la tabla `foro`
+-- AUTO_INCREMENT de la tabla `foro_respuesta`
 --
-ALTER TABLE `foro`
-  MODIFY `id_foro` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `foro_respuesta`
+  MODIFY `id_respuesta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+
+--
+-- AUTO_INCREMENT de la tabla `foro_tema`
+--
+ALTER TABLE `foro_tema`
+  MODIFY `id_tema` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT de la tabla `foro_voto_respuesta`
+--
+ALTER TABLE `foro_voto_respuesta`
+  MODIFY `id_voto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `institucion`
@@ -1800,7 +1915,7 @@ ALTER TABLE `mensaje`
 -- AUTO_INCREMENT de la tabla `permiso`
 --
 ALTER TABLE `permiso`
-  MODIFY `id_permiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_permiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `profesion`
@@ -1888,11 +2003,24 @@ ALTER TABLE `disponibilidad`
   ADD CONSTRAINT `disponibilidad_ibfk_2` FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `foro`
+-- Filtros para la tabla `foro_respuesta`
 --
-ALTER TABLE `foro`
-  ADD CONSTRAINT `foro_ibfk_1` FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut`),
-  ADD CONSTRAINT `foro_ibfk_2` FOREIGN KEY (`rut_profesional`) REFERENCES `profesional` (`rut`);
+ALTER TABLE `foro_respuesta`
+  ADD CONSTRAINT `foro_respuesta_ibfk_1` FOREIGN KEY (`id_tema`) REFERENCES `foro_tema` (`id_tema`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `foro_respuesta_ibfk_2` FOREIGN KEY (`rut_usuario`) REFERENCES `usuario` (`rut`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `foro_tema`
+--
+ALTER TABLE `foro_tema`
+  ADD CONSTRAINT `foro_tema_ibfk_1` FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `foro_voto_respuesta`
+--
+ALTER TABLE `foro_voto_respuesta`
+  ADD CONSTRAINT `foro_voto_respuesta_ibfk_1` FOREIGN KEY (`id_respuesta`) REFERENCES `foro_respuesta` (`id_respuesta`) ON DELETE CASCADE,
+  ADD CONSTRAINT `foro_voto_respuesta_ibfk_2` FOREIGN KEY (`rut_usuario`) REFERENCES `usuario` (`rut`) ON DELETE CASCADE;
 
 --
 -- Filtros para la tabla `lugar_atencion_presencial`

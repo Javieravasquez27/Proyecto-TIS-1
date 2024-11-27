@@ -15,6 +15,7 @@
     else
     {
         $rut = $_SESSION["rut"];
+        $foto_perfil = $_SESSION["foto_perfil"];
         $usuario = get_user_by_rut($rut);
     
         if (!$usuario)
