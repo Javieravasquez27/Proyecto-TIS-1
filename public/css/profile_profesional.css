@@ -1,19 +1,10 @@
-body {
-    background-color: white;
-    color: black;
-}
-.navbar {
-    background-color: rgb(150, 120, 182);
-}
-.navbar .navbar-nav .nav-link {
-    color: white;
-}
-.profile-header, .calendar {
-    background-color: #f8f8f8;
-    border: 1px solid #ddd;
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 20px;
+/* Estilos principales */
+.card { 
+    max-width: 900px; 
+    margin: 20px auto; 
+    border: 1px solid #ddd; 
+    border-radius: 8px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 }
 
 /* Perfil */
