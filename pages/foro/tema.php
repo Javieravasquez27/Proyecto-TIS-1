@@ -161,6 +161,11 @@
     <h3>Respuestas (<span id="cantidad-respuestas">0</span>)</h3>
     <div id="lista-respuestas" class="respuestas"></div>
     <div class="text-center mt-3">
+        <div id="spinner-carga" style="display: none;">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Cargando...</span>
+            </div>
+        </div>
         <button id="cargarMas" class="btn btn-primary">Cargar más</button>
     </div>
 </div>
@@ -171,34 +176,52 @@
     const idTema = <?php echo $id_tema; ?>;
 
     function cargarRespuestas() {
+        const spinner = document.getElementById('spinner-carga');
+        const cargarMasButton = document.getElementById('cargarMas');
+        
+        spinner.style.display = 'block';
+        cargarMasButton.disabled = true;
+        
         fetch(`api/foro/foro_respuesta.php?id_tema=${idTema}&offset=${offset}&limit=${limit}`)
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
                     const respuestas = data.respuestas;
                     const listaRespuestas = document.getElementById('lista-respuestas');
-
-                    respuestas.forEach(respuesta => {
+                
+                    console.log('Respuestas recibidas:', respuestas);
+                
+                    respuestas.forEach((respuesta, index) => {
                         const nuevaRespuestaHTML = `
-                                <div class="card mb-3">
-                                    <div class="card-body">
-                                        <p>${respuesta.contenido_respuesta}</p>
-                                        <small>
-                                            <img src="${respuesta.foto_perfil}" alt="Perfil" width="30" height="30" class="rounded-circle">
-                                            ${respuesta.nombres} (${respuesta.nombre_rol}) · ${respuesta.fecha_respuesta}
-                                        </small>
-                                        <div class="votos mt-3">
-                                            <button class="btn btn-success btn-sm votar" data-id="${respuesta.id_respuesta}" data-tipo="positivo">
-                                                👍 ${respuesta.votos_positivos}
-                                            </button>
-                                            <button class="btn btn-danger btn-sm votar" data-id="${respuesta.id_respuesta}" data-tipo="negativo">
-                                                👎 ${respuesta.votos_negativos}
-                                            </button>
-                                        </div>
+                            <div class="card mb-3" style="${offset > 0 ? 'opacity: 0; transition: opacity 0.5s ease-in-out;' : ''}">
+                                <div class="card-body">
+                                    <p>${respuesta.contenido_respuesta}</p>
+                                    <small>
+                                        <img src="${respuesta.foto_perfil}" alt="Perfil" width="30" height="30" class="rounded-circle">
+                                        ${respuesta.nombres} (${respuesta.nombre_rol}) · ${respuesta.fecha_respuesta}
+                                    </small>
+                                    <div class="votos mt-3">
+                                        <button class="btn btn-success btn-sm votar" data-id="${respuesta.id_respuesta}" data-tipo="positivo">
+                                            👍 ${respuesta.votos_positivos}
+                                        </button>
+                                        <button class="btn btn-danger btn-sm votar" data-id="${respuesta.id_respuesta}" data-tipo="negativo">
+                                            👎 ${respuesta.votos_negativos}
+                                        </button>
                                     </div>
                                 </div>
-                            `;
+                            </div>
+                        `;
+                    
                         listaRespuestas.insertAdjacentHTML('beforeend', nuevaRespuestaHTML);
+                    
+                        if (offset > 0) {
+                            const tarjetasNuevas = listaRespuestas.querySelectorAll('.card[style*="opacity: 0"]');
+                            tarjetasNuevas.forEach((tarjeta, i) => {
+                                setTimeout(() => {
+                                    tarjeta.style.opacity = 1;
+                                }, 100 * i); // Efecto progresivo
+                            });
+                        }
                     });
 
                     // Se incrementa el offset
@@ -210,13 +233,17 @@
 
                     // Se oculta el botón si no hay más respuestas
                     if (respuestas.length < limit) {
-                        document.getElementById('cargarMas').style.display = 'none';
+                        cargarMasButton.style.display = 'none';
                     }
                 } else {
                     alert('Error al cargar las respuestas.');
                 }
             })
-            .catch(error => console.error('Error:', error));
+            .catch(error => console.error('Error en la carga:', error))
+            .finally(() => {
+                spinner.style.display = 'none';
+                cargarMasButton.disabled = false;
+            });
     }
 
     // Se cargan respuestas iniciales
@@ -224,32 +251,6 @@
 
     // Event listener para "Cargar más"
     document.getElementById('cargarMas').addEventListener('click', cargarRespuestas);
-</script>
-
-<script>
-    document.querySelectorAll('.marcar-mejor-respuesta').forEach(button => {
-        button.addEventListener('click', function () {
-            const id_respuesta = this.getAttribute('data-id');
-            const id_tema = <?php echo $id_tema; ?>;
-
-            fetch('api/foro/foro_mejor_respuesta.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: new URLSearchParams({ id_respuesta, id_tema })
-            })
-
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Se actualiza la interfaz, resaltando la mejor respuesta
-                    document.querySelectorAll('.badge.bg-success').forEach(badge => badge.remove());
-                    this.parentNode.innerHTML += `<span class="badge bg-success mt-2">Mejor Respuesta</span>`;
-                } else {
-                    alert(data.mensaje);
-                }
-            });
-        });
-    });
 </script>
 
 <script>
