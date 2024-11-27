@@ -1,33 +1,42 @@
-<!doctype html>
-<html lang="es">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Admin</title>
-    <link rel="stylesheet" href="estilos.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=delete" />
-    <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/jqc-1.12.4/dt-2.1.7/b-3.1.2/sl-2.1.0/datatables.min.css"/>
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-  </head>
-  <body>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="https://cdn.datatables.net/v/dt/jqc-1.12.4/dt-2.1.7/b-3.1.2/sl-2.1.0/datatables.min.js"></script>
-    <div class="container-fluid border contenedorcompleto" > 
-    <div class="container text-center mt-5">
-      <img src="images/Logo_KindomJobs.png" alt="" width="20%">
-      <h1 class="mt-5">Bienvenido Administrador </h1>
-      <div class="container text-center mt-5">
-      <div class="container pl-5 pr-5 text-center">
-        <div class="row justify-content-sm-center">
-            <div class="col-lg-7 col-sm-14 mt-2">
-              <div class="d-grid gap-2">
-                <a class="btn btn-info rounded-pill" href="admin/index.php" type="button">Mantenedores</a>
-                <a class="btn btn-info rounded-pill" href="pagina_principal/index.php" type="button">Pagina Principal</a>
-              </div>
-            </div>
-        </div>
-      </div>
-    </div>
-  </body>
-</html>
+<?php 
+    ob_start();
+    session_start();
+    
+    include 'database/conexion.php';
+    
+    $pagina = isset($_GET['p']) ? strtolower($_GET['p']) : 'home'; // Se obtiene la página actual
+    $esPaginaAdmin = strpos($pagina, "admin") === 0; // Se identifica a las páginas de admin con la forma 'index.php?p=admin/...'
+    
+    $sinNavbarFooter = in_array($pagina, ['auth/login', 'auth/register']); // Arreglo con las páginas sin navbar ni footer
+    
+    $ruta = 'pages/' . $pagina . '.php'; // Ruta de la página a cargar
+    
+    if (!file_exists($ruta)) {
+        $ruta = 'pages/error/pagina_no_existe.php'; // Página de error si se intenta cargar una página no existente
+    }
+    
+    // Se incluye el header correspondiente al rol
+    if ($esPaginaAdmin) {
+        // Se incluye header de admin
+        require_once 'includes/admin/header.php';
+    } else {
+        // Se incluye header común
+        require_once 'includes/header.php';
+    }
+    
+    require_once $ruta; // Se incluye la página seleccionada
+    
+    // Se carga el footer solo si la página no está dentro del arreglo de páginas sin navbar ni footer
+    if (!$sinNavbarFooter) {
+        // Se incluye el footer correspondiente al rol
+        if ($esPaginaAdmin) {
+            // Se incluye footer de admin
+            require_once 'includes/admin/footer.php';
+        } else {
+            // Se incluye footer común
+            require_once 'includes/footer.php';
+        }
+    }
+    
+    ob_end_flush();
+?>

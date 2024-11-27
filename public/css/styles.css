@@ -1,0 +1,27 @@
+body {
+    font-family: "Josefin Sans", sans-serif;
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-brand:hover {
+    color: rgb(230, 230, 230) !important;
+}
+
+.navbar-nav .nav-link,
+.navbar-brand {
+    color: white !important;
+}
+
+.navbar-nav .nav-link.active {
+    color: rgb(230, 230, 230) !important;
+}
+
+.contenedorcompleto {
+    height: 100vh;
+    background-color: rgb(234, 228, 246)
+}
+
+#imagen{
+    margin: 0;
+    padding: 0;
+}
