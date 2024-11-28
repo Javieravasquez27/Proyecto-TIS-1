@@ -46,7 +46,7 @@
                             <b><?php echo $_SESSION['nombre_usuario']; ?></b>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-lg-end">
-                            <li><a class="dropdown-item <?php echo ($pagina == 'profile') ? 'active' : null ?>" aria-current="page" href="index.php?p=profile">Perfil</a></li>
+                            <li><a class="dropdown-item <?php echo ($pagina == 'perfil') ? 'active' : null ?>" aria-current="page" href="index.php?p=perfil&nombre_usuario=<?php echo $_SESSION['nombre_usuario']; ?>">Perfil</a></li>
                             <?php if ($_SESSION['id_rol'] == 1 || $_SESSION['id_rol'] == 2): ?>
                                 <li><a class="dropdown-item <?php echo ($pagina == 'admin/home') ? 'active' : null ?>" aria-current="page" href="index.php?p=admin/home">Panel Admin</a></li>
                             <?php endif; ?>

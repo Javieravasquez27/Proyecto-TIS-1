@@ -25,7 +25,7 @@
     $resultado_lugar_at_presencial = mysqli_query($conexion, $consulta_lugar_at_presencial);
 ?>
 
-<link rel="stylesheet" href="public/css/profile_cita.css">
+<link rel="stylesheet" href="public/css/perfil_cita.css">
 
 <div class="container my-5">
     <title>Reservar cita profesional con

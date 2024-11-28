@@ -53,20 +53,20 @@
                         </li>
                     <?php endif; ?>
                 </ul>
-                <ul class="navbar-nav mr-auto mb-5 mb-lg-0">
-                    <li class="nav-item dropdown">
+                <ul class="navbar-nav mr-auto mb-5 mb-lg-0 ">
+                    <li class="nav-item dropdown ">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <b><?php echo $_SESSION['nombre_usuario']; ?></b>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-lg-end">
-                            <li><a class="dropdown-item <?php echo ($pagina == 'profile') ? 'active' : null ?>" aria-current="page" href="index.php?p=profile">Perfil</a></li>
+                            <li><a class="dropdown-item <?php echo ($pagina == 'perfil') ? 'active' : null ?>" aria-current="page" href="index.php?p=perfil&nombre_usuario=<?php echo $_SESSION['nombre_usuario']; ?>">Perfil</a></li>
                             <?php if ($_SESSION['id_rol'] == 1 || $_SESSION['id_rol'] == 2): ?>
                                 <li><a class="dropdown-item <?php echo ($pagina == 'admin/home') ? 'active' : null ?>" aria-current="page" href="index.php?p=admin/home">Panel Admin</a></li>
                             <?php endif; ?>
                             <li><a class="dropdown-item" id="logout" href="#">Cerrar Sesión</a></li>
                         </ul>
                     </li>
-                </u1>
+                </ul>
             <?php
             } else {
             ?>
