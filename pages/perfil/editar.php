@@ -118,13 +118,24 @@
                             <div class="row mb-3">
                                 <div class="col">
                                     <label for="biografia_prof" class="form-label">Biografía</label>
-                                    <textarea class="form-control" id="biografia_prof" name="biografia_prof" placeholder="Escriba su biografía personal. Esto se mostrará en su perfil público" maxlength="500"><?php echo $fila_profesional['biografia_prof']; ?></textarea>
+                                    <?php if ((isset($fila_profesional['biografia_prof'])) && ($_SESSION['id_rol'] == 3)): ?>
+                                        <textarea class="form-control" id="biografia_prof" name="biografia_prof" placeholder="Escriba su biografía personal. Esto se mostrará en su perfil público" maxlength="500" required><?php echo $fila_profesional['biografia_prof']; ?></textarea>
+                                    <?php endif; ?>
+                                    <?php if (!isset($fila_profesional['biografia_prof'])): ?>
+                                        <textarea class="form-control" id="biografia_prof" name="biografia_prof" placeholder="Usted debe estar autorizado como profesional para poder completar esta información" maxlength="500" disabled></textarea>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col">
+                                <?php if (isset($fila_profesional['biografia_prof'])): ?>
                                     <label for="experiencia" class="form-label">Experiencia <b style="color: #b30000;">(*)</b></label>
                                     <textarea class="form-control" id="experiencia" name="experiencia" placeholder="Breve resumen de su experiencia (ej: Soy Ingeniero Civil Informático, Magíster en Ciencias de la Computación...). Esto se mostrará a los clientes al momento de reservar" maxlength="500" required><?php echo $fila_profesional['experiencia']; ?></textarea>
+                                <?php endif; ?>
+                                <?php if (!isset($fila_profesional['biografia_prof'])): ?>
+                                    <label for="experiencia" class="form-label">Experiencia</label>
+                                    <textarea class="form-control" id="experiencia" name="experiencia" placeholder="Usted debe estar autorizado como profesional para poder completar esta información" maxlength="500" disabled></textarea>
+                                <?php endif; ?>
                                 </div>
                             </div>
                         <?php endif; ?>
@@ -140,16 +151,76 @@
 </div>
 
 <script>
+    // Función para validar teléfono
+    function validarTelefonoInput(telefono) {
+        const regex = /^[0-9]+$/; // Solo números
+        return regex.test(telefono);
+    }
+
+    // Función para validar nombre de usuario
+    function validarNombreUsuarioInput(nombreUsuario) {
+        const regex = /^[a-zA-Z0-9_]+$/; // Solo letras, números y guion bajo
+        return regex.test(nombreUsuario);
+    }
+
+    // Función para validar contraseña
+    function validarPasswordInput(password) {
+        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/; // Mínimo 8 caracteres, 1 minúscula, 1 mayúscula, 1 número
+        return regex.test(password);
+    }
+
     $('#save-profile').click(function() {
-        // Validar el formulario manualmente
-        var form = document.getElementById('edit-profile-form');
-        if (!form.checkValidity()) {
-            // Mostrar errores de validación del navegador
-            form.reportValidity();
+        var nombreUsuario = $('#nombre_usuario').val().trim();
+        var telefono = $('#telefono').val().trim();
+        var password = $('#password').val().trim();
+        var confirmarPassword = $('#confirmar_password').val().trim();
+
+        // Validar nombre de usuario
+        if (!validarNombreUsuarioInput(nombreUsuario)) {
+            Swal.fire({
+                title: "Error",
+                text: "El nombre de usuario solo puede contener letras, números y guion bajo (_).",
+                icon: "error",
+                confirmButtonText: "Aceptar",
+            });
             return;
         }
-    
-        var formData = new FormData(form);
+
+        // Validar teléfono
+        if (!validarTelefonoInput(telefono)) {
+            Swal.fire({
+                title: "Error",
+                text: "El teléfono solo puede contener números.",
+                icon: "error",
+                confirmButtonText: "Aceptar",
+            });
+            return;
+        }
+
+        // Validar contraseña (solo si no está vacía)
+        if (password && !validarPasswordInput(password)) {
+            Swal.fire({
+                title: "Error",
+                text: "La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula y un número.",
+                icon: "error",
+                confirmButtonText: "Aceptar",
+            });
+            return;
+        }
+
+        // Validar coincidencia de contraseñas
+        if (password && password !== confirmarPassword) {
+            Swal.fire({
+                title: "Error",
+                text: "Las contraseñas no coinciden.",
+                icon: "error",
+                confirmButtonText: "Aceptar",
+            });
+            return;
+        }
+
+        // Si todas las validaciones pasan, envía los datos
+        var formData = new FormData($('#edit-profile-form')[0]);
         $.ajax({
             url: 'api/perfil/update.php',
             type: 'POST',
