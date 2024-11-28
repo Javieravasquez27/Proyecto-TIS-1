@@ -29,27 +29,27 @@
                 <span class="h5 align-bottom text-white mt-4"><b>Administrador</b></span>
                 <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link <?php echo ($pagina == 'admin/home') ? 'active' : null ?>" aria-current="page" href="index.php?p=admin/home">Inicio</a>
+                        <a class="nav-link <?php echo ($pagina == 'admin/home') ? 'active' : null ?>" aria-current="page" href="index.php?p=admin/home"><b>Inicio</b></a>
                     </li>
                     <?php if ($_SESSION['id_rol'] == 1): ?>
                         <li class="nav-item">
-                            <a class="nav-link <?php echo (strpos($pagina, 'admin/mantenedores') !== false) ? 'active' : null ?>" href="index.php?p=admin/mantenedores/index">Mantenedores</a>
+                            <a class="nav-link <?php echo (strpos($pagina, 'admin/mantenedores') !== false) ? 'active' : null ?>" href="index.php?p=admin/mantenedores/index"><b>Mantenedores</b></a>
                         </li>
                     <?php endif; ?>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo (strpos($pagina, 'admin/users') !== false) ? 'active' : null ?>" href="index.php?p=admin/users/index">Usuarios</a>
+                        <a class="nav-link <?php echo (strpos($pagina, 'admin/users') !== false) ? 'active' : null ?>" href="index.php?p=admin/users/index"><b>Usuarios</b></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo (strpos($pagina, 'admin/profesionales') !== false) ? 'active' : null ?>" href="index.php?p=admin/profesionales/index">Profesionales</a>
+                        <a class="nav-link <?php echo (strpos($pagina, 'admin/profesionales') !== false) ? 'active' : null ?>" href="index.php?p=admin/profesionales/index"><b>Profesionales</b></a>
                     </li>
                     <?php if ($_SESSION['id_rol'] == 1): ?>
                         <li class="nav-item">
-                            <a class="nav-link <?php echo (strpos($pagina, 'admin/permiso_rol') !== false) ? 'active' : null ?>" href="index.php?p=admin/permiso_rol/index">Permisos para Roles</a>
+                            <a class="nav-link <?php echo (strpos($pagina, 'admin/permiso_rol') !== false) ? 'active' : null ?>" href="index.php?p=admin/permiso_rol/index"><b>Permisos para Roles</b></a>
                         </li>
                     <?php endif; ?>
                     <?php if ($_SESSION['id_rol'] == 1): ?>
                         <li class="nav-item">
-                            <a class="nav-link <?php echo (strpos($pagina, 'admin/servicio_profesion') !== false) ? 'active' : null ?>" href="index.php?p=admin/servicio_profesion/index">Servicios para Profesiones</a>
+                            <a class="nav-link <?php echo (strpos($pagina, 'admin/servicio_profesion') !== false) ? 'active' : null ?>" href="index.php?p=admin/servicio_profesion/index"><b>Servicios para Profesiones</b></a>
                         </li>
                     <?php endif; ?>
                 </ul>
