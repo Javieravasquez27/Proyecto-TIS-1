@@ -1,5 +1,6 @@
 <?php
     include('middleware/auth.php');
+    include('includes/navbar_usuario.php');
     
     if ($_SESSION['rut'] !== $_GET['rut']) {
         header("Location: index.php?p=error/acceso_denegado");
