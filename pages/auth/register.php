@@ -145,7 +145,7 @@
                     <form name="registration" id="registration-form" action="" method="post" enctype="multipart/form-data">
                         <div class="row mb-3">
                             <div class="col">
-                                <label for="rol" class="form-label">Usted se está registrando como...</label>
+                                <label for="rol" class="form-label">Usted se está registrando como... <b style="color: #b30000;">(*)</b></label>
                                 <div id="rol" class="form-check" required>
                                     <!-- Los botones radio se llenarán aquí con AJAX -->
                                 </div>
@@ -153,21 +153,21 @@
                         </div>
                         <div class="row mb-3">
                             <div class="col">
-                                <label for="rut" class="form-label">RUT</label>
+                                <label for="rut" class="form-label">RUT <b style="color: #b30000;">(*)</b></label>
                                 <input type="text" class="form-control" id="rut" name="rut" placeholder="RUT sin guión y con digito verificador (ej: 13799304K o 13799304k)" maxlength="9" required>
                             </div>
                             <div class="col">
-                                <label for="nombre_usuario" class="form-label">Nombre de Usuario</label>
+                                <label for="nombre_usuario" class="form-label">Nombre de Usuario <b style="color: #b30000;">(*)</b></label>
                                 <input type="text" class="form-control" id="nombre_usuario" placeholder="Sin espacios ni carácteres especiales (ej: JuanPerez)" name="nombre_usuario" maxlength="20" required>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col">
-                                <label for="nombres" class="form-label">Nombres</label>
+                                <label for="nombres" class="form-label">Nombres <b style="color: #b30000;">(*)</b></label>
                                 <input type="text" class="form-control" id="nombres" name="nombres" placeholder="Ejemplo: Juan Carlos" maxlength="50" required>
                             </div>
                             <div class="col">
-                                <label for="apellido_p" class="form-label">Apellido Paterno</label>
+                                <label for="apellido_p" class="form-label">Apellido Paterno <b style="color: #b30000;">(*)</b></label>
                                 <input type="text" class="form-control" id="apellido_p" name="apellido_p" placeholder="Ejemplo: Pérez" maxlength="50" required>
                             </div>
                             <div class="col">
@@ -177,25 +177,25 @@
                         </div>
                         <div class="row mb-3">
                             <div class="col">
-                                <label for="correo" class="form-label">Correo</label>
+                                <label for="correo" class="form-label">Correo <b style="color: #b30000;">(*)</b></label>
                                 <input type="email" class="form-control" id="correo" name="correo" placeholder="Ejemplo: juan@email.com" maxlength="50" required>
                             </div>
                             <div class="col">
-                                <label for="telefono" class="form-label">Teléfono</label>
+                                <label for="telefono" class="form-label">Teléfono <b style="color: #b30000;">(*)</b></label>
                                 <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="Ejemplo: 912345678" maxlength="9" required>
                             </div>
                             <div class="col">
-                                <label for="fecha_nac" class="form-label">Fecha de Nacimiento</label>
+                                <label for="fecha_nac" class="form-label">Fecha de Nacimiento <b style="color: #b30000;">(*)</b></label>
                                 <input type="date" class="form-control" id="fecha_nac" name="fecha_nac" required>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col">
-                                <label for="direccion" class="form-label">Dirección</label>
+                                <label for="direccion" class="form-label">Dirección <b style="color: #b30000;">(*)</b></label>
                                 <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Ejemplo: Avenida Las Golondrinas 2456" maxlength="50" required>
                             </div>
                             <div class="col">
-                                <label for="comuna" class="form-label">Comuna</label>
+                                <label for="comuna" class="form-label">Comuna <b style="color: #b30000;">(*)</b></label>
                                 <select id="comuna" name="comuna" class="form-select" required>
                                     <!-- Las opciones se llenarán aquí con AJAX -->
                                 </select>
@@ -203,11 +203,11 @@
                         </div>
                         <div class="row mb-3">
                             <div class="col">
-                                <label for="password" class="form-label">Contraseña</label>
+                                <label for="password" class="form-label">Contraseña <b style="color: #b30000;">(*)</b></label>
                                 <input type="password" class="form-control" id="password" name="password" placeholder="Debe contener al menos 8 carácteres" maxlength="100" required>
                             </div>
                             <div class="col">
-                                <label for="confirmar_password" class="form-label">Confirmar Contraseña</label>
+                                <label for="confirmar_password" class="form-label">Confirmar Contraseña <b style="color: #b30000;">(*)</b></label>
                                 <input type="password" class="form-control" id="confirmar_password" name="confirmar_password" placeholder="Reingrese la contraseña" maxlength="100" required>
                             </div>
                         </div>
@@ -215,13 +215,13 @@
                         <div id="campos_profesional" style="display: none;">
                             <div class="row mb-3">
                                 <div class="col">
-                                    <label for="profesion" class="form-label">Profesión</label>
+                                    <label for="profesion" class="form-label">Profesión <b style="color: #b30000;">(*)</b></label>
                                     <select id="profesion" name="profesion" class="form-select">
                                         <!-- Las opciones se llenarán aquí con AJAX -->
                                     </select>
                                 </div>
                                 <div class="col">
-                                    <label for="institucion" class="form-label">Institución</label>
+                                    <label for="institucion" class="form-label">Institución <b style="color: #b30000;">(*)</b></label>
                                     <select id="institucion" name="institucion" class="form-select">
                                         <!-- Las opciones se llenarán aquí con AJAX -->
                                     </select>
@@ -229,22 +229,23 @@
                             </div>
                             <div class="row mb-3">
                                 <div class="col">
-                                    <label for="foto_perfil" class="form-label">Foto de Perfil</label>
+                                    <label for="foto_perfil" class="form-label">Foto de Perfil <b style="color: #b30000;">(*)</b></label>
                                     <input type="file" class="form-control" name="foto_perfil" id="foto_perfil">
                                 </div>
                                 <div class="col">
-                                    <label for="titulo_profesional" class="form-label">Título Profesional</label>
+                                    <label for="titulo_profesional" class="form-label">Título Profesional <b style="color: #b30000;">(*)</b></label>
                                     <input type="file" class="form-control" name="titulo_profesional" id="titulo_profesional">
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col">
-                                    <label for="experiencia" class="form-label">Experiencia</label>
-                                    <input type="text" class="form-control" id="experiencia" name="experiencia" placeholder="Breve resumen de su experiencia (ej: Soy Ingeniero Civil Informático, Magíster en Ciencias de la Computación...)" maxlength="500">
+                                    <label for="experiencia" class="form-label">Experiencia <b style="color: #b30000;">(*)</b></label>
+                                    <textarea class="form-control" name="experiencia" id="experiencia" placeholder="Breve resumen de su experiencia (ej: Soy Ingeniero Civil Informático, Magíster en Ciencias de la Computación...)" maxlength="500"></textarea>
                                 </div>
                             </div>
                         </div>
                         <div class="d-grid gap-2">
+                            <p><b style="color: #b30000;">(*)</b> Campos obligatorios.</p>
                             <button type="submit" name="submit" class="btn btn-primary">Registrarse</button>
                         </div>
                     </form>
