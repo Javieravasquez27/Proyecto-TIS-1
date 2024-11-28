@@ -3,6 +3,7 @@
     include("../../middleware/auth.php");
     
     $rut = $_SESSION['rut'];
+    $id_rol = $_SESSION['id_rol'];
     $nombre_usuario = $_POST['nombre_usuario'];
     $nombres = $_POST['nombres'];
     $apellido_p = $_POST['apellido_p'];
@@ -20,9 +21,9 @@
         move_uploaded_file($_FILES['foto_perfil']['tmp_name'], $localizacion_foto_perfil_relativa);
     }
     
-    $sql_actualiza_usuario = "UPDATE usuario SET nombre_usuario = '$nombre_usuario', nombres = '$nombres',
-                              apellido_p = '$apellido_p', apellido_m = '$apellido_m', correo = '$correo',
-                              telefono = '$telefono'";
+    $sql_actualiza_usuario = "UPDATE usuario SET nombre_usuario = '$nombre_usuario', nombres = '$nombres', apellido_p = '$apellido_p',
+                                     apellido_m = '$apellido_m', correo = '$correo',
+                                     telefono = '$telefono'";
     
     if ($password) {
         $sql_actualiza_usuario .= ", contrasena = '$password'";
@@ -31,7 +32,17 @@
         $sql_actualiza_usuario .= ", foto_perfil = '$localizacion_foto_perfil'";
     }
     
-    $sql_actualiza_usuario .= " WHERE rut = '$rut'";
+    $sql_actualiza_usuario .= " WHERE rut = '$rut';";
     mysqli_query($conexion, $sql_actualiza_usuario);
+
+    if ($id_rol == 1 || $id_rol == 2 || $id_rol == 3) {
+        $biografia_prof = $_POST['biografia_prof'];
+        $experiencia = $_POST['experiencia'];
+
+        $sql_actualiza_profesional = "UPDATE profesional SET biografia_prof = '$biografia_prof', experiencia = '$experiencia'
+                                      WHERE rut = '$rut';";
+        mysqli_query($conexion, $sql_actualiza_profesional);
+    }
+
     echo "success";    
 ?>

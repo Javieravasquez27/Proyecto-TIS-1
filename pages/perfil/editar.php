@@ -29,7 +29,7 @@
                     <form name="edit-profile" id="edit-profile-form" action="" method="post" enctype="multipart/form-data">
                         <div class="row mb-3">
                             <div class="col">
-                                <label for="rol" class="form-label">Rol</label>
+                                <label for="rol" class="form-label">Rol <b style="color: #b30000;">(*)</b></label>
                                 <select id="rol" name="rol" class="form-select" disabled>
                                     <option selected><?php echo $_SESSION['nombre_rol']; ?></option>
                                 </select>
@@ -37,49 +37,49 @@
                         </div>
                         <div class="row mb-3">
                             <div class="col">
-                                <label for="rut" class="form-label">RUT</label>
+                                <label for="rut" class="form-label">RUT <b style="color: #b30000;">(*)</b></label>
                                 <input type="text" class="form-control" id="rut" name="rut" value="<?php echo $fila_usuario['rut']; echo $fila_usuario['dv']; ?>" maxlength="9" disabled>
                             </div>
                             <div class="col">
-                                <label for="nombre_usuario" class="form-label">Nombre de Usuario</label>
+                                <label for="nombre_usuario" class="form-label">Nombre de Usuario <b style="color: #b30000;">(*)</b></label>
                                 <input type="text" class="form-control" id="nombre_usuario" name="nombre_usuario" placeholder="Sin espacios ni carácteres especiales (ej: JuanPerez)" value="<?php echo $fila_usuario['nombre_usuario']; ?>" maxlength="20" required>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col">
-                                <label for="nombres" class="form-label">Nombres</label>
+                                <label for="nombres" class="form-label">Nombres <b style="color: #b30000;">(*)</b></label>
                                 <input type="text" class="form-control" id="nombres" name="nombres" placeholder="Ejemplo: Juan Carlos" value="<?php echo $fila_usuario['nombres']; ?>" maxlength="50" required>
                             </div>
                             <div class="col">
-                                <label for="apellido_p" class="form-label">Apellido Paterno</label>
+                                <label for="apellido_p" class="form-label">Apellido Paterno <b style="color: #b30000;">(*)</b></label>
                                 <input type="text" class="form-control" id="apellido_p" name="apellido_p" placeholder="Ejemplo: Pérez" value="<?php echo $fila_usuario['apellido_p']; ?>" maxlength="50" required>
                             </div>
                             <div class="col">
                                 <label for="apellido_m" class="form-label">Apellido Materno</label>
-                                <input type="text" class="form-control" id="apellido_m" name="apellido_m" placeholder="Ejemplo: García" value="<?php echo $fila_usuario['apellido_m']; ?>" maxlength="50" required>
+                                <input type="text" class="form-control" id="apellido_m" name="apellido_m" placeholder="Ejemplo: García" value="<?php echo $fila_usuario['apellido_m']; ?>" maxlength="50">
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col">
-                                <label for="correo" class="form-label">Correo</label>
+                                <label for="correo" class="form-label">Correo <b style="color: #b30000;">(*)</b></label>
                                 <input type="email" class="form-control" id="correo" name="correo" placeholder="Ejemplo: juan@email.com" value="<?php echo $fila_usuario['correo']; ?>" maxlength="50" required>
                             </div>
                             <div class="col">
-                                <label for="telefono" class="form-label">Teléfono</label>
+                                <label for="telefono" class="form-label">Teléfono <b style="color: #b30000;">(*)</b></label>
                                 <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="Ejemplo: 912345678" value="<?php echo $fila_usuario['telefono']; ?>" maxlength="9" required>
                             </div>
                             <div class="col">
-                                <label for="fecha_nac" class="form-label">Fecha de Nacimiento</label>
+                                <label for="fecha_nac" class="form-label">Fecha de Nacimiento <b style="color: #b30000;">(*)</b></label>
                                 <input type="date" class="form-control" id="fecha_nac" name="fecha_nac" value="<?php echo $fila_usuario['fecha_nac']; ?>" disabled>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col">
-                                <label for="password" class="form-label">Contraseña</label>
+                                <label for="password" class="form-label">Contraseña <b style="color: #b30000;">(**)</b></label>
                                 <input type="password" class="form-control" id="password" name="password" placeholder="Debe contener al menos 8 carácteres" maxlength="100">
                             </div>
                             <div class="col">
-                                <label for="confirmar_password" class="form-label">Confirmar Contraseña</label>
+                                <label for="confirmar_password" class="form-label">Confirmar Contraseña <b style="color: #b30000;">(**)</b></label>
                                 <input type="password" class="form-control" id="confirmar_password" name="confirmar_password" placeholder="Reingrese la contraseña" maxlength="100">
                             </div>
                         </div>
@@ -93,26 +93,43 @@
                         <?php if ($_SESSION['id_rol'] == 1 || $_SESSION['id_rol'] == 2 || $_SESSION['id_rol'] == 3): ?>
                             <div class="row mb-3">
                                 <div class="col">
-                                    <label for="profesion" class="form-label">Profesión</label>
+                                    <label for="profesion" class="form-label">Profesión <b style="color: #b30000;">(*)</b></label>
                                     <select id="profesion" name="profesion" class="form-select" disabled>
-                                        <option selected>Seleccione una profesión</option>
+                                        <?php if (isset($fila_profesional['nombre_profesion'])): ?>
+                                            <option selected><?php echo $fila_profesional['nombre_profesion']; ?></option>
+                                        <?php endif; ?>
+                                        <?php if (!isset($fila_profesional['nombre_profesion'])): ?>
+                                            <option selected>No definido</option>
+                                        <?php endif; ?>
                                     </select>
                                 </div>
                                 <div class="col">
-                                    <label for="institucion" class="form-label">Institución</label>
+                                    <label for="institucion" class="form-label">Institución <b style="color: #b30000;">(*)</b></label>
                                     <select id="institucion" name="institucion" class="form-select" disabled>
-                                        <option selected>Seleccione una institución</option>
+                                        <?php if (isset($fila_profesional['nombre_institucion'])): ?>
+                                            <option selected><?php echo $fila_profesional['nombre_institucion']; ?></option>
+                                        <?php endif; ?>
+                                        <?php if (!isset($fila_profesional['nombre_institucion'])): ?>
+                                            <option selected>No definido</option>
+                                        <?php endif; ?>
                                     </select>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col">
-                                    <label for="experiencia" class="form-label">Experiencia</label>
-                                    <textarea class="form-control" id="experiencia" name="experiencia" placeholder="Breve resumen de su experiencia (ej: Soy Ingeniero Civil Informático, Magíster en Ciencias de la Computación...)" maxlength="500"></textarea>
+                                    <label for="biografia_prof" class="form-label">Biografía</label>
+                                    <textarea class="form-control" id="biografia_prof" name="biografia_prof" placeholder="Escriba su biografía personal. Esto se mostrará en su perfil público" maxlength="500"><?php echo $fila_profesional['biografia_prof']; ?></textarea>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <label for="experiencia" class="form-label">Experiencia <b style="color: #b30000;">(*)</b></label>
+                                    <textarea class="form-control" id="experiencia" name="experiencia" placeholder="Breve resumen de su experiencia (ej: Soy Ingeniero Civil Informático, Magíster en Ciencias de la Computación...). Esto se mostrará a los clientes al momento de reservar" maxlength="500" required><?php echo $fila_profesional['experiencia']; ?></textarea>
                                 </div>
                             </div>
                         <?php endif; ?>
                         <div class="d-grid gap-2">
+                            <p><b style="color: #b30000;">(*)</b> Campos obligatorios.<br><b style="color: #b30000;">(**)</b> Solo llenar si se desea cambiar contraseña.</p>
                             <button type="button" id="save-profile" class="btn btn-primary">Guardar cambios</button>
                         </div>
                     </form>
@@ -124,7 +141,15 @@
 
 <script>
     $('#save-profile').click(function() {
-        var formData = new FormData($('#edit-profile-form')[0]);
+        // Validar el formulario manualmente
+        var form = document.getElementById('edit-profile-form');
+        if (!form.checkValidity()) {
+            // Mostrar errores de validación del navegador
+            form.reportValidity();
+            return;
+        }
+    
+        var formData = new FormData(form);
         $.ajax({
             url: 'api/perfil/update.php',
             type: 'POST',
