@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-11-2024 a las 17:34:45
+-- Tiempo de generación: 28-11-2024 a las 21:18:10
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -1106,11 +1106,11 @@ INSERT INTO `profesion` (`id_profesion`, `nombre_profesion`) VALUES
 
 CREATE TABLE `profesional` (
   `rut` int(11) NOT NULL,
-  `id_profesion` int(11) NOT NULL,
-  `id_institucion` int(11) NOT NULL,
+  `id_profesion` int(11) DEFAULT NULL,
+  `id_institucion` int(11) DEFAULT NULL,
   `biografia_prof` varchar(255) DEFAULT NULL,
-  `experiencia` varchar(255) NOT NULL,
-  `titulo_profesional` varchar(255) NOT NULL
+  `experiencia` varchar(255) DEFAULT NULL,
+  `titulo_profesional` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -1127,6 +1127,7 @@ INSERT INTO `profesional` (`rut`, `id_profesion`, `id_institucion`, `biografia_p
 (15727637, 34, 2, NULL, 'Clases de física para escolares', '../../uploads/titulo_profesional/Ejercicios ejemplo de óptimo de producción.pdf'),
 (16377783, 10, 38, NULL, 'Enseñanza de la matemática para segundo ciclo de enseñanza básica, y enseñanza media (de 1.° a 4.° Medio)', '../../uploads/titulo_profesional/reglamentacion.pdf'),
 (16767878, 7, 3, NULL, 'Gestión tributaria y Operación Renta anual', '../../uploads/titulo_profesional/DataTables example - PDF - image.pdf'),
+(20786387, NULL, NULL, '', '', NULL),
 (20876543, 9, 16, NULL, 'Gestión de información', '../../uploads/titulo_profesional/Feedback Incremento 2.pdf');
 
 -- --------------------------------------------------------
