@@ -1,5 +1,5 @@
 <?php 
-    include_once __DIR__ . '/../config/config.php';
+    include_once __DIR__ . '/../config/config.php'; // Se carga archivo de configuración (donde se almacenan los datos desde .env)
 
     $conexion = mysqli_connect($host, $db_user, $db_pass, $db);
 

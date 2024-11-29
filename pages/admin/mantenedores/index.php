@@ -1,15 +1,16 @@
-<?php 
-    define('PERMISO_REQUERIDO', 'Gestionar los mantenedores de la plataforma');
+<?php
+    define('PERMISO_REQUERIDO', 'mantainers_manage');
     include("middleware/auth.php");
 ?>
 
 <title>Mantenedores - KindomJob's</title>
 
+<?php
+    include 'includes/admin/navbar_mantenedores.php';
+?>
+
 <body>
     <div class="container-fluid py-2 contenedorcompleto">
-        <?php
-            include 'includes/admin/navbar_mantenedores.php';
-        ?>
         <br>
         <table class="table table-striped">
             <thead>
@@ -57,14 +58,10 @@
                 </tr>
                 <tr>
                     <th scope="row">9</th>
-                    <td>Roles y Permisos</td>
-                </tr>
-                <tr>
-                    <th scope="row">10</th>
                     <td>Servicios</td>
                 </tr>
                 <tr>
-                    <th scope="row">11</th>
+                    <th scope="row">10</th>
                     <td>Tipos de Horario</td>
                 </tr>
             </tbody>

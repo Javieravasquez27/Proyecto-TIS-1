@@ -50,7 +50,7 @@
         }
     }
 
-    function get_user_by_apellido_p($nombres)
+    function get_user_by_apellido_p($apellido_p)
     {
         global $conexion;
 
@@ -67,18 +67,20 @@
         }
     }
 
-    function include_page($pagina)
+    function get_user_by_apellido_m($apellido_m)
     {
-        $pagina = strtolower($pagina);
-        $pagina_path = 'pages/' . $pagina . '.php';
+        global $conexion;
 
-        if (file_exists($pagina_path))
+        $sql = "SELECT * FROM usuario WHERE apellido_m = '$apellido_m'";
+        $resultado = mysqli_query($conexion, $sql);
+
+        if (mysqli_num_rows($resultado) == 1)
         {
-            require_once $pagina_path;
+            return mysqli_fetch_assoc($resultado);
         }
         else
         {
-            require_once 'pages/home.php';
+            return false;
         }
     }
 ?>
