@@ -4,7 +4,7 @@
 
 <title>Panel de Métricas - KindomJob's</title>
 
-<div>
+<div class="chart-container" style="position: relative; height:40vh; width:80vw">
   <canvas id="myChart"></canvas>
 </div>
 
