@@ -16,9 +16,9 @@
     {
         $rut = $_SESSION["rut"];
         $foto_perfil = $_SESSION["foto_perfil"];
-        $usuario = get_user_by_rut($rut);
+        $fila_usuario = get_user_by_rut($rut);
     
-        if (!$usuario)
+        if (!$fila_usuario)
         {
             session_destroy();
             header("Location: index.php?p=auth/login");
@@ -40,23 +40,25 @@
         global $conexion;
     
         // Obtener el id_rol del usuario
-        $sql_usuario = "SELECT id_rol FROM usuario WHERE rut = '$rut'";
-        $resultado_usuario = mysqli_query($conexion, $sql_usuario);
-        $usuario = mysqli_fetch_assoc($resultado_usuario);
+        $sql_consulta_usuario = "SELECT u.id_rol, r.nombre_rol AS nombre_rol
+                                 FROM usuario u JOIN rol r ON u.id_rol = r.id_rol
+                                 WHERE rut = '$rut';";
+        $resultado_consulta_usuario = mysqli_query($conexion, $sql_consulta_usuario);
+        $fila_usuario = mysqli_fetch_assoc($resultado_consulta_usuario);
     
-        if (!$usuario)
+        if (!$fila_usuario)
         {
             return false;
         }
 
-        $id_rol = $usuario['id_rol'];
-        $sql_permiso = "
+        $id_rol = $fila_usuario['id_rol'];
+        $sql_consulta_permiso = "
             SELECT 1 FROM permiso_rol pr
             JOIN permiso p ON pr.id_permiso = p.id_permiso
             WHERE pr.id_rol = $id_rol AND p.nombre_permiso = '$permiso_requerido'
         ";
-        $resultado_permiso = mysqli_query($conexion, $sql_permiso);
+        $resultado_consulta_permiso = mysqli_query($conexion, $sql_consulta_permiso);
     
-        return mysqli_num_rows($resultado_permiso) > 0;
+        return mysqli_num_rows($resultado_consulta_permiso) > 0;
     }
 ?>

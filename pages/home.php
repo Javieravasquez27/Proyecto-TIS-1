@@ -1,7 +1,20 @@
+<?php
+    include("database/conexion.php");
+
+    if (isset($_SESSION['rut'])) {
+        $rut = $_SESSION['rut'];
+
+        $sql_consulta_serv_profesional = "SELECT * FROM servicio_profesional
+                                          WHERE rut_profesional = '$rut';";
+        $resultado_consulta_serv_profesional = mysqli_query($conexion, $sql_consulta_serv_profesional);
+        $fila_serv_profesional = mysqli_fetch_assoc($resultado_consulta_serv_profesional);
+    }
+?>
+
 <title>KindomJob's</title>
 
 <script>
-    <?php if ($_SESSION['id_rol'] == 1 || $_SESSION['id_rol'] == 2 || $_SESSION['id_rol'] == 3): ?>
+    <?php if (($_SESSION['id_rol'] != 4) && (!$fila_serv_profesional)): ?>
         const Toast = Swal.mixin({
             toast: true,
             position: "bottom-end",
@@ -18,7 +31,7 @@
         });
         Toast.fire({
             icon: "warning",
-            html: "Para ser mostrado en la búsqueda, <b>tiene que rellenar sus campos de profesional.</b><br><a href='index.php?p=profile' style='color:#fff;'>Rellene los campos aquí</a>"
+            html: "Para ser mostrado en la búsqueda, <b>tiene que rellenar sus campos de profesional.</b><br><a href='index.php?p=perfil&nombre_usuario=<?php echo $_SESSION['nombre_usuario']; ?>' style='color:#fff;'>Rellene los campos aquí</a>"
         });
     <?php endif; ?>
 </script>
