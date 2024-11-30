@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         #map {
-            height: 400px;
+            height: 600px;
             width: 100%;
         }
         form {
@@ -31,6 +31,7 @@
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
+
 
         // Manejar el envío del formulario
         document.getElementById('address-form').addEventListener('submit', async (event) => {
