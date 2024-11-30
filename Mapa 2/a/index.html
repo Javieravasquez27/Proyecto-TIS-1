@@ -1,26 +1,39 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mapa con Leaflet</title>
+    <title>Geolocalizar Dirección</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <link rel="stylesheet" href="estilos.css">
+    <style>
+        #map {
+            height: 600px;
+            width: 100%;
+        }
+        form {
+            margin: 20px 0;
+        }
+    </style>
 </head>
 <body>
-    <h1>Mapa con Leaflet</h1>
-    <h3>Geolocalizar Dirección</h3>
+    <h1>Geolocalizar Dirección</h1>
     <form id="address-form">
         <label for="address">Dirección:</label>
         <input type="text" id="address" name="address" placeholder="Ingresa una dirección" required />
         <button type="submit">Geolocalizar</button>
     </form>
-    <br>
     <div id="map"></div>
     <p id="result"></p>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
+        // Inicializar el mapa
+        const map = L.map('map').setView([37.7749, -122.4194], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
 
+
+        // Manejar el envío del formulario
         document.getElementById('address-form').addEventListener('submit', async (event) => {
             event.preventDefault(); // Evita el envío tradicional del formulario
 
@@ -39,8 +52,11 @@
                     const lon = parseFloat(location.lon);
 
                     // Mostrar la ubicación en el mapa
-                    map.setView([lat, lon], 12);
-                    
+                    map.setView([lat, lon], 15);
+                    L.marker([lat, lon]).addTo(map)
+                        .bindPopup(`<b>${address}</b><br>Lat: ${lat}, Lon: ${lon}`)
+                        .openPopup();
+
                     // Mostrar las coordenadas en pantalla
                     document.getElementById('result').innerText = 
                         `Coordenadas para "${address}": Latitud: ${lat}, Longitud: ${lon}`;
@@ -57,56 +73,6 @@
                     "Ocurrió un error al intentar geolocalizar la dirección.";
             }
         });
-
-        async function geocodeAddresses(addresses) {
-            const baseUrl = "https://nominatim.openstreetmap.org/search";
-            const locations = [];
-
-            for (const address of addresses) {
-                const url = `${baseUrl}?q=${encodeURIComponent(address)}&format=json&limit=1`;
-                try {
-                    const response = await fetch(url);
-                    const data = await response.json();
-                    if (data.length > 0) {
-                        const location = data[0];
-                        console.log(`Dirección: ${address}, Coordenadas: ${location.lat}, ${location.lon}`);
-                        locations.push({ 
-                            address, 
-                            lat: parseFloat(location.lat), 
-                            lng: parseFloat(location.lon) 
-                        });
-                    } else {
-                        console.error(`No se encontraron coordenadas para la dirección "${address}".`);
-                    }
-                } catch (error) {
-                    console.error("Error en la solicitud:", error);
-                }
-            }
-            return locations;
-        }
-
-        const map = L.map('map').setView([-36.8258763,-73.1154458], 10);
-
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors'
-        }).addTo(map);
-
-        const addresses = [
-            "Avenida Alonso de ribera 2850, concepcion, Chile ",
-            "Lientur 1457, Concepción, chile",
-            "Avenida Valle Blanco 280, concepcion, Chile"
-        ];
-
-        geocodeAddresses(addresses).then(locations => {
-            locations.forEach(location => {
-                L.marker([location.lat, location.lng])
-                    .addTo(map)
-                    .bindPopup(`<b>${location.address}</b><br>Lat: ${location.lat}, Lng: ${location.lng}`)
-                    .openPopup();
-            });
-        });
     </script>
 </body>
 </html>
-
-    
