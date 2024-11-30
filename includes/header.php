@@ -18,12 +18,12 @@
 
 	<!-- CSS -->
 	<?php
-		// Se hace la consulta para obtener si es que profile_cita se repite en alguna parte
-		// de la pagina si es asi entonces se muestra el profile_profesional
+		// Se hace la consulta para obtener si es que perfil_cita se repite en alguna parte
+		// de la pagina si es asi entonces se muestra el perfil_profesional
 		$pagina = isset($_GET['p']) ? strtolower($_GET['p']): 'home';
-		$esprofilecita = preg_match('*\b'.preg_quote('profile_cita').'\b*i',$pagina);
-		if ($esprofilecita == 1) { ?>
-			<link rel="stylesheet" href="public/css/profile_profesional.css">
+		$esperfilcita = preg_match('*\b'.preg_quote('perfil_cita').'\b*i',$pagina);
+		if ($esperfilcita == 1) { ?>
+			<link rel="stylesheet" href="public/css/perfil_profesional.css">
 
 	<?php
 		} 
@@ -44,8 +44,12 @@
 	<!-- SweetAlert2 -->
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+	<!-- Leaflet -->
+	<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
 	<!-- Select2 -->
 	<!-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> -->
+	 
 	<!-- jQuery -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
