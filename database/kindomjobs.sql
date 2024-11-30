@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-11-2024 a las 21:18:10
+-- Tiempo de generación: 01-12-2024 a las 00:11:17
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -75,12 +75,16 @@ INSERT INTO `cliente` (`rut`) VALUES
 (11086788),
 (11111111),
 (12345678),
+(12783648),
 (13082637),
+(13476476),
 (14565656),
 (15098364),
 (15727637),
+(16235638),
 (16377783),
 (16767878),
+(18267357),
 (20786387),
 (20876543),
 (23456789);
@@ -1566,6 +1570,8 @@ CREATE TABLE `usuario` (
   `telefono` int(11) NOT NULL,
   `fecha_nac` date NOT NULL,
   `direccion` varchar(255) NOT NULL,
+  `latitud` varchar(100) DEFAULT NULL,
+  `longitud` varchar(100) DEFAULT NULL,
   `contrasena` varchar(100) NOT NULL,
   `foto_perfil` varchar(255) NOT NULL DEFAULT 'uploads/foto_perfil/foto_perfil_predeterminada.jpg',
   `id_comuna` int(11) NOT NULL,
@@ -1577,26 +1583,30 @@ CREATE TABLE `usuario` (
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`rut`, `dv`, `nombre_usuario`, `nombres`, `apellido_p`, `apellido_m`, `correo`, `telefono`, `fecha_nac`, `direccion`, `contrasena`, `foto_perfil`, `id_comuna`, `id_rol`, `id_estado_usuario`) VALUES
-(7466578, '0', 'Mayerly', 'Mayerly', 'Zavala', 'Iturra', 'mayerly@gmail.com', 956543424, '2000-08-31', 'Avenida Michimalonco 278', '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 241, 4, 1),
-(10208323, '7', 'Guillermo', 'Guillermo', 'Pacheco', 'Cereceda', 'guillermo@gmail.com', 982776382, '1994-02-25', 'ABC 123', '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 192, 4, 1),
-(10286235, 'K', 'Profesional456', 'ProfesionalP', 'PPP', 'ProfPP', 'profprof@gmail.com', 986372773, '2002-01-12', 'Calle Nueva 343', '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 37, 3, 2),
-(10367255, '4', 'Natalia', 'Natalia', 'Urrutia', 'Menares', 'natalia@gmail.com', 953535645, '1997-09-03', 'Calle ABC 123', 'baaab6fa3b287456d2ff691027920826', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 233, 3, 1),
-(11022434, '6', 'Profesional123', 'Profesional', 'Prof', 'ProfProf', 'profesional@gmail.com', 987875646, '1999-12-12', 'Avenida Portales 1234', '81dc9bdb52d04dc20036dbd8313ed055', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 78, 3, 2),
-(11086788, '3', 'Lorena', 'Lorena', 'Lagos', 'Sanhueza', 'lorena@gmail.com', 998876565, '1998-08-25', 'Avenida Bernardo O\'Higgins 3272', '827ccb0eea8a706c4c34a16891f84e7b', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 65, 4, 1),
-(11111111, '1', 'Admin', 'Admin', 'Admin', 'Admin', 'superadmin@gmail.com', 999999999, '1999-11-11', 'Calle Admin 123', '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 233, 1, 1),
-(12323424, '3', 'AAASSD', 'Orlando', 'Salazar', 'Urrutia', 'profprofprof@gmail.com', 982878273, '2000-08-12', 'Francisco Pérez 123', '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/IMG_20240817_182910109.jpg', 32, 3, 2),
-(12345678, '5', 'Cliente', 'Cliente', 'Pérez', 'García', 'cliente@gmail.com', 999999999, '1999-08-25', 'Calle DEF, 321', '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 1, 4, 1),
-(12424567, '2', 'Graciela', 'Graciela', 'Hernández', 'Jiménez', 'graciela@gmail.com', 924566345, '2022-08-12', 'Avenida Las Golondrinas 2485', '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/Fondo.png', 237, 3, 2),
-(13082637, '7', 'ABCDEF', 'Admin', 'Prueba', 'Prueba', 'admin@gmail.com', 982872637, '1995-08-08', 'Calle Nueva 123', '81dc9bdb52d04dc20036dbd8313ed055', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 1, 4, 1),
-(14565656, '7', 'Hector', 'Héctor', 'Jiménez', 'Suazo', 'hector@gmail.com', 965656565, '2002-07-08', 'Avenida Arturo Prat 234', '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/IMG_20240831_163740121.jpg', 1, 3, 1),
-(15098364, '9', 'Barbara', 'Barbara', 'Hernández', 'Ramírez', 'barbara@gmail.com', 936262767, '2000-09-15', 'Calle ABC, 123', '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 332, 4, 1),
-(15727637, '9', 'Valentina', 'Valentina', 'Figueroa', 'Pereira', 'valentina@gmail.com', 938736726, '1994-06-01', 'Postdam 4332', '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/Fondo.png', 237, 3, 1),
-(16377783, '5', 'Karina', 'Karina', 'Medina', 'Lozano', 'karina@gmail.com', 936726362, '1985-01-12', 'Ramón Carrasco 1023', '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/IMG_20240831_174544129.jpg', 233, 3, 1),
-(16767878, '5', 'Ernesto', 'Ernesto', 'Loyola', 'Zapata', 'ernesto@gmail.com', 988786565, '1991-12-15', 'José Arrieta 2345', 'e10adc3949ba59abbe56e057f20f883e', 'uploads/foto_perfil/IMG_20240810_181021908.jpg', 36, 3, 1),
-(20786387, '4', 'Alvaro', 'Álvaro Alfonso', 'Molina', 'Jara', 'alvaromolinacl@gmail.com', 988888888, '2001-07-10', 'Calle ABC, 123', '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 1, 1, 1),
-(20876543, '4', 'PruebaProf', 'Prueba', 'Profesional', 'Prof', 'pruebaprof@gmail.com', 987767657, '2002-08-12', 'Calle Gabriela 143', '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 83, 3, 1),
-(23456789, '6', 'Juanito', 'Juan', 'Pérez', 'Gar', 'juan@gmail.com', 987654321, '2000-08-02', 'Calle GHI, 786', '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 1, 2, 1);
+INSERT INTO `usuario` (`rut`, `dv`, `nombre_usuario`, `nombres`, `apellido_p`, `apellido_m`, `correo`, `telefono`, `fecha_nac`, `direccion`, `latitud`, `longitud`, `contrasena`, `foto_perfil`, `id_comuna`, `id_rol`, `id_estado_usuario`) VALUES
+(7466578, '0', 'Mayerly', 'Mayerly', 'Zavala', 'Iturra', 'mayerly@gmail.com', 956543424, '2000-08-31', 'Avenida Michimalonco 278', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 241, 4, 1),
+(10208323, '7', 'Guillermo', 'Guillermo', 'Pacheco', 'Cereceda', 'guillermo@gmail.com', 982776382, '1994-02-25', 'ABC 123', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 192, 4, 1),
+(10286235, 'K', 'Profesional456', 'ProfesionalP', 'PPP', 'ProfPP', 'profprof@gmail.com', 986372773, '2002-01-12', 'Calle Nueva 343', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 37, 3, 2),
+(10367255, '4', 'Natalia', 'Natalia', 'Urrutia', 'Menares', 'natalia@gmail.com', 953535645, '1997-09-03', 'Calle ABC 123', NULL, NULL, 'baaab6fa3b287456d2ff691027920826', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 233, 3, 1),
+(11022434, '6', 'Profesional123', 'Profesional', 'Prof', 'ProfProf', 'profesional@gmail.com', 987875646, '1999-12-12', 'Avenida Portales 1234', NULL, NULL, '81dc9bdb52d04dc20036dbd8313ed055', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 78, 3, 2),
+(11086788, '3', 'Lorena', 'Lorena', 'Lagos', 'Sanhueza', 'lorena@gmail.com', 998876565, '1998-08-25', 'Avenida Bernardo O\'Higgins 3272', NULL, NULL, '827ccb0eea8a706c4c34a16891f84e7b', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 65, 4, 1),
+(11111111, '1', 'Admin', 'Admin', 'Admin', 'Admin', 'superadmin@gmail.com', 999999999, '1999-11-11', 'Calle Admin 123', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 233, 1, 1),
+(12323424, '3', 'AAASSD', 'Orlando', 'Salazar', 'Urrutia', 'profprofprof@gmail.com', 982878273, '2000-08-12', 'Francisco Pérez 123', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/IMG_20240817_182910109.jpg', 32, 3, 2),
+(12345678, '5', 'Cliente', 'Cliente', 'Pérez', 'García', 'cliente@gmail.com', 999999999, '1999-08-25', 'Calle DEF, 321', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 1, 4, 1),
+(12424567, '2', 'Graciela', 'Graciela', 'Hernández', 'Jiménez', 'graciela@gmail.com', 924566345, '2022-08-12', 'Avenida Las Golondrinas 2485', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/Fondo.png', 237, 3, 2),
+(12783648, '5', 'Jorge', 'Jorge', 'Bravo', 'Bravo', 'jorge@gmail.com', 928627627, '2001-08-12', 'Rengo 436', '-36.824307450000006', '-73.0543428', 'baaab6fa3b287456d2ff691027920826', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 233, 4, 1),
+(13082637, '7', 'ABCDEF', 'Admin', 'Prueba', 'Prueba', 'admin@gmail.com', 982872637, '1995-08-08', 'Calle Nueva 123', NULL, NULL, '81dc9bdb52d04dc20036dbd8313ed055', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 1, 4, 1),
+(13476476, '7', 'Renato', 'Renato', 'Poblete', 'Iturra', 'renato@gmail.com', 937363753, '2002-08-08', 'O\'Higgins 680', '-36.827606309302325', '-73.04949143953488', 'baaab6fa3b287456d2ff691027920826', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 233, 4, 1),
+(14565656, '7', 'Hector', 'Héctor', 'Jiménez', 'Suazo', 'hector@gmail.com', 965656565, '2002-07-08', 'Avenida Arturo Prat 234', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/IMG_20240831_163740121.jpg', 1, 3, 1),
+(15098364, '9', 'Barbara', 'Barbara', 'Hernández', 'Ramírez', 'barbara@gmail.com', 936262767, '2000-09-15', 'Calle ABC, 123', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 332, 4, 1),
+(15727637, '9', 'Valentina', 'Valentina', 'Figueroa', 'Pereira', 'valentina@gmail.com', 938736726, '1994-06-01', 'Postdam 4332', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/Fondo.png', 237, 3, 1),
+(16235638, '0', 'Francisco', 'Francisco', 'Figueroa', 'Figueroa', 'francisco@gmail.com', 927673563, '2000-08-13', 'Ramón Carrasco 825', '-36.78906465157923', '-73.05718657506715', 'baaab6fa3b287456d2ff691027920826', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 233, 4, 1),
+(16377783, '5', 'Karina', 'Karina', 'Medina', 'Lozano', 'karina@gmail.com', 936726362, '1985-01-12', 'Ramón Carrasco 1023', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/IMG_20240831_174544129.jpg', 233, 3, 1),
+(16767878, '5', 'Ernesto', 'Ernesto', 'Loyola', 'Zapata', 'ernesto@gmail.com', 988786565, '1991-12-15', 'José Arrieta 2345', NULL, NULL, 'e10adc3949ba59abbe56e057f20f883e', 'uploads/foto_perfil/IMG_20240810_181021908.jpg', 36, 3, 1),
+(18267357, '9', 'Humberto', 'Humberto', 'Pérez', 'Pérez', 'humberto@gmail.com', 972627527, '2001-08-12', 'Serrano 50', '-33.458953050132564', '-70.64623414845794', 'baaab6fa3b287456d2ff691027920826', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 86, 4, 1),
+(20786387, '4', 'Alvaro', 'Álvaro Alfonso', 'Molina', 'Jara', 'alvaromolinacl@gmail.com', 988888888, '2001-07-10', 'Calle ABC, 123', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 1, 1, 1),
+(20876543, '4', 'PruebaProf', 'Prueba', 'Profesional', 'Prof', 'pruebaprof@gmail.com', 987767657, '2002-08-12', 'Calle Gabriela 143', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 83, 3, 1),
+(23456789, '6', 'Juanito', 'Juan', 'Pérez', 'Gar', 'juan@gmail.com', 987654321, '2000-08-02', 'Calle GHI, 786', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 1, 2, 1);
 
 --
 -- Disparadores `usuario`
