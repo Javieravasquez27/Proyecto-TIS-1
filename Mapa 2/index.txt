@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geolocalizar Dirección</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+        form {
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Geolocalizar Dirección</h1>
+    <form id="address-form">
+        <label for="address">Dirección:</label>
+        <input type="text" id="address" name="address" placeholder="Ingresa una dirección" required />
+        <button type="submit">Geolocalizar</button>
+    </form>
+    <div id="map"></div>
+    <p id="result"></p>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // Inicializar el mapa
+        const map = L.map('map').setView([37.7749, -122.4194], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Manejar el envío del formulario
+        document.getElementById('address-form').addEventListener('submit', async (event) => {
+            event.preventDefault(); // Evita el envío tradicional del formulario
+
+            const addressInput = document.getElementById('address');
+            const address = addressInput.value;
+
+            // Geocodificar la dirección con Nominatim
+            const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(address)}&format=json&limit=1`;
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+
+                if (data.length > 0) {
+                    const location = data[0];
+                    const lat = parseFloat(location.lat);
+                    const lon = parseFloat(location.lon);
+
+                    // Mostrar la ubicación en el mapa
+                    map.setView([lat, lon], 15);
+                    L.marker([lat, lon]).addTo(map)
+                        .bindPopup(`<b>${address}</b><br>Lat: ${lat}, Lon: ${lon}`)
+                        .openPopup();
+
+                    // Mostrar las coordenadas en pantalla
+                    document.getElementById('result').innerText = 
+                        `Coordenadas para "${address}": Latitud: ${lat}, Longitud: ${lon}`;
+
+                    // Opcional: Almacenar la información (simulado)
+                    console.log(`Dirección: ${address}, Latitud: ${lat}, Longitud: ${lon}`);
+                } else {
+                    document.getElementById('result').innerText = 
+                        `No se encontraron resultados para "${address}".`;
+                }
+            } catch (error) {
+                console.error("Error en la geocodificación:", error);
+                document.getElementById('result').innerText = 
+                    "Ocurrió un error al intentar geolocalizar la dirección.";
+            }
+        });
+    </script>
+</body>
+</html>
