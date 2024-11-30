@@ -246,6 +246,8 @@
                         </div>
                         <div class="d-grid gap-2">
                             <p><b style="color: #b30000;">(*)</b> Campos obligatorios.</p>
+                            <input type="hidden" name="latitud" id="latitud">
+                            <input type="hidden" name="longitud" id="longitud">
                             <button type="submit" name="submit" class="btn btn-primary">Registrarse</button>
                         </div>
                     </form>

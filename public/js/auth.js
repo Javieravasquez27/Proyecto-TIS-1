@@ -169,12 +169,59 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
+            const formData = new FormData(registrationForm);
+            
+            // Se obtiene dirección y comuna desde el formulario de registro
+            const direccion = formData.get("direccion");
+            const comuna = document.querySelector("#comuna option:checked").text;
+
+            if (!direccion || !comuna) {
+                Swal.fire({
+                    title: "Error",
+                    text: "Debe ingresar una dirección y seleccionar una comuna",
+                    icon: "error",
+                    button: "Aceptar",
+                });
+                return;
+            }
+
+            // Se geocodifica dirección + comuna
+            const query = `${direccion}, ${comuna}`;
+            try {
+                const geocodeResponse = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&limit=1`);
+                const geocodeData = await geocodeResponse.json();
+
+                if (geocodeData.length > 0) {
+                    const { lat, lon } = geocodeData[0];
+                    document.getElementById("latitud").value = lat;
+                    document.getElementById("longitud").value = lon;
+                } else {
+                    Swal.fire({
+                        title: "Error",
+                        text: "No se pudo geocodificar la dirección. Por favor, verifica los datos ingresados.",
+                        icon: "error",
+                        button: "Aceptar",
+                    });
+                    return;
+                }
+            } catch (error) {
+                Swal.fire({
+                    title: "Error",
+                    text: "Ocurrió un error al geocodificar la dirección.",
+                    icon: "error",
+                    button: "Aceptar",
+                });
+                return;
+            }
+
+            // Se recrea FormData después de actualizar los valores dinámicos
+            const updatedFormData = new FormData(registrationForm);
+
             // Se envían los datos del formulario al servidor
             try {
-                const formData = new FormData(registrationForm);
                 const response = await fetch("api/auth/register.php", {
                     method: "POST",
-                    body: formData,
+                    body: updatedFormData,
                 });
 
                 const data = await response.json();

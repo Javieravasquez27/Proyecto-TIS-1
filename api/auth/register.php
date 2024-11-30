@@ -4,7 +4,7 @@
     try {
         if (isset($_POST['rut']) && isset($_POST['nombre_usuario']) && isset($_POST['nombres']) && isset($_POST['apellido_p']) && isset($_POST['apellido_m'])
             && isset($_POST['correo']) && isset($_POST['telefono']) && isset($_POST['password']) && isset($_POST['fecha_nac']) && isset($_POST['direccion'])
-            && isset($_POST['comuna']) && isset($_POST['rol'])) {
+            && isset($_POST['latitud']) && isset($_POST['longitud']) && isset($_POST['comuna']) && isset($_POST['rol'])) {
 
             // Se separa el número del RUT y el dígito verificador
             $rutCompleto = strtoupper($_POST['rut']); // Se asegura que el dígito verificador esté en mayúsculas si es K
@@ -22,6 +22,8 @@
             $password = mysqli_real_escape_string($conexion, $_POST['password']);
             $fecha_nac = mysqli_real_escape_string($conexion, $_POST['fecha_nac']);
             $direccion = mysqli_real_escape_string($conexion, $_POST['direccion']);
+            $latitud = mysqli_real_escape_string($conexion, $_POST['latitud']);
+            $longitud = mysqli_real_escape_string($conexion, $_POST['longitud']);
             $comuna = mysqli_real_escape_string($conexion, $_POST['comuna']);
             $rol = mysqli_real_escape_string($conexion, $_POST['rol']);
 
@@ -85,16 +87,21 @@
                     }
                 }
 
+                if (empty($latitud) || empty($longitud)) {
+                    echo json_encode(['success' => false, 'message' => 'Latitud o longitud no proporcionadas.']);
+                    exit;
+                }
+
                 if ($foto_perfil !== null)
                 {
-                    $sql_ingreso_usuario = "INSERT INTO usuario (rut, dv, nombre_usuario, nombres, apellido_p, apellido_m, correo, telefono, contrasena, fecha_nac, direccion, foto_perfil, id_comuna, id_rol, id_estado_usuario) 
-                                        VALUES ('$rut', '$digitoVerificador', '$nombre_usuario', '$nombres', '$apellido_p', '$apellido_m', '$correo', '$telefono', '" . md5($password) . "', '$fecha_nac', '$direccion', '$foto_perfil', '$comuna', '$rol', " . ($rol == 3 ? 2 : 1) . ")";
+                    $sql_ingreso_usuario = "INSERT INTO usuario (rut, dv, nombre_usuario, nombres, apellido_p, apellido_m, correo, telefono, contrasena, fecha_nac, direccion, latitud, longitud, foto_perfil, id_comuna, id_rol, id_estado_usuario) 
+                                        VALUES ('$rut', '$digitoVerificador', '$nombre_usuario', '$nombres', '$apellido_p', '$apellido_m', '$correo', '$telefono', '" . md5($password) . "', '$fecha_nac', '$direccion', '$latitud', '$longitud', '$foto_perfil', '$comuna', '$rol', " . ($rol == 3 ? 2 : 1) . ")";
                     $resultado_usuario = mysqli_query($conexion, $sql_ingreso_usuario);
                 }
                 else
                 {
-                    $sql_ingreso_usuario = "INSERT INTO usuario (rut, dv, nombre_usuario, nombres, apellido_p, apellido_m, correo, telefono, contrasena, fecha_nac, direccion, id_comuna, id_rol, id_estado_usuario) 
-                                        VALUES ('$rut', '$digitoVerificador', '$nombre_usuario', '$nombres', '$apellido_p', '$apellido_m', '$correo', '$telefono', '" . md5($password) . "', '$fecha_nac', '$direccion', '$comuna', '$rol', " . ($rol == 3 ? 2 : 1) . ")";
+                    $sql_ingreso_usuario = "INSERT INTO usuario (rut, dv, nombre_usuario, nombres, apellido_p, apellido_m, correo, telefono, contrasena, fecha_nac, direccion, latitud, longitud, id_comuna, id_rol, id_estado_usuario) 
+                                        VALUES ('$rut', '$digitoVerificador', '$nombre_usuario', '$nombres', '$apellido_p', '$apellido_m', '$correo', '$telefono', '" . md5($password) . "', '$fecha_nac', '$direccion', '$latitud', '$longitud', '$comuna', '$rol', " . ($rol == 3 ? 2 : 1) . ")";
                     $resultado_usuario = mysqli_query($conexion, $sql_ingreso_usuario);
                 }
 
