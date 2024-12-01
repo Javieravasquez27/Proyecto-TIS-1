@@ -9,30 +9,32 @@
 
 <h1 class="text-center my-5">Gestión de profesionales</h1>
 
-<main class="">
-    <div class="card">
-        <div class="card-body table-responsive">
-            <table id="professionalTable" class="table table-hover" style="width: 100%;">
-                <thead class="">
-                    <tr>
-                        <th scope="col">Foto</th>
-                        <th scope="col">RUT</th>
-                        <th scope="col">Nombres</th>
-                        <th scope="col">Apellido P.</th>
-                        <th scope="col">Apellido M.</th>
-                        <th scope="col">Correo</th>
-                        <th scope="col">Teléfono</th>
-                        <th scope="col">Profesión</th>
-                        <th scope="col">Institución</th>
-                        <th scope="col">Título Prof.</th>
-                        <th scope="col">Acciones</th>
-                    </tr>
-                </thead>
+<div class="px-4">
+    <main class="">
+        <div class="card">
+            <div class="card-body table-responsive">
+                <table id="professionalTable" class="table table-hover" style="width: 100%;">
+                    <thead class="">
+                        <tr>
+                            <th scope="col">Foto</th>
+                            <th scope="col">RUT</th>
+                            <th scope="col">Nombres</th>
+                            <th scope="col">Apellido P.</th>
+                            <th scope="col">Apellido M.</th>
+                            <th scope="col">Correo</th>
+                            <th scope="col">Teléfono</th>
+                            <th scope="col">Profesión</th>
+                            <th scope="col">Institución</th>
+                            <th scope="col">Título Prof.</th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>
 
-            </table>
+                </table>
+            </div>
         </div>
-    </div>
-</main>
+    </main>
+</div>
 
 <!-- DataTable -->
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>

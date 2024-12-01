@@ -197,62 +197,70 @@
 
 <div class="container">
     <div class="row py-5 text-center">
-    <p class="h1">Busca profesionales y agenda tu cita aquí</p>
-        <form class="d-flex" method="POST" role="search" action="index.php?p=busqueda">
-            <div class="col">
-                <div class="row py-3">
-                    <div class="col py-5 px-1 mt-4">
-                        <select id="profesion" name="profesion" class="form-select">
-                            <!-- Las opciones se llenarán aquí con AJAX -->
-                        </select>
-                    </div>
-                    <div class="col py-5 px-1 mt-4">
-                        <select id="region" name="region" class="form-select">
-                            <!-- Las opciones se llenarán aquí con AJAX -->
-                        </select>
-                    </div>
-                    <div class="col py-5 px-1 mt-4">
-                        <select id="provincia" name="provincia" class="form-select">
-                            <!-- Las opciones se llenarán aquí con AJAX -->
-                        </select>
-                    </div>
-                    <div class="col py-5 px-1 mt-4">
-                        <select id="comuna" name="comuna" class="form-select">
-                            <!-- Las opciones se llenarán aquí con AJAX -->
-                        </select>
-                    </div>
-                    <div class="col py-5 px-1 mt-4">
-                        <select id="servicio" name="servicio" class="form-select">
-                            <!-- Las opciones se llenarán aquí con AJAX -->
-                        </select>
-                    </div>
-                    <div class="col py-5 px-1 mt-4 input-group">
-                        <input class="form-control" type="search" placeholder="Nombre" aria-label="Search"
-                            name="nombreprof">
-                        <button class="btn btn-success " type="submit">Buscar</button>
+        <p class="h1">Busca profesionales y agenda tu cita aquí</p>
+        <form class="d-flex flex-wrap justify-content-center" method="POST" role="search" action="index.php?p=busqueda">
+            <div class="row justify-content-center w-100">
+                <div class="col-12 col-md-6 col-lg-4 col-xl-2 py-1 mt-lg-4">
+                    <select id="profesion" name="profesion" class="form-select">
+                        <!-- Las opciones se llenarán aquí con AJAX -->
+                    </select>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 col-xl-2 py-1 mt-lg-4">
+                    <select id="region" name="region" class="form-select">
+                        <!-- Las opciones se llenarán aquí con AJAX -->
+                    </select>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 col-xl-2 py-1 mt-lg-4">
+                    <select id="provincia" name="provincia" class="form-select">
+                        <!-- Las opciones se llenarán aquí con AJAX -->
+                    </select>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 col-xl-2 py-1 mt-lg-4">
+                    <select id="comuna" name="comuna" class="form-select">
+                        <!-- Las opciones se llenarán aquí con AJAX -->
+                    </select>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 col-xl-2 py-1 mt-lg-4">
+                    <select id="servicio" name="servicio" class="form-select">
+                        <!-- Las opciones se llenarán aquí con AJAX -->
+                    </select>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 col-xl-2 py-1 mt-lg-4">
+                    <div class="input-group">
+                        <input class="form-control" type="search" placeholder="Nombre" aria-label="Search" name="nombreprof">
+                        <button class="btn btn-success" type="submit">Buscar</button>
                     </div>
                 </div>
             </div>
+        </form>
     </div>
-    </form>
 </div>
+
 
 <div class="container-fluid">
     <div class="row">
         <div class="col text-center mb-1" style="font-size: 20px;">
-            <span>Búsqueda de profesionales cercanos</span>
-            <h3>Geolocalizar Dirección</h3>
-            <form id="address-form">
-                <label for="address">Dirección:</label>
-                <input type="text" id="address" name="address" placeholder="Ingresa una dirección" required />
-                <button type="submit">Geolocalizar</button>
-            </form>
+            <h3>Búsqueda de profesionales cercanos</h3>
+            <span>Ingresa una dirección, regíon o comuna:</span>
+            <div class="container mt-2">
+                <form id="address-form">
+                    <div class="row justify-content-center g-3">
+                        <div class="col-8 col-md-6 col-lg-4 col-xl-3">
+                            <input type="text" id="address" name="address" class="form-control" placeholder="Ejemplo: Talcahuano" required>
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-primary mb-3">Buscar</button>
+                        </div>
+                    </div>
+                </form>    
+            </div>
         </div>
     </div>
 </div>
 
 <div class="container cont_mapa">
 
+        <!-- Mapa Leaflet -->
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
         <br>
         <div id="map"></div>
@@ -322,13 +330,15 @@
             const map = L.map('map').setView([-36.8258763,-73.1154458], 10);
 
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© OpenStreetMap contributors'
+                attribution: '© OpenStreetMap & KindomJob´s'
             }).addTo(map);
 
             setTimeout(() => {
                 map.invalidateSize();
             }, 200);
+
             const addresses = [
+
                 "Avenida Alonso de ribera 2850, concepcion, Chile ",
                 "Lientur 1457, Concepción, chile",
                 "Avenida Valle Blanco 280, concepcion, Chile"
@@ -345,8 +355,8 @@
         </script>
         <style>
             #map {
-                height: 500px;
                 width: 100%;
+                height: 500px;
             }
         </style>
 </div>

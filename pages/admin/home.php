@@ -55,7 +55,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Servicios para Profesiones</h5>
                         <p class="card-text">Gestiona los servicios que pueden prestar los profesionales de acuerdo a su profesión.</p>
-                        <a href="index.php?p=admin/profesionales/index" class="btn btn-primary">Entrar</a>
+                        <a href="index.php?p=admin/servicio_profesion/index" class="btn btn-primary">Entrar</a>
                     </div>
                 </div>
             </div>

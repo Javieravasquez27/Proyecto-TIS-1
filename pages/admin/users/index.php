@@ -51,31 +51,33 @@
 
 <h1 class="text-center my-5">Gestión de usuarios</h1>
 
-<main class="">
-    <div class="card">
-        <div class="card-body table-responsive">
-            <table id="userTable" class="table table-hover" style="width: 100%;">
-                <thead class="">
-                <tr>
-                    <th scope="col">Foto</th>
-                    <th scope="col">RUT</th>
-                    <th scope="col">Usuario</th>
-                    <th scope="col">Nombres</th>
-                    <th scope="col">Apellido P.</th>
-                    <th scope="col">Apellido M.</th>
-                    <th scope="col">Correo</th>
-                    <th scope="col">Teléfono</th>
-                    <th scope="col">Fecha Nac.</th>
-                    <th scope="col">Dirección</th>
-                    <th scope="col">Comuna</th>
-                    <th scope="col">Rol</th>
-                    <th scope="col">Acciones</th>
-                </tr>
-                </thead>
-            </table>
+<div class="px-4">
+    <main class="">
+        <div class="card">
+            <div class="card-body table-responsive">
+                <table id="userTable" class="table table-hover" style="width: 100%;">
+                    <thead class="">
+                    <tr>
+                        <th scope="col">Foto</th>
+                        <th scope="col">RUT</th>
+                        <th scope="col">Usuario</th>
+                        <th scope="col">Nombres</th>
+                        <th scope="col">Apellido P.</th>
+                        <th scope="col">Apellido M.</th>
+                        <th scope="col">Correo</th>
+                        <th scope="col">Teléfono</th>
+                        <th scope="col">Fecha Nac.</th>
+                        <th scope="col">Dirección</th>
+                        <th scope="col">Comuna</th>
+                        <th scope="col">Rol</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
         </div>
-    </div>
-</main>
+    </main>
+</div>
 
 <!-- Modal -->
 <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
