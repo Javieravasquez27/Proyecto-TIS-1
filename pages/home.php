@@ -1,38 +1,45 @@
-<?php
-    include("database/conexion.php");
-
-    if (isset($_SESSION['rut'])) {
-        $rut = $_SESSION['rut'];
-
-        $sql_consulta_serv_profesional = "SELECT * FROM servicio_profesional
-                                          WHERE rut_profesional = '$rut';";
-        $resultado_consulta_serv_profesional = mysqli_query($conexion, $sql_consulta_serv_profesional);
-        $fila_serv_profesional = mysqli_fetch_assoc($resultado_consulta_serv_profesional);
-    }
-?>
-
 <title>KindomJob's</title>
 
 <script>
-    <?php if (($_SESSION['id_rol'] != 4) && (!$fila_serv_profesional)): ?>
-        const Toast = Swal.mixin({
-            toast: true,
-            position: "bottom-end",
-            color: "#fff",
-            background: "#cf142b",
-            showConfirmButton: false,
-            showCloseButton: true,
-            timer: 10000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-                toast.onmouseenter = Swal.stopTimer;
-                toast.onmouseleave = Swal.resumeTimer;
-            }
-        });
-        Toast.fire({
-            icon: "warning",
-            html: "Para ser mostrado en la búsqueda, <b>tiene que rellenar sus campos de profesional.</b><br><a href='index.php?p=perfil&nombre_usuario=<?php echo $_SESSION['nombre_usuario']; ?>' style='color:#fff;'>Rellene los campos aquí</a>"
-        });
+    <?php $query="SELECT profesional.rut, profesion.nombre_profesion, usuario.nombres, 
+              GROUP_CONCAT(DISTINCT servicio.nombre_servicio ORDER BY servicio.nombre_servicio SEPARATOR '|') AS servicios, 
+              GROUP_CONCAT(DISTINCT servicio_profesional.precio_serv_prof ORDER BY servicio.nombre_servicio SEPARATOR '|') AS montos,
+              GROUP_CONCAT(DISTINCT comuna.nombre_comuna ORDER BY comuna.nombre_comuna SEPARATOR '|') AS lugares_atencion 
+              FROM usuario
+              JOIN profesional ON profesional.rut = '$_SESSION[rut]'
+              JOIN profesion ON profesion.id_profesion = profesional.id_profesion
+              JOIN servicio_profesional ON servicio_profesional.rut_profesional = profesional.rut
+              JOIN servicio ON servicio.id_servicio = servicio_profesional.id_servicio
+              JOIN lugar_atencion_presencial ON lugar_atencion_presencial.rut_profesional = profesional.rut
+              JOIN comuna ON lugar_atencion_presencial.id_comuna = comuna.id_comuna";
+              $result=mysqli_query($conexion,$query);
+              while($row=mysqli_fetch_array($result)){
+                    $servicios=$row["servicios"];
+                    $montos=$row["montos"];
+                    $lugares_atencion=$row["lugares_atencion"];
+              }
+    ?>
+    <?php if ($_SESSION['id_rol'] == 1 || $_SESSION['id_rol'] == 2 || $_SESSION['id_rol'] == 3): ?>
+        <?php if (empty($servicios) || empty($montos) || empty($lugares_atencion)): ?>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "bottom-end",
+                color: "#fff",
+                background: "#cf142b",
+                showConfirmButton: false,
+                showCloseButton: true,
+                timer: 10000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "warning",
+                html: "Para ser mostrado en la búsqueda, <b>tiene que rellenar sus campos de profesional.</b><br><a href='index.php?p=profile' style='color:#fff;'>Rellene los campos aquí</a>"
+            });
+        <?php endif; ?>
     <?php endif; ?>
 </script>
 <script>
@@ -177,10 +184,10 @@
                     select.appendChild(defaultOption);
 
                     // Rellenar el select con las servicios recibidas
-                    data.forEach(servicio => {
+                    data.forEach(horario => {
                         const option = document.createElement("option");
-                        option.value = servicio.id_servicio;
-                        option.textContent = servicio.nombre_servicio;
+                        option.value = horario.nombre_horario;
+                        option.textContent = horario.id_th;
                         select.appendChild(option);
                     });
                 })
@@ -194,7 +201,7 @@
         cargarServicios();
     });
 </script>
-
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <div class="container">
     <div class="row py-5 text-center">
     <p class="h1">Busca profesionales y agenda tu cita aquí</p>
@@ -236,10 +243,18 @@
     </div>
     </form>
 </div>
-
+<script>
+    $('#profesion').select2({
+        width: 'resolve'
+    });
+    $('#region').select2();
+    $('#provincia').select2();
+    $('#comuna').select2();
+    $('#servicio').select2();
+</script>
 <div class="container-fluid">
     <div class="row">
-        <div class="col text-center mb-1" style="font-size: 20px;"><span>Búsqueda de profesionales cercanos</span></div>
+        <div class="col text-center mb-1" style="font-size: 20px;"><span>Busqueda de profesionales cercanos</span></div>
     </div>
 </div>
 
