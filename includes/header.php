@@ -29,6 +29,9 @@
 		} 
 	?>
 	<link rel="stylesheet" href="public/css/styles.css">
+
+	<!-- Mapa Leaflet -->
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 	
 	<!-- Favicon -->
 	<link rel="apple-touch-icon" sizes="180x180" href="public/images/apple-touch-icon.png">
@@ -57,6 +60,6 @@
 	<div class="min-vh-100">
 <?php endif; ?>
 	<?php if (empty($sinNavbarFooter)): ?>
-		<div class="min-vh-10">
+		<div class="min-vh-100">
     		<?php require_once 'includes/navbar.php'; ?>
 	<?php endif; ?>

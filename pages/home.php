@@ -244,13 +244,116 @@
 </div>
 
 <div class="container cont_mapa">
-    <div class="row">
-        <div class="col-2"></div>
-        <div class="col-8 mapa">
-            <!-- <iframe class="mapa" src="https://locatestore.com/Xh--K4" style="border:none;width:100%;height:300px" allow="geolocation"></iframe> -->
-        </div>
-        <dic class="col-2"></dic>
-    </div>
+
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+        
+
+        <h3>Geolocalizar Dirección</h3>
+        <form id="address-form">
+            <label for="address">Dirección:</label>
+            <input type="text" id="address" name="address" placeholder="Ingresa una dirección" required />
+            <button type="submit">Geolocalizar</button>
+        </form>
+        <br>
+        <div id="map"></div>
+        <p id="result"></p>
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+        <script>
+
+            document.getElementById('address-form').addEventListener('submit', async (event) => {
+                event.preventDefault(); // Evita el envío tradicional del formulario
+
+                const addressInput = document.getElementById('address');
+                const address = addressInput.value;
+
+                // Geocodificar la dirección con Nominatim
+                const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(address)}&format=json&limit=1`;
+                try {
+                    const response = await fetch(url);
+                    const data = await response.json();
+
+                    if (data.length > 0) {
+                        const location = data[0];
+                        const lat = parseFloat(location.lat);
+                        const lon = parseFloat(location.lon);
+
+                        // Mostrar la ubicación en el mapa
+                        map.setView([lat, lon], 12);
+
+                        // Mostrar las coordenadas en pantalla
+                        document.getElementById('result').innerText = 
+                            `Coordenadas para "${address}": Latitud: ${lat}, Longitud: ${lon}`;
+
+                        // Opcional: Almacenar la información (simulado)
+                        console.log(`Dirección: ${address}, Latitud: ${lat}, Longitud: ${lon}`);
+                    } else {
+                        document.getElementById('result').innerText = 
+                            `No se encontraron resultados para "${address}".`;
+                    }
+                } catch (error) {
+                    console.error("Error en la geocodificación:", error);
+                    document.getElementById('result').innerText = 
+                        "Ocurrió un error al intentar geolocalizar la dirección.";
+                }
+            });
+
+            async function geocodeAddresses(addresses) {
+                const baseUrl = "https://nominatim.openstreetmap.org/search";
+                const locations = [];
+
+                for (const address of addresses) {
+                    const url = `${baseUrl}?q=${encodeURIComponent(address)}&format=json&limit=1`;
+                    try {
+                        const response = await fetch(url);
+                        const data = await response.json();
+                        if (data.length > 0) {
+                            const location = data[0];
+                            console.log(`Dirección: ${address}, Coordenadas: ${location.lat}, ${location.lon}`);
+                            locations.push({ 
+                                address, 
+                                lat: parseFloat(location.lat), 
+                                lng: parseFloat(location.lon) 
+                            });
+                        } else {
+                            console.error(`No se encontraron coordenadas para la dirección "${address}".`);
+                        }
+                    } catch (error) {
+                        console.error("Error en la solicitud:", error);
+                    }
+                }
+                return locations;
+            }
+
+            const map = L.map('map').setView([-36.8258763,-73.1154458], 10);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+
+            const addresses = [
+                "Avenida Alonso de ribera 2850, concepcion, Chile ",
+                "Lientur 1457, Concepción, chile",
+                "Avenida Valle Blanco 280, concepcion, Chile"
+            ];
+
+            geocodeAddresses(addresses).then(locations => {
+                locations.forEach(location => {
+                    L.marker([location.lat, location.lng])
+                        .addTo(map)
+                        .bindPopup(`<b>${location.address}</b><br>Lat: ${location.lat}, Lng: ${location.lng}`)
+                        .openPopup();
+                });
+            });
+        </script>
+        <style>
+            #map {
+                height: 500px;
+                width: 100%;
+            }
+        </style>
 </div>
 
+
+
 </div>
+
