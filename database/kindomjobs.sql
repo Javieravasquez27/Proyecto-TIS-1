@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-12-2024 a las 00:11:17
+-- Tiempo de generación: 01-12-2024 a las 02:17:23
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -85,6 +85,8 @@ INSERT INTO `cliente` (`rut`) VALUES
 (16377783),
 (16767878),
 (18267357),
+(18273862),
+(19286338),
 (20786387),
 (20876543),
 (23456789);
@@ -655,6 +657,17 @@ INSERT INTO `estado_usuario` (`id_estado_usuario`, `nombre_estado_usuario`) VALU
 (1, 'Activado'),
 (2, 'Desactivado'),
 (3, 'Bloqueado');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `favoritos`
+--
+
+CREATE TABLE `favoritos` (
+  `rut_usuario` int(11) NOT NULL,
+  `rut_profesional` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1604,7 +1617,9 @@ INSERT INTO `usuario` (`rut`, `dv`, `nombre_usuario`, `nombres`, `apellido_p`, `
 (16377783, '5', 'Karina', 'Karina', 'Medina', 'Lozano', 'karina@gmail.com', 936726362, '1985-01-12', 'Ramón Carrasco 1023', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/IMG_20240831_174544129.jpg', 233, 3, 1),
 (16767878, '5', 'Ernesto', 'Ernesto', 'Loyola', 'Zapata', 'ernesto@gmail.com', 988786565, '1991-12-15', 'José Arrieta 2345', NULL, NULL, 'e10adc3949ba59abbe56e057f20f883e', 'uploads/foto_perfil/IMG_20240810_181021908.jpg', 36, 3, 1),
 (18267357, '9', 'Humberto', 'Humberto', 'Pérez', 'Pérez', 'humberto@gmail.com', 972627527, '2001-08-12', 'Serrano 50', '-33.458953050132564', '-70.64623414845794', 'baaab6fa3b287456d2ff691027920826', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 86, 4, 1),
-(20786387, '4', 'Alvaro', 'Álvaro Alfonso', 'Molina', 'Jara', 'alvaromolinacl@gmail.com', 988888888, '2001-07-10', 'Calle ABC, 123', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 1, 1, 1),
+(18273862, 'K', 'Monica', 'Mónica', 'Gallardo', 'Gallardo', 'monica@gmail.com', 928327826, '2000-10-10', 'Los Tulipanes 336', '-37.03329892406181', '-72.394982724876', 'baaab6fa3b287456d2ff691027920826', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 221, 4, 1),
+(19286338, '4', 'Carlos', 'Carlos', 'Rebolledo', '', 'carlos@gmail.com', 937838674, '2000-08-12', 'San Diego 333', '-33.449850881632656', '-70.65080746530613', 'baaab6fa3b287456d2ff691027920826', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 86, 4, 1),
+(20786387, '4', 'Alvaro', 'Álvaro Alfonso', 'Molina', 'Jara', 'alvaromolinacl@gmail.com', 988888888, '2001-07-10', 'Calle ABC, 1234', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 233, 1, 1),
 (20876543, '4', 'PruebaProf', 'Prueba', 'Profesional', 'Prof', 'pruebaprof@gmail.com', 987767657, '2002-08-12', 'Calle Gabriela 143', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 83, 3, 1),
 (23456789, '6', 'Juanito', 'Juan', 'Pérez', 'Gar', 'juan@gmail.com', 987654321, '2000-08-02', 'Calle GHI, 786', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 1, 2, 1);
 
@@ -1721,6 +1736,13 @@ ALTER TABLE `disponibilidad`
 --
 ALTER TABLE `estado_usuario`
   ADD PRIMARY KEY (`id_estado_usuario`);
+
+--
+-- Indices de la tabla `favoritos`
+--
+ALTER TABLE `favoritos`
+  ADD PRIMARY KEY (`rut_usuario`,`rut_profesional`),
+  ADD KEY `rut_profesional` (`rut_profesional`);
 
 --
 -- Indices de la tabla `foro_respuesta`
@@ -2033,6 +2055,13 @@ ALTER TABLE `comuna`
 ALTER TABLE `disponibilidad`
   ADD CONSTRAINT `disponibilidad_ibfk_1` FOREIGN KEY (`rut_profesional`) REFERENCES `profesional` (`rut`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `disponibilidad_ibfk_2` FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `favoritos`
+--
+ALTER TABLE `favoritos`
+  ADD CONSTRAINT `favoritos_ibfk_1` FOREIGN KEY (`rut_usuario`) REFERENCES `usuario` (`rut`),
+  ADD CONSTRAINT `favoritos_ibfk_2` FOREIGN KEY (`rut_profesional`) REFERENCES `profesional` (`rut`);
 
 --
 -- Filtros para la tabla `foro_respuesta`
