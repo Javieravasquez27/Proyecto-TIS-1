@@ -185,6 +185,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
+            Swal.fire({
+                title: 'Espere un momento...',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+
             // Se geocodifica dirección + comuna
             const query = `${direccion}, ${comuna}`;
             try {
@@ -196,6 +204,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     document.getElementById("latitud").value = lat;
                     document.getElementById("longitud").value = lon;
                 } else {
+                    Swal.close();
                     Swal.fire({
                         title: "Error",
                         text: "No se pudo geocodificar la dirección. Por favor, verifica los datos ingresados.",
@@ -205,6 +214,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     return;
                 }
             } catch (error) {
+                Swal.close();
                 Swal.fire({
                     title: "Error",
                     text: "Ocurrió un error al geocodificar la dirección.",
@@ -227,6 +237,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const data = await response.json();
 
                 if (data.success) {
+                    Swal.close();
                     Swal.fire({
                         title: "Registro exitoso",
                         text: data.message,
@@ -237,6 +248,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         window.location.href = "index.php?p=auth/login";
                     });
                 } else {
+                    Swal.close();
                     Swal.fire({
                         title: "Error",
                         text: data.message,
@@ -245,6 +257,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     });
                 }
             } catch (error) {
+                Swal.close();
                 Swal.fire({
                     title: "Error",
                     text: "Ocurrió un error en el servidor. Intente más tarde.",
