@@ -16,6 +16,12 @@
                                  WHERE p.rut = '$rut';";
     $resultado_consulta_profesional = mysqli_query($conexion, $sql_consulta_profesional);
     $fila_profesional = mysqli_fetch_assoc($resultado_consulta_profesional);
+
+    $sql_consulta_usuario_comuna = "SELECT u.id_comuna, c.nombre_comuna AS nombre_comuna
+                                    FROM usuario u JOIN comuna c ON u.id_comuna = c.id_comuna
+                                    WHERE u.rut = '$rut';";
+    $resultado_consulta_usuario_comuna = mysqli_query($conexion, $sql_consulta_usuario_comuna);
+    $fila_usuario_comuna = mysqli_fetch_assoc($resultado_consulta_usuario_comuna); 
 ?>
 
 <title>Editar perfil - KindomJob's</title>
@@ -72,6 +78,18 @@
                             <div class="col">
                                 <label for="fecha_nac" class="form-label">Fecha de Nacimiento <b style="color: #b30000;">(*)</b></label>
                                 <input type="date" class="form-control" id="fecha_nac" name="fecha_nac" value="<?php echo $fila_usuario['fecha_nac']; ?>" disabled>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label for="direccion" class="form-label">Dirección <b style="color: #b30000;">(*)</b></label>
+                                <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Ejemplo: Avenida Las Golondrinas 2456" value="<?php echo $fila_usuario['direccion']; ?>" maxlength="50" required>
+                            </div>
+                            <div class="col">
+                                <label for="comuna" class="form-label">Comuna <b style="color: #b30000;">(*)</b></label>
+                                <select id="comuna" name="comuna" class="form-select" required>
+                                    <!-- Las opciones se llenarán aquí con AJAX -->
+                                </select>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -142,6 +160,8 @@
                         <?php endif; ?>
                         <div class="d-grid gap-2">
                             <p><b style="color: #b30000;">(*)</b> Campos obligatorios.<br><b style="color: #b30000;">(**)</b> Solo llenar si se desea cambiar contraseña.</p>
+                            <input type="hidden" name="latitud" id="latitud">
+                            <input type="hidden" name="longitud" id="longitud">
                             <button type="button" id="save-profile" class="btn btn-primary">Guardar cambios</button>
                         </div>
                     </form>
@@ -152,6 +172,30 @@
 </div>
 
 <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        function cargarComunas() {
+            fetch("utils/get_comuna.php")
+                .then(response => response.json())
+                .then(data => {
+                    const select = document.getElementById("comuna");
+                    select.innerHTML = '';
+                    const defaultOption = document.createElement("option");
+                    defaultOption.textContent = "<?php echo $fila_usuario_comuna['nombre_comuna']; ?>";
+                    defaultOption.value = "<?php echo $fila_usuario['id_comuna']; ?>";
+                    defaultOption.selected = true;
+                    select.appendChild(defaultOption);
+                    data.forEach(comuna => {
+                        const option = document.createElement("option");
+                        option.value = comuna.id_comuna;
+                        option.textContent = comuna.nombre_comuna;
+                        select.appendChild(option);
+                    });
+                })
+                .catch(error => console.error("Error al cargar comunas:", error));
+        }
+        cargarComunas();
+    });
+
     // Función para validar teléfono
     function validarTelefonoInput(telefono) {
         const regex = /^[0-9]+$/; // Solo números
@@ -176,7 +220,7 @@
         var password = $('#password').val().trim();
         var confirmarPassword = $('#confirmar_password').val().trim();
 
-        // Validar nombre de usuario
+        // Se valida nombre de usuario
         if (!validarNombreUsuarioInput(nombreUsuario)) {
             Swal.fire({
                 title: "Error",
@@ -187,7 +231,7 @@
             return;
         }
 
-        // Validar teléfono
+        // Se valida teléfono
         if (!validarTelefonoInput(telefono)) {
             Swal.fire({
                 title: "Error",
@@ -198,7 +242,7 @@
             return;
         }
 
-        // Validar contraseña (solo si no está vacía)
+        // Se valida contraseña (solo si no está vacía)
         if (password && !validarPasswordInput(password)) {
             Swal.fire({
                 title: "Error",
@@ -209,7 +253,7 @@
             return;
         }
 
-        // Validar coincidencia de contraseñas
+        // Se valida coincidencia de contraseñas
         if (password && password !== confirmarPassword) {
             Swal.fire({
                 title: "Error",
@@ -220,8 +264,53 @@
             return;
         }
 
-        // Si todas las validaciones pasan, envía los datos
+        // Si todas las validaciones pasan, se envía los datos
         var formData = new FormData($('#edit-profile-form')[0]);
+    //    const direccion = formData.get("direccion");
+    //    const comuna = document.querySelector("#comuna option:checked").text;
+//
+    //    if (!direccion || !comuna) {
+    //        Swal.fire({
+    //            title: "Error",
+    //            text: "Debe ingresar una dirección y seleccionar una comuna",
+    //            icon: "error",
+    //            button: "Aceptar",
+    //        });
+    //        return;
+    //    }
+//
+    //    // Se geocodifica dirección + comuna
+    //    const query = `${direccion}, ${comuna}`;
+    //    try {
+    //        const geocodeResponse = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&limit=1`);
+    //        const geocodeData = await geocodeResponse.json();
+//
+    //        if (geocodeData.length > 0) {
+    //            const { lat, lon } = geocodeData[0];
+    //            document.getElementById("latitud").value = lat;
+    //            document.getElementById("longitud").value = lon;
+    //        } else {
+    //            Swal.fire({
+    //                title: "Error",
+    //                text: "No se pudo geocodificar la dirección. Por favor, verifica los datos ingresados.",
+    //                icon: "error",
+    //                button: "Aceptar",
+    //            });
+    //            return;
+    //        }
+    //    } catch (error) {
+    //        Swal.fire({
+    //            title: "Error",
+    //            text: "Ocurrió un error al geocodificar la dirección.",
+    //            icon: "error",
+    //            button: "Aceptar",
+    //        });
+    //        return;
+    //    }
+//
+    //    // Se recrea FormData después de actualizar los valores dinámicos
+    //    var updatedFormData = new FormData($('#edit-profile-form')[0]);
+
         $.ajax({
             url: 'api/perfil/update.php',
             type: 'POST',

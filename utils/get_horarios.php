@@ -1,7 +1,7 @@
 <?php
     require('../database/conexion.php');
 
-    // Consulta para obtener las servicios
+    // Consulta para obtener los tipos de horario
     $sql = "SELECT id_th, horario FROM tipo_horario";
     $resultado = $conexion->query($sql);
 
@@ -11,7 +11,7 @@
     {
         while($row = $resultado->fetch_assoc())
         {
-            $horarios[] = $row; // Se agrega cada fila de la tabla servicio al arreglo
+            $horarios[] = $row; // Se agrega cada fila de la tabla tipo_horario al arreglo
         }
     }
 

@@ -73,33 +73,35 @@
 
 <h1 class="text-center my-5">Gestión de tipos de horario</h1>
 
-<main class="">
-    <div class="card">
-        <div class="card-header">
-            <div class="d-flex justify-content-between align-items-center">
-                <div class="text-center">
-                </div>
-                <div>
-                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
-                        data-bs-target="#addTipoHorarioModal">
-                        Ingresar nuevo tipo de horario
-                    </button>
+<div class="px-4">
+    <main class="">
+        <div class="card">
+            <div class="card-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="text-center">
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#addTipoHorarioModal">
+                            Ingresar nuevo tipo de horario
+                        </button>
+                    </div>
                 </div>
             </div>
+            <div class="card-body table-responsive">
+                <table id="tipoHorarioTabla" class="table table-hover" style="width: 100%;">
+                    <thead class="">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Tipo de Horario</th>
+                            <th scope="col">Opciones</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
         </div>
-        <div class="card-body table-responsive">
-            <table id="tipoHorarioTabla" class="table table-hover" style="width: 100%;">
-                <thead class="">
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Tipo de Horario</th>
-                        <th scope="col">Opciones</th>
-                    </tr>
-                </thead>
-            </table>
-        </div>
-    </div>
-</main>
+    </main>
+</div>
 
 <!-- Modal -->
 <div class="modal fade" id="addTipoHorarioModal" tabindex="-1" aria-labelledby="addTipoHorarioModalLabel" aria-hidden="true">
@@ -170,7 +172,7 @@
                 "data": "horario"
             },
             {
-                "data": "opciones"
+                "data": "opciones", orderable: false, searchable: false
             }
             ]
         });

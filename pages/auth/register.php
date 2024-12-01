@@ -172,7 +172,7 @@
                             </div>
                             <div class="col">
                                 <label for="apellido_m" class="form-label">Apellido Materno</label>
-                                <input type="text" class="form-control" id="apellido_m" name="apellido_m" placeholder="Ejemplo: García" maxlength="50" required>
+                                <input type="text" class="form-control" id="apellido_m" name="apellido_m" placeholder="Ejemplo: García" maxlength="50">
                             </div>
                         </div>
                         <div class="row mb-3">
