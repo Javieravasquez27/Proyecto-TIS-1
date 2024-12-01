@@ -2,7 +2,7 @@
     include 'database/conexion.php';
 
     // Capturar filtros de formulario
-    $filtro_ciudad = isset($_POST['ciudad']) ? $_POST['ciudad'] : null;
+    $filtro_ciudad = isset($_POST['provincia']) ? $_POST['provincia'] : null;
     $filtro_comuna = isset($_POST['comuna']) ? $_POST['comuna'] : null;
     $filtro_region = isset($_POST['region']) ? $_POST['region'] : null;
     $filtro_profesion = isset($_POST['profesion']) ? $_POST['profesion'] : null;
@@ -36,12 +36,12 @@
     if (!empty($filtro_comuna)) {
         $query .= " AND lugar_atencion_presencial.id_comuna = '$filtro_comuna'";
     }
-    if (!empty($filtro_ciudad)) {
-        $query .= " AND comuna.id_ciudad = '$filtro_ciudad'";
+    if (!empty($filtro_provincia)) {
+        $query .= " AND comuna.id_provincia = '$filtro_provincia'";
     }
     if (!empty($filtro_region)) {
-        $query .= " AND comuna.id_ciudad IN (SELECT id_ciudad FROM ciudad WHERE id_region = '$filtro_region')";
-    }
+        $query .= " AND comuna.id_provincia IN (SELECT id_provincia FROM provincia WHERE id_region = '$filtro_region')";
+    }   
     if (!empty($filtro_servicio)) {
         $query .= " AND servicio.id_servicio = '$filtro_servicio'";
     }

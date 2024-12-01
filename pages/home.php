@@ -201,7 +201,7 @@
         cargarServicios();
     });
 </script>
-
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <div class="container">
     <div class="row py-5 text-center">
     <p class="h1">Busca profesionales y agenda tu cita aquí</p>
@@ -243,7 +243,15 @@
     </div>
     </form>
 </div>
-
+<script>
+    $('#profesion').select2({
+        width: 'resolve'
+    });
+    $('#region').select2();
+    $('#provincia').select2();
+    $('#comuna').select2();
+    $('#servicio').select2();
+</script>
 <div class="container-fluid">
     <div class="row">
         <div class="col text-center mb-1" style="font-size: 20px;"><span>Busqueda de profesionales cercanos</span></div>
