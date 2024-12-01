@@ -1,4 +1,5 @@
 <?php
+
 include 'vendor/autoload.php';
 use Transbank\Webpay\WebpayPlus\Transaction;
 
@@ -18,6 +19,7 @@ try {
     $_SESSION['nombre_servicio'] = $_POST['nombre_servicio'];
     $_SESSION['fecha_cita'] = $_POST['fecha_cita'];
     $_SESSION['hora_cita'] = $_POST['hora_cita'];
+    $_SESSION['lugar_atencion'] = $_POST['lugar_atencion'];
 
     // Generar la transacción
     $response = $transaction->create($buy_order, $sessionid, $amount, $returnUrl);

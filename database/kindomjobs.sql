@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-11-2024 a las 03:00:04
+-- Tiempo de generación: 01-12-2024 a las 23:34:48
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -47,10 +47,33 @@ INSERT INTO `administrador` (`rut`) VALUES
 --
 
 CREATE TABLE `cita` (
-  `id_cita` int(11) NOT NULL,
   `fecha_cita` date NOT NULL,
-  `id_th` int(11) NOT NULL,
+  `hora_cita` time NOT NULL,
   `rut_cliente` int(11) NOT NULL,
+  `rut_profesional` int(11) NOT NULL,
+  `tokencompra` varchar(200) NOT NULL,
+  `lugar_atencion` varchar(255) NOT NULL,
+  `servicio` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `cita`
+--
+
+INSERT INTO `cita` (`fecha_cita`, `hora_cita`, `rut_cliente`, `rut_profesional`, `tokencompra`, `lugar_atencion`, `servicio`) VALUES
+('2024-12-18', '08:15:00', 11111111, 11111111, '01ab2ba09bff36bef0ad2e710ce7d254098f0a3780818ec580f1351d2d042fad', 'hola', 'Asesoría en Derecho Civil'),
+('2024-12-19', '08:15:00', 11111111, 11111111, '01ab60054388327c511edca75423de3bc2ac4abc28a67159815698e2a1ed35e2', 'hola', 'Asesoría en Derecho Civil');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `clasificacion`
+--
+
+CREATE TABLE `clasificacion` (
+  `id_clasificacion` bigint(20) UNSIGNED NOT NULL,
+  `rating_star` int(11) NOT NULL,
+  `rut_usuario` int(11) NOT NULL,
   `rut_profesional` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -82,6 +105,7 @@ INSERT INTO `cliente` (`rut`) VALUES
 (16767878),
 (20786387),
 (20876543),
+(20981734),
 (23456789);
 
 -- --------------------------------------------------------
@@ -468,168 +492,19 @@ CREATE TABLE `disponibilidad` (
 --
 
 INSERT INTO `disponibilidad` (`id_disponibilidad`, `rut_profesional`, `rut_cliente`, `fecha`, `hora`, `disponible`) VALUES
-(1, 14565656, NULL, '2024-11-25', '08:00:00', 1),
-(2, 14565656, NULL, '2024-11-25', '09:00:00', 1),
-(3, 14565656, NULL, '2024-11-25', '10:00:00', 1),
-(4, 14565656, NULL, '2024-11-25', '11:00:00', 1),
-(5, 14565656, NULL, '2024-11-25', '12:00:00', 1),
-(6, 14565656, NULL, '2024-11-25', '13:00:00', 1),
-(7, 14565656, NULL, '2024-11-25', '14:00:00', 1),
-(8, 14565656, NULL, '2024-11-25', '15:00:00', 1),
-(9, 14565656, NULL, '2024-11-25', '16:00:00', 1),
-(10, 14565656, NULL, '2024-11-25', '17:00:00', 1),
-(11, 14565656, NULL, '2024-11-25', '18:00:00', 1),
-(12, 14565656, NULL, '2024-11-25', '19:00:00', 1),
-(13, 14565656, NULL, '2024-11-25', '20:00:00', 1),
-(14, 14565656, NULL, '2024-11-25', '21:00:00', 1),
-(15, 14565656, NULL, '2024-12-02', '08:00:00', 1),
-(16, 14565656, NULL, '2024-12-02', '09:00:00', 1),
-(17, 14565656, NULL, '2024-12-02', '10:00:00', 1),
-(18, 14565656, NULL, '2024-12-02', '11:00:00', 1),
-(19, 14565656, NULL, '2024-12-02', '12:00:00', 1),
-(20, 14565656, NULL, '2024-12-02', '13:00:00', 1),
-(21, 14565656, NULL, '2024-12-02', '14:00:00', 1),
-(22, 14565656, NULL, '2024-12-02', '15:00:00', 1),
-(23, 14565656, NULL, '2024-12-02', '16:00:00', 1),
-(24, 14565656, NULL, '2024-12-02', '17:00:00', 1),
-(25, 14565656, NULL, '2024-12-02', '18:00:00', 1),
-(26, 14565656, NULL, '2024-12-02', '19:00:00', 1),
-(27, 14565656, NULL, '2024-12-02', '20:00:00', 1),
-(28, 14565656, NULL, '2024-12-02', '21:00:00', 1),
-(29, 14565656, NULL, '2024-12-09', '08:00:00', 1),
-(30, 14565656, NULL, '2024-12-09', '09:00:00', 1),
-(31, 14565656, NULL, '2024-12-09', '10:00:00', 1),
-(32, 14565656, NULL, '2024-12-09', '11:00:00', 1),
-(33, 14565656, NULL, '2024-12-09', '12:00:00', 1),
-(34, 14565656, NULL, '2024-12-09', '13:00:00', 1),
-(35, 14565656, NULL, '2024-12-09', '14:00:00', 1),
-(36, 14565656, NULL, '2024-12-09', '15:00:00', 1),
-(37, 14565656, NULL, '2024-12-09', '16:00:00', 1),
-(38, 14565656, NULL, '2024-12-09', '17:00:00', 1),
-(39, 14565656, NULL, '2024-12-09', '18:00:00', 1),
-(40, 14565656, NULL, '2024-12-09', '19:00:00', 1),
-(41, 14565656, NULL, '2024-12-09', '20:00:00', 1),
-(42, 14565656, NULL, '2024-12-09', '21:00:00', 1),
-(43, 14565656, NULL, '2024-11-26', '09:00:00', 1),
-(44, 14565656, NULL, '2024-11-26', '10:00:00', 1),
-(45, 14565656, NULL, '2024-11-26', '11:00:00', 1),
-(46, 14565656, NULL, '2024-11-26', '12:00:00', 1),
-(47, 14565656, NULL, '2024-11-26', '13:00:00', 1),
-(48, 14565656, NULL, '2024-11-26', '14:00:00', 1),
-(49, 14565656, NULL, '2024-11-26', '15:00:00', 1),
-(50, 14565656, NULL, '2024-11-26', '16:00:00', 1),
-(51, 14565656, NULL, '2024-11-26', '17:00:00', 1),
-(52, 14565656, NULL, '2024-11-26', '18:00:00', 1),
-(53, 14565656, NULL, '2024-11-26', '19:00:00', 1),
-(54, 14565656, NULL, '2024-11-26', '20:00:00', 1),
-(55, 14565656, NULL, '2024-11-26', '21:00:00', 1),
-(56, 14565656, NULL, '2024-12-03', '09:00:00', 1),
-(57, 14565656, NULL, '2024-12-03', '10:00:00', 1),
-(58, 14565656, NULL, '2024-12-03', '11:00:00', 1),
-(59, 14565656, NULL, '2024-12-03', '12:00:00', 1),
-(60, 14565656, NULL, '2024-12-03', '13:00:00', 1),
-(61, 14565656, NULL, '2024-12-03', '14:00:00', 1),
-(62, 14565656, NULL, '2024-12-03', '15:00:00', 1),
-(63, 14565656, NULL, '2024-12-03', '16:00:00', 1),
-(64, 14565656, NULL, '2024-12-03', '17:00:00', 1),
-(65, 14565656, NULL, '2024-12-03', '18:00:00', 1),
-(66, 14565656, NULL, '2024-12-03', '19:00:00', 1),
-(67, 14565656, NULL, '2024-12-03', '20:00:00', 1),
-(68, 14565656, NULL, '2024-12-03', '21:00:00', 1),
-(69, 14565656, NULL, '2024-12-10', '09:00:00', 1),
-(70, 14565656, NULL, '2024-12-10', '10:00:00', 1),
-(71, 14565656, NULL, '2024-12-10', '11:00:00', 1),
-(72, 14565656, NULL, '2024-12-10', '12:00:00', 1),
-(73, 14565656, NULL, '2024-12-10', '13:00:00', 1),
-(74, 14565656, NULL, '2024-12-10', '14:00:00', 1),
-(75, 14565656, NULL, '2024-12-10', '15:00:00', 1),
-(76, 14565656, NULL, '2024-12-10', '16:00:00', 1),
-(77, 14565656, NULL, '2024-12-10', '17:00:00', 1),
-(78, 14565656, NULL, '2024-12-10', '18:00:00', 1),
-(79, 14565656, NULL, '2024-12-10', '19:00:00', 1),
-(80, 14565656, NULL, '2024-12-10', '20:00:00', 1),
-(81, 14565656, NULL, '2024-12-10', '21:00:00', 1),
-(82, 14565656, NULL, '2024-11-27', '09:15:00', 1),
-(83, 14565656, NULL, '2024-11-27', '10:15:00', 1),
-(84, 14565656, NULL, '2024-11-27', '11:15:00', 1),
-(85, 14565656, NULL, '2024-11-27', '12:15:00', 1),
-(86, 14565656, NULL, '2024-11-27', '13:15:00', 1),
-(87, 14565656, NULL, '2024-11-27', '14:15:00', 1),
-(88, 14565656, NULL, '2024-11-27', '15:15:00', 1),
-(89, 14565656, NULL, '2024-11-27', '16:15:00', 1),
-(90, 14565656, NULL, '2024-11-27', '17:15:00', 1),
-(91, 14565656, NULL, '2024-11-27', '18:15:00', 1),
-(92, 14565656, NULL, '2024-11-27', '19:15:00', 1),
-(93, 14565656, NULL, '2024-11-27', '20:15:00', 1),
-(94, 14565656, NULL, '2024-11-27', '21:15:00', 1),
-(95, 14565656, NULL, '2024-12-04', '09:15:00', 1),
-(96, 14565656, NULL, '2024-12-04', '10:15:00', 1),
-(97, 14565656, NULL, '2024-12-04', '11:15:00', 1),
-(98, 14565656, NULL, '2024-12-04', '12:15:00', 1),
-(99, 14565656, NULL, '2024-12-04', '13:15:00', 1),
-(100, 14565656, NULL, '2024-12-04', '14:15:00', 1),
-(101, 14565656, NULL, '2024-12-04', '15:15:00', 1),
-(102, 14565656, NULL, '2024-12-04', '16:15:00', 1),
-(103, 14565656, NULL, '2024-12-04', '17:15:00', 1),
-(104, 14565656, NULL, '2024-12-04', '18:15:00', 1),
-(105, 14565656, NULL, '2024-12-04', '19:15:00', 1),
-(106, 14565656, NULL, '2024-12-04', '20:15:00', 1),
-(107, 14565656, NULL, '2024-12-04', '21:15:00', 1),
-(108, 14565656, NULL, '2024-12-11', '09:15:00', 1),
-(109, 14565656, NULL, '2024-12-11', '10:15:00', 1),
-(110, 14565656, NULL, '2024-12-11', '11:15:00', 1),
-(111, 14565656, NULL, '2024-12-11', '12:15:00', 1),
-(112, 14565656, NULL, '2024-12-11', '13:15:00', 1),
-(113, 14565656, NULL, '2024-12-11', '14:15:00', 1),
-(114, 14565656, NULL, '2024-12-11', '15:15:00', 1),
-(115, 14565656, NULL, '2024-12-11', '16:15:00', 1),
-(116, 14565656, NULL, '2024-12-11', '17:15:00', 1),
-(117, 14565656, NULL, '2024-12-11', '18:15:00', 1),
-(118, 14565656, NULL, '2024-12-11', '19:15:00', 1),
-(119, 14565656, NULL, '2024-12-11', '20:15:00', 1),
-(120, 14565656, NULL, '2024-12-11', '21:15:00', 1),
-(121, 14565656, NULL, '2024-11-28', '09:30:00', 1),
-(122, 14565656, NULL, '2024-11-28', '10:30:00', 1),
-(123, 14565656, NULL, '2024-11-28', '11:30:00', 1),
-(124, 14565656, NULL, '2024-11-28', '12:30:00', 1),
-(125, 14565656, NULL, '2024-11-28', '13:30:00', 1),
-(126, 14565656, NULL, '2024-11-28', '14:30:00', 1),
-(127, 14565656, NULL, '2024-11-28', '15:30:00', 1),
-(128, 14565656, NULL, '2024-11-28', '16:30:00', 1),
-(129, 14565656, NULL, '2024-11-28', '17:30:00', 1),
-(130, 14565656, NULL, '2024-11-28', '18:30:00', 1),
-(131, 14565656, NULL, '2024-11-28', '19:30:00', 1),
-(132, 14565656, NULL, '2024-12-05', '09:30:00', 1),
-(133, 14565656, NULL, '2024-12-05', '10:30:00', 1),
-(134, 14565656, NULL, '2024-12-05', '11:30:00', 1),
-(135, 14565656, NULL, '2024-12-05', '12:30:00', 1),
-(136, 14565656, NULL, '2024-12-05', '13:30:00', 1),
-(137, 14565656, NULL, '2024-12-05', '14:30:00', 1),
-(138, 14565656, NULL, '2024-12-05', '15:30:00', 1),
-(139, 14565656, NULL, '2024-12-05', '16:30:00', 1),
-(140, 14565656, NULL, '2024-12-05', '17:30:00', 1),
-(141, 14565656, NULL, '2024-12-05', '18:30:00', 1),
-(142, 14565656, NULL, '2024-12-05', '19:30:00', 1),
-(143, 14565656, NULL, '2024-12-12', '09:30:00', 1),
-(144, 14565656, NULL, '2024-12-12', '10:30:00', 1),
-(145, 14565656, NULL, '2024-12-12', '11:30:00', 1),
-(146, 14565656, NULL, '2024-12-12', '12:30:00', 1),
-(147, 14565656, NULL, '2024-12-12', '13:30:00', 1),
-(148, 14565656, NULL, '2024-12-12', '14:30:00', 1),
-(149, 14565656, NULL, '2024-12-12', '15:30:00', 1),
-(150, 14565656, NULL, '2024-12-12', '16:30:00', 1),
-(151, 14565656, NULL, '2024-12-12', '17:30:00', 1),
-(152, 14565656, NULL, '2024-12-12', '18:30:00', 1),
-(153, 14565656, NULL, '2024-12-12', '19:30:00', 1),
-(154, 14565656, NULL, '2024-11-29', '11:00:00', 1),
-(155, 14565656, NULL, '2024-11-29', '12:00:00', 1),
-(156, 14565656, NULL, '2024-11-29', '13:00:00', 1),
-(157, 14565656, NULL, '2024-12-06', '11:00:00', 1),
-(158, 14565656, NULL, '2024-12-06', '12:00:00', 1),
-(159, 14565656, NULL, '2024-12-06', '13:00:00', 1),
-(160, 14565656, NULL, '2024-12-13', '11:00:00', 1),
-(161, 14565656, NULL, '2024-12-13', '12:00:00', 1),
-(162, 14565656, NULL, '2024-12-13', '13:00:00', 1);
+(202, 11111111, NULL, '2024-12-09', '08:00:00', 1),
+(203, 11111111, NULL, '2024-12-09', '08:15:00', 1),
+(204, 11111111, 11111111, '2024-12-16', '08:00:00', 0),
+(205, 11111111, 11111111, '2024-12-16', '08:15:00', 0),
+(206, 11111111, 11111111, '2024-12-03', '08:15:00', 0),
+(207, 11111111, NULL, '2024-12-10', '08:15:00', 1),
+(208, 11111111, 11111111, '2024-12-17', '08:15:00', 0),
+(209, 11111111, 11111111, '2024-12-04', '08:15:00', 0),
+(210, 11111111, NULL, '2024-12-11', '08:15:00', 1),
+(211, 11111111, 11111111, '2024-12-18', '08:15:00', 0),
+(212, 11111111, 11111111, '2024-12-05', '08:15:00', 0),
+(213, 11111111, NULL, '2024-12-12', '08:15:00', 1),
+(214, 11111111, 11111111, '2024-12-19', '08:15:00', 0);
 
 -- --------------------------------------------------------
 
@@ -650,6 +525,24 @@ INSERT INTO `estado_usuario` (`id_estado_usuario`, `nombre_estado_usuario`) VALU
 (1, 'Activado'),
 (2, 'Desactivado'),
 (3, 'Bloqueado');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `favoritos`
+--
+
+CREATE TABLE `favoritos` (
+  `rut_usuario` int(11) NOT NULL,
+  `rut_profesional` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `favoritos`
+--
+
+INSERT INTO `favoritos` (`rut_usuario`, `rut_profesional`) VALUES
+(20981734, 10286235);
 
 -- --------------------------------------------------------
 
@@ -845,8 +738,16 @@ INSERT INTO `lugar_atencion_presencial` (`rut_profesional`, `id_comuna`) VALUES
 CREATE TABLE `lugar_atencion_virtual` (
   `id_lugar_at_virtual` int(11) NOT NULL,
   `rut_profesional` int(11) NOT NULL,
-  `link_sala_virtual` varchar(255) NOT NULL
+  `link_sala_virtual` varchar(255) NOT NULL,
+  `nombre_atv` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `lugar_atencion_virtual`
+--
+
+INSERT INTO `lugar_atencion_virtual` (`id_lugar_at_virtual`, `rut_profesional`, `link_sala_virtual`, `nombre_atv`) VALUES
+(1, 11111111, 'hola', 'aaaa');
 
 -- --------------------------------------------------------
 
@@ -1013,6 +914,7 @@ CREATE TABLE `profesional` (
 INSERT INTO `profesional` (`rut`, `id_profesion`, `id_institucion`, `biografia_prof`, `experiencia`, `titulo_profesional`) VALUES
 (10286235, 3, 8, NULL, 'Mecánica de Rocas', '../../uploads/titulo_profesional/com_data_12.pdf'),
 (11022434, 11, 10, NULL, 'Preparación para TOEFL', '../../uploads/titulo_profesional/Tarea_3_ComData_2024.pdf'),
+(11111111, 6, 91, 'a', 'a', 'a'),
 (12323424, 8, 50, NULL, 'Mmm...', '../../uploads/titulo_profesional/Malla_UA53_ plan3_IngCivilInformática _2017_09_30.pdf'),
 (12424567, 12, 7, NULL, 'Clases particulares de Lenguaje y Comunicación y preparación para la PAES de Lenguaje', '../../uploads/titulo_profesional/CronogramaLabIN1053C_2024-2.pdf'),
 (14565656, 1, 1, NULL, 'Sé hacer de todo', '../../uploads/titulo_profesional/Consentimiento Informado ENCE CRUCH 2024.docx.pdf'),
@@ -1368,7 +1270,8 @@ CREATE TABLE `servicio_profesional` (
 INSERT INTO `servicio_profesional` (`id_servicio`, `rut_profesional`, `precio_serv_prof`) VALUES
 (1, 14565656, 15000),
 (2, 14565656, 20000),
-(3, 14565656, 25000);
+(3, 14565656, 25000),
+(4, 11111111, 1000);
 
 -- --------------------------------------------------------
 
@@ -1486,6 +1389,7 @@ INSERT INTO `usuario` (`rut`, `dv`, `nombre_usuario`, `nombres`, `apellido_p`, `
 (16767878, '5', 'Ernesto', 'Ernesto', 'Loyola', 'Zapata', 'ernesto@gmail.com', 988786565, '1991-12-15', 'José Arrieta 2345', 'e10adc3949ba59abbe56e057f20f883e', 'uploads/foto_perfil/IMG_20240810_181021908.jpg', 36, 3, 1),
 (20786387, '4', 'Alvaro', 'Álvaro Alfonso', 'Molina', 'Jara', 'alvaromolinacl@gmail.com', 951269878, '2001-07-10', 'Calle ABC, 123', '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 1, 1, 1),
 (20876543, '4', 'PruebaProf', 'Prueba', 'Profesional', 'Prof', 'pruebaprof@gmail.com', 987767657, '2002-08-12', 'Calle Gabriela 143', '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 83, 3, 1),
+(20981734, '9', 'yungnico', 'Nicolas', 'Vasquez', 'Suazo', 'nvasquezsu@ing.ucsc.cl', 973211750, '2002-03-07', 'pasaje linares2927', '3030531ff2c83288ce25273c8e7f4b8e', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 234, 4, 1),
 (23456789, '6', 'Juanito', 'Juan', 'Pérez', 'Gar', 'juan@gmail.com', 987654321, '2000-08-02', 'Calle GHI, 786', '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 1, 2, 1);
 
 --
@@ -1570,10 +1474,17 @@ ALTER TABLE `administrador`
 -- Indices de la tabla `cita`
 --
 ALTER TABLE `cita`
-  ADD PRIMARY KEY (`id_cita`),
+  ADD PRIMARY KEY (`fecha_cita`,`hora_cita`,`rut_cliente`,`rut_profesional`),
   ADD KEY `cita_ibfk_1` (`rut_cliente`),
-  ADD KEY `cita_ibfk_2` (`rut_profesional`),
-  ADD KEY `cita_ibfk_3` (`id_th`);
+  ADD KEY `cita_ibfk_2` (`rut_profesional`);
+
+--
+-- Indices de la tabla `clasificacion`
+--
+ALTER TABLE `clasificacion`
+  ADD PRIMARY KEY (`id_clasificacion`),
+  ADD KEY `fk_rut_usuario` (`rut_usuario`),
+  ADD KEY `fk_rut_profesional` (`rut_profesional`);
 
 --
 -- Indices de la tabla `cliente`
@@ -1601,6 +1512,13 @@ ALTER TABLE `disponibilidad`
 --
 ALTER TABLE `estado_usuario`
   ADD PRIMARY KEY (`id_estado_usuario`);
+
+--
+-- Indices de la tabla `favoritos`
+--
+ALTER TABLE `favoritos`
+  ADD PRIMARY KEY (`rut_usuario`,`rut_profesional`),
+  ADD KEY `rut_profesional` (`rut_profesional`);
 
 --
 -- Indices de la tabla `foro`
@@ -1749,10 +1667,10 @@ ALTER TABLE `usuario`
 --
 
 --
--- AUTO_INCREMENT de la tabla `cita`
+-- AUTO_INCREMENT de la tabla `clasificacion`
 --
-ALTER TABLE `cita`
-  MODIFY `id_cita` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `clasificacion`
+  MODIFY `id_clasificacion` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `comuna`
@@ -1764,7 +1682,7 @@ ALTER TABLE `comuna`
 -- AUTO_INCREMENT de la tabla `disponibilidad`
 --
 ALTER TABLE `disponibilidad`
-  MODIFY `id_disponibilidad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=163;
+  MODIFY `id_disponibilidad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=215;
 
 --
 -- AUTO_INCREMENT de la tabla `estado_usuario`
@@ -1788,7 +1706,7 @@ ALTER TABLE `institucion`
 -- AUTO_INCREMENT de la tabla `lugar_atencion_virtual`
 --
 ALTER TABLE `lugar_atencion_virtual`
-  MODIFY `id_lugar_at_virtual` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_lugar_at_virtual` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `mensaje`
@@ -1864,9 +1782,15 @@ ALTER TABLE `administrador`
 -- Filtros para la tabla `cita`
 --
 ALTER TABLE `cita`
-  ADD CONSTRAINT `cita_ibfk_1` FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `cita_ibfk_2` FOREIGN KEY (`rut_profesional`) REFERENCES `profesional` (`rut`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `cita_ibfk_3` FOREIGN KEY (`id_th`) REFERENCES `tipo_horario` (`id_th`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `cita_ibfk_1` FOREIGN KEY (`rut_cliente`) REFERENCES `disponibilidad` (`rut_cliente`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `cita_ibfk_2` FOREIGN KEY (`rut_profesional`) REFERENCES `disponibilidad` (`rut_profesional`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `clasificacion`
+--
+ALTER TABLE `clasificacion`
+  ADD CONSTRAINT `fk_rut_profesional` FOREIGN KEY (`rut_profesional`) REFERENCES `profesional` (`rut`),
+  ADD CONSTRAINT `fk_rut_usuario` FOREIGN KEY (`rut_usuario`) REFERENCES `usuario` (`rut`);
 
 --
 -- Filtros para la tabla `cliente`
@@ -1886,6 +1810,13 @@ ALTER TABLE `comuna`
 ALTER TABLE `disponibilidad`
   ADD CONSTRAINT `disponibilidad_ibfk_1` FOREIGN KEY (`rut_profesional`) REFERENCES `profesional` (`rut`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `disponibilidad_ibfk_2` FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `favoritos`
+--
+ALTER TABLE `favoritos`
+  ADD CONSTRAINT `favoritos_ibfk_1` FOREIGN KEY (`rut_usuario`) REFERENCES `usuario` (`rut`),
+  ADD CONSTRAINT `favoritos_ibfk_2` FOREIGN KEY (`rut_profesional`) REFERENCES `profesional` (`rut`);
 
 --
 -- Filtros para la tabla `foro`
