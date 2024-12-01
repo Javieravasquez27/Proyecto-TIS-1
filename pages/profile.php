@@ -11,12 +11,147 @@
                          WHERE u.rut = '$_SESSION[rut]'";
     $resultado_usuario = mysqli_query($conexion, $consulta_usuario);
     $usuario = mysqli_fetch_assoc($resultado_usuario);
+
+    $colsulta_horarios = "SELECT horario from tipo_horario";
+    $resultado_horarios = mysqli_query($conexion, $colsulta_horarios);
+    if ($_SESSION['id_rol'] == 1 || $_SESSION['id_rol'] == 2 || $_SESSION['id_rol'] == 3):
+        
+    endif;
 ?>
 
 <link rel="stylesheet" href="public/css/profile_profesional.css">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    function cargarhorariolunes() {
+            fetch("utils/get_horarios.php")
+                .then(response => response.json())
+                .then(data => {
+                    const select = document.getElementById("horarioLunes");
 
+                    // Vaciar el select por si tiene opciones
+                    select.innerHTML = '';
+
+
+                    // Rellenar el select con las servicios recibidas
+                    data.forEach(horarios => {
+                        const option = document.createElement("option");
+                        option.value = horarios.horario;
+                        option.textContent = horarios.horario;
+                        select.appendChild(option);
+                    });
+                })
+                .catch(error => console.error("Error al cargar servicios:", error));
+        }
+    function cargarhorariomartes() {
+        fetch("utils/get_horarios.php")
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById("horariomartes");
+
+                // Vaciar el select por si tiene opciones
+                select.innerHTML = '';
+
+
+                // Rellenar el select con las servicios recibidas
+                data.forEach(horarios => {
+                    const option = document.createElement("option");
+                    option.value = horarios.horario;
+                    option.textContent = horarios.horario;
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => console.error("Error al cargar servicios:", error));
+    }
+    function cargarhorariomiercoles() {
+        fetch("utils/get_horarios.php")
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById("horariomiercoles");
+
+                // Vaciar el select por si tiene opciones
+                select.innerHTML = '';
+
+
+                // Rellenar el select con las servicios recibidas
+                data.forEach(horarios => {
+                    const option = document.createElement("option");
+                    option.value = horarios.horario;
+                    option.textContent = horarios.horario;
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => console.error("Error al cargar servicios:", error));
+    }
+    function cargarhorariojueves() {
+        fetch("utils/get_horarios.php")
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById("horariojueves");
+
+                // Vaciar el select por si tiene opciones
+                select.innerHTML = '';
+
+
+                // Rellenar el select con las servicios recibidas
+                data.forEach(horarios => {
+                    const option = document.createElement("option");
+                    option.value = horarios.horario;
+                    option.textContent = horarios.horario;
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => console.error("Error al cargar servicios:", error));
+    }
+    function cargarhorarioviernes() {
+        fetch("utils/get_horarios.php")
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById("horarioviernes");
+
+                // Vaciar el select por si tiene opciones
+                select.innerHTML = '';
+
+
+                // Rellenar el select con las servicios recibidas
+                data.forEach(horarios => {
+                    const option = document.createElement("option");
+                    option.value = horarios.horario;
+                    option.textContent = horarios.horario;
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => console.error("Error al cargar servicios:", error));
+    }
+    function cargarhorariosabado() {
+        fetch("utils/get_horarios.php")
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById("horariosabado");
+
+                // Vaciar el select por si tiene opciones
+                select.innerHTML = '';
+
+
+                // Rellenar el select con las servicios recibidas
+                data.forEach(horarios => {
+                    const option = document.createElement("option");
+                    option.value = horarios.horario;
+                    option.textContent = horarios.horario;
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => console.error("Error al cargar servicios:", error));
+    }
+
+    cargarhorariolunes();
+    cargarhorariomartes();
+    cargarhorariomiercoles();
+    cargarhorariojueves();
+    cargarhorarioviernes();
+    cargarhorariosabado();
+</script>
 <title>Perfil <?php if ($_SESSION['id_rol'] == 1 || $_SESSION['id_rol'] == 2 || $_SESSION['id_rol'] == 3): ?> Profesional <?php endif; ?> de
     <?php echo $_SESSION['nombre_usuario']; ?> - KindomJob's
 </title>
@@ -41,7 +176,7 @@
         </div>
     </div>
 
-    <!-- Sección de Direcciones -->
+    <!-- Sección de Rellenar Horarios para profesionales -->
     <?php if ($_SESSION['id_rol'] == 1 || $_SESSION['id_rol'] == 2 || $_SESSION['id_rol'] == 3): ?>
     <div class="card mb-4">
         <form id="form-disponibilidad">
@@ -53,52 +188,64 @@
                     <div class="availability">
                         <div class="row">
                             <div class="col-2 day-column">
-                                <strong>lunes</strong>
                                 <input type="hidden" name="dia[]" value='lunes'>
-                                <label for=""><b>Hora Inicio</b></label>
-                                <input type="time" name="hora_inicio[]" required>
-                                <label for=""><b>Hora Fin</b></label>
-                                <input type="time" name="hora_fin[]" required>
+                                <label for="">
+                                    Selecciona aquí el horario para el dia <b>lunes</b>
+                                </label><br><br>
+                                <select class="form-control" id="horarioLunes" multiple="multiple" name="horario[]" required></select>
+                                <script>
+                                    $('#horarioLunes').select2();
+                                </script>
                             </div>
                             <div class="col-2 day-column">
-                                <strong>martes</strong>
                                 <input type="hidden" name="dia[]" value='martes'>
-                                <label for=""><b>Hora Inicio</b></label>
-                                <input type="time" name="hora_inicio[]" required>
-                                <label for=""><b>Hora Fin</b></label>
-                                <input type="time" name="hora_fin[]" required>
+                                <label for="">
+                                    Selecciona aquí el horario para el dia <b>martes</b>
+                                </label><br><br>
+                                <select class="form-control" id="horariomartes" multiple="multiple" name="horario[]" required></select>
+                                <script>
+                                    $('#horariomartes').select2();
+                                </script>
                             </div>
                             <div class="col-2 day-column">
-                                <strong>miércoles</strong>
-                                <input type="hidden" name="dia[]" value='miércoles'>
-                                <label for=""><b>Hora Inicio</b></label>
-                                <input type="time" name="hora_inicio[]" required>
-                                <label for=""><b>Hora Fin</b></label>
-                                <input type="time" name="hora_fin[]" required>
+                                <input type="hidden" name="dia[]" value='miercoles'>
+                                <label for="">
+                                    Selecciona aquí el horario para el dia <b>miercoles</b>
+                                </label><br><br>
+                                <select class="form-control" id="horariomiercoles" multiple="multiple" name="horario[]" required></select>
+                                <script>
+                                    $('#horariomiercoles').select2();
+                                </script>
                             </div>
                             <div class="col-2 day-column">
-                                <strong>jueves</strong>
                                 <input type="hidden" name="dia[]" value='jueves'>
-                                <label for=""><b>Hora Inicio</b></label>
-                                <input type="time" name="hora_inicio[]" required>
-                                <label for=""><b>Hora Fin</b></label>
-                                <input type="time" name="hora_fin[]" required>
+                                <label for="">
+                                    Selecciona aquí el horario para el dia <b>jueves</b>
+                                </label><br><br>
+                                <select class="form-control" id="horariojueves" multiple="multiple" name="horario[]" required></select>
+                                <script>
+                                    $('#horariojueves').select2();
+                                </script>
                             </div>
                             <div class="col-2 day-column">
-                                <strong>viernes</strong>
                                 <input type="hidden" name="dia[]" value='viernes'>
-                                <label for=""><b>Hora Inicio</b></label>
-                                <input type="time" name="hora_inicio[]" required>
-                                <label for=""><b>Hora Fin</b></label>
-                                <input type="time" name="hora_fin[]" required>
+                                <label for="">
+                                    Selecciona aquí el horario para el dia <b>viernes</b>
+                                </label><br><br>
+                                <select class="form-control" id="horarioviernes" multiple="multiple" name="horario[]" required></select>
+                                <script>
+                                    $('#horarioviernes').select2();
+                                </script>
                             </div>
                             <div class="col-2 day-column">
-                                <strong>sábado</strong>
-                                <input type="hidden" name="dia[]" value='sábado'>
-                                <label for=""><b>Hora Inicio</b></label>
-                                <input type="time" name="hora_inicio[]" required>
-                                <label for=""><b>Hora Fin</b></label>
-                                <input type="time" name="hora_fin[]" required>
+                                <input type="hidden" name="dia[]" value='sabado'>
+                                <label for="">
+                                    Selecciona aquí el horario para el dia <b>sabado</b>
+                                </label><br><br>
+                                <select class="form-control" id="horariosabado" multiple="multiple" name="horario[]" required></select>
+                                <script>
+                                    $('#horariosabado').select2();
+                                </script>
                             </div>
                         </div>
                         <div class="row">
@@ -142,6 +289,7 @@
                 });
             });
         </script>
+        
         <?php endif; ?>
     </div>
 

@@ -1,25 +1,45 @@
 <title>KindomJob's</title>
 
 <script>
+    <?php $query="SELECT profesional.rut, profesion.nombre_profesion, usuario.nombres, 
+              GROUP_CONCAT(DISTINCT servicio.nombre_servicio ORDER BY servicio.nombre_servicio SEPARATOR '|') AS servicios, 
+              GROUP_CONCAT(DISTINCT servicio_profesional.precio_serv_prof ORDER BY servicio.nombre_servicio SEPARATOR '|') AS montos,
+              GROUP_CONCAT(DISTINCT comuna.nombre_comuna ORDER BY comuna.nombre_comuna SEPARATOR '|') AS lugares_atencion 
+              FROM usuario
+              JOIN profesional ON profesional.rut = '$_SESSION[rut]'
+              JOIN profesion ON profesion.id_profesion = profesional.id_profesion
+              JOIN servicio_profesional ON servicio_profesional.rut_profesional = profesional.rut
+              JOIN servicio ON servicio.id_servicio = servicio_profesional.id_servicio
+              JOIN lugar_atencion_presencial ON lugar_atencion_presencial.rut_profesional = profesional.rut
+              JOIN comuna ON lugar_atencion_presencial.id_comuna = comuna.id_comuna";
+              $result=mysqli_query($conexion,$query);
+              while($row=mysqli_fetch_array($result)){
+                    $servicios=$row["servicios"];
+                    $montos=$row["montos"];
+                    $lugares_atencion=$row["lugares_atencion"];
+              }
+    ?>
     <?php if ($_SESSION['id_rol'] == 1 || $_SESSION['id_rol'] == 2 || $_SESSION['id_rol'] == 3): ?>
-        const Toast = Swal.mixin({
-            toast: true,
-            position: "bottom-end",
-            color: "#fff",
-            background: "#cf142b",
-            showConfirmButton: false,
-            showCloseButton: true,
-            timer: 10000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-                toast.onmouseenter = Swal.stopTimer;
-                toast.onmouseleave = Swal.resumeTimer;
-            }
-        });
-        Toast.fire({
-            icon: "warning",
-            html: "Para ser mostrado en la búsqueda, <b>tiene que rellenar sus campos de profesional.</b><br><a href='index.php?p=profile' style='color:#fff;'>Rellene los campos aquí</a>"
-        });
+        <?php if (empty($servicios) || empty($montos) || empty($lugares_atencion)): ?>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "bottom-end",
+                color: "#fff",
+                background: "#cf142b",
+                showConfirmButton: false,
+                showCloseButton: true,
+                timer: 10000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "warning",
+                html: "Para ser mostrado en la búsqueda, <b>tiene que rellenar sus campos de profesional.</b><br><a href='index.php?p=profile' style='color:#fff;'>Rellene los campos aquí</a>"
+            });
+        <?php endif; ?>
     <?php endif; ?>
 </script>
 <script>
@@ -164,10 +184,10 @@
                     select.appendChild(defaultOption);
 
                     // Rellenar el select con las servicios recibidas
-                    data.forEach(servicio => {
+                    data.forEach(horario => {
                         const option = document.createElement("option");
-                        option.value = servicio.id_servicio;
-                        option.textContent = servicio.nombre_servicio;
+                        option.value = horario.nombre_horario;
+                        option.textContent = horario.id_th;
                         select.appendChild(option);
                     });
                 })
