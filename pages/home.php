@@ -1,24 +1,6 @@
 <title>KindomJob's</title>
 
 <script>
-    <?php $query="SELECT profesional.rut, profesion.nombre_profesion, usuario.nombres, 
-              GROUP_CONCAT(DISTINCT servicio.nombre_servicio ORDER BY servicio.nombre_servicio SEPARATOR '|') AS servicios, 
-              GROUP_CONCAT(DISTINCT servicio_profesional.precio_serv_prof ORDER BY servicio.nombre_servicio SEPARATOR '|') AS montos,
-              GROUP_CONCAT(DISTINCT comuna.nombre_comuna ORDER BY comuna.nombre_comuna SEPARATOR '|') AS lugares_atencion 
-              FROM usuario
-              JOIN profesional ON profesional.rut = '$_SESSION[rut]'
-              JOIN profesion ON profesion.id_profesion = profesional.id_profesion
-              JOIN servicio_profesional ON servicio_profesional.rut_profesional = profesional.rut
-              JOIN servicio ON servicio.id_servicio = servicio_profesional.id_servicio
-              JOIN lugar_atencion_presencial ON lugar_atencion_presencial.rut_profesional = profesional.rut
-              JOIN comuna ON lugar_atencion_presencial.id_comuna = comuna.id_comuna";
-              $result=mysqli_query($conexion,$query);
-              while($row=mysqli_fetch_array($result)){
-                    $servicios=$row["servicios"];
-                    $montos=$row["montos"];
-                    $lugares_atencion=$row["lugares_atencion"];
-              }
-    ?>
     <?php if ($_SESSION['id_rol'] == 1 || $_SESSION['id_rol'] == 2 || $_SESSION['id_rol'] == 3): ?>
         <?php if (empty($servicios) || empty($montos) || empty($lugares_atencion)): ?>
             const Toast = Swal.mixin({
@@ -44,31 +26,65 @@
 </script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        function cargarRegiones() {
-            fetch("utils/get_region.php")
-                .then(response => response.json())
-                .then(data => {
-                    const select = document.getElementById("region");
+        console.log("DOM fully loaded and parsed");
 
-                    // Vaciar el select por si tiene opciones
-                    select.innerHTML = '';
+    const regionSelect = document.getElementById("region");
+    const provinciaSelect = document.getElementById("provincia");
+    const comunaSelect = document.getElementById("comuna");
+    const profesionSelect = document.getElementById("profesion");
+    const servicioSelect = document.getElementById("servicio");
+    if (!regionSelect) {
+        console.error("Element with ID 'region' is missing");
+    }
+    if (!provinciaSelect) {
+        console.error("Element with ID 'provincia' is missing");
+    }
+    if (!comunaSelect) {
+        console.error("Element with ID 'comuna' is missing");
+    }
+    if (!profesionSelect) {
+        console.error("Element with ID 'profesion' is missing");
+    }
+    if (!servicioSelect) {
+        console.error("Element with ID 'servicio' is missing");
+    }
 
-                    // Agregar una opción por defecto
-                    const defaultOption = document.createElement("option");
-                    defaultOption.textContent = "Región";
-                    defaultOption.value = "";
-                    select.appendChild(defaultOption);
+    if (!regionSelect || !provinciaSelect || !comunaSelect || !profesionSelect || !servicioSelect) {
+        console.error("One or more select elements are missing");
+        return;
+    }
 
-                    // Rellenar el select con las regiones recibidas
-                    data.forEach(region => {
-                        const option = document.createElement("option");
-                        option.value = region.id_region;
-                        option.textContent = region.nombre_region;
-                        select.appendChild(option);
-                    });
-                })
-                .catch(error => console.error("Error al cargar regiones:", error));
-        }
+    provinciaSelect.addEventListener("change", function() {
+        console.log("Provincia cambiada:", provinciaSelect.value);
+        cargarRegiones(comunaSelect.value, provinciaSelect.value, profesionSelect.value, servicioSelect.value);
+    });
+
+    function cargarRegiones(comunaid, provinciaid, profesionid, servicioid) {  
+        console.log("Cargando regiones con:", { comunaid, provinciaid, profesionid, servicioid });
+        fetch("utils/get_region.php?comuna=" + comunaid + "&provincia=" + provinciaid + "&profesion=" + profesionid + "&servicio=" + servicioid)
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById("region");
+
+                // Vaciar el select por si tiene opciones
+                select.innerHTML = '';
+
+                // Agregar una opción por defecto
+                const defaultOption = document.createElement("option");
+                defaultOption.textContent = "Región";
+                defaultOption.value = "";
+                select.appendChild(defaultOption);
+
+                // Rellenar el select con las regiones recibidas
+                data.forEach(region => {
+                    const option = document.createElement("option");
+                    option.value = region.id_region;
+                    option.textContent = region.nombre_region;
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => console.error("Error al cargar regiones:", error));
+    }
 
         function cargarProvincias() {
             fetch("utils/get_provincia.php")
@@ -184,23 +200,24 @@
                     select.appendChild(defaultOption);
 
                     // Rellenar el select con las servicios recibidas
-                    data.forEach(horario => {
+                    data.forEach(servicio => {
                         const option = document.createElement("option");
-                        option.value = horario.nombre_horario;
-                        option.textContent = horario.id_th;
+                        option.value = servicio.id_servicio;
+                        option.textContent = servicio.nombre_servicio;
                         select.appendChild(option);
                     });
                 })
                 .catch(error => console.error("Error al cargar servicios:", error));
         }
 
-        cargarRegiones();
+        cargarRegiones(comunaSelect.value, provinciaSelect.value, profesionSelect.value, servicioSelect.value);
         cargarProvincias();
         cargarComunas();
         cargarProfesiones();
         cargarServicios();
     });
 </script>
+
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <div class="container">
     <div class="row py-5 text-center">

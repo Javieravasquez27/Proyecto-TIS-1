@@ -192,7 +192,7 @@
                                 <label for="">
                                     Selecciona aquí el horario para el dia <b>lunes</b>
                                 </label><br><br>
-                                <select class="form-control" id="horarioLunes" multiple="multiple" name="horario[]" required></select>
+                                <select class="form-control" id="horarioLunes" multiple="multiple" name="horario[lunes][]" required></select>
                                 <script>
                                     $('#horarioLunes').select2();
                                 </script>
@@ -202,17 +202,17 @@
                                 <label for="">
                                     Selecciona aquí el horario para el dia <b>martes</b>
                                 </label><br><br>
-                                <select class="form-control" id="horariomartes" multiple="multiple" name="horario[]" required></select>
+                                <select class="form-control" id="horariomartes" multiple="multiple" name="horario[martes][]" required></select>
                                 <script>
                                     $('#horariomartes').select2();
                                 </script>
                             </div>
                             <div class="col-2 day-column">
-                                <input type="hidden" name="dia[]" value='miercoles'>
+                                <input type="hidden" name="dia[]" value='miércoles'>
                                 <label for="">
                                     Selecciona aquí el horario para el dia <b>miercoles</b>
                                 </label><br><br>
-                                <select class="form-control" id="horariomiercoles" multiple="multiple" name="horario[]" required></select>
+                                <select class="form-control" id="horariomiercoles" multiple="multiple" name="horario[miércoles][]" required></select>
                                 <script>
                                     $('#horariomiercoles').select2();
                                 </script>
@@ -222,7 +222,7 @@
                                 <label for="">
                                     Selecciona aquí el horario para el dia <b>jueves</b>
                                 </label><br><br>
-                                <select class="form-control" id="horariojueves" multiple="multiple" name="horario[]" required></select>
+                                <select class="form-control" id="horariojueves" multiple="multiple" name="horario[jueves][]" required></select>
                                 <script>
                                     $('#horariojueves').select2();
                                 </script>
@@ -232,17 +232,17 @@
                                 <label for="">
                                     Selecciona aquí el horario para el dia <b>viernes</b>
                                 </label><br><br>
-                                <select class="form-control" id="horarioviernes" multiple="multiple" name="horario[]" required></select>
+                                <select class="form-control" id="horarioviernes" multiple="multiple" name="hhorario[viernes][]" required></select>
                                 <script>
                                     $('#horarioviernes').select2();
                                 </script>
                             </div>
                             <div class="col-2 day-column">
-                                <input type="hidden" name="dia[]" value='sabado'>
+                                <input type="hidden" name="dia[]" value='sábado'>
                                 <label for="">
                                     Selecciona aquí el horario para el dia <b>sabado</b>
                                 </label><br><br>
-                                <select class="form-control" id="horariosabado" multiple="multiple" name="horario[]" required></select>
+                                <select class="form-control" id="horariosabado" multiple="multiple" name="horhorario[sábado][]" required></select>
                                 <script>
                                     $('#horariosabado').select2();
                                 </script>
@@ -260,35 +260,35 @@
             </div>
         </form>
         <script>
-            $(document).ready(function () {
-                $('#guardar-disponibilidad').click(function () {
-                    const formData = $('#form-disponibilidad').serialize();
-                
-                    $.ajax({
-                        url: 'pages/profesional/guardar_disponibilidad.php',
-                        type: 'POST',
-                        data: formData,
-                        success: function (response) {
-                            Swal.fire({
-                                icon: 'success',
-                                title: '¡Éxito!',
-                                text: 'Disponibilidad guardada correctamente.',
-                                timer: 1500,
-                                showCancelButton: false,
-                                showConfirmButton: false
-                            });
-                        },
-                        error: function (xhr, status, error) {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Error',
-                                text: 'Ocurrió un error al guardar la disponibilidad: ' + error
-                            });
-                        }
-                    });
+        $(document).ready(function () {
+            $('#guardar-disponibilidad').click(function () {
+                const formData = $('#form-disponibilidad').serialize();
+            
+                $.ajax({
+                    url: 'pages/profesional/guardar_disponibilidad.php',
+                    type: 'POST',
+                    data: formData,
+                    success: function (response) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: '¡Éxito!',
+                            text: 'Disponibilidad guardada correctamente.',
+                            timer: 1500,
+                            showCancelButton: false,
+                            showConfirmButton: false
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Hubo un problema al guardar la disponibilidad.'
+                        });
+                    }
                 });
             });
-        </script>
+        });
+    </script>
         
         <?php endif; ?>
     </div>

@@ -18,39 +18,36 @@
             'sábado' => 6,
         ];
 
-        for ($i = 0; $i < count($_POST['dia']); $i++) {
-            $dia = strtolower($_POST['dia'][$i]);
-            $hora_inicio = $_POST['hora_inicio'][$i];
-            $hora_fin = $_POST['hora_fin'][$i];
-
+        foreach ($_POST['dia'] as $dia) {
+            $dia = strtolower($dia);
             if (!array_key_exists($dia, $dias_validos)) {
                 throw new Exception("Día no válido: $dia.");
             }
+
+            if (!isset($_POST['horario'][$dia])) {
+                continue;
+            }
+
+            $horas = $_POST['horario'][$dia]; // Array of selected hours for the day
 
             $hoy = (int)(new DateTime())->format('w');
             $proximo_dia = $dias_validos[$dia];
 
             for ($semana = 0; $semana < 3; $semana++) {
-                $inicio_hora = strtotime($hora_inicio);
-                $fin_hora = strtotime($hora_fin);
-
                 $fecha = new DateTime();
                 $fecha->modify("+$semana week");
                 $diferencia_dias = ($proximo_dia - $hoy + 7) % 7;
                 $diferencia_dias = $diferencia_dias === 0 ? 7 : $diferencia_dias;
                 $fecha->modify("+$diferencia_dias days");
 
-                while ($inicio_hora < $fin_hora) {
-                    $hora_actual = date("H:i:s", $inicio_hora);
+                foreach ($horas as $hora) {
                     $fecha_formateada = $fecha->format("Y-m-d");
 
                     $sql = "INSERT INTO disponibilidad (rut_profesional, fecha, hora, disponible) 
-                            VALUES ('" . $usuario['rut'] . "', '$fecha_formateada', '$hora_actual', TRUE)";
+                            VALUES ('" . $usuario['rut'] . "', '$fecha_formateada', '$hora', TRUE)";
                     if (!$conexion->query($sql)) {
                         throw new Exception("Error al insertar en la base de datos: " . $conexion->error);
                     }
-
-                    $inicio_hora = strtotime('+1 hour', $inicio_hora);
                 }
             }
         }
