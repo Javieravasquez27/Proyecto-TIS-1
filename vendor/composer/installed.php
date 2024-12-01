@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => '__root__',
-        'pretty_version' => 'dev-main',
-        'version' => 'dev-main',
-        'reference' => '2fa58f31b56b7970dce83a4f4f37ab70a76fa6c8',
+        'pretty_version' => '1.0.0+no-version-set',
+        'version' => '1.0.0.0',
+        'reference' => null,
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         '__root__' => array(
-            'pretty_version' => 'dev-main',
-            'version' => 'dev-main',
-            'reference' => '2fa58f31b56b7970dce83a4f4f37ab70a76fa6c8',
+            'pretty_version' => '1.0.0+no-version-set',
+            'version' => '1.0.0.0',
+            'reference' => null,
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -110,9 +110,9 @@
             'dev_requirement' => false,
         ),
         'transbank/transbank-sdk' => array(
-            'pretty_version' => '2.0.10',
-            'version' => '2.0.10.0',
-            'reference' => 'fca5464314d805ee95c753aedd31cea4be601396',
+            'pretty_version' => '2.0',
+            'version' => '2.0.0.0',
+            'reference' => '3358b277154b293aa7344a8a32bf46b4d3929e3f',
             'type' => 'library',
             'install_path' => __DIR__ . '/../transbank/transbank-sdk',
             'aliases' => array(),
