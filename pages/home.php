@@ -239,23 +239,24 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col text-center mb-1" style="font-size: 20px;"><span>Búsqueda de profesionales cercanos</span></div>
+        <div class="col text-center mb-1" style="font-size: 20px;">
+            <span>Búsqueda de profesionales cercanos</span>
+            <h3>Geolocalizar Dirección</h3>
+            <form id="address-form">
+                <label for="address">Dirección:</label>
+                <input type="text" id="address" name="address" placeholder="Ingresa una dirección" required />
+                <button type="submit">Geolocalizar</button>
+            </form>
+        </div>
     </div>
 </div>
 
 <div class="container cont_mapa">
 
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-        
-
-        <h3>Geolocalizar Dirección</h3>
-        <form id="address-form">
-            <label for="address">Dirección:</label>
-            <input type="text" id="address" name="address" placeholder="Ingresa una dirección" required />
-            <button type="submit">Geolocalizar</button>
-        </form>
         <br>
         <div id="map"></div>
+        <br>
         <p id="result"></p>
         <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
         <script>
@@ -279,13 +280,7 @@
 
                         // Mostrar la ubicación en el mapa
                         map.setView([lat, lon], 12);
-
-                        // Mostrar las coordenadas en pantalla
-                        document.getElementById('result').innerText = 
-                            `Coordenadas para "${address}": Latitud: ${lat}, Longitud: ${lon}`;
-
-                        // Opcional: Almacenar la información (simulado)
-                        console.log(`Dirección: ${address}, Latitud: ${lat}, Longitud: ${lon}`);
+                        
                     } else {
                         document.getElementById('result').innerText = 
                             `No se encontraron resultados para "${address}".`;
@@ -330,6 +325,9 @@
                 attribution: '© OpenStreetMap contributors'
             }).addTo(map);
 
+            setTimeout(() => {
+                map.invalidateSize();
+            }, 200);
             const addresses = [
                 "Avenida Alonso de ribera 2850, concepcion, Chile ",
                 "Lientur 1457, Concepción, chile",
