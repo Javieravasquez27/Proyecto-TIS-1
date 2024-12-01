@@ -83,4 +83,11 @@
             return false;
         }
     }
+    function enviarCorreo($destinatario, $asunto, $mensaje) {
+        $headers = "From: no-reply@kindomjobs.com\r\n";
+        $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+    
+        return mail($destinatario, $asunto, $mensaje, $headers);
+    }
+    
 ?>
