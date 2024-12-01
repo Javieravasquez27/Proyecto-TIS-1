@@ -16,6 +16,8 @@
     $longitud = $_POST['longitud'];
     $password = !empty($_POST['password']) ? md5($_POST['password']) : null;
     $foto_perfil = $_FILES['foto_perfil']['name'];
+    $biografia_prof = $_POST['biografia_prof'];
+    $experiencia = $_POST['experiencia'];
     
     // Se procesa la foto de perfil
     if ($foto_perfil) {
@@ -39,10 +41,7 @@
     $sql_actualiza_usuario .= " WHERE rut = '$rut';";
     mysqli_query($conexion, $sql_actualiza_usuario);
 
-    if ($id_rol == 1 || $id_rol == 2 || $id_rol == 3) {
-        $biografia_prof = $_POST['biografia_prof'];
-        $experiencia = $_POST['experiencia'];
-
+    if (($id_rol == 1 || $id_rol == 2 || $id_rol == 3) && ($biografia_prof && $experiencia)) {
         $sql_actualiza_profesional = "UPDATE profesional SET biografia_prof = '$biografia_prof', experiencia = '$experiencia'
                                       WHERE rut = '$rut';";
         mysqli_query($conexion, $sql_actualiza_profesional);
