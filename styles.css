@@ -1,0 +1,15 @@
+ul#rating-stars {
+    list-style: none;
+    display: flex;
+    padding: 0;
+}
+
+ul#rating-stars li {
+    font-size: 2rem;
+    color: gray;
+    cursor: pointer;
+}
+
+ul#rating-stars li:hover {
+    color: gold;
+}
