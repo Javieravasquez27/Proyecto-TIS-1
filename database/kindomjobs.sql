@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-11-2024 a las 21:46:24
+-- Tiempo de generación: 28-11-2024 a las 21:18:10
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -36,6 +36,7 @@ CREATE TABLE `administrador` (
 --
 
 INSERT INTO `administrador` (`rut`) VALUES
+(11111111),
 (20786387),
 (23456789);
 
@@ -70,7 +71,9 @@ CREATE TABLE `cliente` (
 INSERT INTO `cliente` (`rut`) VALUES
 (7466578),
 (10208323),
+(10367255),
 (11086788),
+(11111111),
 (12345678),
 (13082637),
 (14565656),
@@ -652,16 +655,112 @@ INSERT INTO `estado_usuario` (`id_estado_usuario`, `nombre_estado_usuario`) VALU
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `foro`
+-- Estructura de tabla para la tabla `foro_respuesta`
 --
 
-CREATE TABLE `foro` (
-  `id_foro` int(11) NOT NULL,
-  `rut_cliente` int(11) NOT NULL,
-  `pregunta_foro` varchar(255) NOT NULL,
-  `rut_profesional` int(11) NOT NULL,
-  `respuesta_foro` varchar(255) NOT NULL
+CREATE TABLE `foro_respuesta` (
+  `id_respuesta` int(11) NOT NULL,
+  `id_tema` int(11) NOT NULL,
+  `rut_usuario` int(11) NOT NULL,
+  `contenido_respuesta` text NOT NULL,
+  `mejor_respuesta` tinyint(1) DEFAULT 0,
+  `fecha_respuesta` timestamp NOT NULL DEFAULT current_timestamp(),
+  `votos_positivos` int(11) DEFAULT 0,
+  `votos_negativos` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `foro_respuesta`
+--
+
+INSERT INTO `foro_respuesta` (`id_respuesta`, `id_tema`, `rut_usuario`, `contenido_respuesta`, `mejor_respuesta`, `fecha_respuesta`, `votos_positivos`, `votos_negativos`) VALUES
+(3, 1, 20786387, 'Y también puedo escribir las respuestas que quiero...', 0, '2024-11-27 00:03:27', 1, 0),
+(4, 1, 20786387, 'Una y otra vez...', 0, '2024-11-27 00:05:06', 0, 0),
+(5, 1, 20786387, 'Probando probando', 0, '2024-11-27 00:08:09', 0, 0),
+(6, 1, 20786387, '123 123', 0, '2024-11-27 00:23:41', 0, 1),
+(7, 1, 20786387, '456 456', 0, '2024-11-27 00:58:17', 0, 0),
+(8, 1, 20786387, 'Parece que la cosa funciona...', 0, '2024-11-27 01:13:35', 0, 0),
+(9, 1, 20786387, 'Y sigue funcionado :O', 0, '2024-11-27 01:46:39', 0, 0),
+(10, 1, 20786387, 'Sigamos probando', 0, '2024-11-27 01:47:26', 0, 0),
+(11, 1, 20786387, 'Probandooooo', 0, '2024-11-27 01:53:25', 0, 0),
+(12, 1, 20786387, 'Seguimos probando', 0, '2024-11-27 01:54:47', 0, 0),
+(13, 1, 20786387, 'Y seguimos, y seguimos probando...', 0, '2024-11-27 01:56:11', 0, 0),
+(14, 1, 20786387, 'Una vez más, probando...', 0, '2024-11-27 01:56:26', 0, 0),
+(15, 1, 20786387, 'Vamos bien, vamos bien', 0, '2024-11-27 01:57:13', 0, 0),
+(16, 1, 20786387, 'Vamos vamosss', 0, '2024-11-27 01:57:32', 0, 0),
+(17, 1, 20786387, 'Ahora tiene colores cuando se envía una nueva respuesta', 0, '2024-11-27 01:58:21', 0, 0),
+(18, 1, 20786387, 'Otra prueba más', 0, '2024-11-27 02:19:04', 0, 0),
+(19, 1, 11086788, 'Hola hola', 0, '2024-11-27 02:21:20', 0, 0),
+(20, 2, 11086788, 'Dame ideas para preguntar...', 0, '2024-11-27 02:21:47', 2, 0),
+(21, 1, 12345678, 'Finally, problema solucionado...', 0, '2024-11-27 02:22:52', 0, 0),
+(22, 1, 12345678, 'Y cerrado', 0, '2024-11-27 02:23:15', 0, 0),
+(23, 1, 12345678, 'And solved', 0, '2024-11-27 02:23:30', 0, 0),
+(24, 2, 12345678, 'No sé, dime tú...', 1, '2024-11-27 02:23:55', 0, 0),
+(25, 4, 20786387, 'Y cuando el tema ya no sea tema, entonces el tema será tema cuando la gente quiere que sea tema, o sea nunca... Mucho gusto estimado', 0, '2024-11-27 02:28:53', 0, 0),
+(26, 3, 20786387, 'Ideas de qué, solo si es que se puede saber?', 0, '2024-11-27 02:29:22', 1, 0),
+(29, 3, 20786387, 'Alo', 0, '2024-11-27 06:13:23', 1, 0),
+(30, 3, 20786387, 'Alo Alo', 0, '2024-11-27 06:14:50', 1, 0),
+(31, 3, 20786387, 'Alo Alooooo', 0, '2024-11-27 06:18:51', 1, 0),
+(32, 3, 20786387, 'Hola Holaaaa', 0, '2024-11-27 15:03:55', 1, 0),
+(33, 3, 20786387, 'Holaaaaaa', 0, '2024-11-27 15:06:42', 1, 0),
+(34, 1, 20786387, 'Hola', 0, '2024-11-27 15:13:35', 0, 0),
+(35, 1, 20786387, 'A ver A veer', 0, '2024-11-27 15:57:10', 0, 0),
+(36, 1, 20786387, 'Alo', 0, '2024-11-27 15:58:17', 0, 0),
+(37, 1, 20786387, 'Holaaa', 0, '2024-11-27 16:20:27', 0, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `foro_tema`
+--
+
+CREATE TABLE `foro_tema` (
+  `id_tema` int(11) NOT NULL,
+  `titulo_tema` varchar(255) NOT NULL,
+  `contenido_tema` text NOT NULL,
+  `rut_cliente` int(11) NOT NULL,
+  `estado_tema` enum('abierto','cerrado','resuelto','no_resuelto') DEFAULT 'abierto',
+  `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `foro_tema`
+--
+
+INSERT INTO `foro_tema` (`id_tema`, `titulo_tema`, `contenido_tema`, `rut_cliente`, `estado_tema`, `fecha_creacion`) VALUES
+(1, 'Tema de prueba', 'Aquí hago las preguntas que quiero', 20786387, 'resuelto', '2024-11-26 23:35:00'),
+(2, 'Otro tema de prueba', 'Esto está interesante... A ver, qué puedo preguntar aquí...', 20786387, 'abierto', '2024-11-26 23:43:09'),
+(3, 'Ideas, ideas', 'Ideaaaas, necesito ideaaaas', 12345678, 'cerrado', '2024-11-27 02:24:29'),
+(4, 'Otro temita', 'Y el tema es tema cuando el tema ya no es tema :O', 14565656, 'resuelto', '2024-11-27 02:27:12');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `foro_voto_respuesta`
+--
+
+CREATE TABLE `foro_voto_respuesta` (
+  `id_voto` int(11) NOT NULL,
+  `id_respuesta` int(11) NOT NULL,
+  `rut_usuario` int(11) NOT NULL,
+  `tipo_voto` enum('positivo','negativo') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `foro_voto_respuesta`
+--
+
+INSERT INTO `foro_voto_respuesta` (`id_voto`, `id_respuesta`, `rut_usuario`, `tipo_voto`) VALUES
+(5, 3, 11086788, 'positivo'),
+(7, 6, 11086788, 'negativo'),
+(8, 20, 12345678, 'positivo'),
+(37, 32, 20786387, 'positivo'),
+(38, 31, 20786387, 'positivo'),
+(39, 30, 20786387, 'positivo'),
+(40, 29, 20786387, 'positivo'),
+(43, 33, 20786387, 'positivo'),
+(44, 26, 20786387, 'positivo'),
+(53, 20, 20786387, 'positivo');
 
 -- --------------------------------------------------------
 
@@ -884,7 +983,9 @@ INSERT INTO `permiso` (`id_permiso`, `nombre_permiso`, `descripcion_permiso`) VA
 (6, 'professional_pages_access', 'Acceder a las páginas de profesionales'),
 (7, 'client_pages_access', 'Acceder a las páginas de clientes'),
 (8, 'permission_manage', 'Gestionar permisos para roles de usuario'),
-(9, 'servicio_profesion_manage', 'Gestionar servicios disponibles para cada profesión');
+(9, 'servicio_profesion_manage', 'Gestionar servicios disponibles para cada profesión'),
+(10, 'foro_access', 'Acceder a los foros disponibles de la plataforma'),
+(11, 'foro_topic_create', 'Crear temas en los foros disponibles de la plataforma');
 
 -- --------------------------------------------------------
 
@@ -918,7 +1019,15 @@ INSERT INTO `permiso_rol` (`id_rol`, `id_permiso`) VALUES
 (3, 7),
 (4, 7),
 (1, 8),
-(1, 9);
+(1, 9),
+(1, 10),
+(2, 10),
+(3, 10),
+(4, 10),
+(1, 11),
+(2, 11),
+(3, 11),
+(4, 11);
 
 -- --------------------------------------------------------
 
@@ -997,11 +1106,11 @@ INSERT INTO `profesion` (`id_profesion`, `nombre_profesion`) VALUES
 
 CREATE TABLE `profesional` (
   `rut` int(11) NOT NULL,
-  `id_profesion` int(11) NOT NULL,
-  `id_institucion` int(11) NOT NULL,
+  `id_profesion` int(11) DEFAULT NULL,
+  `id_institucion` int(11) DEFAULT NULL,
   `biografia_prof` varchar(255) DEFAULT NULL,
-  `experiencia` varchar(255) NOT NULL,
-  `titulo_profesional` varchar(255) NOT NULL
+  `experiencia` varchar(255) DEFAULT NULL,
+  `titulo_profesional` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -1010,6 +1119,7 @@ CREATE TABLE `profesional` (
 
 INSERT INTO `profesional` (`rut`, `id_profesion`, `id_institucion`, `biografia_prof`, `experiencia`, `titulo_profesional`) VALUES
 (10286235, 3, 8, NULL, 'Mecánica de Rocas', '../../uploads/titulo_profesional/com_data_12.pdf'),
+(10367255, 5, 2, 'Esta es mi biografía', 'Mi especialidad son las estructuras', '../../uploads/titulo_profesional/Guía 3-Elasticidad.pdf'),
 (11022434, 11, 10, NULL, 'Preparación para TOEFL', '../../uploads/titulo_profesional/Tarea_3_ComData_2024.pdf'),
 (12323424, 8, 50, NULL, 'Mmm...', '../../uploads/titulo_profesional/Malla_UA53_ plan3_IngCivilInformática _2017_09_30.pdf'),
 (12424567, 12, 7, NULL, 'Clases particulares de Lenguaje y Comunicación y preparación para la PAES de Lenguaje', '../../uploads/titulo_profesional/CronogramaLabIN1053C_2024-2.pdf'),
@@ -1017,6 +1127,7 @@ INSERT INTO `profesional` (`rut`, `id_profesion`, `id_institucion`, `biografia_p
 (15727637, 34, 2, NULL, 'Clases de física para escolares', '../../uploads/titulo_profesional/Ejercicios ejemplo de óptimo de producción.pdf'),
 (16377783, 10, 38, NULL, 'Enseñanza de la matemática para segundo ciclo de enseñanza básica, y enseñanza media (de 1.° a 4.° Medio)', '../../uploads/titulo_profesional/reglamentacion.pdf'),
 (16767878, 7, 3, NULL, 'Gestión tributaria y Operación Renta anual', '../../uploads/titulo_profesional/DataTables example - PDF - image.pdf'),
+(20786387, NULL, NULL, '', '', NULL),
 (20876543, 9, 16, NULL, 'Gestión de información', '../../uploads/titulo_profesional/Feedback Incremento 2.pdf');
 
 -- --------------------------------------------------------
@@ -1148,7 +1259,7 @@ INSERT INTO `region` (`id_region`, `nombre_region`) VALUES
 (3, 'Antofagasta'),
 (4, 'Atacama'),
 (5, 'Coquimbo'),
-(6, 'Valparaiso'),
+(6, 'Valparaíso'),
 (7, 'Metropolitana de Santiago'),
 (8, 'Libertador General Bernardo O\'Higgins'),
 (9, 'Maule'),
@@ -1450,7 +1561,7 @@ CREATE TABLE `usuario` (
   `nombre_usuario` varchar(50) NOT NULL,
   `nombres` varchar(50) NOT NULL,
   `apellido_p` varchar(50) NOT NULL,
-  `apellido_m` varchar(50) NOT NULL,
+  `apellido_m` varchar(50) DEFAULT NULL,
   `correo` varchar(100) NOT NULL,
   `telefono` int(11) NOT NULL,
   `fecha_nac` date NOT NULL,
@@ -1470,18 +1581,20 @@ INSERT INTO `usuario` (`rut`, `dv`, `nombre_usuario`, `nombres`, `apellido_p`, `
 (7466578, '0', 'Mayerly', 'Mayerly', 'Zavala', 'Iturra', 'mayerly@gmail.com', 956543424, '2000-08-31', 'Avenida Michimalonco 278', '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 241, 4, 1),
 (10208323, '7', 'Guillermo', 'Guillermo', 'Pacheco', 'Cereceda', 'guillermo@gmail.com', 982776382, '1994-02-25', 'ABC 123', '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 192, 4, 1),
 (10286235, 'K', 'Profesional456', 'ProfesionalP', 'PPP', 'ProfPP', 'profprof@gmail.com', 986372773, '2002-01-12', 'Calle Nueva 343', '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 37, 3, 2),
+(10367255, '4', 'Natalia', 'Natalia', 'Urrutia', 'Menares', 'natalia@gmail.com', 953535645, '1997-09-03', 'Calle ABC 123', 'baaab6fa3b287456d2ff691027920826', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 233, 3, 1),
 (11022434, '6', 'Profesional123', 'Profesional', 'Prof', 'ProfProf', 'profesional@gmail.com', 987875646, '1999-12-12', 'Avenida Portales 1234', '81dc9bdb52d04dc20036dbd8313ed055', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 78, 3, 2),
 (11086788, '3', 'Lorena', 'Lorena', 'Lagos', 'Sanhueza', 'lorena@gmail.com', 998876565, '1998-08-25', 'Avenida Bernardo O\'Higgins 3272', '827ccb0eea8a706c4c34a16891f84e7b', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 65, 4, 1),
+(11111111, '1', 'Admin', 'Admin', 'Admin', 'Admin', 'superadmin@gmail.com', 999999999, '1999-11-11', 'Calle Admin 123', '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 233, 1, 1),
 (12323424, '3', 'AAASSD', 'Orlando', 'Salazar', 'Urrutia', 'profprofprof@gmail.com', 982878273, '2000-08-12', 'Francisco Pérez 123', '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/IMG_20240817_182910109.jpg', 32, 3, 2),
 (12345678, '5', 'Cliente', 'Cliente', 'Pérez', 'García', 'cliente@gmail.com', 999999999, '1999-08-25', 'Calle DEF, 321', '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 1, 4, 1),
 (12424567, '2', 'Graciela', 'Graciela', 'Hernández', 'Jiménez', 'graciela@gmail.com', 924566345, '2022-08-12', 'Avenida Las Golondrinas 2485', '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/Fondo.png', 237, 3, 2),
-(13082637, '7', 'Admin', 'Admin', 'Prueba', 'Prueba', 'admin@gmail.com', 982872637, '1995-08-08', 'Calle Nueva 123', '81dc9bdb52d04dc20036dbd8313ed055', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 1, 4, 1),
+(13082637, '7', 'ABCDEF', 'Admin', 'Prueba', 'Prueba', 'admin@gmail.com', 982872637, '1995-08-08', 'Calle Nueva 123', '81dc9bdb52d04dc20036dbd8313ed055', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 1, 4, 1),
 (14565656, '7', 'Hector', 'Héctor', 'Jiménez', 'Suazo', 'hector@gmail.com', 965656565, '2002-07-08', 'Avenida Arturo Prat 234', '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/IMG_20240831_163740121.jpg', 1, 3, 1),
 (15098364, '9', 'Barbara', 'Barbara', 'Hernández', 'Ramírez', 'barbara@gmail.com', 936262767, '2000-09-15', 'Calle ABC, 123', '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 332, 4, 1),
 (15727637, '9', 'Valentina', 'Valentina', 'Figueroa', 'Pereira', 'valentina@gmail.com', 938736726, '1994-06-01', 'Postdam 4332', '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/Fondo.png', 237, 3, 1),
 (16377783, '5', 'Karina', 'Karina', 'Medina', 'Lozano', 'karina@gmail.com', 936726362, '1985-01-12', 'Ramón Carrasco 1023', '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/IMG_20240831_174544129.jpg', 233, 3, 1),
 (16767878, '5', 'Ernesto', 'Ernesto', 'Loyola', 'Zapata', 'ernesto@gmail.com', 988786565, '1991-12-15', 'José Arrieta 2345', 'e10adc3949ba59abbe56e057f20f883e', 'uploads/foto_perfil/IMG_20240810_181021908.jpg', 36, 3, 1),
-(20786387, '4', 'Alvaro', 'Álvaro Alfonso', 'Molina', 'Jara', 'alvaromolinacl@gmail.com', 951269878, '2001-07-10', 'Calle ABC, 123', '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 1, 1, 1),
+(20786387, '4', 'Alvaro', 'Álvaro Alfonso', 'Molina', 'Jara', 'alvaromolinacl@gmail.com', 988888888, '2001-07-10', 'Calle ABC, 123', '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 1, 1, 1),
 (20876543, '4', 'PruebaProf', 'Prueba', 'Profesional', 'Prof', 'pruebaprof@gmail.com', 987767657, '2002-08-12', 'Calle Gabriela 143', '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 83, 3, 1),
 (23456789, '6', 'Juanito', 'Juan', 'Pérez', 'Gar', 'juan@gmail.com', 987654321, '2000-08-02', 'Calle GHI, 786', '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 1, 2, 1);
 
@@ -1600,12 +1713,27 @@ ALTER TABLE `estado_usuario`
   ADD PRIMARY KEY (`id_estado_usuario`);
 
 --
--- Indices de la tabla `foro`
+-- Indices de la tabla `foro_respuesta`
 --
-ALTER TABLE `foro`
-  ADD PRIMARY KEY (`id_foro`),
-  ADD KEY `rut_cliente` (`rut_cliente`),
-  ADD KEY `rut_profesional` (`rut_profesional`);
+ALTER TABLE `foro_respuesta`
+  ADD PRIMARY KEY (`id_respuesta`),
+  ADD KEY `foro_respuesta_ibfk_1` (`id_tema`),
+  ADD KEY `foro_respuesta_ibfk_2` (`rut_usuario`);
+
+--
+-- Indices de la tabla `foro_tema`
+--
+ALTER TABLE `foro_tema`
+  ADD PRIMARY KEY (`id_tema`),
+  ADD KEY `foro_tema_ibfk_1` (`rut_cliente`);
+
+--
+-- Indices de la tabla `foro_voto_respuesta`
+--
+ALTER TABLE `foro_voto_respuesta`
+  ADD PRIMARY KEY (`id_voto`),
+  ADD UNIQUE KEY `id_respuesta` (`id_respuesta`,`rut_usuario`),
+  ADD KEY `rut_usuario` (`rut_usuario`);
 
 --
 -- Indices de la tabla `institucion`
@@ -1770,10 +1898,22 @@ ALTER TABLE `estado_usuario`
   MODIFY `id_estado_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT de la tabla `foro`
+-- AUTO_INCREMENT de la tabla `foro_respuesta`
 --
-ALTER TABLE `foro`
-  MODIFY `id_foro` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `foro_respuesta`
+  MODIFY `id_respuesta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+
+--
+-- AUTO_INCREMENT de la tabla `foro_tema`
+--
+ALTER TABLE `foro_tema`
+  MODIFY `id_tema` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT de la tabla `foro_voto_respuesta`
+--
+ALTER TABLE `foro_voto_respuesta`
+  MODIFY `id_voto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT de la tabla `institucion`
@@ -1797,7 +1937,7 @@ ALTER TABLE `mensaje`
 -- AUTO_INCREMENT de la tabla `permiso`
 --
 ALTER TABLE `permiso`
-  MODIFY `id_permiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_permiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `profesion`
@@ -1885,11 +2025,24 @@ ALTER TABLE `disponibilidad`
   ADD CONSTRAINT `disponibilidad_ibfk_2` FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `foro`
+-- Filtros para la tabla `foro_respuesta`
 --
-ALTER TABLE `foro`
-  ADD CONSTRAINT `foro_ibfk_1` FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut`),
-  ADD CONSTRAINT `foro_ibfk_2` FOREIGN KEY (`rut_profesional`) REFERENCES `profesional` (`rut`);
+ALTER TABLE `foro_respuesta`
+  ADD CONSTRAINT `foro_respuesta_ibfk_1` FOREIGN KEY (`id_tema`) REFERENCES `foro_tema` (`id_tema`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `foro_respuesta_ibfk_2` FOREIGN KEY (`rut_usuario`) REFERENCES `usuario` (`rut`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `foro_tema`
+--
+ALTER TABLE `foro_tema`
+  ADD CONSTRAINT `foro_tema_ibfk_1` FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `foro_voto_respuesta`
+--
+ALTER TABLE `foro_voto_respuesta`
+  ADD CONSTRAINT `foro_voto_respuesta_ibfk_1` FOREIGN KEY (`id_respuesta`) REFERENCES `foro_respuesta` (`id_respuesta`) ON DELETE CASCADE,
+  ADD CONSTRAINT `foro_voto_respuesta_ibfk_2` FOREIGN KEY (`rut_usuario`) REFERENCES `usuario` (`rut`) ON DELETE CASCADE;
 
 --
 -- Filtros para la tabla `lugar_atencion_presencial`

@@ -1,3 +1,11 @@
+<?php
+    if (isset($_SESSION["rut"]))
+    {
+        header("Location: index.php?p=home");
+        exit();
+    }
+?>
+
 <title>Iniciar Sesión - KindomJob's</title>
 
 <div class="container" style="margin-top: 145px; margin-bottom: 115px;">
@@ -11,11 +19,11 @@
                     <form action="" method="post" name="login" id="login-form">
                         <div class="form-group mb-3">
                             <label for="rut">RUT</label>
-                            <input type="text" id="rut" name="rut" class="form-control" placeholder="RUT sin guión y con digito verificador (ej: 13799304K o 13799304k)" required />
+                            <input type="text" id="rut" name="rut" class="form-control" placeholder="RUT sin guión y con digito verificador (ej: 13799304K o 13799304k)" maxlength="9" required />
                         </div>
                         <div class="form-group mb-3">
                             <label for="password">Contraseña</label>
-                            <input type="password" id="password" name="password" class="form-control" placeholder="Ingresa tu contraseña" required />
+                            <input type="password" id="password" name="password" class="form-control" placeholder="Ingresa tu contraseña" maxlength="100" required />
                         </div>
                         <div class="d-grid gap-2">
                             <button name="submit" type="submit" class="btn btn-primary btn-block">Entrar</button>

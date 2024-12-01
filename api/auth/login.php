@@ -16,11 +16,12 @@
             $digitoVerificador = mysqli_real_escape_string($conexion, $digitoVerificador);
             $password = mysqli_real_escape_string($conexion, $_POST['password']);
 
-            $sql_usuario = "SELECT * FROM usuario 
-                            WHERE rut = '$rutSinDv' AND dv = '$digitoVerificador' 
-                            AND contrasena = '" . md5($password) . "'";
-            $resultado_usuario = mysqli_query($conexion, $sql_usuario);
-            $datos_usuario = mysqli_fetch_assoc($resultado_usuario);
+            $sql_consulta_usuario = "SELECT u.*, r.nombre_rol AS nombre_rol
+                                     FROM usuario u JOIN rol r ON u.id_rol = r.id_rol
+                                     WHERE u.rut = '$rutSinDv' AND u.dv = '$digitoVerificador' 
+                                     AND u.contrasena = '" . md5($password) . "'";
+            $resultado_consulta_usuario = mysqli_query($conexion, $sql_consulta_usuario);
+            $datos_usuario = mysqli_fetch_assoc($resultado_consulta_usuario);
 
             if ($datos_usuario) {
                 if ($datos_usuario['id_estado_usuario'] == 2) {
@@ -38,8 +39,10 @@
                     $_SESSION['apellido_m'] = $datos_usuario['apellido_m'];
                     $_SESSION['correo'] = $datos_usuario['correo'];
                     $_SESSION['telefono'] = $datos_usuario['telefono'];
+                    $_SESSION['foto_perfil'] = $datos_usuario['foto_perfil'];
                     $_SESSION['fecha_nac'] = $datos_usuario['fecha_nac'];
                     $_SESSION['id_rol'] = $datos_usuario['id_rol'];
+                    $_SESSION['nombre_rol'] = $datos_usuario['nombre_rol'];
                     $_SESSION['id_estado_usuario'] = $datos_usuario['id_estado_usuario'];
 
                     $response = array(

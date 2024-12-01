@@ -5,14 +5,15 @@
             $fecha = $_POST['fecha'];
             $rut_prof = $_POST['rut'];
 
-            // Consulta para obtener las horas disponibles en la fecha seleccionada
-            $query = "SELECT hora FROM disponibilidad WHERE fecha = ? AND disponible = 1 AND rut_profesional = '$rut_prof'";
-            $stmt = $conexion->prepare($query);
+            // Se realiza consulta para obtener las horas disponibles en la fecha seleccionada
+            $consulta_disponibilidad = "SELECT hora FROM disponibilidad
+                                        WHERE fecha = ? AND disponible = 1 AND rut_profesional = '$rut_prof';";
+            $stmt = $conexion->prepare($consulta_disponibilidad);
             $stmt->bind_param("s", $fecha);
             $stmt->execute();
             $resultado = $stmt->get_result();
 
-            // Generar HTML con las horas disponibles
+            // Se generan botones con las horas disponibles
             if ($resultado->num_rows > 0)
             {
                 while ($fila = $resultado->fetch_assoc()) {
