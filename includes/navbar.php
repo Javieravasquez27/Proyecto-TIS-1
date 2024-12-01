@@ -22,66 +22,76 @@
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon text-white"></span>
             </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <?php
-            if (isset($_SESSION["rut"])) {
-            ?>
-                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-                    <li class="nav-item px-1">
-                        <a class="nav-link <?php echo ($pagina == 'home') ? 'active' : null ?>" aria-current="page" href="index.php?p=home"><b>Inicio</b></a>
-                    </li>
-                    <li class="nav-item px-1">
-                        <a class="nav-link <?php echo ($pagina == 'profesiones') ? 'active' : null ?>" aria-current="page" href="index.php?p=profesiones"><b>Profesiones</b></a>
-                    </li>
-                    <li class="nav-item px-1">
-                        <a class="nav-link <?php echo ($pagina == 'servicios') ? 'active' : null ?>" aria-current="page" href="index.php?p=servicios"><b>Servicios</b></a>
-                    </li>
-                    <li class="nav-item px-1">
-                        <a class="nav-link <?php echo ($pagina == 'foro/index') ? 'active' : null ?>" aria-current="page" href="index.php?p=foro/index"><b>Pregunta al Experto</b></a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav mr-auto mb-5 mb-lg-0 ">
-                    <li class="nav-item dropdown ">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <b><?php echo $_SESSION['nombre_usuario']; ?></b>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-lg-end">
-                            <li><a class="dropdown-item <?php echo ($pagina == 'perfil') ? 'active' : null ?>" aria-current="page" href="index.php?p=perfil&nombre_usuario=<?php echo $_SESSION['nombre_usuario']; ?>">Perfil</a></li>
-                            <?php if ($_SESSION['id_rol'] == 1 || $_SESSION['id_rol'] == 2): ?>
-                                <li><a class="dropdown-item <?php echo ($pagina == 'admin/home') ? 'active' : null ?>" aria-current="page" href="index.php?p=admin/home">Panel Admin</a></li>
-                            <?php endif; ?>
-                            <li><a class="dropdown-item" id="logout" href="#">Cerrar Sesión</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            <?php
-            } else {
-            ?>
-                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-                    <li class="nav-item px-1">
-                        <a class="nav-link <?php echo ($pagina == 'home') ? 'active' : null ?>" aria-current="page" href="index.php?p=home"><b>Inicio</b></a>
-                    </li>
-                    <li class="nav-item px-1">
-                        <a class="nav-link <?php echo ($pagina == 'profesiones') ? 'active' : null ?>" aria-current="page" href="index.php?p=profesiones"><b>Profesiones</b></a>
-                    </li>
-                    <li class="nav-item px-1">
-                        <a class="nav-link <?php echo ($pagina == 'servicios') ? 'active' : null ?>" aria-current="page" href="index.php?p=servicios"><b>Servicios</b></a>
-                    </li>
-                    <li class="nav-item px-1">
-                        <a class="nav-link <?php echo ($pagina == 'foro/index') ? 'active' : null ?>" aria-current="page" href="index.php?p=foro/index"><b>Pregunta al Experto</b></a>
-                    </li>
-                </ul>
-                <ul class=" navbar-nav mr-auto ">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.php?p=auth/login"><button type="button" class="btn btn-light">Iniciar Sesión</button></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.php?p=auth/register"><button type="button" class="btn btn-light">Registrarse</button></a>
-                    </li>
-                </ul>
-            <?php
-            }
-            ?>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <?php
+                if (isset($_SESSION["rut"])) {
+                ?>
+                    <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                        <li class="nav-item px-1">
+                            <a class="nav-link <?php echo ($pagina == 'home') ? 'active' : null ?>" aria-current="page" href="index.php?p=home"><b>Inicio</b></a>
+                        </li>
+                        <li class="nav-item px-1">
+                            <a class="nav-link <?php echo ($pagina == 'profesiones') ? 'active' : null ?>" aria-current="page" href="index.php?p=profesiones"><b>Profesiones</b></a>
+                        </li>
+                        <li class="nav-item px-1">
+                            <a class="nav-link <?php echo ($pagina == 'servicios') ? 'active' : null ?>" aria-current="page" href="index.php?p=servicios"><b>Servicios</b></a>
+                        </li>
+                        <li class="nav-item px-1">
+                            <a class="nav-link <?php echo ($pagina == 'foro/index') ? 'active' : null ?>" aria-current="page" href="index.php?p=foro/index"><b>Pregunta al Experto</b></a>
+                        </li>
+                    </ul>
+                    <div class="row">
+                        <div class="col-1"></div>
+                        <div class="col-4 px-5">
+                            <ul class="navbar-nav mr-auto mb-5 mb-lg-0 ">
+                                <li class="nav-item dropdown ">
+                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <b><?php echo $_SESSION['nombre_usuario']; ?></b>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-lg-end">
+                                        <li><a class="dropdown-item <?php echo ($pagina == 'perfil') ? 'active' : null ?>" aria-current="page" href="index.php?p=perfil&nombre_usuario=<?php echo $_SESSION['nombre_usuario']; ?>">Perfil</a></li>
+                                        <?php if ($_SESSION['id_rol'] == 1 || $_SESSION['id_rol'] == 2): ?>
+                                            <li><a class="dropdown-item <?php echo ($pagina == 'admin/home') ? 'active' : null ?>" aria-current="page" href="index.php?p=admin/home">Panel Admin</a></li>
+                                        <?php endif; ?>
+                                        <li><a class="dropdown-item" id="logout" href="#">Cerrar Sesión</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-7"></div>
+                    </div>
+                    
+                <?php
+                } else {
+                ?>
+                    <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                        <li class="nav-item px-1">
+                            <a class="nav-link <?php echo ($pagina == 'home') ? 'active' : null ?>" aria-current="page" href="index.php?p=home"><b>Inicio</b></a>
+                        </li>
+                        <li class="nav-item px-1">
+                            <a class="nav-link <?php echo ($pagina == 'profesiones') ? 'active' : null ?>" aria-current="page" href="index.php?p=profesiones"><b>Profesiones</b></a>
+                        </li>
+                        <li class="nav-item px-1">
+                            <a class="nav-link <?php echo ($pagina == 'servicios') ? 'active' : null ?>" aria-current="page" href="index.php?p=servicios"><b>Servicios</b></a>
+                        </li>
+                        <li class="nav-item px-1">
+                            <a class="nav-link <?php echo ($pagina == 'foro/index') ? 'active' : null ?>" aria-current="page" href="index.php?p=foro/index"><b>Pregunta al Experto</b></a>
+                        </li>
+                    </ul>
+                    <ul class=" navbar-nav mr-auto ">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.php?p=auth/login"><button type="button" class="btn btn-light">Iniciar Sesión</button></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.php?p=auth/register"><button type="button" class="btn btn-light">Registrarse</button></a>
+                        </li>
+                    </ul>
+                <?php
+                }
+                ?>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
+
+</body>

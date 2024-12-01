@@ -9,7 +9,7 @@
         
     </body>
 
-    <footer class="py-2" style="background-color: azure;">
+    <footer class="footer" style="background-color: azure;">
         <div class="cont_footer py-3 border-1 border-secondary-subtle border-top" style="background-color: azure;">
                 <div class="container " >
                     <div class="row ">
@@ -17,7 +17,7 @@
                         <div class="col-8 ">
                             <div class="row ">
                                 <div class="col-4">     
-                                    <div class=" text-center" style="width: 200px; height: 100px;">
+                                    <div class=" border text-center" style="width: 200px; height: 100px;">
                                         <a href="#">Política de privacidad</a>
                                         <br>
                                         <a href="#">Términos y condiciones</a>
@@ -28,7 +28,7 @@
                                     </div>               
                                 </div>
                                 <div class="col-4">
-                                    <div class=" text-center" style="width: 200px; height: 100px;">
+                                    <div class=" border text-center" style="width: 200px; height: 100px;">
                                         <a class="" href="#">¿Quiénes somos?</a>
                                     </div> 
                                 </div>
