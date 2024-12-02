@@ -20,6 +20,7 @@ try {
     $_SESSION['fecha_cita'] = $_POST['fecha_cita'];
     $_SESSION['hora_cita'] = $_POST['hora_cita'];
     $_SESSION['lugar_atencion'] = $_POST['lugar_atencion'];
+    $_SESSION['Estrellas'] = $_POST['estrellas_usadas'];
 
     // Generar la transacción
     $response = $transaction->create($buy_order, $sessionid, $amount, $returnUrl);

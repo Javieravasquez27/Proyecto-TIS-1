@@ -1,6 +1,6 @@
 <?php
-include 'database/conexion.php';
-
+include 'database/conexion.php';?>
+<?php
 $status = $_GET['status'];
 
 $rut_prof = $_GET['rut_prof'];
@@ -9,6 +9,8 @@ $nombre_servicio = $_GET['nombre_servicio'];
 $fecha_cita = $_GET['fecha_cita'];
 $hora_cita = $_GET['hora_cita'];
 $lugar_atencion = $_GET['lugar_atencion'];
+$cant_estrellas_gastadas = isset($_GET['estrellas_usadas']) ? $_GET['estrellas_usadas'] : 0;
+
 
 if ($status == 'success') { 
     $buyOrder = $_GET['buyOrder'];
@@ -16,6 +18,33 @@ if ($status == 'success') {
     $token = $_GET['token'];
     $insertar_cita = "INSERT INTO cita (rut_cliente, rut_profesional, fecha_cita, hora_cita, tokencompra, lugar_atencion, servicio) VALUES ('$_SESSION[rut]', '$rut_prof', '$fecha_cita', '$hora_cita', '$token', '$lugar_atencion', '$nombre_servicio')";
     $resultado = mysqli_query($conexion, $insertar_cita);
+    $estrellas_generadas = intdiv($amount, 1000);
+    if(intval($cant_estrellas_gastadas)==0){
+        echo "
+        <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Pago Exitoso',
+                text: 'Has ganado $estrellas_generadas estrellas por esta compra.',
+                showConfirmButton: true,
+                confirmButtonText: 'Aceptar',
+            });
+        </script>";
+    }else{
+        echo "
+        <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Pago Exitoso',
+                text: 'Has gastado int$cant_estrellas_gastadas estrellas.',
+                showConfirmButton: true,
+                confirmButtonText: 'Aceptar',
+            });";
+    }
+    $insertar_estrellas = "update usuario set estrellas = estrellas + $estrellas_generadas where rut = '$_SESSION[rut]'";
+    $result = mysqli_query($conexion, $insertar_estrellas);
 ?>
     <div class='container mt-5'>
         <div class='voucher' id='voucher'>

@@ -8,7 +8,7 @@ $rut_envia = $_POST['rut_envia'];
 $query = "SELECT m.contenido_mensaje, u.nombres AS username 
           FROM mensaje m 
           JOIN usuario u ON m.rut_envia = u.rut 
-          WHERE (m.rut_recie = '$rut_envia' AND m.rut_envia = '$rut_recibe') 
+          WHERE (m.rut_recive = '$rut_envia' AND m.rut_envia = '$rut_recibe') 
              OR (m.rut_recive = '$rut_recibe' AND m.rut_envia = '$rut_envia')
           ORDER BY m.id_mensaje ASC";
 

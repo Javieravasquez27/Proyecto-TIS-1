@@ -1,10 +1,8 @@
 <?php
     include '../../database/conexion.php';
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $fecha = $_POST['fecha'];
         $rut_prof = $_POST['rut'];
-
         // Se realiza consulta para obtener las horas disponibles en la fecha seleccionada
         $consulta_disponibilidad = "SELECT hora FROM disponibilidad
                                     WHERE fecha = ? AND disponible = 1 AND rut_profesional = '$rut_prof';";
@@ -23,7 +21,4 @@
         }
 
         $stmt->close();
-    }
-
-    $conexion->close();
 ?>

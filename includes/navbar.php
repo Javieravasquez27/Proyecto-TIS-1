@@ -47,8 +47,29 @@
                             <?php if ($_SESSION['id_rol'] == 1 || $_SESSION['id_rol'] == 2): ?>
                                 <li><a class="dropdown-item <?php echo ($pagina == 'admin/home') ? 'active' : null ?>" aria-current="page" href="index.php?p=admin/home">Panel Admin</a></li>
                             <?php endif; ?>
+                            <?php 
+                                $query =  "select * from mensaje where rut_envia = '$_SESSION[rut]' or rut_recive = '$_SESSION[rut]'";
+                                $result = mysqli_query($conexion, $query);
+                                $row = mysqli_num_rows($result);
+                                if ($row > 0) {
+                            ?>
                             <li><a class="dropdown-item"  href="index.php?p=mensajes">Mensajes</a></li>
+                            <?php } ?>
+                            <?php
+                                $query = "select * from cita where rut_cliente = '$_SESSION[rut]'";
+                                $result = mysqli_query($conexion, $query);
+                                $row = mysqli_num_rows($result);
+                                if ($row > 0) { 
+                            ?>
                             <li><a class="dropdown-item"  href="index.php?p=citas">Citas Agendadas</a></li>
+                            <?php } ?>
+                            <?php
+                                $query = "select * from favoritos where rut_usuario = '$_SESSION[rut]'";
+                                $result = mysqli_query($conexion, $query);
+                                $row = mysqli_num_rows($result);
+                                if ($row > 0) { ?>
+                            <li><a class="dropdown-item"  href="index.php?p=favoritos">Favoritos</a></li>
+                            <?php } ?>
                             <li><a class="dropdown-item" id="logout" href="#">Cerrar Sesión</a></li>
                         </ul>
                     </li>

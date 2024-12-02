@@ -40,6 +40,15 @@ $promedio_estrellas = $fila_promedio_estrellas['promedio_estrellas'];
 $consulta_comentarios = "SELECT comentario FROM clasificacion WHERE rut_profesional = '$rut'";
 $resultado_comentarios = mysqli_query($conexion, $consulta_comentarios);
 
+// Consulta para obtener las estrellas del cliente
+$consulta_estrellas_cliente = "SELECT estrellas FROM usuario WHERE rut = '$rut_cliente'";
+$resultado_estrellas_cliente = mysqli_query($conexion, $consulta_estrellas_cliente);
+$fila_estrellas_cliente = mysqli_fetch_assoc($resultado_estrellas_cliente);
+$estrellas_cliente = $fila_estrellas_cliente['estrellas'];
+
+$consulta_favorito = "SELECT * FROM favoritos WHERE rut_profesional = '$rut' AND rut_usuario = '$rut_cliente'";
+$resultado_favorito = mysqli_query($conexion, $consulta_favorito);
+$es_favorito = mysqli_num_rows($resultado_favorito) > 0;
 // Preparar datos para el gráfico
 $servicios = [];
 $precios = [];
@@ -69,7 +78,7 @@ while($fila_serv_prof = mysqli_fetch_assoc($resultado_serv_prof)){
     <div class="profile-header">
         <div style="position: relative;">
             <img src="<?php echo $fila_profesional['foto_perfil'] ?>" alt="Foto de perfil" class="rounded-circle mb-3">
-            <i id="favorite-icon" class="bi bi-heart" style="position: absolute; top: 10px; left: 10px; font-size: 2rem; cursor: pointer;"></i>
+           <i id="favorite-icon" class="bi <?php echo $es_favorito ? 'bi-heart-fill' : 'bi-heart'; ?>" style="position: absolute; top: 10px; left: 10px; font-size: 2rem; cursor: pointer; color: <?php echo $es_favorito ? 'purple' : 'black'; ?>;"></i>
         </div>
         <h2>
             <?php echo $fila_profesional['nombres']?>
@@ -198,6 +207,7 @@ while($fila_serv_prof = mysqli_fetch_assoc($resultado_serv_prof)){
                     <input type="hidden" id="hora_cita" name="hora_cita">
                     <input type="hidden" id="lugar_atencion" name="lugar_atencion">
                     <input type="hidden" id="monto_total" name="monto_total" value="0">
+                    <input type="hidden" id="estrellas_usadas" name="estrellas_usadas" value="0">
                     <select class="form-select mb-3" id="servicio" name="servicio">
                         <option value="" selected>Seleccione un servicio</option>
                         <?php
@@ -220,27 +230,6 @@ while($fila_serv_prof = mysqli_fetch_assoc($resultado_serv_prof)){
         </div>
     </div>
 </div>
-
-<script>
-    $(document).ready(function() {
-        $('#favorite-icon').on('click', function() {
-            $.ajax({
-                type: 'POST',
-                url: 'utils/guardar_favorito.php',
-                data: {
-                    rut_profesional: '<?php echo $rut; ?>',
-                    rut_cliente: '<?php echo $rut_cliente; ?>'
-                },
-                success: function(response) {
-                    alert('Profesional agregado a favoritos');
-                },
-                error: function() {
-                    alert('Error al agregar a favoritos');
-                }
-            });
-        });
-    });
-</script>
 <!-- Modal de confirmación -->
 <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -289,6 +278,13 @@ while($fila_serv_prof = mysqli_fetch_assoc($resultado_serv_prof)){
                     <div class="voucher-section">
                         <strong>Monto:</strong> $<span id="monto-servicio">0</span>
                     </div>
+                    <div class="voucher-section">
+                        <strong>Estrellas disponibles:</strong> <span id="estrellas-disponibles"><?php echo $estrellas_cliente; ?></span>
+                    </div>
+                    <div class="voucher-section">
+                        <label for="estrellas-usar">Estrellas a usar:</label>
+                        <input type="number" id="estrellas-usar" name="estrellas-usar" class="form-control" min="0" max="<?php echo $estrellas_cliente; ?>" value="0">
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -299,78 +295,110 @@ while($fila_serv_prof = mysqli_fetch_assoc($resultado_serv_prof)){
     </div>
 </div>
 
-
 <script>
-    $(document).ready(function () {
-        // Detecta cuando cambia la fecha y hace una solicitud AJAX
-        $('#fecha').on('change', function () {
-            const fechaSeleccionada = $(this).val();
-            const rut = document.querySelector("#rut_prof").value;
-            if (fechaSeleccionada) {
-                $.ajax({
-                    url: 'pages/profesional/consultar_disponibilidad.php',
-                    data: { rut: rut, fecha: fechaSeleccionada },
-                    success: function (data) {
-                        // Se actualiza la lista de horas disponibles
-                        $('#horas-disponibles').html(data);
-                    },
-                    error: function () {
-                        $('#horas-disponibles').html('<li>Error al obtener disponibilidad</li>');
-                    }
+$(document).ready(function () {
+    // Detecta cuando cambia la fecha y hace una solicitud AJAX
+    $('#fecha').on('change', function () {
+        const fechaSeleccionada = $(this).val();
+        const rut = document.querySelector("#rut_prof").value;
+        if (fechaSeleccionada) {
+            $.ajax({
+                url: 'pages/profesional/consultar_disponibilidad.php',
+                type: 'POST',
+                data: { rut: rut, fecha: fechaSeleccionada },
+                success: function (data) {
+                    // Se actualiza la lista de horas disponibles
+                    $('#horas-disponibles').html(data);
+                },
+                error: function () {
+                    $('#horas-disponibles').html('<li>Error al obtener disponibilidad</li>');
+                }
+            });
+        }
+    });
+
+    // Maneja la selección de una hora disponible
+    $(document).on('click', '.btn-time', function (e) {
+        e.preventDefault();
+        const servicioSeleccionado = $('#servicio').val();
+        if (!servicioSeleccionado) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Tiene que seleccionar un servicio para poder elegir una hora",
                 });
-            }
-        });
+            return;
+        }
 
-        // Maneja la selección de una hora disponible
-        $(document).on('click', '.btn-time', function (e) {
-            e.preventDefault();
-            const servicioSeleccionado = $('#servicio').val();
-            if (!servicioSeleccionado) {
-                Swal.fire({
-                    icon: "error",
-                    title: "Oops...",
-                    text: "Tiene que seleccionar un servicio para poder elegir una hora",
-                    });
-                return;
-            }
+        const horaSeleccionada = $(this).val();
+        const fechaSeleccionada = $('#fecha').val();
+        const nombreServicio = $('#servicio option:selected').text();
+        const precioServicio = $('#servicio option:selected').data('precio');
 
-            const horaSeleccionada = $(this).val();
-            const fechaSeleccionada = $('#fecha').val();
-            const nombreServicio = $('#servicio option:selected').text();
-            const precioServicio = $('#servicio option:selected').data('precio');
+        $('#nombre-servicio-modal').text(nombreServicio);
+        $('#fecha-cita-modal').text(fechaSeleccionada);
+        $('#hora-cita-modal').text(horaSeleccionada);
+        $('#monto-servicio').text(precioServicio);
 
-            $('#nombre-servicio-modal').text(nombreServicio);
-            $('#fecha-cita-modal').text(fechaSeleccionada);
-            $('#hora-cita-modal').text(horaSeleccionada);
-            $('#monto-servicio').text(precioServicio);
+        $('#nombre_servicio').val(nombreServicio);
+        $('#fecha_cita').val(fechaSeleccionada);
+        $('#hora_cita').val(horaSeleccionada);
+        $('#monto_total').val(precioServicio);
 
-            $('#nombre_servicio').val(nombreServicio);
-            $('#fecha_cita').val(fechaSeleccionada);
-            $('#hora_cita').val(horaSeleccionada);
-            $('#monto_total').val(precioServicio);
+        $('#confirmModal').modal('show');
+    });
 
-            $('#confirmModal').modal('show');
-        });
+    // Actualiza el monto cuando se selecciona/deselecciona el checkbox
+    $('#cita-adicional').change(function () {
+        const precioServicio = parseFloat($('#servicio option:selected').data('precio'));
+        let montoTotal = precioServicio;
+        if ($(this).is(':checked')) {
+            montoTotal += 1000;
+        }
+        $('#monto-servicio').text(montoTotal);
+        $('#monto_total').val(montoTotal);
+    });
 
-        // Actualiza el monto cuando se selecciona/deselecciona el checkbox
-        $('#cita-adicional').change(function () {
-            const precioServicio = parseFloat($('#servicio option:selected').data('precio'));
-            let montoTotal = precioServicio;
-            if ($(this).is(':checked')) {
-                montoTotal += 1000;
-            }
-            $('#monto-servicio').text(montoTotal);
-            $('#monto_total').val(montoTotal);
-        });
+    // Calcula el monto total restando el valor de las estrellas
+    $('#estrellas-usar').on('input', function () {
+        const estrellasUsar = $(this).val();
+        const montoServicio = parseFloat($('#monto-servicio').text());
+        const descuento = estrellasUsar * 1000;
+        const montoTotal = montoServicio - descuento;
+        $('#monto-servicio').text(montoTotal > 0 ? montoTotal : 1);
+        $('#monto_total').val(montoTotal > 0 ? montoTotal : 1);
+        $('#estrellas_usadas').val(estrellasUsar);
+    });
 
-        // Confirmar la cita
-        $('#confirmar-cita').click(function () {
-            const lugarAtencion = $('#lugar-atencion-modal').val();
-            $('#lugar_atencion').val(lugarAtencion);
-            $('#form-reserva').submit();
-        });
-        $('#cancelar-cita').click(function () {
-            $('#confirmModal').modal('hide');
+    // Confirmar la cita
+    $('#confirmar-cita').click(function () {
+        const lugarAtencion = $('#lugar-atencion-modal').val();
+        $('#lugar_atencion').val(lugarAtencion);
+        $('#form-reserva').submit();
+    });
+    $('#cancelar-cita').click(function () {
+        $('#confirmModal').modal('hide');
+    });
+
+    $('#favorite-icon').on('click', function() {
+        var isFavorite = $(this).hasClass('bi-heart-fill');
+        var url = isFavorite ? 'utils/eliminar_favorito.php' : 'utils/guardar_favoritos.php';
+        var newClass = isFavorite ? 'bi-heart' : 'bi-heart-fill';
+        var newColor = isFavorite ? 'black' : 'purple';
+
+        $.ajax({
+            type: 'POST',
+                url: url,
+                data: {
+                    rut_profesional: '<?php echo $rut; ?>',
+                    rut_cliente: '<?php echo $rut_cliente; ?>'
+                },
+                success: function(response) {
+                    $('#favorite-icon').removeClass('bi-heart bi-heart-fill').addClass(newClass).css('color', newColor);
+                },
+                error: function() {
+                }
+            });
         });
     });
 </script>
