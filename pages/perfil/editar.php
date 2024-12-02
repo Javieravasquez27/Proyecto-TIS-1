@@ -137,13 +137,18 @@
                             <div class="row mb-3">
                                 <div class="col">
                                     <label for="biografia_prof" class="form-label">Biografía</label>
-                                    <textarea class="form-control" id="biografia_prof" name="biografia_prof" placeholder="Escriba su biografía personal. Esto se mostrará en su perfil público" maxlength="500" required><?php echo $fila_profesional['biografia_prof']; ?></textarea>
+                                    <textarea class="form-control" id="biografia_prof" name="biografia_prof" placeholder="Escriba su biografía personal. Esto se mostrará en su perfil público" maxlength="500" required><?php if (isset($fila_profesional['biografia_profesional'])) {
+                                        echo $fila_profesional['biografia_prof'];
+                                    }  ?></textarea>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col">
                                     <label for="experiencia" class="form-label">Experiencia <b style="color: #b30000;">(*)</b></label>
-                                    <textarea class="form-control" id="experiencia" name="experiencia" placeholder="Breve resumen de su experiencia (ej: Soy Ingeniero Civil Informático, Magíster en Ciencias de la Computación...). Esto se mostrará a los clientes al momento de reservar" maxlength="500" required><?php echo $fila_profesional['experiencia']; ?></textarea>
+                                    <textarea class="form-control" id="experiencia" name="experiencia" placeholder="Breve resumen de su experiencia (ej: Soy Ingeniero Civil Informático, Magíster en Ciencias de la Computación...). Esto se mostrará a los clientes al momento de reservar" maxlength="500" required><?php if(isset($fila_profesional['experiencia'])){
+                                        echo $fila_profesional['experiencia'];
+                                    }
+                                   ?></textarea>
                                 </div>
                             </div>
                         <?php endif; ?>
