@@ -16,6 +16,10 @@ body {
     color: rgb(230, 230, 230) !important;
 }
 
+.btn-primary{
+    background-color: blueviolet !important;
+}
+
 .contenedorcompleto {
     height: 100vh;
     background-color: rgb(234, 228, 246)
@@ -31,4 +35,3 @@ body {
     margin: 0;
     padding: 0;
 }
-

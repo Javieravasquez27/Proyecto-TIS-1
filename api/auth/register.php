@@ -1,10 +1,16 @@
 <?php 
     include '../../database/conexion.php';
+    require_once '../../libs/PHPMailer/src/PHPMailer.php';
+    require_once '../../libs/PHPMailer/src/SMTP.php';
+    require_once '../../libs/PHPMailer/src/Exception.php';
+
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\Exception;
 
     try {
         if (isset($_POST['rut']) && isset($_POST['nombre_usuario']) && isset($_POST['nombres']) && isset($_POST['apellido_p']) && isset($_POST['apellido_m'])
             && isset($_POST['correo']) && isset($_POST['telefono']) && isset($_POST['password']) && isset($_POST['fecha_nac']) && isset($_POST['direccion'])
-            && isset($_POST['comuna']) && isset($_POST['rol'])) {
+            && isset($_POST['latitud']) && isset($_POST['longitud']) && isset($_POST['comuna']) && isset($_POST['rol'])) {
 
             // Se separa el número del RUT y el dígito verificador
             $rutCompleto = strtoupper($_POST['rut']); // Se asegura que el dígito verificador esté en mayúsculas si es K
@@ -22,6 +28,8 @@
             $password = mysqli_real_escape_string($conexion, $_POST['password']);
             $fecha_nac = mysqli_real_escape_string($conexion, $_POST['fecha_nac']);
             $direccion = mysqli_real_escape_string($conexion, $_POST['direccion']);
+            $latitud = mysqli_real_escape_string($conexion, $_POST['latitud']);
+            $longitud = mysqli_real_escape_string($conexion, $_POST['longitud']);
             $comuna = mysqli_real_escape_string($conexion, $_POST['comuna']);
             $rol = mysqli_real_escape_string($conexion, $_POST['rol']);
 
@@ -85,16 +93,21 @@
                     }
                 }
 
+                if (empty($latitud) || empty($longitud)) {
+                    echo json_encode(['success' => false, 'message' => 'Latitud o longitud no proporcionadas.']);
+                    exit;
+                }
+
                 if ($foto_perfil !== null)
                 {
-                    $sql_ingreso_usuario = "INSERT INTO usuario (rut, dv, nombre_usuario, nombres, apellido_p, apellido_m, correo, telefono, contrasena, fecha_nac, direccion, foto_perfil, id_comuna, id_rol, id_estado_usuario) 
-                                        VALUES ('$rut', '$digitoVerificador', '$nombre_usuario', '$nombres', '$apellido_p', '$apellido_m', '$correo', '$telefono', '" . md5($password) . "', '$fecha_nac', '$direccion', '$foto_perfil', '$comuna', '$rol', " . ($rol == 3 ? 2 : 1) . ")";
+                    $sql_ingreso_usuario = "INSERT INTO usuario (rut, dv, nombre_usuario, nombres, apellido_p, apellido_m, correo, telefono, contrasena, fecha_nac, direccion, latitud, longitud, foto_perfil, id_comuna, id_rol, id_estado_usuario) 
+                                        VALUES ('$rut', '$digitoVerificador', '$nombre_usuario', '$nombres', '$apellido_p', '$apellido_m', '$correo', '$telefono', '" . md5($password) . "', '$fecha_nac', '$direccion', '$latitud', '$longitud', '$foto_perfil', '$comuna', '$rol', " . ($rol == 3 ? 2 : 1) . ")";
                     $resultado_usuario = mysqli_query($conexion, $sql_ingreso_usuario);
                 }
                 else
                 {
-                    $sql_ingreso_usuario = "INSERT INTO usuario (rut, dv, nombre_usuario, nombres, apellido_p, apellido_m, correo, telefono, contrasena, fecha_nac, direccion, id_comuna, id_rol, id_estado_usuario) 
-                                        VALUES ('$rut', '$digitoVerificador', '$nombre_usuario', '$nombres', '$apellido_p', '$apellido_m', '$correo', '$telefono', '" . md5($password) . "', '$fecha_nac', '$direccion', '$comuna', '$rol', " . ($rol == 3 ? 2 : 1) . ")";
+                    $sql_ingreso_usuario = "INSERT INTO usuario (rut, dv, nombre_usuario, nombres, apellido_p, apellido_m, correo, telefono, contrasena, fecha_nac, direccion, latitud, longitud, id_comuna, id_rol, id_estado_usuario) 
+                                        VALUES ('$rut', '$digitoVerificador', '$nombre_usuario', '$nombres', '$apellido_p', '$apellido_m', '$correo', '$telefono', '" . md5($password) . "', '$fecha_nac', '$direccion', '$latitud', '$longitud', '$comuna', '$rol', " . ($rol == 3 ? 2 : 1) . ")";
                     $resultado_usuario = mysqli_query($conexion, $sql_ingreso_usuario);
                 }
 
@@ -122,6 +135,37 @@
                     'success' => true,
                     'message' => $rol == 3 ? 'Hemos recibido su solicitud de registro como profesional y será revisada.' : 'Registro exitoso'
                 );
+                // Configuración y envío de correo
+                try {
+                    $mail = new PHPMailer(true);
+                    $mail->SMTPDebug = 0;
+                    $mail->isSMTP();
+                    $mail->Host = 'smtp.gmail.com';
+                    $mail->SMTPAuth = true;
+                    $mail->Username = 'kindomjobs@gmail.com';
+                    $mail->Password = 'vjgj roxa ypvn qtmo';
+                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                    $mail->Port = 587;
+                    $mail->SMTPOptions = array(
+                        'ssl' => array(
+                            'verify_peer' => false,
+                            'verify_peer_name' => false,
+                            'allow_self_signed' => true,
+                        ),
+                    );
+
+                    $mail->setFrom('kindomjobs@gmail.com', 'KindomJobs');
+                    $mail->addAddress($correo);
+                    $mail->Subject = '¡Bienvenido a KindomJob\'s!';
+                    $mail->Body = "Hola $nombre_usuario,\n\n"
+                                . "¡Felicidades por ser parte de la comunidad KindomJob's!\n"
+                                . "Estamos encantados de tenerte como miembro de nuestra plataforma.\n\n"
+                                . "Atentamente,\n"
+                                . "El equipo de KindomJob's";
+                    $mail->send();
+                } catch (Exception $e) {
+                    $response['message'] .= ' Sin embargo, no se pudo enviar el correo de confirmación.';
+                }
             }
         } else {
             $response = array(

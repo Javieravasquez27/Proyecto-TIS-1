@@ -16,6 +16,12 @@
                                  WHERE p.rut = '$rut';";
     $resultado_consulta_profesional = mysqli_query($conexion, $sql_consulta_profesional);
     $fila_profesional = mysqli_fetch_assoc($resultado_consulta_profesional);
+
+    $sql_consulta_usuario_comuna = "SELECT u.id_comuna, c.nombre_comuna AS nombre_comuna
+                                    FROM usuario u JOIN comuna c ON u.id_comuna = c.id_comuna
+                                    WHERE u.rut = '$rut';";
+    $resultado_consulta_usuario_comuna = mysqli_query($conexion, $sql_consulta_usuario_comuna);
+    $fila_usuario_comuna = mysqli_fetch_assoc($resultado_consulta_usuario_comuna); 
 ?>
 
 <title>Editar perfil - KindomJob's</title>
@@ -76,6 +82,18 @@
                         </div>
                         <div class="row mb-3">
                             <div class="col">
+                                <label for="direccion" class="form-label">Dirección <b style="color: #b30000;">(*)</b></label>
+                                <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Ejemplo: Avenida Las Golondrinas 2456" value="<?php echo $fila_usuario['direccion']; ?>" maxlength="50" required>
+                            </div>
+                            <div class="col">
+                                <label for="comuna" class="form-label">Comuna <b style="color: #b30000;">(*)</b></label>
+                                <select id="comuna" name="comuna" class="form-select" required>
+                                    <!-- Las opciones se llenarán aquí con AJAX -->
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">
                                 <label for="password" class="form-label">Contraseña <b style="color: #b30000;">(**)</b></label>
                                 <input type="password" class="form-control" id="password" name="password" placeholder="Debe contener al menos 8 carácteres" maxlength="100">
                             </div>
@@ -129,11 +147,11 @@
                             </div>
                             <div class="row mb-3">
                                 <div class="col">
-                                <?php if (isset($fila_profesional['biografia_prof'])): ?>
+                                <?php if (isset($fila_profesional['experiencia'])): ?>
                                     <label for="experiencia" class="form-label">Experiencia <b style="color: #b30000;">(*)</b></label>
                                     <textarea class="form-control" id="experiencia" name="experiencia" placeholder="Breve resumen de su experiencia (ej: Soy Ingeniero Civil Informático, Magíster en Ciencias de la Computación...). Esto se mostrará a los clientes al momento de reservar" maxlength="500" required><?php echo $fila_profesional['experiencia']; ?></textarea>
                                 <?php endif; ?>
-                                <?php if (!isset($fila_profesional['biografia_prof'])): ?>
+                                <?php if (!isset($fila_profesional['experiencia'])): ?>
                                     <label for="experiencia" class="form-label">Experiencia</label>
                                     <textarea class="form-control" id="experiencia" name="experiencia" placeholder="Usted debe estar autorizado como profesional para poder completar esta información" maxlength="500" disabled></textarea>
                                 <?php endif; ?>
@@ -142,6 +160,8 @@
                         <?php endif; ?>
                         <div class="d-grid gap-2">
                             <p><b style="color: #b30000;">(*)</b> Campos obligatorios.<br><b style="color: #b30000;">(**)</b> Solo llenar si se desea cambiar contraseña.</p>
+                            <input type="hidden" name="latitud" id="latitud">
+                            <input type="hidden" name="longitud" id="longitud">
                             <button type="button" id="save-profile" class="btn btn-primary">Guardar cambios</button>
                         </div>
                     </form>
@@ -152,101 +172,180 @@
 </div>
 
 <script>
-    // Función para validar teléfono
-    function validarTelefonoInput(telefono) {
-        const regex = /^[0-9]+$/; // Solo números
-        return regex.test(telefono);
-    }
+    document.addEventListener("DOMContentLoaded", function() {
+        // Función para cargar las comunas dinámicamente
+        function cargarComunas() {
+            fetch("utils/get_comuna.php")
+                .then(response => response.json())
+                .then(data => {
+                    const select = document.getElementById("comuna");
+                    select.innerHTML = '';
+                    const defaultOption = document.createElement("option");
+                    defaultOption.textContent = "<?php echo $fila_usuario_comuna['nombre_comuna']; ?>";
+                    defaultOption.value = "<?php echo $fila_usuario['id_comuna']; ?>";
+                    defaultOption.selected = true;
+                    select.appendChild(defaultOption);
+                    data.forEach(comuna => {
+                        const option = document.createElement("option");
+                        option.value = comuna.id_comuna;
+                        option.textContent = comuna.nombre_comuna;
+                        select.appendChild(option);
+                    });
+                })
+                .catch(error => console.error("Error al cargar comunas:", error));
+        }
+        cargarComunas();
 
-    // Función para validar nombre de usuario
-    function validarNombreUsuarioInput(nombreUsuario) {
-        const regex = /^[a-zA-Z0-9_]+$/; // Solo letras, números y guion bajo
-        return regex.test(nombreUsuario);
-    }
-
-    // Función para validar contraseña
-    function validarPasswordInput(password) {
-        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/; // Mínimo 8 caracteres, 1 minúscula, 1 mayúscula, 1 número
-        return regex.test(password);
-    }
-
-    $('#save-profile').click(function() {
-        var nombreUsuario = $('#nombre_usuario').val().trim();
-        var telefono = $('#telefono').val().trim();
-        var password = $('#password').val().trim();
-        var confirmarPassword = $('#confirmar_password').val().trim();
-
-        // Validar nombre de usuario
-        if (!validarNombreUsuarioInput(nombreUsuario)) {
-            Swal.fire({
-                title: "Error",
-                text: "El nombre de usuario solo puede contener letras, números y guion bajo (_).",
-                icon: "error",
-                confirmButtonText: "Aceptar",
-            });
-            return;
+        // Funciones de validación
+        function validarTelefonoInput(telefono) {
+            const regex = /^[0-9]+$/; // Solo números
+            return regex.test(telefono);
         }
 
-        // Validar teléfono
-        if (!validarTelefonoInput(telefono)) {
-            Swal.fire({
-                title: "Error",
-                text: "El teléfono solo puede contener números.",
-                icon: "error",
-                confirmButtonText: "Aceptar",
-            });
-            return;
+        function validarNombreUsuarioInput(nombreUsuario) {
+            const regex = /^[a-zA-Z0-9_]+$/; // Solo letras, números y guion bajo
+            return regex.test(nombreUsuario);
         }
 
-        // Validar contraseña (solo si no está vacía)
-        if (password && !validarPasswordInput(password)) {
-            Swal.fire({
-                title: "Error",
-                text: "La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula y un número.",
-                icon: "error",
-                confirmButtonText: "Aceptar",
-            });
-            return;
+        function validarPasswordInput(password) {
+            const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/; // Mínimo 8 caracteres, 1 minúscula, 1 mayúscula, 1 número
+            return regex.test(password);
         }
 
-        // Validar coincidencia de contraseñas
-        if (password && password !== confirmarPassword) {
-            Swal.fire({
-                title: "Error",
-                text: "Las contraseñas no coinciden.",
-                icon: "error",
-                confirmButtonText: "Aceptar",
-            });
-            return;
-        }
+        // Función para manejar la geocodificación y envío de datos
+        async function guardarPerfil() {
+            const nombreUsuario = $('#nombre_usuario').val().trim();
+            const telefono = $('#telefono').val().trim();
+            const password = $('#password').val().trim();
+            const confirmarPassword = $('#confirmar_password').val().trim();
+            const direccion = $('#direccion').val().trim();
+            const comuna = $('#comuna option:selected').text();
 
-        // Si todas las validaciones pasan, envía los datos
-        var formData = new FormData($('#edit-profile-form')[0]);
-        $.ajax({
-            url: 'api/perfil/update.php',
-            type: 'POST',
-            data: formData,
-            contentType: false,
-            processData: false,
-            success: function(response) {
+            // Validaciones
+            if (!validarNombreUsuarioInput(nombreUsuario)) {
                 Swal.fire({
-                    icon: 'success',
-                    title: 'Perfil actualizado',
-                    text: 'Tus cambios se han guardado correctamente.',
-                    timer: 1500,
-                    showConfirmButton: false
-                }).then(() => {
-                    // Redirige al perfil del usuario actual
-                    window.location.href = 'index.php?p=perfil&nombre_usuario=' + $('#nombre_usuario').val();
+                    title: "Error",
+                    text: "El nombre de usuario solo puede contener letras, números y guion bajo (_).",
+                    icon: "error",
+                    confirmButtonText: "Aceptar",
                 });
-            },
-            error: function() {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'No se pudieron guardar los cambios.'
-                });
+                return;
             }
+
+            if (!validarTelefonoInput(telefono)) {
+                Swal.fire({
+                    title: "Error",
+                    text: "El teléfono solo puede contener números.",
+                    icon: "error",
+                    confirmButtonText: "Aceptar",
+                });
+                return;
+            }
+
+            if (password && !validarPasswordInput(password)) {
+                Swal.fire({
+                    title: "Error",
+                    text: "La contraseña debe tener al menos 8 caracteres, una letra mayúscula, una letra minúscula y un número.",
+                    icon: "error",
+                    confirmButtonText: "Aceptar",
+                });
+                return;
+            }
+
+            if (password && password !== confirmarPassword) {
+                Swal.fire({
+                    title: "Error",
+                    text: "Las contraseñas no coinciden.",
+                    icon: "error",
+                    confirmButtonText: "Aceptar",
+                });
+                return;
+            }
+
+            if (!direccion || !comuna) {
+                Swal.fire({
+                    title: "Error",
+                    text: "Debe ingresar una dirección y seleccionar una comuna",
+                    icon: "error",
+                    button: "Aceptar",
+                });
+                return;
+            }
+
+            try {
+                Swal.fire({
+                    title: 'Espere un momento...',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+                // Geocodificación
+                const query = `${direccion}, ${comuna}`;
+                const geocodeResponse = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&limit=1`);
+                const geocodeData = await geocodeResponse.json();
+
+                if (geocodeData.length > 0) {
+                    const { lat, lon } = geocodeData[0];
+                    $('#latitud').val(lat);
+                    $('#longitud').val(lon);
+                } else {
+                    Swal.close();
+                    Swal.fire({
+                        title: "Error",
+                        text: "No se pudo geocodificar la dirección. Por favor, verifica los datos ingresados.",
+                        icon: "error",
+                        button: "Aceptar",
+                    });
+                    return;
+                }
+            } catch (error) {
+                Swal.close();
+                Swal.fire({
+                    title: "Error",
+                    text: "Ocurrió un error al geocodificar la dirección.",
+                    icon: "error",
+                    button: "Aceptar",
+                });
+                return;
+            }
+
+            // Envío del formulario con AJAX
+            const formData = new FormData($('#edit-profile-form')[0]);
+
+            $.ajax({
+                url: 'api/perfil/update.php',
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    Swal.close();
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Perfil actualizado',
+                        text: 'Tus cambios se han guardado correctamente.',
+                        timer: 1500,
+                        showConfirmButton: false
+                    }).then(() => {
+                        // Se redirige al perfil del usuario actual
+                        window.location.href = 'index.php?p=perfil&nombre_usuario=' + $('#nombre_usuario').val();
+                    });
+                },
+                error: function() {
+                    Swal.close();
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'No se pudieron guardar los cambios.'
+                    });
+                }
+            });
+        }
+
+        // Evento de clic para guardar perfil
+        $('#save-profile').click(function() {
+            guardarPerfil();
         });
     });
 </script>

@@ -19,6 +19,12 @@
     if (!$fila_usuario) {
        header('Location: index.php?p=error/pagina_no_existe.php');
     }
+
+    $sql_consulta_horarios = "SELECT horario from tipo_horario";
+    $resultado_consulta_horarios = mysqli_query($conexion, $sql_consulta_horarios);
+    if ($_SESSION['id_rol'] == 1 || $_SESSION['id_rol'] == 2 || $_SESSION['id_rol'] == 3):
+        
+    endif;
 ?>
 
 <link rel="stylesheet" href="public/css/perfil.css">

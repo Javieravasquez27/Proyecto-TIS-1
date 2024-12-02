@@ -73,33 +73,35 @@
 
 <h1 class="text-center my-5">Gestión de servicios</h1>
 
-<main class="">
-    <div class="card">
-        <div class="card-header">
-            <div class="d-flex justify-content-between align-items-center">
-                <div class="text-center">
-                </div>
-                <div>
-                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
-                        data-bs-target="#addServicioModal">
-                        Ingresar nuevo servicio
-                    </button>
+<div class="px-4">
+    <main class="">
+        <div class="card">
+            <div class="card-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="text-center">
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#addServicioModal">
+                            Ingresar nuevo servicio
+                        </button>
+                    </div>
                 </div>
             </div>
+            <div class="card-body table-responsive">
+                <table id="servicioTabla" class="table table-hover" style="width: 100%;">
+                    <thead class="">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Servicio</th>
+                            <th scope="col">Opciones</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
         </div>
-        <div class="card-body table-responsive">
-            <table id="servicioTabla" class="table table-hover" style="width: 100%;">
-                <thead class="">
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Servicio</th>
-                        <th scope="col">Opciones</th>
-                    </tr>
-                </thead>
-            </table>
-        </div>
-    </div>
-</main>
+    </main>
+</div>
 
 <!-- Modal -->
 <div class="modal fade" id="addServicioModal" tabindex="-1" aria-labelledby="addServicioModalLabel" aria-hidden="true">

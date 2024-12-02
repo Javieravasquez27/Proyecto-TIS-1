@@ -73,33 +73,35 @@
 
 <h1 class="text-center my-5">Gestión de profesiones</h1>
 
-<main class="">
-    <div class="card">
-        <div class="card-header">
-            <div class="d-flex justify-content-between align-items-center">
-                <div class="text-center">
-                </div>
-                <div>
-                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
-                        data-bs-target="#addProfesionModal">
-                        Ingresar nueva profesión
-                    </button>
+<div class="px-4">
+    <main class="">
+        <div class="card">
+            <div class="card-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="text-center">
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#addProfesionModal">
+                            Ingresar nueva profesión
+                        </button>
+                    </div>
                 </div>
             </div>
+            <div class="card-body table-responsive">
+                <table id="profesionTabla" class="table table-hover" style="width: 100%;">
+                    <thead class="">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Profesión</th>
+                            <th scope="col">Opciones</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
         </div>
-        <div class="card-body table-responsive">
-            <table id="profesionTabla" class="table table-hover" style="width: 100%;">
-                <thead class="">
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Profesión</th>
-                        <th scope="col">Opciones</th>
-                    </tr>
-                </thead>
-            </table>
-        </div>
-    </div>
-</main>
+    </main>
+</div>
 
 <!-- Modal -->
 <div class="modal fade" id="addProfesionModal" tabindex="-1" aria-labelledby="addProfesionModalLabel" aria-hidden="true">

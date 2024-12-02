@@ -109,7 +109,7 @@
         $(document).on('click', '.toggle-status', function() {
             var rut = $(this).data('id');
             var actual_estado_usuario = $(this).data('status');
-            var nuevo_estado_usuario = actual_estado_usuario == 1 ? 0 : 1;
+            var nuevo_estado_usuario = actual_estado_usuario == 1 ? 2 : 1;
             var button = $(this);
 
             $.ajax({
@@ -130,7 +130,7 @@
                                 .removeClass('btn-outline-danger')
                                 .addClass('btn-outline-success')
                                 .text('Autorizar')
-                                .data('status', 0);
+                                .data('status', 2);
                         }
                     } else {
                         console.log("Error al cambiar el estado.");
