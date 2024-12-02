@@ -5,7 +5,7 @@
 
 <title>Panel de Administradores - KindomJob's</title>
 
-<div class="container">
+<div class="container mb-5">
     <h1 class="text-center my-5">Panel de Administradores</h1>
     <div class="row g-4"> <!-- Clase g-4 para un espaciado uniforme entre filas y columnas -->
         <?php if ($_SESSION['id_rol'] == 1): ?>
@@ -73,6 +73,3 @@
         </div>
     </div>
 </div>
-
-
-
