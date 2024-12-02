@@ -18,6 +18,7 @@
         $_SESSION['nombre_servicio'] = $_POST['nombre_servicio'];
         $_SESSION['fecha_cita'] = $_POST['fecha_cita'];
         $_SESSION['hora_cita'] = $_POST['hora_cita'];
+        $_SESSION['lugar_atencion'] = $_POST['lugar_atencion'];
     
         // Generar la transacción
         $response = $transaction->create($buy_order, $sessionid, $amount, $returnUrl);
@@ -26,7 +27,7 @@
         $url_tbk = $response->getUrl(); 
         $token = $response->getToken();
     
-        // Redirigir automáticamente mediante un formulario HTML
+        // Redirigir automáticamente
         echo '
         <form action="' . $url_tbk . '" method="POST" id="webpay-form">
             <input type="hidden" name="token_ws" value="' . $token . '">

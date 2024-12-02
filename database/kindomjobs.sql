@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-12-2024 a las 08:45:40
+-- Tiempo de generación: 02-12-2024 a las 01:54:08
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -47,10 +47,25 @@ INSERT INTO `administrador` (`rut`) VALUES
 --
 
 CREATE TABLE `cita` (
-  `id_cita` int(11) NOT NULL,
   `fecha_cita` date NOT NULL,
-  `id_th` int(11) NOT NULL,
+  `hora_cita` time NOT NULL,
   `rut_cliente` int(11) NOT NULL,
+  `rut_profesional` int(11) NOT NULL,
+  `tokencompra` varchar(200) NOT NULL,
+  `lugar_atencion` varchar(255) NOT NULL,
+  `servicio` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `clasificacion`
+--
+
+CREATE TABLE `clasificacion` (
+  `id_clasificacion` bigint(20) UNSIGNED NOT NULL,
+  `rating_star` int(11) NOT NULL,
+  `rut_usuario` int(11) NOT NULL,
   `rut_profesional` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -86,6 +101,8 @@ INSERT INTO `cliente` (`rut`) VALUES
 (16767878),
 (18267357),
 (18273862),
+(18276272),
+(19267355),
 (19286338),
 (20786387),
 (20876543),
@@ -777,7 +794,8 @@ INSERT INTO `foro_respuesta` (`id_respuesta`, `id_tema`, `rut_usuario`, `conteni
 (34, 1, 20786387, 'Hola', 0, '2024-11-27 15:13:35', 0, 0),
 (35, 1, 20786387, 'A ver A veer', 0, '2024-11-27 15:57:10', 0, 0),
 (36, 1, 20786387, 'Alo', 0, '2024-11-27 15:58:17', 0, 0),
-(37, 1, 20786387, 'Holaaa', 0, '2024-11-27 16:20:27', 0, 0);
+(37, 1, 20786387, 'Holaaa', 0, '2024-11-27 16:20:27', 0, 0),
+(38, 5, 14565656, 'La mía por supuesto', 0, '2024-12-01 23:58:29', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -802,7 +820,8 @@ INSERT INTO `foro_tema` (`id_tema`, `titulo_tema`, `contenido_tema`, `rut_client
 (1, 'Tema de prueba', 'Aquí hago las preguntas que quiero', 20786387, 'resuelto', '2024-11-26 23:35:00'),
 (2, 'Otro tema de prueba', 'Esto está interesante... A ver, qué puedo preguntar aquí...', 20786387, 'abierto', '2024-11-26 23:43:09'),
 (3, 'Ideas, ideas', 'Ideaaaas, necesito ideaaaas', 12345678, 'cerrado', '2024-11-27 02:24:29'),
-(4, 'Otro temita', 'Y el tema es tema cuando el tema ya no es tema :O', 14565656, 'resuelto', '2024-11-27 02:27:12');
+(4, 'Otro temita', 'Y el tema es tema cuando el tema ya no es tema :O', 14565656, 'resuelto', '2024-11-27 02:27:12'),
+(5, '¿Cuál será la mejor respuesta?', 'Ni idea, necesito sugerencias', 15098364, 'abierto', '2024-12-01 23:57:45');
 
 -- --------------------------------------------------------
 
@@ -831,7 +850,8 @@ INSERT INTO `foro_voto_respuesta` (`id_voto`, `id_respuesta`, `rut_usuario`, `ti
 (40, 29, 20786387, 'positivo'),
 (43, 33, 20786387, 'positivo'),
 (44, 26, 20786387, 'positivo'),
-(53, 20, 20786387, 'positivo');
+(53, 20, 20786387, 'positivo'),
+(60, 38, 14565656, 'positivo');
 
 -- --------------------------------------------------------
 
@@ -1013,7 +1033,8 @@ INSERT INTO `lugar_atencion_presencial` (`rut_profesional`, `id_comuna`) VALUES
 CREATE TABLE `lugar_atencion_virtual` (
   `id_lugar_at_virtual` int(11) NOT NULL,
   `rut_profesional` int(11) NOT NULL,
-  `link_sala_virtual` varchar(255) NOT NULL
+  `link_sala_virtual` varchar(255) NOT NULL,
+  `nombre_atv` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -1195,6 +1216,7 @@ INSERT INTO `profesional` (`rut`, `id_profesion`, `id_institucion`, `biografia_p
 (12323424, 8, 50, NULL, 'Mmm...', '../../uploads/titulo_profesional/Malla_UA53_ plan3_IngCivilInformática _2017_09_30.pdf'),
 (12424567, 12, 7, NULL, 'Clases particulares de Lenguaje y Comunicación y preparación para la PAES de Lenguaje', '../../uploads/titulo_profesional/CronogramaLabIN1053C_2024-2.pdf'),
 (14565656, 1, 1, NULL, 'Sé hacer de todo', '../../uploads/titulo_profesional/Consentimiento Informado ENCE CRUCH 2024.docx.pdf'),
+(15626277, 35, 7, NULL, 'Me encantan los límites, las derivadas e integrales, me fascinan', '../../uploads/titulo_profesional/lugar_atencion_presencial.pdf'),
 (15727637, 34, 2, NULL, 'Clases de física para escolares', '../../uploads/titulo_profesional/Ejercicios ejemplo de óptimo de producción.pdf'),
 (16377783, 10, 38, NULL, 'Enseñanza de la matemática para segundo ciclo de enseñanza básica, y enseñanza media (de 1.° a 4.° Medio)', '../../uploads/titulo_profesional/reglamentacion.pdf'),
 (16767878, 7, 3, NULL, 'Gestión tributaria y Operación Renta anual', '../../uploads/titulo_profesional/DataTables example - PDF - image.pdf'),
@@ -1666,14 +1688,17 @@ INSERT INTO `usuario` (`rut`, `dv`, `nombre_usuario`, `nombres`, `apellido_p`, `
 (13476476, '7', 'Renato', 'Renato', 'Poblete', 'Iturra', 'renato@gmail.com', 937363753, '2002-08-08', 'O\'Higgins 680', '-36.827606309302325', '-73.04949143953488', 'baaab6fa3b287456d2ff691027920826', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 233, 4, 1),
 (14565656, '7', 'Hector', 'Héctor', 'Jiménez', 'Suazo', 'hector@gmail.com', 965656565, '2002-07-08', 'Avenida Arturo Prat 234', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/IMG_20240831_163740121.jpg', 1, 3, 1),
 (15098364, '9', 'Barbara', 'Barbara', 'Hernández', 'Ramírez', 'barbara@gmail.com', 936262767, '2000-09-15', 'Calle ABC, 123', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 332, 4, 1),
+(15626277, '3', 'Sandra', 'Sandra', 'Pereira', 'Pereira', 'sandra@gmail.com', 927862536, '2000-08-12', 'Agustinas 336', '-33.44154538277806', '-70.65875680521435', 'baaab6fa3b287456d2ff691027920826', 'uploads/foto_perfil/Fondo.png', 86, 3, 2),
 (15727637, '9', 'Valentina', 'Valentina', 'Figueroa', 'Pereira', 'valentina@gmail.com', 938736726, '1994-06-01', 'Postdam 4332', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/Fondo.png', 237, 3, 1),
 (16235638, '0', 'Francisco', 'Francisco', 'Figueroa', 'Figueroa', 'francisco@gmail.com', 927673563, '2000-08-13', 'Ramón Carrasco 825', '-36.78906465157923', '-73.05718657506715', 'baaab6fa3b287456d2ff691027920826', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 233, 4, 1),
 (16377783, '5', 'Karina', 'Karina', 'Medina', 'Lozano', 'karina@gmail.com', 936726362, '1985-01-12', 'Ramón Carrasco 1023', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/IMG_20240831_174544129.jpg', 233, 3, 1),
 (16767878, '5', 'Ernesto', 'Ernesto', 'Loyola', 'Zapata', 'ernesto@gmail.com', 988786565, '1991-12-15', 'José Arrieta 2345', NULL, NULL, 'e10adc3949ba59abbe56e057f20f883e', 'uploads/foto_perfil/IMG_20240810_181021908.jpg', 36, 3, 1),
 (18267357, '9', 'Humberto', 'Humberto', 'Pérez', 'Pérez', 'humberto@gmail.com', 972627527, '2001-08-12', 'Serrano 50', '-33.458953050132564', '-70.64623414845794', 'baaab6fa3b287456d2ff691027920826', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 86, 4, 1),
 (18273862, 'K', 'Monica', 'Mónica', 'Gallardo', 'Gallardo', 'monica@gmail.com', 928327826, '2000-10-10', 'Los Tulipanes 336', '-37.03329892406181', '-72.394982724876', 'baaab6fa3b287456d2ff691027920826', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 221, 4, 1),
+(18276272, '5', 'Zacarias', 'Zacarias', 'López', 'Jiménez', 'zacarias@gmail.com', 928826826, '2000-05-02', 'Chucre Manzur 1201', '-33.431352', '-70.6337216', 'baaab6fa3b287456d2ff691027920826', 'uploads/foto_perfil/Fondo.png', 96, 4, 1),
+(19267355, '0', 'Daniel', 'Daniel', 'Salazar', '', 'daniel@gmail.com', 927826722, '1991-01-12', 'Avenida Colón 8120', '-36.805323808388245', '-73.0801115780687', 'baaab6fa3b287456d2ff691027920826', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 237, 4, 1),
 (19286338, '4', 'Carlos', 'Carlos', 'Rebolledo', '', 'carlos@gmail.com', 937838674, '2000-08-12', 'San Diego 333', '-33.449850881632656', '-70.65080746530613', 'baaab6fa3b287456d2ff691027920826', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 86, 4, 1),
-(20786387, '4', 'Alvaro', 'Álvaro Alfonso', 'Molina', 'Jara', 'alvaromolinacl@gmail.com', 988888888, '2001-07-10', 'Calle ABC, 1234', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 233, 1, 1),
+(20786387, '4', 'Alvaro', 'Álvaro Alfonso', 'Molina', 'Jara', 'alvaromolinacl@gmail.com', 988888888, '2001-07-10', 'Abdon Cifuentes 551', '-36.78878900820779', '-73.03858311561113', '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 233, 1, 1),
 (20876543, '4', 'PruebaProf', 'Prueba', 'Profesional', 'Prof', 'pruebaprof@gmail.com', 987767657, '2002-08-12', 'Calle Gabriela 143', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 83, 3, 1),
 (23456789, '6', 'Juanito', 'Juan', 'Pérez', 'Gar', 'juan@gmail.com', 987654321, '2000-08-02', 'Calle GHI, 786', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 1, 2, 1);
 
@@ -1759,10 +1784,17 @@ ALTER TABLE `administrador`
 -- Indices de la tabla `cita`
 --
 ALTER TABLE `cita`
-  ADD PRIMARY KEY (`id_cita`),
+  ADD PRIMARY KEY (`fecha_cita`,`hora_cita`,`rut_cliente`,`rut_profesional`),
   ADD KEY `cita_ibfk_1` (`rut_cliente`),
-  ADD KEY `cita_ibfk_2` (`rut_profesional`),
-  ADD KEY `cita_ibfk_3` (`id_th`);
+  ADD KEY `cita_ibfk_2` (`rut_profesional`);
+
+--
+-- Indices de la tabla `clasificacion`
+--
+ALTER TABLE `clasificacion`
+  ADD PRIMARY KEY (`id_clasificacion`),
+  ADD KEY `fk_rut_usuario` (`rut_usuario`),
+  ADD KEY `fk_rut_profesional` (`rut_profesional`);
 
 --
 -- Indices de la tabla `cliente`
@@ -1796,7 +1828,7 @@ ALTER TABLE `estado_usuario`
 --
 ALTER TABLE `favoritos`
   ADD PRIMARY KEY (`rut_usuario`,`rut_profesional`),
-  ADD KEY `rut_profesional` (`rut_profesional`);
+  ADD KEY `favoritos_ibfk_2` (`rut_profesional`);
 
 --
 -- Indices de la tabla `foro_respuesta`
@@ -1960,10 +1992,10 @@ ALTER TABLE `usuario`
 --
 
 --
--- AUTO_INCREMENT de la tabla `cita`
+-- AUTO_INCREMENT de la tabla `clasificacion`
 --
-ALTER TABLE `cita`
-  MODIFY `id_cita` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `clasificacion`
+  MODIFY `id_clasificacion` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `comuna`
@@ -1987,19 +2019,19 @@ ALTER TABLE `estado_usuario`
 -- AUTO_INCREMENT de la tabla `foro_respuesta`
 --
 ALTER TABLE `foro_respuesta`
-  MODIFY `id_respuesta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id_respuesta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT de la tabla `foro_tema`
 --
 ALTER TABLE `foro_tema`
-  MODIFY `id_tema` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_tema` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `foro_voto_respuesta`
 --
 ALTER TABLE `foro_voto_respuesta`
-  MODIFY `id_voto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `id_voto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT de la tabla `institucion`
@@ -2087,9 +2119,15 @@ ALTER TABLE `administrador`
 -- Filtros para la tabla `cita`
 --
 ALTER TABLE `cita`
-  ADD CONSTRAINT `cita_ibfk_1` FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `cita_ibfk_2` FOREIGN KEY (`rut_profesional`) REFERENCES `profesional` (`rut`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `cita_ibfk_3` FOREIGN KEY (`id_th`) REFERENCES `tipo_horario` (`id_th`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `cita_ibfk_1` FOREIGN KEY (`rut_cliente`) REFERENCES `disponibilidad` (`rut_cliente`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `cita_ibfk_2` FOREIGN KEY (`rut_profesional`) REFERENCES `disponibilidad` (`rut_profesional`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `clasificacion`
+--
+ALTER TABLE `clasificacion`
+  ADD CONSTRAINT `fk_rut_profesional` FOREIGN KEY (`rut_profesional`) REFERENCES `profesional` (`rut`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_rut_usuario` FOREIGN KEY (`rut_usuario`) REFERENCES `usuario` (`rut`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `cliente`
@@ -2114,8 +2152,8 @@ ALTER TABLE `disponibilidad`
 -- Filtros para la tabla `favoritos`
 --
 ALTER TABLE `favoritos`
-  ADD CONSTRAINT `favoritos_ibfk_1` FOREIGN KEY (`rut_usuario`) REFERENCES `usuario` (`rut`),
-  ADD CONSTRAINT `favoritos_ibfk_2` FOREIGN KEY (`rut_profesional`) REFERENCES `profesional` (`rut`);
+  ADD CONSTRAINT `favoritos_ibfk_1` FOREIGN KEY (`rut_usuario`) REFERENCES `usuario` (`rut`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `favoritos_ibfk_2` FOREIGN KEY (`rut_profesional`) REFERENCES `profesional` (`rut`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `foro_respuesta`
@@ -2148,7 +2186,7 @@ ALTER TABLE `lugar_atencion_presencial`
 -- Filtros para la tabla `lugar_atencion_virtual`
 --
 ALTER TABLE `lugar_atencion_virtual`
-  ADD CONSTRAINT `lugar_atencion_virtual_ibfk_1` FOREIGN KEY (`rut_profesional`) REFERENCES `profesional` (`rut`);
+  ADD CONSTRAINT `lugar_atencion_virtual_ibfk_1` FOREIGN KEY (`rut_profesional`) REFERENCES `profesional` (`rut`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `mensaje`

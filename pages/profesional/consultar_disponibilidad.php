@@ -14,9 +14,10 @@
         $resultado = $stmt->get_result();
 
         // Se generan botones con las horas disponibles
-        if ($resultado->num_rows > 0) {
+        if ($resultado->num_rows > 0)
+        {
             while ($fila = $resultado->fetch_assoc()) {
-                echo "<button type='button' class='btn btn-time' value='" . date("H:i", strtotime($fila['hora'])) . "'>" . date("H:i", strtotime($fila['hora'])) . "</button>";
+                echo "<button class='btn btn-time' name='hora' value='" . date("H:i", strtotime($fila['hora'])) . "'>" . date("H:i", strtotime($fila['hora'])) . "</button>";
             }
         } else {
             echo "<li>No hay horas disponibles para esta fecha.</li>";
