@@ -1,20 +1,21 @@
 <?php
+include 'database/conexion.php';
+
 $status = $_GET['status'];
 $buyOrder = $_GET['buyOrder'];
 $amount = $_GET['amount'];
 $token = $_GET['token'];
-$rut_prof = $_GET['rut_prof'];//listo
+$rut_prof = $_GET['rut_prof'];
 $nombre_profesional = $_GET['nombre_profesional'];
-$nombre_servicio = $_GET['nombre_servicio'];//listo
-$fecha_cita = $_GET['fecha_cita'];//listo
-$hora_cita = $_GET['hora_cita'];//listo
-$lugar_atencion = $_GET['lugar_atencion'];//listo
+$nombre_servicio = $_GET['nombre_servicio'];
+$fecha_cita = $_GET['fecha_cita'];
+$hora_cita = $_GET['hora_cita'];
+$lugar_atencion = $_GET['lugar_atencion'];
 
-$insertar_cita = "INSERT INTO cita (rut_cliente, rut_profesional, fecha_cita, hora_cita,tokencompra, lugar_atencion, servicio) VALUES ('$_SESSION[rut]', '$rut_prof', '$fecha_cita', '$hora_cita','$token','$lugar_atencion', '$nombre_servicio')";
-$resultado = mysqli_query($conexion,$insertar_cita);
+$insertar_cita = "INSERT INTO cita (rut_cliente, rut_profesional, fecha_cita, hora_cita, tokencompra, lugar_atencion, servicio) VALUES ('$_SESSION[rut]', '$rut_prof', '$fecha_cita', '$hora_cita', '$token', '$lugar_atencion', '$nombre_servicio')";
+$resultado = mysqli_query($conexion, $insertar_cita);
 
-if ($status == 'success') {
-    echo "
+if ($status == 'success') { ?>
     <div class='container mt-5'>
         <div class='voucher' id='voucher'>
             <div class='voucher-header text-center'>
@@ -23,47 +24,47 @@ if ($status == 'success') {
             <div class='voucher-section'>
                 <div class='row'>
                     <div class='col-md-6'>
-                        <strong>Servicio:</strong> $nombre_servicio
+                        <strong>Servicio:</strong> <?php echo $nombre_servicio; ?>
                     </div>
                     <div class='col-md-6'>
-                        <strong>Profesional:</strong> $nombre_profesional
-                    </div>
-                </div>
-            </div>
-            <div class='voucher-section'>
-                <div class='row'>
-                    <div class='col-md-6'>
-                        <strong>RUT Profesional:</strong> $rut_prof
-                    </div>
-                    <div class='col-md-6'>
-                        <strong>Fecha:</strong> $fecha_cita
+                        <strong>Profesional:</strong> <?php echo $nombre_profesional; ?>
                     </div>
                 </div>
             </div>
             <div class='voucher-section'>
                 <div class='row'>
                     <div class='col-md-6'>
-                        <strong>Hora:</strong> $hora_cita
+                        <strong>RUT Profesional:</strong> <?php echo $rut_prof; ?>
                     </div>
                     <div class='col-md-6'>
-                        <strong>Monto:</strong> $$amount
+                        <strong>Fecha:</strong> <?php echo $fecha_cita; ?>
                     </div>
                 </div>
             </div>
             <div class='voucher-section'>
                 <div class='row'>
                     <div class='col-md-6'>
-                        <strong>Lugar de Atención:</strong> $lugar_atencion
+                        <strong>Hora:</strong> <?php echo $hora_cita; ?>
                     </div>
                     <div class='col-md-6'>
-                        <strong>Orden de Compra:</strong> $buyOrder
+                        <strong>Monto:</strong> $<?php echo $amount; ?>
+                    </div>
+                </div>
+            </div>
+            <div class='voucher-section'>
+                <div class='row'>
+                    <div class='col-md-6'>
+                        <strong>Lugar de Atención:</strong> <?php echo $lugar_atencion; ?>
+                    </div>
+                    <div class='col-md-6'>
+                        <strong>Orden de Compra:</strong> <?php echo $buyOrder; ?>
                     </div>
                 </div>
             </div>
         </div>
         <div class='mt-3 text-center'>
-            <button class='btn btn-primary' onclick='window.location.href=\"index.php\"'>Volver al inicio</button>
-            <button class='btn btn-secondary' onclick='downloadPDF()'>Descargar como PDF</button>
+            <button class='btn btn-primary' onclick="window.location.href='index.php'">Volver al inicio</button>
+            <button class='btn btn-secondary' onclick="downloadPDF()">Descargar como PDF</button>
         </div>
     </div>
     <style>
@@ -99,23 +100,23 @@ if ($status == 'success') {
             const doc = new jsPDF();
 
             doc.setFontSize(18);
-            doc.text('Detalles del Servicio', 105, 40, null, null, 'center');
+            doc.text('Detalles del Servicio', 105, 20, null, null, 'center');
             doc.setFontSize(12);
-            doc.text('Servicio: $nombre_servicio', 10, 60);
-            doc.text('Profesional: $nombre_profesional', 105, 60);
-            doc.text('RUT Profesional: $rut_prof', 10, 70);
-            doc.text('Fecha: $fecha_cita', 105, 70);
-            doc.text('Hora: $hora_cita', 10, 80);
-            doc.text('Monto: $$amount', 105, 80);
-            doc.text('Lugar de Atención: $lugar_atencion', 10, 90);
-            doc.text('Orden de Compra: $buyOrder', 105, 90);
-
+            doc.text('Servicio: <?php echo $nombre_servicio; ?>', 10, 40);
+            doc.text('Profesional: <?php echo $nombre_profesional; ?>', 10, 50);
+            doc.text('RUT Profesional: <?php echo $rut_prof; ?>', 10, 60);
+            doc.text('Fecha: <?php echo $fecha_cita; ?>', 10, 70);
+            doc.text('Hora: <?php echo $hora_cita; ?>', 10, 80);
+            doc.text('Monto: $<?php echo $amount; ?>', 10, 90);
+            doc.text('Lugar de Atención: <?php echo $lugar_atencion; ?>', 10, 100);
+            doc.text('Orden de Compra: <?php echo $buyOrder; ?>', 10, 110);
 
             // Descarga el PDF
             doc.save('voucher.pdf');
         }
     </script>
-    ";
+
+<?php
 } else {
     echo "Error en el pago.";
 }

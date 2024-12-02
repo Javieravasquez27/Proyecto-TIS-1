@@ -28,7 +28,7 @@ try {
     $url_tbk = $response->getUrl(); 
     $token = $response->getToken();
 
-    // Redirigir automáticamente mediante un formulario HTML
+    // Redirigir automáticamente
     echo '
     <form action="' . $url_tbk . '" method="POST" id="webpay-form">
         <input type="hidden" name="token_ws" value="' . $token . '">
