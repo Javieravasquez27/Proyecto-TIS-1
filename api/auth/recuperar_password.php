@@ -1,6 +1,10 @@
 <?php
     include '../../database/conexion.php';
 
+    require_once '../../libs/PHPMailer/src/PHPMailer.php';
+    require_once '../../libs/PHPMailer/src/SMTP.php';
+    require_once '../../libs/PHPMailer/src/Exception.php';
+
     $rut = $_POST['rut'];
 
 
@@ -23,7 +27,7 @@
 
     $rut_consultado = mysqli_real_escape_string($conexion, $rut);
 
-    if ($row_rut == $rut) {
+    if (!empty($row_rut)) {
         
         echo "
             <link href='https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css' rel='stylesheet' />
@@ -37,7 +41,7 @@
                     showConfirmButton: true,
                     confirmButtonText: 'Aceptar',
                     willClose: () => {
-                    window.location.href = 'index.php';
+                    window.location.href = '../../index.php';
                 }
                 });
             </script>
