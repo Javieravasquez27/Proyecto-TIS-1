@@ -29,7 +29,7 @@
                             <button name="submit" type="submit" class="btn btn-primary btn-block">Entrar</button>
                         </div>
                     </form>
-                    <p class="text-center mt-3">¿Olvidaste tu contraseña? <a href='index.php?p=auth/recuperar_password'>Recuperala aquí</a><br>
+                    <p class="text-center mt-3">¿Olvidaste tu contraseña? <a href='#'>Recuperala aquí</a><br>
                                            ¿No estás registrado aún? <a href='index.php?p=auth/register'>Regístrate aquí</a></p>
                 </div>
             </div>

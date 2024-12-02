@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-12-2024 a las 10:13:54
+-- Tiempo de generación: 02-12-2024 a las 17:08:12
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -61,14 +61,23 @@ CREATE TABLE `cita` (
 --
 
 INSERT INTO `cita` (`fecha_cita`, `hora_cita`, `rut_cliente`, `rut_profesional`, `tokencompra`, `lugar_atencion`, `servicio`) VALUES
+('2024-12-10', '11:00:00', 14565656, 14565656, '01ab6df692ef182051bea60d9ff4c1b0e93be532127b4f1a7c2562724b9ff11f', '', 'Clases particulares de matemática - Enseñanza superior'),
+('2024-12-10', '14:00:00', 11111111, 14565656, '01ab28ab8d822a6f10e17edda09db276cee4a9526a05b38d2c4b6c118909dfef', '', 'Desarrollo de aplicaciones móviles en Android'),
+('2024-12-10', '15:00:00', 11111111, 14565656, '01ab69e6f8ec6bd8042b722eb76fb1ea11258dd10aa554fd7b534aa76fe16cb4', '', 'Desarrollo de aplicaciones móviles en Android'),
+('2024-12-10', '16:00:00', 11111111, 14565656, '01ab198e66a5da669376e0d065a31a02c223deedb75eefe717884719e75b70aa', '', 'Desarrollo de aplicaciones móviles en iOS'),
+('2024-12-11', '11:15:00', 11111111, 14565656, '01ab231e39c7af99b4677e17e705b076170197d682995c03df201a704831b8d3', '', 'Desarrollo de aplicaciones móviles en Android'),
+('2024-12-11', '16:15:00', 11111111, 14565656, '01abf4b86c41498f28a2fccbe715d6d3b5e428c8289c8426e98cd525dd227b7b', '', 'Desarrollo de aplicaciones móviles en Android'),
 ('2024-12-12', '09:30:00', 15098364, 14565656, '01ab9ebdb08c63923e4854f0720f347904b22df39834f8e369c813390a96c3fc', '', 'Desarrollo de aplicaciones móviles en Android'),
 ('2024-12-12', '10:30:00', 11111111, 14565656, '01ab14a3ead2617dd1533292eecfe4b5e5bb708b7b08044c29a7e0050a6ce50f', '', 'Desarrollo de aplicaciones móviles en Android'),
 ('2024-12-12', '11:30:00', 11111111, 14565656, '', '', 'Desarrollo de aplicaciones móviles en Android'),
 ('2024-12-12', '12:30:00', 11111111, 14565656, '01ab692058b3e20340c665cc54d3432ca652f3022325fa4f4ac865f0412fc860', '', 'Desarrollo de aplicaciones móviles en Android'),
 ('2024-12-12', '13:30:00', 11111111, 14565656, '01abdeb4d4e501beec64b3c478e4e2263ef0f6e969ff0e955f6c2880f471d153', '', 'Desarrollo de aplicaciones móviles en Android'),
 ('2024-12-12', '14:30:00', 15098364, 14565656, '01ab1160cc209014e7ea79efb5d2ba35bfb1dc13253b75d699940749a3b2d425', '', 'Desarrollo de aplicaciones móviles en iOS'),
+('2024-12-12', '15:30:00', 11111111, 14565656, '01ab92ce1f8f27132f5ef02503de82d4e65608fd646d9cb0333989a993b41bbc', '', 'Desarrollo de aplicaciones móviles en Android'),
 ('2024-12-12', '16:30:00', 11111111, 14565656, '', '', 'Desarrollo de aplicaciones móviles en Android'),
-('2024-12-12', '17:30:00', 11111111, 14565656, '01ab6542d4453f7de7bce40a0da42225ddc9aed1bef195303012e5f14e1310a2', '', 'Desarrollo de aplicaciones móviles en Android');
+('2024-12-12', '17:30:00', 11111111, 14565656, '01ab6542d4453f7de7bce40a0da42225ddc9aed1bef195303012e5f14e1310a2', '', 'Desarrollo de aplicaciones móviles en Android'),
+('2024-12-12', '18:30:00', 11111111, 14565656, '01abf6ae6b1b58ff7e67f45e51ab85a56808f5ac9183aa61a71a7614f63364e7', '', 'Desarrollo de aplicaciones móviles en Android'),
+('2024-12-12', '19:30:00', 11111111, 14565656, '01ab05e28e758de99c3488c380e7468746dda488cc1a2481bb9c9deed7e67472', '', 'Desarrollo de aplicaciones móviles en Android');
 
 -- --------------------------------------------------------
 
@@ -80,7 +89,8 @@ CREATE TABLE `clasificacion` (
   `id_clasificacion` bigint(20) UNSIGNED NOT NULL,
   `rating_star` int(11) NOT NULL,
   `rut_usuario` int(11) NOT NULL,
-  `rut_profesional` int(11) NOT NULL
+  `rut_profesional` int(11) NOT NULL,
+  `comentario` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -576,12 +586,12 @@ INSERT INTO `disponibilidad` (`id_disponibilidad`, `rut_profesional`, `rut_clien
 (68, 14565656, NULL, '2024-12-03', '21:00:00', 1),
 (69, 14565656, NULL, '2024-12-10', '09:00:00', 1),
 (70, 14565656, NULL, '2024-12-10', '10:00:00', 1),
-(71, 14565656, NULL, '2024-12-10', '11:00:00', 1),
+(71, 14565656, 14565656, '2024-12-10', '11:00:00', 0),
 (72, 14565656, NULL, '2024-12-10', '12:00:00', 1),
 (73, 14565656, NULL, '2024-12-10', '13:00:00', 1),
-(74, 14565656, NULL, '2024-12-10', '14:00:00', 1),
-(75, 14565656, NULL, '2024-12-10', '15:00:00', 1),
-(76, 14565656, NULL, '2024-12-10', '16:00:00', 1),
+(74, 14565656, 11111111, '2024-12-10', '14:00:00', 0),
+(75, 14565656, 11111111, '2024-12-10', '15:00:00', 0),
+(76, 14565656, 11111111, '2024-12-10', '16:00:00', 0),
 (77, 14565656, NULL, '2024-12-10', '17:00:00', 1),
 (78, 14565656, NULL, '2024-12-10', '18:00:00', 1),
 (79, 14565656, NULL, '2024-12-10', '19:00:00', 1),
@@ -615,12 +625,12 @@ INSERT INTO `disponibilidad` (`id_disponibilidad`, `rut_profesional`, `rut_clien
 (107, 14565656, NULL, '2024-12-04', '21:15:00', 1),
 (108, 14565656, NULL, '2024-12-11', '09:15:00', 1),
 (109, 14565656, NULL, '2024-12-11', '10:15:00', 1),
-(110, 14565656, NULL, '2024-12-11', '11:15:00', 1),
+(110, 14565656, 11111111, '2024-12-11', '11:15:00', 0),
 (111, 14565656, NULL, '2024-12-11', '12:15:00', 1),
 (112, 14565656, NULL, '2024-12-11', '13:15:00', 1),
 (113, 14565656, NULL, '2024-12-11', '14:15:00', 1),
 (114, 14565656, NULL, '2024-12-11', '15:15:00', 1),
-(115, 14565656, NULL, '2024-12-11', '16:15:00', 1),
+(115, 14565656, 11111111, '2024-12-11', '16:15:00', 0),
 (116, 14565656, NULL, '2024-12-11', '17:15:00', 1),
 (117, 14565656, NULL, '2024-12-11', '18:15:00', 1),
 (118, 14565656, NULL, '2024-12-11', '19:15:00', 1),
@@ -654,11 +664,11 @@ INSERT INTO `disponibilidad` (`id_disponibilidad`, `rut_profesional`, `rut_clien
 (146, 14565656, 11111111, '2024-12-12', '12:30:00', 0),
 (147, 14565656, 11111111, '2024-12-12', '13:30:00', 0),
 (148, 14565656, 15098364, '2024-12-12', '14:30:00', 0),
-(149, 14565656, NULL, '2024-12-12', '15:30:00', 1),
+(149, 14565656, 11111111, '2024-12-12', '15:30:00', 0),
 (150, 14565656, 11111111, '2024-12-12', '16:30:00', 0),
 (151, 14565656, 11111111, '2024-12-12', '17:30:00', 0),
-(152, 14565656, NULL, '2024-12-12', '18:30:00', 1),
-(153, 14565656, NULL, '2024-12-12', '19:30:00', 1),
+(152, 14565656, 11111111, '2024-12-12', '18:30:00', 0),
+(153, 14565656, 11111111, '2024-12-12', '19:30:00', 0),
 (154, 14565656, NULL, '2024-11-29', '11:00:00', 1),
 (155, 14565656, NULL, '2024-11-29', '12:00:00', 1),
 (156, 14565656, NULL, '2024-11-29', '13:00:00', 1),
@@ -753,6 +763,13 @@ CREATE TABLE `favoritos` (
   `rut_usuario` int(11) NOT NULL,
   `rut_profesional` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `favoritos`
+--
+
+INSERT INTO `favoritos` (`rut_usuario`, `rut_profesional`) VALUES
+(11111111, 14565656);
 
 -- --------------------------------------------------------
 
@@ -865,7 +882,7 @@ INSERT INTO `foro_voto_respuesta` (`id_voto`, `id_respuesta`, `rut_usuario`, `ti
 (43, 33, 20786387, 'positivo'),
 (44, 26, 20786387, 'positivo'),
 (53, 20, 20786387, 'positivo'),
-(60, 38, 14565656, 'positivo');
+(62, 38, 14565656, 'positivo');
 
 -- --------------------------------------------------------
 
@@ -1069,7 +1086,14 @@ CREATE TABLE `mensaje` (
 --
 
 INSERT INTO `mensaje` (`id_mensaje`, `rut_recibe`, `rut_envia`, `contenido_mensaje`) VALUES
-(2, 14565656, 11111111, 'Hola');
+(2, 14565656, 11111111, 'Hola'),
+(3, 14565656, 11111111, 'Hola de nuevo'),
+(4, 11111111, 14565656, 'Cómo estás?'),
+(5, 11111111, 14565656, 'Bien y tú?'),
+(6, 14565656, 11111111, 'Bien también'),
+(7, 14565656, 11111111, 'Muchas gracias'),
+(8, 11111111, 14565656, 'Que bueno, me alegro!!'),
+(9, 11111111, 14565656, ':D');
 
 -- --------------------------------------------------------
 
@@ -1403,7 +1427,8 @@ CREATE TABLE `reporte_profesional` (
 --
 
 INSERT INTO `reporte_profesional` (`id_reporte`, `rut_cliente`, `rut_profesional`, `motivo_reporte`) VALUES
-(1, 11111111, 14565656, 'AASSASASA');
+(1, 11111111, 14565656, 'AASSASASA'),
+(2, 11111111, 14565656, 'ABCDEF');
 
 -- --------------------------------------------------------
 
@@ -1598,7 +1623,7 @@ CREATE TABLE `servicio_profesional` (
 INSERT INTO `servicio_profesional` (`id_servicio`, `rut_profesional`, `precio_serv_prof`) VALUES
 (1, 14565656, 15000),
 (2, 14565656, 20000),
-(3, 14565656, 25000);
+(3, 14565656, 15000);
 
 -- --------------------------------------------------------
 
@@ -1693,42 +1718,43 @@ CREATE TABLE `usuario` (
   `foto_perfil` varchar(255) NOT NULL DEFAULT 'uploads/foto_perfil/foto_perfil_predeterminada.jpg',
   `id_comuna` int(11) NOT NULL,
   `id_rol` int(11) NOT NULL,
-  `id_estado_usuario` int(11) NOT NULL
+  `id_estado_usuario` int(11) NOT NULL,
+  `estrellas` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`rut`, `dv`, `nombre_usuario`, `nombres`, `apellido_p`, `apellido_m`, `correo`, `telefono`, `fecha_nac`, `direccion`, `latitud`, `longitud`, `contrasena`, `foto_perfil`, `id_comuna`, `id_rol`, `id_estado_usuario`) VALUES
-(7466578, '0', 'Mayerly', 'Mayerly', 'Zavala', 'Iturra', 'mayerly@gmail.com', 956543424, '2000-08-31', 'Avenida Michimalonco 278', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 241, 4, 1),
-(10208323, '7', 'Guillermo', 'Guillermo', 'Pacheco', 'Cereceda', 'guillermo@gmail.com', 982776382, '1994-02-25', 'ABC 123', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 192, 4, 1),
-(10286235, 'K', 'Profesional456', 'ProfesionalP', 'PPP', 'ProfPP', 'profprof@gmail.com', 986372773, '2002-01-12', 'Calle Nueva 343', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 37, 3, 2),
-(10367255, '4', 'Natalia', 'Natalia', 'Urrutia', 'Menares', 'natalia@gmail.com', 953535645, '1997-09-03', 'Calle ABC 123', NULL, NULL, 'baaab6fa3b287456d2ff691027920826', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 233, 3, 1),
-(11022434, '6', 'Profesional123', 'Profesional', 'Prof', 'ProfProf', 'profesional@gmail.com', 987875646, '1999-12-12', 'Avenida Portales 1234', NULL, NULL, '81dc9bdb52d04dc20036dbd8313ed055', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 78, 3, 2),
-(11086788, '3', 'Lorena', 'Lorena', 'Lagos', 'Sanhueza', 'lorena@gmail.com', 998876565, '1998-08-25', 'Avenida Bernardo O\'Higgins 3272', NULL, NULL, '827ccb0eea8a706c4c34a16891f84e7b', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 65, 4, 1),
-(11111111, '1', 'Admin', 'Admin', 'Admin', 'Admin', 'superadmin@gmail.com', 999999999, '1999-11-11', 'Calle Admin 123', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 233, 1, 1),
-(12323424, '3', 'AAASSD', 'Orlando', 'Salazar', 'Urrutia', 'profprofprof@gmail.com', 982878273, '2000-08-12', 'Francisco Pérez 123', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/IMG_20240817_182910109.jpg', 32, 3, 2),
-(12345678, '5', 'Cliente', 'Cliente', 'Pérez', 'García', 'cliente@gmail.com', 999999999, '1999-08-25', 'Calle DEF, 321', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 1, 4, 1),
-(12424567, '2', 'Graciela', 'Graciela', 'Hernández', 'Jiménez', 'graciela@gmail.com', 924566345, '2022-08-12', 'Avenida Las Golondrinas 2485', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/Fondo.png', 237, 3, 2),
-(12783648, '5', 'Jorge', 'Jorge', 'Bravo', 'Bravo', 'jorge@gmail.com', 928627627, '2001-08-12', 'Rengo 436', '-36.824307450000006', '-73.0543428', 'baaab6fa3b287456d2ff691027920826', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 233, 4, 1),
-(13082637, '7', 'ABCDEF', 'Admin', 'Prueba', 'Prueba', 'admin@gmail.com', 982872637, '1995-08-08', 'Calle Nueva 123', NULL, NULL, '81dc9bdb52d04dc20036dbd8313ed055', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 1, 4, 1),
-(13476476, '7', 'Renato', 'Renato', 'Poblete', 'Iturra', 'renato@gmail.com', 937363753, '2002-08-08', 'O\'Higgins 680', '-36.827606309302325', '-73.04949143953488', 'baaab6fa3b287456d2ff691027920826', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 233, 4, 1),
-(14565656, '7', 'Hector', 'Héctor', 'Jiménez', 'Suazo', 'hector@gmail.com', 965656565, '2002-07-08', 'Avenida Arturo Prat 234', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/IMG_20240831_163740121.jpg', 1, 3, 1),
-(15098364, '9', 'Barbara', 'Barbara', 'Hernández', 'Ramírez', 'barbara@gmail.com', 936262767, '2000-09-15', 'Calle ABC, 123', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 332, 4, 1),
-(15626277, '3', 'Sandra', 'Sandra', 'Pereira', 'Pereira', 'sandra@gmail.com', 927862536, '2000-08-12', 'Agustinas 336', '-33.44154538277806', '-70.65875680521435', 'baaab6fa3b287456d2ff691027920826', 'uploads/foto_perfil/Fondo.png', 86, 3, 2),
-(15727637, '9', 'Valentina', 'Valentina', 'Figueroa', 'Pereira', 'valentina@gmail.com', 938736726, '1994-06-01', 'Postdam 4332', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/Fondo.png', 237, 3, 1),
-(16235638, '0', 'Francisco', 'Francisco', 'Figueroa', 'Figueroa', 'francisco@gmail.com', 927673563, '2000-08-13', 'Ramón Carrasco 825', '-36.78906465157923', '-73.05718657506715', 'baaab6fa3b287456d2ff691027920826', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 233, 4, 1),
-(16377783, '5', 'Karina', 'Karina', 'Medina', 'Lozano', 'karina@gmail.com', 936726362, '1985-01-12', 'Ramón Carrasco 1023', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/IMG_20240831_174544129.jpg', 233, 3, 1),
-(16767878, '5', 'Ernesto', 'Ernesto', 'Loyola', 'Zapata', 'ernesto@gmail.com', 988786565, '1991-12-15', 'José Arrieta 2345', NULL, NULL, 'e10adc3949ba59abbe56e057f20f883e', 'uploads/foto_perfil/IMG_20240810_181021908.jpg', 36, 3, 1),
-(18267357, '9', 'Humberto', 'Humberto', 'Pérez', 'Pérez', 'humberto@gmail.com', 972627527, '2001-08-12', 'Serrano 50', '-33.458953050132564', '-70.64623414845794', 'baaab6fa3b287456d2ff691027920826', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 86, 4, 1),
-(18273862, 'K', 'Monica', 'Mónica', 'Gallardo', 'Gallardo', 'monica@gmail.com', 928327826, '2000-10-10', 'Los Tulipanes 336', '-37.03329892406181', '-72.394982724876', 'baaab6fa3b287456d2ff691027920826', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 221, 4, 1),
-(18276272, '5', 'Zacarias', 'Zacarias', 'López', 'Jiménez', 'zacarias@gmail.com', 928826826, '2000-05-02', 'Chucre Manzur 1201', '-33.431352', '-70.6337216', 'baaab6fa3b287456d2ff691027920826', 'uploads/foto_perfil/Fondo.png', 96, 4, 1),
-(19267355, '0', 'Daniel', 'Daniel', 'Salazar', '', 'daniel@gmail.com', 927826722, '1991-01-12', 'Avenida Colón 8120', '-36.805323808388245', '-73.0801115780687', 'baaab6fa3b287456d2ff691027920826', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 237, 4, 1),
-(19286338, '4', 'Carlos', 'Carlos', 'Rebolledo', '', 'carlos@gmail.com', 937838674, '2000-08-12', 'San Diego 333', '-33.449850881632656', '-70.65080746530613', 'baaab6fa3b287456d2ff691027920826', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 86, 4, 1),
-(20786387, '4', 'Alvaro', 'Álvaro Alfonso', 'Molina', 'Jara', 'alvaromolinacl@gmail.com', 988888888, '2001-07-10', 'Abdon Cifuentes 551', '-36.78878900820779', '-73.03858311561113', '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 233, 1, 1),
-(20876543, '4', 'PruebaProf', 'Prueba', 'Profesional', 'Prof', 'pruebaprof@gmail.com', 987767657, '2002-08-12', 'Calle Gabriela 143', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 83, 3, 1),
-(23456789, '6', 'Juanito', 'Juan', 'Pérez', 'Gar', 'juan@gmail.com', 987654321, '2000-08-02', 'Calle GHI, 786', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 1, 2, 1);
+INSERT INTO `usuario` (`rut`, `dv`, `nombre_usuario`, `nombres`, `apellido_p`, `apellido_m`, `correo`, `telefono`, `fecha_nac`, `direccion`, `latitud`, `longitud`, `contrasena`, `foto_perfil`, `id_comuna`, `id_rol`, `id_estado_usuario`, `estrellas`) VALUES
+(7466578, '0', 'Mayerly', 'Mayerly', 'Zavala', 'Iturra', 'mayerly@gmail.com', 956543424, '2000-08-31', 'Avenida Michimalonco 278', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 241, 4, 1, 0),
+(10208323, '7', 'Guillermo', 'Guillermo', 'Pacheco', 'Cereceda', 'guillermo@gmail.com', 982776382, '1994-02-25', 'ABC 123', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 192, 4, 1, 0),
+(10286235, 'K', 'Profesional456', 'ProfesionalP', 'PPP', 'ProfPP', 'profprof@gmail.com', 986372773, '2002-01-12', 'Calle Nueva 343', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 37, 3, 2, 0),
+(10367255, '4', 'Natalia', 'Natalia', 'Urrutia', 'Menares', 'natalia@gmail.com', 953535645, '1997-09-03', 'Calle ABC 123', NULL, NULL, 'baaab6fa3b287456d2ff691027920826', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 233, 3, 1, 0),
+(11022434, '6', 'Profesional123', 'Profesional', 'Prof', 'ProfProf', 'profesional@gmail.com', 987875646, '1999-12-12', 'Avenida Portales 1234', NULL, NULL, '81dc9bdb52d04dc20036dbd8313ed055', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 78, 3, 2, 0),
+(11086788, '3', 'Lorena', 'Lorena', 'Lagos', 'Sanhueza', 'lorena@gmail.com', 998876565, '1998-08-25', 'Avenida Bernardo O\'Higgins 3272', NULL, NULL, '827ccb0eea8a706c4c34a16891f84e7b', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 65, 4, 1, 0),
+(11111111, '1', 'Admin', 'Admin', 'Admin', 'Admin', 'superadmin@gmail.com', 999999999, '1999-11-11', 'Calle Admin 123', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 233, 1, 1, 35),
+(12323424, '3', 'AAASSD', 'Orlando', 'Salazar', 'Urrutia', 'profprofprof@gmail.com', 982878273, '2000-08-12', 'Francisco Pérez 123', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/IMG_20240817_182910109.jpg', 32, 3, 2, 0),
+(12345678, '5', 'Cliente', 'Cliente', 'Pérez', 'García', 'cliente@gmail.com', 999999999, '1999-08-25', 'Calle DEF, 321', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 1, 4, 1, 0),
+(12424567, '2', 'Graciela', 'Graciela', 'Hernández', 'Jiménez', 'graciela@gmail.com', 924566345, '2022-08-12', 'Avenida Las Golondrinas 2485', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/Fondo.png', 237, 3, 2, 0),
+(12783648, '5', 'Jorge', 'Jorge', 'Bravo', 'Bravo', 'jorge@gmail.com', 928627627, '2001-08-12', 'Rengo 436', '-36.824307450000006', '-73.0543428', 'baaab6fa3b287456d2ff691027920826', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 233, 4, 1, 0),
+(13082637, '7', 'ABCDEF', 'Admin', 'Prueba', 'Prueba', 'admin@gmail.com', 982872637, '1995-08-08', 'Calle Nueva 123', NULL, NULL, '81dc9bdb52d04dc20036dbd8313ed055', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 1, 4, 1, 0),
+(13476476, '7', 'Renato', 'Renato', 'Poblete', 'Iturra', 'renato@gmail.com', 937363753, '2002-08-08', 'O\'Higgins 680', '-36.827606309302325', '-73.04949143953488', 'baaab6fa3b287456d2ff691027920826', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 233, 4, 1, 0),
+(14565656, '7', 'Hector', 'Héctor', 'Jiménez', 'Suazo', 'hector@gmail.com', 965656565, '2002-07-08', 'Avenida Arturo Prat 234', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/IMG_20240831_163740121.jpg', 1, 3, 1, 0),
+(15098364, '9', 'Barbara', 'Barbara', 'Hernández', 'Ramírez', 'barbara@gmail.com', 936262767, '2000-09-15', 'Calle ABC, 123', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 332, 4, 1, 0),
+(15626277, '3', 'Sandra', 'Sandra', 'Pereira', 'Pereira', 'sandra@gmail.com', 927862536, '2000-08-12', 'Agustinas 336', '-33.44154538277806', '-70.65875680521435', 'baaab6fa3b287456d2ff691027920826', 'uploads/foto_perfil/Fondo.png', 86, 3, 2, 0),
+(15727637, '9', 'Valentina', 'Valentina', 'Figueroa', 'Pereira', 'valentina@gmail.com', 938736726, '1994-06-01', 'Postdam 4332', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/Fondo.png', 237, 3, 1, 0),
+(16235638, '0', 'Francisco', 'Francisco', 'Figueroa', 'Figueroa', 'francisco@gmail.com', 927673563, '2000-08-13', 'Ramón Carrasco 825', '-36.78906465157923', '-73.05718657506715', 'baaab6fa3b287456d2ff691027920826', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 233, 4, 1, 0),
+(16377783, '5', 'Karina', 'Karina', 'Medina', 'Lozano', 'karina@gmail.com', 936726362, '1985-01-12', 'Ramón Carrasco 1023', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/IMG_20240831_174544129.jpg', 233, 3, 1, 0),
+(16767878, '5', 'Ernesto', 'Ernesto', 'Loyola', 'Zapata', 'ernesto@gmail.com', 988786565, '1991-12-15', 'José Arrieta 2345', NULL, NULL, 'e10adc3949ba59abbe56e057f20f883e', 'uploads/foto_perfil/IMG_20240810_181021908.jpg', 36, 3, 1, 0),
+(18267357, '9', 'Humberto', 'Humberto', 'Pérez', 'Pérez', 'humberto@gmail.com', 972627527, '2001-08-12', 'Serrano 50', '-33.458953050132564', '-70.64623414845794', 'baaab6fa3b287456d2ff691027920826', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 86, 4, 1, 0),
+(18273862, 'K', 'Monica', 'Mónica', 'Gallardo', 'Gallardo', 'monica@gmail.com', 928327826, '2000-10-10', 'Los Tulipanes 336', '-37.03329892406181', '-72.394982724876', 'baaab6fa3b287456d2ff691027920826', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 221, 4, 1, 0),
+(18276272, '5', 'Zacarias', 'Zacarias', 'López', 'Jiménez', 'zacarias@gmail.com', 928826826, '2000-05-02', 'Chucre Manzur 1201', '-33.431352', '-70.6337216', 'baaab6fa3b287456d2ff691027920826', 'uploads/foto_perfil/Fondo.png', 96, 4, 1, 0),
+(19267355, '0', 'Daniel', 'Daniel', 'Salazar', '', 'daniel@gmail.com', 927826722, '1991-01-12', 'Avenida Colón 8120', '-36.805323808388245', '-73.0801115780687', 'baaab6fa3b287456d2ff691027920826', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 237, 4, 1, 0),
+(19286338, '4', 'Carlos', 'Carlos', 'Rebolledo', '', 'carlos@gmail.com', 937838674, '2000-08-12', 'San Diego 333', '-33.449850881632656', '-70.65080746530613', 'baaab6fa3b287456d2ff691027920826', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 86, 4, 1, 0),
+(20786387, '4', 'Alvaro', 'Álvaro Alfonso', 'Molina', 'Jara', 'alvaromolinacl@gmail.com', 988888888, '2001-07-10', 'Abdon Cifuentes 551', '-36.78878900820779', '-73.03858311561113', '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 233, 1, 1, 0),
+(20876543, '4', 'PruebaProf', 'Prueba', 'Profesional', 'Prof', 'pruebaprof@gmail.com', 987767657, '2002-08-12', 'Calle Gabriela 143', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 83, 3, 1, 0),
+(23456789, '6', 'Juanito', 'Juan', 'Pérez', 'Gar', 'juan@gmail.com', 987654321, '2000-08-02', 'Calle GHI, 786', NULL, NULL, '202cb962ac59075b964b07152d234b70', 'uploads/foto_perfil/foto_perfil_predeterminada.jpg', 1, 2, 1, 0);
 
 --
 -- Disparadores `usuario`
@@ -2059,7 +2085,7 @@ ALTER TABLE `foro_tema`
 -- AUTO_INCREMENT de la tabla `foro_voto_respuesta`
 --
 ALTER TABLE `foro_voto_respuesta`
-  MODIFY `id_voto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `id_voto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT de la tabla `institucion`
@@ -2077,7 +2103,7 @@ ALTER TABLE `lugar_atencion_virtual`
 -- AUTO_INCREMENT de la tabla `mensaje`
 --
 ALTER TABLE `mensaje`
-  MODIFY `id_mensaje` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_mensaje` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `permiso`
@@ -2113,7 +2139,7 @@ ALTER TABLE `region`
 -- AUTO_INCREMENT de la tabla `reporte_profesional`
 --
 ALTER TABLE `reporte_profesional`
-  MODIFY `id_reporte` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_reporte` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `rol`

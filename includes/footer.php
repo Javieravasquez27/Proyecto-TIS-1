@@ -17,8 +17,7 @@
                         <div class="border text-center p-1" style="width: 100%; max-width: 200px; height: 110px;">
                             <a href="#">Política de privacidad</a><br>
                             <a href="#">Términos y condiciones</a><br>
-                            <a href="#">Trabaja con nosotros</a><br>
-                            <a href="#">¿Quiénes somos?</a>
+                            <a href="#">Trabaja con nosotros</a>
                         </div>
                     </div>
                     <div class="col-12 col-md-4 mb-2 d-flex flex-column align-items-center">

@@ -14,9 +14,6 @@
                     <li class="nav-item">
                         <a class="nav-link <?php echo (strpos($pagina, 'perfil/servicios') !== false) ? 'active' : null ?>" href="index.php?p=perfil/servicios&nombre_usuario=<?php echo $_SESSION['nombre_usuario']; ?>">Gestionar Servicios</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link <?php echo (strpos($pagina, 'perfil/panel_metricas') !== false) ? 'active' : null ?>" href="index.php?p=perfil/panel_metricas">Panel de Métricas</a>
-                    </li>
                 <?php endif; ?>
             </ul>
         </div>

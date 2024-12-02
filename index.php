@@ -7,7 +7,7 @@
     $pagina = isset($_GET['p']) ? strtolower($_GET['p']) : 'home'; // Se obtiene la página actual
     $esPaginaAdmin = strpos($pagina, "admin") === 0; // Se identifica a las páginas de admin con la forma 'index.php?p=admin/...'
     
-    $sinNavbarFooter = in_array($pagina, ['auth/login', 'auth/register', 'auth/recuperar_password']); // Arreglo con las páginas sin navbar ni footer
+    $sinNavbarFooter = in_array($pagina, ['auth/login', 'auth/register']); // Arreglo con las páginas sin navbar ni footer
     
     $ruta = 'pages/' . $pagina . '.php'; // Ruta de la página a cargar
     

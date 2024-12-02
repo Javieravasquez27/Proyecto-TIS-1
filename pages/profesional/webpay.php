@@ -10,7 +10,7 @@
         $buy_order = uniqid();
         $sessionid = session_id();
         $amount = $_POST['monto_total']; // Monto de la transacción
-        $returnUrl = "http://localhost/xampp/Proyecto-TIS-1/index.php?p=profesional/webpay_return"; // URL de retorno después del pago
+        $returnUrl = "http://localhost/xampp/kindomjobs/index.php?p=profesional/webpay_return"; // URL de retorno después del pago
     
         // Guardar los datos en la sesión
         $_SESSION['rut_prof'] = $_POST['rut_prof'];
@@ -19,6 +19,7 @@
         $_SESSION['fecha_cita'] = $_POST['fecha_cita'];
         $_SESSION['hora_cita'] = $_POST['hora_cita'];
         $_SESSION['lugar_atencion'] = $_POST['lugar_atencion'];
+        $_SESSION['estrellas'] = $_POST['estrellas_usadas'];
     
         // Generar la transacción
         $response = $transaction->create($buy_order, $sessionid, $amount, $returnUrl);

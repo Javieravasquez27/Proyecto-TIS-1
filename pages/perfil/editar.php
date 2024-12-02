@@ -137,24 +137,13 @@
                             <div class="row mb-3">
                                 <div class="col">
                                     <label for="biografia_prof" class="form-label">Biografía</label>
-                                    <?php if ((isset($fila_profesional['biografia_prof'])) && ($_SESSION['id_rol'] == 3)): ?>
-                                        <textarea class="form-control" id="biografia_prof" name="biografia_prof" placeholder="Escriba su biografía personal. Esto se mostrará en su perfil público" maxlength="500" required><?php echo $fila_profesional['biografia_prof']; ?></textarea>
-                                    <?php endif; ?>
-                                    <?php if (!isset($fila_profesional['biografia_prof'])): ?>
-                                        <textarea class="form-control" id="biografia_prof" name="biografia_prof" placeholder="Usted debe estar autorizado como profesional para poder completar esta información" maxlength="500" disabled></textarea>
-                                    <?php endif; ?>
+                                    <textarea class="form-control" id="biografia_prof" name="biografia_prof" placeholder="Escriba su biografía personal. Esto se mostrará en su perfil público" maxlength="500" required><?php echo $fila_profesional['biografia_prof']; ?></textarea>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col">
-                                <?php if (isset($fila_profesional['experiencia'])): ?>
                                     <label for="experiencia" class="form-label">Experiencia <b style="color: #b30000;">(*)</b></label>
                                     <textarea class="form-control" id="experiencia" name="experiencia" placeholder="Breve resumen de su experiencia (ej: Soy Ingeniero Civil Informático, Magíster en Ciencias de la Computación...). Esto se mostrará a los clientes al momento de reservar" maxlength="500" required><?php echo $fila_profesional['experiencia']; ?></textarea>
-                                <?php endif; ?>
-                                <?php if (!isset($fila_profesional['experiencia'])): ?>
-                                    <label for="experiencia" class="form-label">Experiencia</label>
-                                    <textarea class="form-control" id="experiencia" name="experiencia" placeholder="Usted debe estar autorizado como profesional para poder completar esta información" maxlength="500" disabled></textarea>
-                                <?php endif; ?>
                                 </div>
                             </div>
                         <?php endif; ?>
@@ -174,25 +163,24 @@
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         // Función para cargar las comunas dinámicamente
-        function cargarComunas() {
-            fetch("utils/get_comuna.php")
+        function cargarInstituciones() {
+            fetch("utils/get_institucion.php")
                 .then(response => response.json())
                 .then(data => {
-                    const select = document.getElementById("comuna");
+                    const select = document.getElementById("institucion");
                     select.innerHTML = '';
                     const defaultOption = document.createElement("option");
-                    defaultOption.textContent = "<?php echo $fila_usuario_comuna['nombre_comuna']; ?>";
-                    defaultOption.value = "<?php echo $fila_usuario['id_comuna']; ?>";
-                    defaultOption.selected = true;
+                    defaultOption.textContent = "Seleccione una institución";
+                    defaultOption.value = "";
                     select.appendChild(defaultOption);
-                    data.forEach(comuna => {
+                    data.forEach(institucion => {
                         const option = document.createElement("option");
-                        option.value = comuna.id_comuna;
-                        option.textContent = comuna.nombre_comuna;
+                        option.value = institucion.id_institucion;
+                        option.textContent = institucion.nombre_institucion;
                         select.appendChild(option);
                     });
                 })
-                .catch(error => console.error("Error al cargar comunas:", error));
+                .catch(error => console.error("Error al cargar instituciones:", error));
         }
         cargarComunas();
 

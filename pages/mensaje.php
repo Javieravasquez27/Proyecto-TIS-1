@@ -97,5 +97,5 @@
         });
     }
 
-    recargar();
+    setInterval(recargar, 1000);
 </script>
