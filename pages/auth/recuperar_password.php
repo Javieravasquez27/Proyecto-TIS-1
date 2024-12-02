@@ -32,7 +32,7 @@
             </div>
         </div>
     </div>
-    <p class="text-center mt-2"><a href='index.php?p=home'>Volver al inicio</a></p>
+    <p class="text-center mt-2"><button class="btn btn-primary btn-block"><a class="text-decoration-none text-white" href='index.php?p=home'>Volver al inicio</a></button></p>
 </div>
 
 <!-- Scripts de Bootstrap -->

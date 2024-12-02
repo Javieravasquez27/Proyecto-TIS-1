@@ -254,6 +254,7 @@
                     <p class="text-center mt-3">¿Ya tienes una cuenta? <a href='index.php?p=auth/login'>Inicia sesión aquí</a></p>
                 </div>
             </div>
+            <p class="text-center mt-2"><button class="btn btn-primary btn-block"><a class="text-decoration-none text-white" href='index.php?p=home'>Volver al inicio</a></button></p>
         </div>
     </div>
 </div>
