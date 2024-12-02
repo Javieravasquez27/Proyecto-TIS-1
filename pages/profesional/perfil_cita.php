@@ -1,89 +1,81 @@
-<style>
-.modal {
-    display: none;
-    position: fixed; /* Centrado en la pantalla */
-    left: 50%; /* Centrar horizontalmente */
-    top: 10%; /* Desplaza el modal hacia abajo, evita la barra morada */
-    transform: translateX(-50%); /* Solo centrar horizontalmente */
-    width: 80%; /* Ajusta el ancho del modal */
-    max-width: 600px; /* Limitar el ancho máximo */
-    max-height: 80%; /* Limitar la altura máxima */
-    background-color: #f8f9fa; /* Fondo claro */
-    border: 1px solid #e0e0e0; /* Borde claro */
-    border-radius: 15px; /* Bordes redondeados */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra elegante */
-    padding: 20px; /* Espaciado interno */
-    overflow-y: auto; /* Habilitar scroll interno si es necesario */
-}
-
-
-.modal-content {
-    margin: 0;
-    padding: 0;
-}
-
-.close {
-    float: right;
-    font-size: 24px;
-    font-weight: bold;
-    color: #888;
-    cursor: pointer;
-    margin-top: -10px; /* Ajuste para que se alinee mejor */
-    margin-right: -10px;
-}
-
-.close:hover,
-.close:focus {
-    color: #333;
-    text-decoration: none;
-}
-</style>
-
-
 <?php
-    define('PERMISO_REQUERIDO', 'client_pages_access');
-    include("middleware/auth.php");
-    include("database/conexion.php");
-    $rut = $_GET['rut'];
+define('PERMISO_REQUERIDO', 'client_pages_access');
+include("middleware/auth.php");
+include("database/conexion.php");
+$rut = $_GET['rut'];
+$rut_cliente = $_SESSION['rut'];
 
-    $consulta_profesional = "SELECT * FROM comuna, institucion, usuario JOIN profesional USING (rut)
-                                           JOIN profesion USING (id_profesion)
-                             WHERE profesional.id_institucion = institucion.id_institucion
-                             AND usuario.id_comuna = comuna.id_comuna
-                             AND profesional.rut = '$rut';";
-    $resultado_profesional = mysqli_query($conexion, $consulta_profesional);
-    $fila_profesional = mysqli_fetch_assoc($resultado_profesional);
+$consulta_profesional = "SELECT * FROM comuna, institucion, usuario JOIN profesional USING (rut)
+                                       JOIN profesion USING (id_profesion)
+                         WHERE profesional.id_institucion = institucion.id_institucion
+                         AND usuario.id_comuna = comuna.id_comuna
+                         AND profesional.rut = '$rut';";
+$resultado_profesional = mysqli_query($conexion, $consulta_profesional);
+$fila_profesional = mysqli_fetch_assoc($resultado_profesional);
 
-    $consulta_serv_prof = "SELECT sp.id_servicio, sp.rut_profesional, s.nombre_servicio AS nombre_servicio,
-                                  sp.precio_serv_prof
-                           FROM servicio_profesional sp LEFT JOIN servicio s ON sp.id_servicio = s.id_servicio 
-                           WHERE rut_profesional = '$rut';";
-    $resultado_serv_prof = mysqli_query($conexion, $consulta_serv_prof);
+$consulta_serv_prof = "SELECT sp.id_servicio, sp.rut_profesional, s.nombre_servicio AS nombre_servicio,
+                              sp.precio_serv_prof
+                       FROM servicio_profesional sp LEFT JOIN servicio s ON sp.id_servicio = s.id_servicio 
+                       WHERE rut_profesional = '$rut';";
+$resultado_serv_prof = mysqli_query($conexion, $consulta_serv_prof);
 
-    $consulta_lugar_at_presencial = "SELECT nombre_comuna, nombre_provincia, nombre_region
-                                     FROM lugar_atencion_presencial JOIN comuna USING (id_comuna)
-                                          JOIN provincia USING (id_provincia) JOIN region USING (id_region)
-                                     WHERE rut_profesional = '$rut';";
-    $resultado_lugar_at_presencial = mysqli_query($conexion, $consulta_lugar_at_presencial);
+$consulta_lugar_at_presencial = "SELECT nombre_comuna, nombre_provincia, nombre_region
+                                 FROM lugar_atencion_presencial JOIN comuna USING (id_comuna)
+                                      JOIN provincia USING (id_provincia) JOIN region USING (id_region)
+                                 WHERE rut_profesional = '$rut';";
+$resultado_lugar_at_presencial = mysqli_query($conexion, $consulta_lugar_at_presencial);
 
-    $consulta_lugar_at_virtual = "SELECT * 
-                                  FROM lugar_atencion_virtual
-                                  WHERE rut_profesional = '$rut';";
-    
-    $resultado_lugar_at_virtual = mysqli_query($conexion, $consulta_lugar_at_virtual);
+$consulta_lugar_at_virtual = "SELECT * 
+                              FROM lugar_atencion_virtual
+                              WHERE rut_profesional = '$rut';";
+$resultado_lugar_at_virtual = mysqli_query($conexion, $consulta_lugar_at_virtual);
+
+// Consulta para obtener el promedio de estrellas
+$consulta_promedio_estrellas = "SELECT AVG(rating_star) as promedio_estrellas FROM clasificacion WHERE rut_profesional = '$rut'";
+$resultado_promedio_estrellas = mysqli_query($conexion, $consulta_promedio_estrellas);
+$fila_promedio_estrellas = mysqli_fetch_assoc($resultado_promedio_estrellas);
+$promedio_estrellas = $fila_promedio_estrellas['promedio_estrellas'];
+
+// Consulta para obtener los comentarios de los clientes
+$consulta_comentarios = "SELECT comentario FROM clasificacion WHERE rut_profesional = '$rut'";
+$resultado_comentarios = mysqli_query($conexion, $consulta_comentarios);
+
+// Verificar si el profesional ya está marcado como favorito
+$consulta_favorito = "SELECT * FROM favoritos WHERE rut_profesional = '$rut' AND rut_usuario = '$rut_cliente'";
+$resultado_favorito = mysqli_query($conexion, $consulta_favorito);
+$es_favorito = mysqli_num_rows($resultado_favorito) > 0;
+
+// Preparar datos para el gráfico
+$servicios = [];
+$precios = [];
+$promedios_precios = [];
+while($fila_serv_prof = mysqli_fetch_assoc($resultado_serv_prof)){
+    $servicios[] = $fila_serv_prof['nombre_servicio'];
+    $precios[] = $fila_serv_prof['precio_serv_prof'];
+
+    // Consulta para obtener el promedio de los precios de este servicio específico de todos los profesionales
+    $id_servicio = $fila_serv_prof['id_servicio'];
+    $consulta_promedio_precio_servicio = "SELECT AVG(precio_serv_prof) as promedio_precio_servicio FROM servicio_profesional WHERE id_servicio = '$id_servicio'";
+    $resultado_promedio_precio_servicio = mysqli_query($conexion, $consulta_promedio_precio_servicio);
+    $fila_promedio_precio_servicio = mysqli_fetch_assoc($resultado_promedio_precio_servicio);
+    $promedios_precios[] = $fila_promedio_precio_servicio['promedio_precio_servicio'];
+}
 ?>
 
 <link rel="stylesheet" href="public/css/perfil_cita.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
 <div class="container my-5">
     <title>Reservar cita profesional con
         <?php echo $fila_profesional['nombres']; ?> - KindomJob's
     </title>
-    <div class="profile-header" style="position: relative;">
-        <img src="<?php echo $fila_profesional['foto_perfil'] ?>" alt="Foto de perfil" class="rounded-circle mb-3">
-        <!-- Botón de Reportar -->
-        <button id="reportar-btn" class="btn btn-danger" style="position: absolute; top: 10px; right: 10px;">Reportar</button>
-        <!-- Fin del Botón de Reportar -->
+
+    <div class="profile-header">
+        <div style="position: relative;">
+            <img src="<?php echo $fila_profesional['foto_perfil'] ?>" alt="Foto de perfil" class="rounded-circle mb-3">
+            <i id="favorite-icon" class="bi <?php echo $es_favorito ? 'bi-heart-fill' : 'bi-heart'; ?>" style="position: absolute; top: 10px; left: 10px; font-size: 2rem; cursor: pointer; color: <?php echo $es_favorito ? 'purple' : 'black'; ?>;"></i>
+        </div>
         <h2>
             <?php echo $fila_profesional['nombres']?>
             <?php echo $fila_profesional['apellido_p']?>
@@ -92,9 +84,11 @@
         <p>
             <?php echo $fila_profesional['nombre_profesion']?>
         </p>
-        <p>
-            <i class="bi bi-geo-alt"></i> <?php echo $fila_profesional['nombre_comuna']?>
-        </p>
+        <?php if ($promedio_estrellas): ?>
+            <p>
+                <strong>Promedio de Estrellas:</strong> <?php echo number_format($promedio_estrellas, 1); ?> &#9733;
+            </p>
+        <?php endif; ?>
     </div>
     <div class="row mt-4">
         <!-- Sección de información y servicios -->
@@ -121,6 +115,7 @@
                 <div class="tab-pane fade show active" id="services" role="tabpanel">
                     <h5>Servicios y Precios</h5>
                     <?php
+                        mysqli_data_seek($resultado_serv_prof, 0); // Reset the result pointer to the beginning
                         while($fila_serv_prof = mysqli_fetch_assoc($resultado_serv_prof)){
                     ?>
                     <div class="service-item"><span>
@@ -131,7 +126,36 @@
                     <?php
                         }
                     ?>
-                    <div class="graph-placeholder">[Gráfico]</div>
+                    <canvas id="serviciosChart"></canvas>
+                    <script>
+                        var ctx = document.getElementById('serviciosChart').getContext('2d');
+                        var serviciosChart = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: <?php echo json_encode($servicios); ?>,
+                                datasets: [{
+                                    label: 'Precio del Servicio',
+                                    data: <?php echo json_encode($precios); ?>,
+                                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                                    borderColor: 'rgba(54, 162, 235, 1)',
+                                    borderWidth: 1
+                                }, {
+                                    label: 'Promedio del Precio del Servicio',
+                                    data: <?php echo json_encode($promedios_precios); ?>,
+                                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                                    borderColor: 'rgba(255, 99, 132, 1)',
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    y: {
+                                        beginAtZero: true
+                                    }
+                                }
+                            }
+                        });
+                    </script>
                 </div>
                 <div class="tab-pane fade" id="direcciones" role="tabpanel">
                     <h5>Direcciones</h5>
@@ -155,7 +179,13 @@
                 </div>
                 <div class="tab-pane fade" id="opinions" role="tabpanel">
                     <h5>Opiniones</h5>
-                    <p>Opiniones de los clientes...</p>
+                    <?php
+                        $comentario_num = 1;
+                        while($fila_comentario = mysqli_fetch_assoc($resultado_comentarios)){
+                            echo "<p><strong>Comentario $comentario_num:</strong> " . htmlspecialchars($fila_comentario['comentario']) . "</p>";
+                            $comentario_num++;
+                        }
+                    ?>
                 </div>
             </div>
         </div>
@@ -196,6 +226,32 @@
     </div>
 </div>
 
+<script>
+    $(document).ready(function() {
+        $('#favorite-icon').on('click', function() {
+            var isFavorite = $(this).hasClass('bi-heart-fill');
+            var url = isFavorite ? 'utils/eliminar_favorito.php' : 'utils/guardar_favorito.php';
+            var newClass = isFavorite ? 'bi-heart' : 'bi-heart-fill';
+            var newColor = isFavorite ? 'black' : 'purple';
+
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: {
+                    rut_profesional: '<?php echo $rut; ?>',
+                    rut_cliente: '<?php echo $rut_cliente; ?>'
+                },
+                success: function(response) {
+                    $('#favorite-icon').removeClass('bi-heart bi-heart-fill').addClass(newClass).css('color', newColor);
+                    alert(isFavorite ? 'Profesional eliminado de favoritos' : 'Profesional agregado a favoritos');
+                },
+                error: function() {
+                    alert('Error al actualizar favoritos');
+                }
+            });
+        });
+    });
+</script>
 <!-- Modal de confirmación -->
 <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -254,27 +310,7 @@
     </div>
 </div>
 
-<!-- Modal de Reportar al Profesional -->
-<div id="reportar-modal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2 style="text-align: center;">Reportar al Profesional</h2>
-        <form id="form-reporte" method="POST">
-            <input type="hidden" name="rut_profesional" value="<?php echo $rut; ?>">
-            <label for="motivo" style="font-weight: bold;">Motivo del Reporte:</label>
-            <textarea name="motivo" id="motivo" rows="4" cols="50" placeholder="Describe el motivo del reporte..." required style="width: 100%; border: 1px solid #ccc; border-radius: 5px; padding: 10px; margin-bottom: 15px;"></textarea><br>
-            <div style="text-align: center;">
-                <button type="submit" class="btn btn-danger">Enviar Reporte</button>
-            </div>
-        </form>
-    </div>
-</div>
-<!-- Fin del Modal de Reportar al Profesional -->
 
-
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
     $(document).ready(function () {
         // Detecta cuando cambia la fecha y hace una solicitud AJAX
@@ -283,8 +319,7 @@
             const rut = document.querySelector("#rut_prof").value;
             if (fechaSeleccionada) {
                 $.ajax({
-                    url: 'pages/profesional/consultar_disponibilidad.php', // Archivo PHP que manejará la solicitud
-                    type: 'POST',
+                    url: 'pages/profesional/consultar_disponibilidad.php',
                     data: { rut: rut, fecha: fechaSeleccionada },
                     success: function (data) {
                         // Se actualiza la lista de horas disponibles
@@ -349,45 +384,4 @@
             $('#confirmModal').modal('hide');
         });
     });
-</script>
-<script>
-// Manejo del modal de reporte
-document.getElementById('reportar-btn').onclick = function () {
-    document.getElementById('reportar-modal').style.display = "block";
-};
-
-document.querySelector('.close').onclick = function () {
-    document.getElementById('reportar-modal').style.display = "none";
-};
-
-window.onclick = function (event) {
-    if (event.target == document.getElementById('reportar-modal')) {
-        document.getElementById('reportar-modal').style.display = "none";
-    }
-};
-</script>
-<script>
-document.getElementById('form-reporte').addEventListener('submit', function (event) {
-    event.preventDefault(); // Prevenir el comportamiento por defecto del formulario
-
-    const formData = new FormData(this); // Obtener los datos del formulario
-
-    fetch('api/reporte/reportar_usuario.php', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            alert('Reporte enviado exitosamente.');
-            document.getElementById('reportar-modal').style.display = 'none'; // Cerrar el modal
-        } else {
-            alert(data.error || 'Error al enviar el reporte');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Error al procesar la solicitud.');
-    });
-});
 </script>

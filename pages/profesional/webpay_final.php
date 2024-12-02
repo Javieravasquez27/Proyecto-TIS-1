@@ -11,11 +11,11 @@ $hora_cita = $_GET['hora_cita'];
 $lugar_atencion = $_GET['lugar_atencion'];
 
 if ($status == 'success') { 
-    $insertar_cita = "INSERT INTO cita (rut_cliente, rut_profesional, fecha_cita, hora_cita, tokencompra, lugar_atencion, servicio) VALUES ('$_SESSION[rut]', '$rut_prof', '$fecha_cita', '$hora_cita', '$token', '$lugar_atencion', '$nombre_servicio')";
-    $resultado = mysqli_query($conexion, $insertar_cita);
     $buyOrder = $_GET['buyOrder'];
     $amount = $_GET['amount'];
     $token = $_GET['token'];
+    $insertar_cita = "INSERT INTO cita (rut_cliente, rut_profesional, fecha_cita, hora_cita, tokencompra, lugar_atencion, servicio) VALUES ('$_SESSION[rut]', '$rut_prof', '$fecha_cita', '$hora_cita', '$token', '$lugar_atencion', '$nombre_servicio')";
+    $resultado = mysqli_query($conexion, $insertar_cita);
 ?>
     <div class='container mt-5'>
         <div class='voucher' id='voucher'>
@@ -27,41 +27,40 @@ if ($status == 'success') {
                     <div class='col-md-6'>
                         <strong>Servicio:</strong> <?php echo $nombre_servicio; ?>
                     </div>
-                </div>
-                <div class='voucher-section'>
-                    <div class='row'>
-                        <div class='col-md-6'>
-                            <strong>RUT Profesional:</strong> <?php echo $rut_prof; ?>
-                        </div>
-                        <div class='col-md-6'>
-                            <strong>Fecha:</strong> <?php echo $fecha_cita; ?>
-                        </div>
-                    </div>
-                </div>
-                <div class='voucher-section'>
-                    <div class='row'>
-                        <div class='col-md-6'>
-                            <strong>Hora:</strong> <?php echo $hora_cita; ?>
-                        </div>
-                        <div class='col-md-6'>
-                            <strong>Monto:</strong> $<?php echo $amount; ?>
-                        </div>
-                    </div>
-                </div>
-                <div class='voucher-section'>
-                    <div class='row'>
-                        <div class='col-md-6'>
-                            <strong>Lugar de Atención:</strong> <?php echo $lugar_atencion; ?>
-                        </div>
-                        <div class='col-md-6'>
-                            <strong>Orden de Compra:</strong> <?php echo $buyOrder; ?>
-                        </div>
+                    <div class='col-md-6'>
+                        <strong>Profesional:</strong> <?php echo $nombre_profesional; ?>
                     </div>
                 </div>
             </div>
-            <div class='mt-3 text-center'>
-                <button class='btn btn-primary' onclick="window.location.href='index.php'">Volver al inicio</button>
-                <button class='btn btn-secondary' onclick="downloadPDF()">Descargar como PDF</button>
+            <div class='voucher-section'>
+                <div class='row'>
+                    <div class='col-md-6'>
+                        <strong>RUT Profesional:</strong> <?php echo $rut_prof; ?>
+                    </div>
+                    <div class='col-md-6'>
+                        <strong>Fecha:</strong> <?php echo $fecha_cita; ?>
+                    </div>
+                </div>
+            </div>
+            <div class='voucher-section'>
+                <div class='row'>
+                    <div class='col-md-6'>
+                        <strong>Hora:</strong> <?php echo $hora_cita; ?>
+                    </div>
+                    <div class='col-md-6'>
+                        <strong>Monto:</strong> $<?php echo $amount; ?>
+                    </div>
+                </div>
+            </div>
+            <div class='voucher-section'>
+                <div class='row'>
+                    <div class='col-md-6'>
+                        <strong>Lugar de Atención:</strong> <?php echo $lugar_atencion; ?>
+                    </div>
+                    <div class='col-md-6'>
+                        <strong>Orden de Compra:</strong> <?php echo $buyOrder; ?>
+                    </div>
+                </div>
             </div>
         </div>
         <div class='mt-3 text-center'>
