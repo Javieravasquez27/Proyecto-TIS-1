@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-12-2024 a las 01:54:08
+-- Tiempo de generación: 02-12-2024 a las 10:13:54
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -55,6 +55,20 @@ CREATE TABLE `cita` (
   `lugar_atencion` varchar(255) NOT NULL,
   `servicio` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `cita`
+--
+
+INSERT INTO `cita` (`fecha_cita`, `hora_cita`, `rut_cliente`, `rut_profesional`, `tokencompra`, `lugar_atencion`, `servicio`) VALUES
+('2024-12-12', '09:30:00', 15098364, 14565656, '01ab9ebdb08c63923e4854f0720f347904b22df39834f8e369c813390a96c3fc', '', 'Desarrollo de aplicaciones móviles en Android'),
+('2024-12-12', '10:30:00', 11111111, 14565656, '01ab14a3ead2617dd1533292eecfe4b5e5bb708b7b08044c29a7e0050a6ce50f', '', 'Desarrollo de aplicaciones móviles en Android'),
+('2024-12-12', '11:30:00', 11111111, 14565656, '', '', 'Desarrollo de aplicaciones móviles en Android'),
+('2024-12-12', '12:30:00', 11111111, 14565656, '01ab692058b3e20340c665cc54d3432ca652f3022325fa4f4ac865f0412fc860', '', 'Desarrollo de aplicaciones móviles en Android'),
+('2024-12-12', '13:30:00', 11111111, 14565656, '01abdeb4d4e501beec64b3c478e4e2263ef0f6e969ff0e955f6c2880f471d153', '', 'Desarrollo de aplicaciones móviles en Android'),
+('2024-12-12', '14:30:00', 15098364, 14565656, '01ab1160cc209014e7ea79efb5d2ba35bfb1dc13253b75d699940749a3b2d425', '', 'Desarrollo de aplicaciones móviles en iOS'),
+('2024-12-12', '16:30:00', 11111111, 14565656, '', '', 'Desarrollo de aplicaciones móviles en Android'),
+('2024-12-12', '17:30:00', 11111111, 14565656, '01ab6542d4453f7de7bce40a0da42225ddc9aed1bef195303012e5f14e1310a2', '', 'Desarrollo de aplicaciones móviles en Android');
 
 -- --------------------------------------------------------
 
@@ -634,15 +648,15 @@ INSERT INTO `disponibilidad` (`id_disponibilidad`, `rut_profesional`, `rut_clien
 (140, 14565656, NULL, '2024-12-05', '17:30:00', 1),
 (141, 14565656, NULL, '2024-12-05', '18:30:00', 1),
 (142, 14565656, NULL, '2024-12-05', '19:30:00', 1),
-(143, 14565656, NULL, '2024-12-12', '09:30:00', 1),
-(144, 14565656, NULL, '2024-12-12', '10:30:00', 1),
-(145, 14565656, NULL, '2024-12-12', '11:30:00', 1),
-(146, 14565656, NULL, '2024-12-12', '12:30:00', 1),
-(147, 14565656, NULL, '2024-12-12', '13:30:00', 1),
-(148, 14565656, NULL, '2024-12-12', '14:30:00', 1),
+(143, 14565656, 15098364, '2024-12-12', '09:30:00', 0),
+(144, 14565656, 11111111, '2024-12-12', '10:30:00', 0),
+(145, 14565656, 11111111, '2024-12-12', '11:30:00', 0),
+(146, 14565656, 11111111, '2024-12-12', '12:30:00', 0),
+(147, 14565656, 11111111, '2024-12-12', '13:30:00', 0),
+(148, 14565656, 15098364, '2024-12-12', '14:30:00', 0),
 (149, 14565656, NULL, '2024-12-12', '15:30:00', 1),
-(150, 14565656, NULL, '2024-12-12', '16:30:00', 1),
-(151, 14565656, NULL, '2024-12-12', '17:30:00', 1),
+(150, 14565656, 11111111, '2024-12-12', '16:30:00', 0),
+(151, 14565656, 11111111, '2024-12-12', '17:30:00', 0),
 (152, 14565656, NULL, '2024-12-12', '18:30:00', 1),
 (153, 14565656, NULL, '2024-12-12', '19:30:00', 1),
 (154, 14565656, NULL, '2024-11-29', '11:00:00', 1),
@@ -1045,10 +1059,17 @@ CREATE TABLE `lugar_atencion_virtual` (
 
 CREATE TABLE `mensaje` (
   `id_mensaje` int(11) NOT NULL,
-  `rut_cliente` int(11) NOT NULL,
-  `rut_profesional` int(11) NOT NULL,
+  `rut_recibe` int(11) NOT NULL,
+  `rut_envia` int(11) NOT NULL,
   `contenido_mensaje` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `mensaje`
+--
+
+INSERT INTO `mensaje` (`id_mensaje`, `rut_recibe`, `rut_envia`, `contenido_mensaje`) VALUES
+(2, 14565656, 11111111, 'Hola');
 
 -- --------------------------------------------------------
 
@@ -1376,6 +1397,13 @@ CREATE TABLE `reporte_profesional` (
   `rut_profesional` int(11) NOT NULL,
   `motivo_reporte` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `reporte_profesional`
+--
+
+INSERT INTO `reporte_profesional` (`id_reporte`, `rut_cliente`, `rut_profesional`, `motivo_reporte`) VALUES
+(1, 11111111, 14565656, 'AASSASASA');
 
 -- --------------------------------------------------------
 
@@ -1878,8 +1906,8 @@ ALTER TABLE `lugar_atencion_virtual`
 --
 ALTER TABLE `mensaje`
   ADD PRIMARY KEY (`id_mensaje`),
-  ADD KEY `mensaje_ibfk_1` (`rut_cliente`),
-  ADD KEY `mensaje_ibfk_2` (`rut_profesional`);
+  ADD KEY `mensaje_ibfk_1` (`rut_recibe`),
+  ADD KEY `mensaje_ibfk_2` (`rut_envia`);
 
 --
 -- Indices de la tabla `permiso`
@@ -2049,7 +2077,7 @@ ALTER TABLE `lugar_atencion_virtual`
 -- AUTO_INCREMENT de la tabla `mensaje`
 --
 ALTER TABLE `mensaje`
-  MODIFY `id_mensaje` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_mensaje` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `permiso`
@@ -2085,7 +2113,7 @@ ALTER TABLE `region`
 -- AUTO_INCREMENT de la tabla `reporte_profesional`
 --
 ALTER TABLE `reporte_profesional`
-  MODIFY `id_reporte` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_reporte` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `rol`
@@ -2192,8 +2220,8 @@ ALTER TABLE `lugar_atencion_virtual`
 -- Filtros para la tabla `mensaje`
 --
 ALTER TABLE `mensaje`
-  ADD CONSTRAINT `mensaje_ibfk_1` FOREIGN KEY (`rut_cliente`) REFERENCES `cliente` (`rut`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `mensaje_ibfk_2` FOREIGN KEY (`rut_profesional`) REFERENCES `profesional` (`rut`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `mensaje_ibfk_1` FOREIGN KEY (`rut_recibe`) REFERENCES `usuario` (`rut`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `mensaje_ibfk_2` FOREIGN KEY (`rut_envia`) REFERENCES `usuario` (`rut`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `permiso_rol`
