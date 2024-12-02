@@ -117,6 +117,7 @@
         </div>
         <!-- Sección de reserva de citas -->
         <div class="col-md-4">
+            <a href="index.php?p=mensaje&rut=<?php echo $rut; ?>" class="btn btn-primary mb-3">Chatear con profesional</a>
             <!-- A pagar -->
             <form id="form-reserva" action="index.php?p=profesional/webpay" method="POST">
                 <div class="calendar">
@@ -127,7 +128,7 @@
                     <input type="hidden" id="fecha_cita" name="fecha_cita">
                     <input type="hidden" id="hora_cita" name="hora_cita">
                     <input type="hidden" id="lugar_atencion" name="lugar_atencion">
-                    <input type="hidden" id="monto_total" name="monto_total" value="1">
+                    <input type="hidden" id="monto_total" name="monto_total" value="0">
                     <select class="form-select mb-3" id="servicio" name="servicio">
                         <option value="" selected>Seleccione un servicio</option>
                         <?php

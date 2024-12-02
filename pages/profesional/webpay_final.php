@@ -2,9 +2,7 @@
 include 'database/conexion.php';
 
 $status = $_GET['status'];
-$buyOrder = $_GET['buyOrder'];
-$amount = $_GET['amount'];
-$token = $_GET['token'];
+
 $rut_prof = $_GET['rut_prof'];
 $nombre_profesional = $_GET['nombre_profesional'];
 $nombre_servicio = $_GET['nombre_servicio'];
@@ -12,10 +10,13 @@ $fecha_cita = $_GET['fecha_cita'];
 $hora_cita = $_GET['hora_cita'];
 $lugar_atencion = $_GET['lugar_atencion'];
 
-$insertar_cita = "INSERT INTO cita (rut_cliente, rut_profesional, fecha_cita, hora_cita, tokencompra, lugar_atencion, servicio) VALUES ('$_SESSION[rut]', '$rut_prof', '$fecha_cita', '$hora_cita', '$token', '$lugar_atencion', '$nombre_servicio')";
-$resultado = mysqli_query($conexion, $insertar_cita);
-
-if ($status == 'success') { ?>
+if ($status == 'success') { 
+    $insertar_cita = "INSERT INTO cita (rut_cliente, rut_profesional, fecha_cita, hora_cita, tokencompra, lugar_atencion, servicio) VALUES ('$_SESSION[rut]', '$rut_prof', '$fecha_cita', '$hora_cita', '$token', '$lugar_atencion', '$nombre_servicio')";
+    $resultado = mysqli_query($conexion, $insertar_cita);
+    $buyOrder = $_GET['buyOrder'];
+    $amount = $_GET['amount'];
+    $token = $_GET['token'];
+?>
     <div class='container mt-5'>
         <div class='voucher' id='voucher'>
             <div class='voucher-header text-center'>
@@ -117,7 +118,25 @@ if ($status == 'success') { ?>
     </script>
 
 <?php
-} else {
-    echo "Error en el pago.";
+} 
+if ($status == 'error') { 
+    $buyOrder = $_GET['buyOrder'];
+    $amount = $_GET['amount'];
+    $token = $_GET['token'];
+    echo "
+    <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Error En El Pago',
+            text: 'Se te redireccionara a la pagina principal',
+            showConfirmButton: true,
+            confirmButtonText: 'Aceptar',
+            willClose: () => {
+                window.location.href = 'index.php';
+            }
+        });
+    </script>
+    "; 
 }
 ?>

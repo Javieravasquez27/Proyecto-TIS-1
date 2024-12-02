@@ -36,7 +36,7 @@ try {
             echo "Error al guardar la cita: " . mysqli_error($conexion);
         }
     } else {
-        echo "Error en el pago: " . $result->getResponseCode();
+        header("Location: index.php?p=profesional/webpay_final&status=error&buyOrder=$buyOrder&amount=$amount&token=$tokenWs&rut_prof=$rut_prof&nombre_profesional=$nombre_profesional&nombre_servicio=$nombre_servicio&fecha_cita=$fecha_cita&hora_cita=$hora_cita&lugar_atencion=$lugar_atencion&token=$tokenWs");
     }
 } catch (Exception $e) {
     echo 'Error: ' . $e->getMessage();

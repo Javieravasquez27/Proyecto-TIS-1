@@ -47,6 +47,7 @@
                             <?php if ($_SESSION['id_rol'] == 1 || $_SESSION['id_rol'] == 2): ?>
                                 <li><a class="dropdown-item <?php echo ($pagina == 'admin/home') ? 'active' : null ?>" aria-current="page" href="index.php?p=admin/home">Panel Admin</a></li>
                             <?php endif; ?>
+                            <li><a class="dropdown-item"  href="index.php?p=mensajes">Mensajes</a></li>
                             <li><a class="dropdown-item" id="logout" href="#">Cerrar Sesión</a></li>
                         </ul>
                     </li>
