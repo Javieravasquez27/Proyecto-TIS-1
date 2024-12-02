@@ -2,7 +2,6 @@
 .modal {
     display: none;
     position: fixed; /* Centrado en la pantalla */
-    z-index: 1000;
     left: 50%; /* Centrar horizontalmente */
     top: 10%; /* Desplaza el modal hacia abajo, evita la barra morada */
     transform: translateX(-50%); /* Solo centrar horizontalmente */
