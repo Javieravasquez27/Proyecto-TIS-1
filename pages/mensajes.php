@@ -52,7 +52,7 @@ $resultado = mysqli_query($conexion, $query);
         font-size: 0.9rem;
     }
 </style>
-<h1 class="text-center mt-5">Chats con profesionales</h1>
+
 <div class="chat-list">
     <?php while ($row = mysqli_fetch_assoc($resultado)): ?>
         <?php   if ($_SESSION['rut']!= $row['rut']): ?>

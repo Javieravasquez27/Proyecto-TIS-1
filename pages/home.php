@@ -317,7 +317,7 @@
                         const lon = parseFloat(location.lon);
 
                         // Mostrar la ubicación en el mapa
-                        map.setView([lat, lon], 13);
+                        map.setView([lat, lon], 12);
                         
                     } else {
                         document.getElementById('result').innerText = 
