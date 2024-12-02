@@ -133,7 +133,7 @@
                                 </div>
                             </div>
                         </div>
-                        `;
+                    `;
 
                         // Se inserta la nueva respuesta al final de la lista de respuestas
                         const respuestasDiv = document.querySelector('.respuestas');
@@ -193,42 +193,24 @@
                 
                     respuestas.forEach((respuesta, index) => {
                         const nuevaRespuestaHTML = `
-                        <div class="card mb-3 ${respuesta.mejor_respuesta ? 'mejor-respuesta' : ''}" style="${offset > 0 ? 'opacity: 0; transition: opacity 0.5s ease-in-out;' : ''}">
-                            <div class="card-body">
-                                <p>${respuesta.contenido_respuesta}</p>
-                                <small>
-                                    <img src="${respuesta.foto_perfil}" alt="Perfil" width="30" height="30" class="rounded-circle">
-                                    ${respuesta.nombres} (${respuesta.nombre_rol}) · ${respuesta.fecha_respuesta}
-                                </small>
-                                <div class="votos mt-3">
-                                    <button class="btn btn-success btn-sm votar" data-id="${respuesta.id_respuesta}" data-tipo="positivo">
-                                        👍 ${respuesta.votos_positivos}
-                                    </button>
-                                    <button class="btn btn-danger btn-sm votar" data-id="${respuesta.id_respuesta}" data-tipo="negativo">
-                                        👎 ${respuesta.votos_negativos}
-                                    </button>
+                            <div class="card mb-3" style="${offset > 0 ? 'opacity: 0; transition: opacity 0.5s ease-in-out;' : ''}">
+                                <div class="card-body">
+                                    <p>${respuesta.contenido_respuesta}</p>
+                                    <small>
+                                        <img src="${respuesta.foto_perfil}" alt="Perfil" width="30" height="30" class="rounded-circle">
+                                        ${respuesta.nombres} (${respuesta.nombre_rol}) · ${respuesta.fecha_respuesta}
+                                    </small>
+                                    <div class="votos mt-3">
+                                        <button class="btn btn-success btn-sm votar" data-id="${respuesta.id_respuesta}" data-tipo="positivo">
+                                            👍 ${respuesta.votos_positivos}
+                                        </button>
+                                        <button class="btn btn-danger btn-sm votar" data-id="${respuesta.id_respuesta}" data-tipo="negativo">
+                                            👎 ${respuesta.votos_negativos}
+                                        </button>
+                                    </div>
                                 </div>
-                                ${respuesta.mostrar_opcion_mejor_respuesta ? `
-                                <div class="dropdown float-end">
-                                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        ...
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li>
-                                            <button class="dropdown-item marcar-mejor-respuesta" data-id="${respuesta.id_respuesta}">
-                                                Marcar como mejor respuesta
-                                            </button>
-                                        </li>
-                                    </ul>
-                                </div>
-                                ` : ''}
                             </div>
-                            ${respuesta.mejor_respuesta ? `
-                            <div class="badge bg-success position-absolute bottom-0 end-0 m-3">Mejor Respuesta</div>
-                            ` : ''}
-                        </div>
                         `;
-
                     
                         listaRespuestas.insertAdjacentHTML('beforeend', nuevaRespuestaHTML);
                     
@@ -350,75 +332,6 @@
                 }
             })
             .catch(error => console.error('Error:', error));
-        }
-    });
-</script>
-
-<script>
-    // Evento click para "Marcar como mejor respuesta"
-    document.addEventListener("click", function (event) {
-        if (event.target.classList.contains("marcar-mejor-respuesta")) {
-            const idRespuesta = event.target.dataset.id;
-        
-            // Confirmación con SweetAlert2
-            Swal.fire({
-                title: '¿Estás seguro?',
-                text: "Marcarás esta respuesta como la mejor.",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Sí, marcar',
-                cancelButtonText: 'Cancelar',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Realizar la solicitud AJAX
-                    fetch("marcar_mejor_respuesta.php", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({ id_respuesta: idRespuesta }),
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.exito) {
-                            Swal.fire({
-                                title: '¡Hecho!',
-                                text: 'La respuesta ha sido marcada como la mejor.',
-                                icon: 'success',
-                            });
-                        
-                            // Actualizar visualmente la respuesta marcada
-                            document.querySelectorAll(".card.mejor-respuesta").forEach(card => {
-                                card.classList.remove("mejor-respuesta");
-                                const badge = card.querySelector(".badge.bg-success");
-                                if (badge) badge.remove();
-                            });
-                        
-                            // Actualizar la tarjeta actual
-                            const tarjeta = event.target.closest(".card");
-                            tarjeta.classList.add("mejor-respuesta");
-                            const badge = document.createElement("div");
-                            badge.className = "badge bg-success position-absolute bottom-0 end-0 m-3";
-                            badge.textContent = "Mejor Respuesta";
-                            tarjeta.appendChild(badge);
-                        } else {
-                            Swal.fire({
-                                title: 'Error',
-                                text: data.mensaje || 'No se pudo marcar la respuesta.',
-                                icon: 'error',
-                            });
-                        }
-                    })
-                    .catch(error => {
-                        Swal.fire({
-                            title: 'Error',
-                            text: 'Ocurrió un error al intentar marcar la respuesta.',
-                            icon: 'error',
-                        });
-                        console.error("Error en la solicitud:", error);
-                    });
-                }
-            });
         }
     });
 </script>

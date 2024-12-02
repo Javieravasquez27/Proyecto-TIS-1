@@ -1,29 +1,29 @@
 <?php
-include 'database/conexion.php';
-
-$fecha_cita = $_GET['fecha_cita'];
-$hora_cita = $_GET['hora_cita'];
-$rut_cliente = $_GET['rut_cliente'];
-$rut_profesional = $_GET['rut_profesional'];
-$lugar_servicio = $_GET['lugar_servicio'];
-$servicio = $_GET['servicio'];
-
-// Consulta para obtener los detalles del profesional
-$query_profesional = "SELECT nombres, apellido_p, apellido_m FROM usuario WHERE rut = '$rut_profesional'";
-$resultado_profesional = mysqli_query($conexion, $query_profesional);
-$profesional = mysqli_fetch_assoc($resultado_profesional);
-
-// Consulta para obtener los detalles del cliente
-$query_cliente = "SELECT nombres, apellido_p, apellido_m FROM usuario WHERE rut = '$rut_cliente'";
-$resultado_cliente = mysqli_query($conexion, $query_cliente);
-$cliente = mysqli_fetch_assoc($resultado_cliente);
-
-// Obtener la fecha y hora actual
-$fecha_actual = date('Y-m-d');
-$hora_actual = date('H:i:s');
-
-// Verificar si la fecha de la cita ya ha pasado
-$cita_pasada = ($fecha_cita < $fecha_actual) || ($fecha_cita == $fecha_actual && $hora_cita < $hora_actual);
+    include 'database/conexion.php';
+    
+    $fecha_cita = $_GET['fecha_cita'];
+    $hora_cita = $_GET['hora_cita'];
+    $rut_cliente = $_GET['rut_cliente'];
+    $rut_profesional = $_GET['rut_profesional'];
+    $lugar_servicio = $_GET['lugar_servicio'];
+    $servicio = $_GET['servicio'];
+    
+    // Consulta para obtener los detalles del profesional
+    $query_profesional = "SELECT nombres, apellido_p, apellido_m FROM usuario WHERE rut = '$rut_profesional'";
+    $resultado_profesional = mysqli_query($conexion, $query_profesional);
+    $profesional = mysqli_fetch_assoc($resultado_profesional);
+    
+    // Consulta para obtener los detalles del cliente
+    $query_cliente = "SELECT nombres, apellido_p, apellido_m FROM usuario WHERE rut = '$rut_cliente'";
+    $resultado_cliente = mysqli_query($conexion, $query_cliente);
+    $cliente = mysqli_fetch_assoc($resultado_cliente);
+    
+    // Obtener la fecha y hora actual
+    $fecha_actual = date('Y-m-d');
+    $hora_actual = date('H:i:s');
+    
+    // Verificar si la fecha de la cita ya ha pasado
+    $cita_pasada = ($fecha_cita < $fecha_actual) || ($fecha_cita == $fecha_actual && $hora_cita < $hora_actual);
 ?>
 
 <style>

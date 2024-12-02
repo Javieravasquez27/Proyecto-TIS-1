@@ -1,15 +1,15 @@
 <?php
-include 'database/conexion.php';
-
-// Obtener el rut del usuario actual
-$rut_usuario = $_SESSION['rut'];
-
-// Consulta para obtener todas las citas del usuario
-$query = "SELECT fecha_cita, hora_cita, rut_cliente, rut_profesional, lugar_atencion, servicio
-          FROM cita
-          WHERE rut_cliente = '$rut_usuario'";
-
-$resultado = mysqli_query($conexion, $query);
+    include 'database/conexion.php';
+    
+    // Obtener el rut del usuario actual
+    $rut_usuario = $_SESSION['rut'];
+    
+    // Consulta para obtener todas las citas del usuario
+    $query = "SELECT fecha_cita, hora_cita, rut_cliente, rut_profesional, lugar_atencion, servicio
+              FROM cita
+              WHERE rut_cliente = '$rut_usuario'";
+    
+    $resultado = mysqli_query($conexion, $query);
 ?>
 
 <style>
@@ -44,7 +44,7 @@ $resultado = mysqli_query($conexion, $query);
         font-size: 0.9rem;
     }
 </style>
-<h1 class="text-center mt-5">Citas agendadas</h1>
+
 <div class="cita-list">
     <?php while ($row = mysqli_fetch_assoc($resultado)): ?>
         <div class="cita-item" onclick="window.location.href='index.php?p=cita&fecha_cita=<?php echo $row['fecha_cita']; ?>&hora_cita=<?php echo $row['hora_cita']; ?>&rut_cliente=<?php echo $row['rut_cliente']; ?>&rut_profesional=<?php echo $row['rut_profesional']; ?>&lugar_servicio=<?php echo $row['lugar_atencion']; ?>&servicio=<?php echo $row['servicio']; ?>'">

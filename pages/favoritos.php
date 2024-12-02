@@ -1,16 +1,16 @@
 <?php
-include 'database/conexion.php';
+    include 'database/conexion.php';
 
-// Obtener el rut del usuario actual
-$rut_usuario = $_SESSION['rut'];
+    // Obtener el rut del usuario actual
+    $rut_usuario = $_SESSION['rut'];
 
-// Consulta para obtener todos los profesionales favoritos del usuario
-$query = "SELECT u.rut, u.nombres, u.apellido_p, u.apellido_m, u.foto_perfil
-          FROM favoritos f
-          JOIN usuario u ON f.rut_profesional = u.rut
-          WHERE f.rut_usuario = '$rut_usuario'";
+    // Consulta para obtener todos los profesionales favoritos del usuario
+    $query = "SELECT u.rut, u.nombres, u.apellido_p, u.apellido_m, u.foto_perfil
+              FROM favoritos f
+              JOIN usuario u ON f.rut_profesional = u.rut
+              WHERE f.rut_usuario = '$rut_usuario'";
 
-$resultado = mysqli_query($conexion, $query);
+    $resultado = mysqli_query($conexion, $query);
 ?>
 
 <style>
@@ -51,10 +51,10 @@ $resultado = mysqli_query($conexion, $query);
         font-size: 0.9rem;
     }
 </style>
-<h1 class="text-center mt-5">Lista de favoritos</h1>
+
 <div class="favorite-list">
     <?php while ($row = mysqli_fetch_assoc($resultado)): ?>
-        <div class="favorite-item" onclick="window.location.href='index.php?p=profesional/profile_cita&rut=<?php echo $row['rut']; ?>'">
+        <div class="favorite-item" onclick="window.location.href='index.php?p=profesional/perfil_cita&rut=<?php echo $row['rut']; ?>'">
             <img src="<?php echo $row['foto_perfil']; ?>" alt="Foto de perfil">
             <div class="favorite-info">
                 <h5><?php echo $row['nombres'] . ' ' . $row['apellido_p'] . ' ' . $row['apellido_m']; ?></h5>

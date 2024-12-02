@@ -29,13 +29,13 @@
                             <button name="submit" type="submit" class="btn btn-primary btn-block">Entrar</button>
                         </div>
                     </form>
-                    <p class="text-center mt-3">¿Olvidaste tu contraseña? <a href='index.php?p=auth/recuperar_password'>Recuperala aquí</a><br>
+                    <p class="text-center mt-3">¿Olvidaste tu contraseña? <a href='#'>Recuperala aquí</a><br>
                                            ¿No estás registrado aún? <a href='index.php?p=auth/register'>Regístrate aquí</a></p>
                 </div>
             </div>
         </div>
     </div>
-    <p class="text-center mt-2"><button class="btn btn-primary btn-block"><a class="text-decoration-none text-white" href='index.php?p=home'>Volver al inicio</a></button></p>
+    <p class="text-center mt-2"><a href='index.php?p=home'>Volver al inicio</a></p>
 </div>
 
 <!-- Scripts de Bootstrap -->
@@ -44,6 +44,3 @@
         crossorigin="anonymous"></script>
         
         <script src="public/js/auth.js" ></script>
-
-        
-        
