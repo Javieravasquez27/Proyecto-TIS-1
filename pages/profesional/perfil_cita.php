@@ -1,3 +1,46 @@
+<style>
+.modal {
+    display: none;
+    position: fixed; /* Centrado en la pantalla */
+    z-index: 1000;
+    left: 50%; /* Centrar horizontalmente */
+    top: 10%; /* Desplaza el modal hacia abajo, evita la barra morada */
+    transform: translateX(-50%); /* Solo centrar horizontalmente */
+    width: 80%; /* Ajusta el ancho del modal */
+    max-width: 600px; /* Limitar el ancho máximo */
+    max-height: 80%; /* Limitar la altura máxima */
+    background-color: #f8f9fa; /* Fondo claro */
+    border: 1px solid #e0e0e0; /* Borde claro */
+    border-radius: 15px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra elegante */
+    padding: 20px; /* Espaciado interno */
+    overflow-y: auto; /* Habilitar scroll interno si es necesario */
+}
+
+
+.modal-content {
+    margin: 0;
+    padding: 0;
+}
+
+.close {
+    float: right;
+    font-size: 24px;
+    font-weight: bold;
+    color: #888;
+    cursor: pointer;
+    margin-top: -10px; /* Ajuste para que se alinee mejor */
+    margin-right: -10px;
+}
+
+.close:hover,
+.close:focus {
+    color: #333;
+    text-decoration: none;
+}
+</style>
+
+
 <?php
     define('PERMISO_REQUERIDO', 'client_pages_access');
     include("middleware/auth.php");
@@ -37,9 +80,11 @@
     <title>Reservar cita profesional con
         <?php echo $fila_profesional['nombres']; ?> - KindomJob's
     </title>
-
-    <div class="profile-header">
+    <div class="profile-header" style="position: relative;">
         <img src="<?php echo $fila_profesional['foto_perfil'] ?>" alt="Foto de perfil" class="rounded-circle mb-3">
+        <!-- Botón de Reportar -->
+        <button id="reportar-btn" class="btn btn-danger" style="position: absolute; top: 10px; right: 10px;">Reportar</button>
+        <!-- Fin del Botón de Reportar -->
         <h2>
             <?php echo $fila_profesional['nombres']?>
             <?php echo $fila_profesional['apellido_p']?>
@@ -209,6 +254,24 @@
     </div>
 </div>
 
+<!-- Modal de Reportar al Profesional -->
+<div id="reportar-modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2 style="text-align: center;">Reportar al Profesional</h2>
+        <form id="form-reporte" method="POST">
+            <input type="hidden" name="rut_profesional" value="<?php echo $rut; ?>">
+            <label for="motivo" style="font-weight: bold;">Motivo del Reporte:</label>
+            <textarea name="motivo" id="motivo" rows="4" cols="50" placeholder="Describe el motivo del reporte..." required style="width: 100%; border: 1px solid #ccc; border-radius: 5px; padding: 10px; margin-bottom: 15px;"></textarea><br>
+            <div style="text-align: center;">
+                <button type="submit" class="btn btn-danger">Enviar Reporte</button>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- Fin del Modal de Reportar al Profesional -->
+
+
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -286,4 +349,45 @@
             $('#confirmModal').modal('hide');
         });
     });
+</script>
+<script>
+// Manejo del modal de reporte
+document.getElementById('reportar-btn').onclick = function () {
+    document.getElementById('reportar-modal').style.display = "block";
+};
+
+document.querySelector('.close').onclick = function () {
+    document.getElementById('reportar-modal').style.display = "none";
+};
+
+window.onclick = function (event) {
+    if (event.target == document.getElementById('reportar-modal')) {
+        document.getElementById('reportar-modal').style.display = "none";
+    }
+};
+</script>
+<script>
+document.getElementById('form-reporte').addEventListener('submit', function (event) {
+    event.preventDefault(); // Prevenir el comportamiento por defecto del formulario
+
+    const formData = new FormData(this); // Obtener los datos del formulario
+
+    fetch('api/reporte/reportar_usuario.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Reporte enviado exitosamente.');
+            document.getElementById('reportar-modal').style.display = 'none'; // Cerrar el modal
+        } else {
+            alert(data.error || 'Error al enviar el reporte');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error al procesar la solicitud.');
+    });
+});
 </script>
