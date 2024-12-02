@@ -53,9 +53,6 @@
                         </li>
                     <?php endif; ?>
                 </ul>
-                    <li class="nav-item dropdown ">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <b><?php echo $_SESSION['nombre_usuario']; ?></b>
 
                 <div class="row">
                     <div class="col-1"></div>
