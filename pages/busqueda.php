@@ -165,8 +165,6 @@
         </div>
     </div>
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     $(document).ready(function () {
         let profesionalesSeleccionados = [];
@@ -250,7 +248,7 @@
                             datasets: [{
                                 label: 'Número de Citas',
                                 data: [profesionalesSeleccionados[0].citas, profesionalesSeleccionados[1].citas],
-                                backgroundColor: ['#007bff', '#28a745']
+                                backgroundColor: ['#007bff', '#28a745'],
                             }]
                         },
                         options: {
@@ -262,13 +260,13 @@
                         }
                     });
                     if (profesionalesSeleccionados[0].citas < profesionalesSeleccionados[1].citas) {
-                        contenedor.append(`<p>la mejor eleccion segun citas es: ${profesionalesSeleccionados[1].nombre} ya que tiene: ${profesionalesSeleccionados[1].citas}</p>`);
+                        contenedor.append(`<p>la mejor eleccion segun citas es: ${profesionalesSeleccionados[1].nombre} ,ya que tiene: ${profesionalesSeleccionados[1].citas} citas</p>`);
                     }
                     if (profesionalesSeleccionados[0].citas==profesionalesSeleccionados[1].citas) {
                         contenedor.append(`<p>Los profesionales tienen la misma cantidad de citas</p>`);
                     }
                     if (profesionalesSeleccionados[0].citas > profesionalesSeleccionados[1].citas) {
-                       contenedor.append(`<p>la mejor eleccion segun citas es: ${profesionalesSeleccionados[0].nombre} ya que tiene: ${profesionalesSeleccionados[0].citas}</p>`);  
+                       contenedor.append(`<p>la mejor eleccion segun citas es: ${profesionalesSeleccionados[0].nombre} ,ya que tiene: ${profesionalesSeleccionados[0].citas} citas</p>`);  
                     }
                 }
             }
