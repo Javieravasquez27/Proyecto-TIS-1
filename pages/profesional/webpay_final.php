@@ -1,5 +1,12 @@
 <?php
     include 'database/conexion.php';
+
+    require_once 'libs/PHPMailer/src/PHPMailer.php';
+    require_once 'libs/PHPMailer/src/SMTP.php';
+    require_once 'libs/PHPMailer/src/Exception.php';
+
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\Exception;
     
     $status = $_GET['status'];
     $buyOrder = $_GET['buyOrder'];
@@ -15,7 +22,55 @@
     $insertar_cita = "INSERT INTO cita (rut_cliente, rut_profesional, fecha_cita, hora_cita, tokencompra, lugar_atencion, servicio) VALUES ('$_SESSION[rut]', '$rut_prof', '$fecha_cita', '$hora_cita', '$token', '$lugar_atencion', '$nombre_servicio')";
     $resultado = mysqli_query($conexion, $insertar_cita);
     
-    if ($status == 'success') { ?>
+    if ($status == 'success') { 
+        // Consulta para obtener el correo del cliente
+        $query = "SELECT correo FROM usuario WHERE rut = '$_SESSION[rut]'";
+        $result_email = mysqli_query($conexion, $query);
+        $email_cliente = '';
+        
+        if ($result_email && mysqli_num_rows($result_email) > 0) {
+            $row = mysqli_fetch_assoc($result_email);
+            $email_cliente = $row['correo'];
+        } else {
+            echo "Error: No se pudo obtener el correo del cliente.";
+            exit();
+        }
+
+        // Enviar correo al cliente
+        $mail = new PHPMailer(true);
+        try {
+            $mail->isSMTP();
+            $mail->Host = 'smtp.gmail.com';
+            $mail->SMTPAuth = true;
+            $mail->Username = 'kindomjobs@gmail.com';
+            $mail->Password = 'vjgj roxa ypvn qtmo'; // Cambia esta contraseña a un token seguro
+            $mail->SMTPSecure = 'tls';
+            $mail->Port = 587;
+
+            $mail->setFrom('kindomjobs@gmail.com', 'KindomJob\'s');
+            $mail->addAddress($email_cliente);
+
+            $mail->isHTML(true);
+            $mail->Subject = 'Recordatorio de tu cita';
+            $mail->Body = "
+                <html>
+                <body>
+                    <h2>Detalles de tu cita</h2>
+                    <p><strong>Servicio:</strong> $nombre_servicio</p>
+                    <p><strong>Profesional:</strong> $nombre_profesional</p>
+                    <p><strong>Fecha:</strong> $fecha_cita</p>
+                    <p><strong>Hora:</strong> $hora_cita</p>
+                    <p><strong>Lugar:</strong> $lugar_atencion</p>
+                    <p>Gracias por confiar en KindomJob's.</p>
+                </body>
+                </html>";
+
+            $mail->send();
+            
+        } catch (Exception $e) {
+            error_log("Error al enviar el correo: " . $mail->ErrorInfo);
+        }    
+        ?>
         <div class='container mt-5'>
             <div class='voucher' id='voucher'>
                 <div class='voucher-header text-center'>
