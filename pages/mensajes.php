@@ -7,8 +7,8 @@ $rut_usuario = $_SESSION['rut'];
 // Consulta para obtener todos los chats del usuario
 $query = "SELECT DISTINCT u.rut, u.nombres, u.apellido_p, u.apellido_m, u.foto_perfil
           FROM mensaje m
-          JOIN usuario u ON (m.rut_recive = u.rut OR m.rut_envia = u.rut)
-          WHERE m.rut_recive = '$rut_usuario' OR m.rut_envia = '$rut_usuario'
+          JOIN usuario u ON (m.rut_recibe = u.rut OR m.rut_envia = u.rut)
+          WHERE m.rut_recibe = '$rut_usuario' OR m.rut_envia = '$rut_usuario'
           AND u.rut != '$rut_usuario'";
 
 $resultado = mysqli_query($conexion, $query);

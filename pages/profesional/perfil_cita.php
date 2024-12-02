@@ -1,42 +1,42 @@
 <style>
-.modal {
-    display: none;
-    position: fixed; /* Centrado en la pantalla */
-    left: 50%; /* Centrar horizontalmente */
-    top: 10%; /* Desplaza el modal hacia abajo, evita la barra morada */
-    transform: translateX(-50%); /* Solo centrar horizontalmente */
-    width: 80%; /* Ajusta el ancho del modal */
-    max-width: 600px; /* Limitar el ancho máximo */
-    max-height: 80%; /* Limitar la altura máxima */
-    background-color: #f8f9fa; /* Fondo claro */
-    border: 1px solid #e0e0e0; /* Borde claro */
-    border-radius: 15px; /* Bordes redondeados */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra elegante */
-    padding: 20px; /* Espaciado interno */
-    overflow-y: auto; /* Habilitar scroll interno si es necesario */
-}
+    .modal {
+        display: none;
+        position: fixed; /* Centrado en la pantalla */
+        left: 50%; /* Centrar horizontalmente */
+        top: 10%; /* Desplaza el modal hacia abajo, evita la barra morada */
+        transform: translateX(-50%); /* Solo centrar horizontalmente */
+        width: 80%; /* Ajusta el ancho del modal */
+        max-width: 600px; /* Limitar el ancho máximo */
+        max-height: 80%; /* Limitar la altura máxima */
+        background-color: #f8f9fa; /* Fondo claro */
+        border: 1px solid #e0e0e0; /* Borde claro */
+        border-radius: 15px; /* Bordes redondeados */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra elegante */
+        padding: 20px; /* Espaciado interno */
+        overflow-y: auto; /* Habilitar scroll interno si es necesario */
+    }
 
 
-.modal-content {
-    margin: 0;
-    padding: 0;
-}
+    .modal-content {
+        margin: 0;
+        padding: 0;
+    }
 
-.close {
-    float: right;
-    font-size: 24px;
-    font-weight: bold;
-    color: #888;
-    cursor: pointer;
-    margin-top: -10px; /* Ajuste para que se alinee mejor */
-    margin-right: -10px;
-}
+    .close {
+        float: right;
+        font-size: 24px;
+        font-weight: bold;
+        color: #888;
+        cursor: pointer;
+        margin-top: -10px; /* Ajuste para que se alinee mejor */
+        margin-right: -10px;
+    }
 
-.close:hover,
-.close:focus {
-    color: #333;
-    text-decoration: none;
-}
+    .close:hover,
+    .close:focus {
+        color: #333;
+        text-decoration: none;
+    }
 </style>
 
 
