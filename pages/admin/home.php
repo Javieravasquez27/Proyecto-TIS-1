@@ -60,6 +60,18 @@
                 </div>
             </div>
         <?php endif; ?>
+        
+        <!-- Nueva sección para Reportes -->
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Reportes de Profesionales</h5>
+                    <p class="card-text">Revisa los reportes enviados por los usuarios sobre los profesionales registrados en la plataforma.</p>
+                    <a href="index.php?p=admin/reportes/index" class="btn btn-primary">Entrar</a>
+                </div>
+            </div>
+        </div>
+
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
