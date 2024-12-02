@@ -24,14 +24,14 @@ try {
         $nombre_servicio = $_SESSION['nombre_servicio'];
         $fecha_cita = $_SESSION['fecha_cita'];
         $hora_cita = $_SESSION['hora_cita'];
+        $lugar_atencion = $_SESSION['lugar_atencion'];
 
-        $sql = "update disponibilidad 
-                set disponible = 0,
-                rut_cliente = '$_SESSION[rut]'
-                where rut_profesional = '$rut_prof' and fecha = '$fecha_cita' and hora = '$hora_cita';";
+        $sql = "UPDATE disponibilidad 
+                SET disponible = 0, rut_cliente = '$_SESSION[rut]'
+                WHERE rut_profesional = '$rut_prof' AND fecha = '$fecha_cita' AND hora = '$hora_cita';";
         if (mysqli_query($conexion, $sql)) {
-            // Redirige al usuario a la URL final
-            header("Location: index.php?p=profesional/webpay_final&status=success&buyOrder=$buyOrder&amount=$amount");
+            // Redirige al usuario a la URL final con todos los datos necesarios
+            header("Location: index.php?p=profesional/webpay_final&status=success&buyOrder=$buyOrder&amount=$amount&token=$tokenWs&rut_prof=$rut_prof&nombre_profesional=$nombre_profesional&nombre_servicio=$nombre_servicio&fecha_cita=$fecha_cita&hora_cita=$hora_cita&lugar_atencion=$lugar_atencion&token=$tokenWs");
         } else {
             echo "Error al guardar la cita: " . mysqli_error($conexion);
         }

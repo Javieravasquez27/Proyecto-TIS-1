@@ -23,6 +23,12 @@
                                           JOIN provincia USING (id_provincia) JOIN region USING (id_region)
                                      WHERE rut_profesional = '$rut';";
     $resultado_lugar_at_presencial = mysqli_query($conexion, $consulta_lugar_at_presencial);
+
+    $consulta_lugar_at_virtual = "SELECT * 
+                                  FROM lugar_atencion_virtual
+                                  WHERE rut_profesional = '$rut';";
+    
+    $resultado_lugar_at_virtual = mysqli_query($conexion, $consulta_lugar_at_virtual);
 ?>
 
 <link rel="stylesheet" href="public/css/perfil_cita.css">
@@ -120,6 +126,8 @@
                     <input type="hidden" id="nombre_servicio" name="nombre_servicio">
                     <input type="hidden" id="fecha_cita" name="fecha_cita">
                     <input type="hidden" id="hora_cita" name="hora_cita">
+                    <input type="hidden" id="lugar_atencion" name="lugar_atencion">
+                    <input type="hidden" id="monto_total" name="monto_total" value="1">
                     <select class="form-select mb-3" id="servicio" name="servicio">
                         <option value="" selected>Seleccione un servicio</option>
                         <?php
@@ -137,7 +145,6 @@
                     <input type="date" class="form-control mb-3" id="fecha" name="fecha">
                     <div class="d-grid gap-2" id="horas-disponibles">
                     </div>
-                    <input type="hidden" id="monto-total" name="monto_total" value="0">
                 </div>
             </form>
         </div>
@@ -165,6 +172,25 @@
                     </div>
                     <div class="voucher-section">
                         <strong>Hora:</strong> <span id="hora-cita-modal"></span>
+                    </div>
+                    <div class="voucher-section">
+                        <strong>Lugar de Atención:</strong>
+                        <select class="form-control" id="lugar-atencion-modal">
+                            <option value="">Seleccione el lugar de atencion virt o presencial</option>
+                            <optgroup label="Virtual"></optgroup>
+                            <?php
+                                while($fila_lugar_at_virtual = mysqli_fetch_assoc($resultado_lugar_at_virtual)){
+                                    echo "<option value='$fila_lugar_at_virtual[link_sala_virtual]'>$fila_lugar_at_virtual[nombre_atv]</option>";
+                                }
+                            ?>
+                            <optgroup label="Presencial"></optgroup>
+                            <?php
+                                while($fila_lugar_at_presencial = mysqli_fetch_assoc($resultado_lugar_at_presencial)){
+                                    $direccion = $fila_lugar_at_presencial['nombre_comuna'] . ', ' . $fila_lugar_at_presencial['nombre_provincia'] . ', ' . $fila_lugar_at_presencial['nombre_region'];
+                                    echo "<option value='$direccion'>$direccion</option>";
+                                }
+                            ?>
+                        </select>
                     </div>
                     <div class="voucher-section">
                         <input type="checkbox" id="cita-adicional" name="cita-adicional">
@@ -234,7 +260,7 @@
             $('#nombre_servicio').val(nombreServicio);
             $('#fecha_cita').val(fechaSeleccionada);
             $('#hora_cita').val(horaSeleccionada);
-            $('#monto-total').val(precioServicio);
+            $('#monto_total').val(precioServicio);
 
             $('#confirmModal').modal('show');
         });
@@ -247,11 +273,13 @@
                 montoTotal += 1000;
             }
             $('#monto-servicio').text(montoTotal);
-            $('#monto-total').val(montoTotal);
+            $('#monto_total').val(montoTotal);
         });
 
         // Confirmar la cita
         $('#confirmar-cita').click(function () {
+            const lugarAtencion = $('#lugar-atencion-modal').val();
+            $('#lugar_atencion').val(lugarAtencion);
             $('#form-reserva').submit();
         });
         $('#cancelar-cita').click(function () {
