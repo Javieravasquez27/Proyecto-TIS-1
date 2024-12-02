@@ -1,37 +1,65 @@
 <?php
-    define('PERMISO_REQUERIDO', 'client_pages_access');
-    include("middleware/auth.php");
-    include("database/conexion.php");
-    $rut = $_GET['rut'];
+define('PERMISO_REQUERIDO', 'client_pages_access');
+include("middleware/auth.php");
+include("database/conexion.php");
+$rut = $_GET['rut'];
+$rut_cliente = $_SESSION['rut'];
 
-    $consulta_profesional = "SELECT * FROM comuna, institucion, usuario JOIN profesional USING (rut)
-                                           JOIN profesion USING (id_profesion)
-                             WHERE profesional.id_institucion = institucion.id_institucion
-                             AND usuario.id_comuna = comuna.id_comuna
-                             AND profesional.rut = '$rut';";
-    $resultado_profesional = mysqli_query($conexion, $consulta_profesional);
-    $fila_profesional = mysqli_fetch_assoc($resultado_profesional);
+$consulta_profesional = "SELECT * FROM comuna, institucion, usuario JOIN profesional USING (rut)
+                                       JOIN profesion USING (id_profesion)
+                         WHERE profesional.id_institucion = institucion.id_institucion
+                         AND usuario.id_comuna = comuna.id_comuna
+                         AND profesional.rut = '$rut';";
+$resultado_profesional = mysqli_query($conexion, $consulta_profesional);
+$fila_profesional = mysqli_fetch_assoc($resultado_profesional);
 
-    $consulta_serv_prof = "SELECT sp.id_servicio, sp.rut_profesional, s.nombre_servicio AS nombre_servicio,
-                                  sp.precio_serv_prof
-                           FROM servicio_profesional sp LEFT JOIN servicio s ON sp.id_servicio = s.id_servicio 
-                           WHERE rut_profesional = '$rut';";
-    $resultado_serv_prof = mysqli_query($conexion, $consulta_serv_prof);
+$consulta_serv_prof = "SELECT sp.id_servicio, sp.rut_profesional, s.nombre_servicio AS nombre_servicio,
+                              sp.precio_serv_prof
+                       FROM servicio_profesional sp LEFT JOIN servicio s ON sp.id_servicio = s.id_servicio 
+                       WHERE rut_profesional = '$rut';";
+$resultado_serv_prof = mysqli_query($conexion, $consulta_serv_prof);
 
-    $consulta_lugar_at_presencial = "SELECT nombre_comuna, nombre_provincia, nombre_region
-                                     FROM lugar_atencion_presencial JOIN comuna USING (id_comuna)
-                                          JOIN provincia USING (id_provincia) JOIN region USING (id_region)
-                                     WHERE rut_profesional = '$rut';";
-    $resultado_lugar_at_presencial = mysqli_query($conexion, $consulta_lugar_at_presencial);
+$consulta_lugar_at_presencial = "SELECT nombre_comuna, nombre_provincia, nombre_region
+                                 FROM lugar_atencion_presencial JOIN comuna USING (id_comuna)
+                                      JOIN provincia USING (id_provincia) JOIN region USING (id_region)
+                                 WHERE rut_profesional = '$rut';";
+$resultado_lugar_at_presencial = mysqli_query($conexion, $consulta_lugar_at_presencial);
 
-    $consulta_lugar_at_virtual = "SELECT * 
-                                  FROM lugar_atencion_virtual
-                                  WHERE rut_profesional = '$rut';";
-    
-    $resultado_lugar_at_virtual = mysqli_query($conexion, $consulta_lugar_at_virtual);
+$consulta_lugar_at_virtual = "SELECT * 
+                              FROM lugar_atencion_virtual
+                              WHERE rut_profesional = '$rut';";
+$resultado_lugar_at_virtual = mysqli_query($conexion, $consulta_lugar_at_virtual);
+
+// Consulta para obtener el promedio de estrellas
+$consulta_promedio_estrellas = "SELECT AVG(rating_star) as promedio_estrellas FROM clasificacion WHERE rut_profesional = '$rut'";
+$resultado_promedio_estrellas = mysqli_query($conexion, $consulta_promedio_estrellas);
+$fila_promedio_estrellas = mysqli_fetch_assoc($resultado_promedio_estrellas);
+$promedio_estrellas = $fila_promedio_estrellas['promedio_estrellas'];
+
+// Consulta para obtener los comentarios de los clientes
+$consulta_comentarios = "SELECT comentario FROM clasificacion WHERE rut_profesional = '$rut'";
+$resultado_comentarios = mysqli_query($conexion, $consulta_comentarios);
+
+// Preparar datos para el gráfico
+$servicios = [];
+$precios = [];
+$promedios_precios = [];
+while($fila_serv_prof = mysqli_fetch_assoc($resultado_serv_prof)){
+    $servicios[] = $fila_serv_prof['nombre_servicio'];
+    $precios[] = $fila_serv_prof['precio_serv_prof'];
+
+    // Consulta para obtener el promedio de los precios de este servicio específico de todos los profesionales
+    $id_servicio = $fila_serv_prof['id_servicio'];
+    $consulta_promedio_precio_servicio = "SELECT AVG(precio_serv_prof) as promedio_precio_servicio FROM servicio_profesional WHERE id_servicio = '$id_servicio'";
+    $resultado_promedio_precio_servicio = mysqli_query($conexion, $consulta_promedio_precio_servicio);
+    $fila_promedio_precio_servicio = mysqli_fetch_assoc($resultado_promedio_precio_servicio);
+    $promedios_precios[] = $fila_promedio_precio_servicio['promedio_precio_servicio'];
+}
 ?>
 
 <link rel="stylesheet" href="public/css/profile_cita.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
 <div class="container my-5">
     <title>Reservar cita profesional con
@@ -39,7 +67,10 @@
     </title>
 
     <div class="profile-header">
-        <img src="<?php echo $fila_profesional['foto_perfil'] ?>" alt="Foto de perfil" class="rounded-circle mb-3">
+        <div style="position: relative;">
+            <img src="<?php echo $fila_profesional['foto_perfil'] ?>" alt="Foto de perfil" class="rounded-circle mb-3">
+            <i id="favorite-icon" class="bi bi-heart" style="position: absolute; top: 10px; left: 10px; font-size: 2rem; cursor: pointer;"></i>
+        </div>
         <h2>
             <?php echo $fila_profesional['nombres']?>
             <?php echo $fila_profesional['apellido_p']?>
@@ -48,9 +79,11 @@
         <p>
             <?php echo $fila_profesional['nombre_profesion']?>
         </p>
-        <p>
-            <i class="bi bi-geo-alt"></i> <?php echo $fila_profesional['nombre_comuna']?>
-        </p>
+        <?php if ($promedio_estrellas): ?>
+            <p>
+                <strong>Promedio de Estrellas:</strong> <?php echo number_format($promedio_estrellas, 1); ?> &#9733;
+            </p>
+        <?php endif; ?>
     </div>
     <div class="row mt-4">
         <!-- Sección de información y servicios -->
@@ -77,6 +110,7 @@
                 <div class="tab-pane fade show active" id="services" role="tabpanel">
                     <h5>Servicios y Precios</h5>
                     <?php
+                        mysqli_data_seek($resultado_serv_prof, 0); // Reset the result pointer to the beginning
                         while($fila_serv_prof = mysqli_fetch_assoc($resultado_serv_prof)){
                     ?>
                     <div class="service-item"><span>
@@ -87,7 +121,36 @@
                     <?php
                         }
                     ?>
-                    <div class="graph-placeholder">[Gráfico]</div>
+                    <canvas id="serviciosChart"></canvas>
+                    <script>
+                        var ctx = document.getElementById('serviciosChart').getContext('2d');
+                        var serviciosChart = new Chart(ctx, {
+                            type: 'bar',
+                            data: { 
+                                labels: <?php echo json_encode($servicios); ?>,
+                                datasets: [{
+                                    label: 'Precio del Servicio',
+                                    data: <?php echo json_encode($precios); ?>,
+                                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                                    borderColor: 'rgba(54, 162, 235, 1)',
+                                    borderWidth: 1
+                                }, {
+                                    label: 'Promedio del Precio del Servicio',
+                                    data: <?php echo json_encode($promedios_precios); ?>,
+                                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                                    borderColor: 'rgba(255, 99, 132, 1)',
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    y: {
+                                        beginAtZero: true
+                                    }
+                                }
+                            }
+                        });
+                    </script>
                 </div>
                 <div class="tab-pane fade" id="direcciones" role="tabpanel">
                     <h5>Direcciones</h5>
@@ -111,7 +174,13 @@
                 </div>
                 <div class="tab-pane fade" id="opinions" role="tabpanel">
                     <h5>Opiniones</h5>
-                    <p>Opiniones de los clientes...</p>
+                    <?php
+                        $comentario_num = 1;
+                        while($fila_comentario = mysqli_fetch_assoc($resultado_comentarios)){
+                            echo "<p><strong>Comentario $comentario_num:</strong> " . htmlspecialchars($fila_comentario['comentario']) . "</p>";
+                            $comentario_num++;
+                        }
+                    ?>
                 </div>
             </div>
         </div>
@@ -152,6 +221,26 @@
     </div>
 </div>
 
+<script>
+    $(document).ready(function() {
+        $('#favorite-icon').on('click', function() {
+            $.ajax({
+                type: 'POST',
+                url: 'utils/guardar_favorito.php',
+                data: {
+                    rut_profesional: '<?php echo $rut; ?>',
+                    rut_cliente: '<?php echo $rut_cliente; ?>'
+                },
+                success: function(response) {
+                    alert('Profesional agregado a favoritos');
+                },
+                error: function() {
+                    alert('Error al agregar a favoritos');
+                }
+            });
+        });
+    });
+</script>
 <!-- Modal de confirmación -->
 <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -210,9 +299,7 @@
     </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 <script>
     $(document).ready(function () {
         // Detecta cuando cambia la fecha y hace una solicitud AJAX
@@ -221,8 +308,7 @@
             const rut = document.querySelector("#rut_prof").value;
             if (fechaSeleccionada) {
                 $.ajax({
-                    url: 'pages/profesional/consultar_disponibilidad.php', // Archivo PHP que manejará la solicitud
-                    type: 'POST',
+                    url: 'pages/profesional/consultar_disponibilidad.php',
                     data: { rut: rut, fecha: fechaSeleccionada },
                     success: function (data) {
                         // Se actualiza la lista de horas disponibles

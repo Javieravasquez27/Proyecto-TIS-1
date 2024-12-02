@@ -11,11 +11,11 @@ $hora_cita = $_GET['hora_cita'];
 $lugar_atencion = $_GET['lugar_atencion'];
 
 if ($status == 'success') { 
-    $insertar_cita = "INSERT INTO cita (rut_cliente, rut_profesional, fecha_cita, hora_cita, tokencompra, lugar_atencion, servicio) VALUES ('$_SESSION[rut]', '$rut_prof', '$fecha_cita', '$hora_cita', '$token', '$lugar_atencion', '$nombre_servicio')";
-    $resultado = mysqli_query($conexion, $insertar_cita);
     $buyOrder = $_GET['buyOrder'];
     $amount = $_GET['amount'];
     $token = $_GET['token'];
+    $insertar_cita = "INSERT INTO cita (rut_cliente, rut_profesional, fecha_cita, hora_cita, tokencompra, lugar_atencion, servicio) VALUES ('$_SESSION[rut]', '$rut_prof', '$fecha_cita', '$hora_cita', '$token', '$lugar_atencion', '$nombre_servicio')";
+    $resultado = mysqli_query($conexion, $insertar_cita);
 ?>
     <div class='container mt-5'>
         <div class='voucher' id='voucher'>
