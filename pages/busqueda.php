@@ -17,8 +17,8 @@ if (empty($filtro_ciudad) && empty($filtro_comuna) && empty($filtro_region) && e
 
 // Crear la consulta SQL en función de los filtros
 $query = "SELECT usuario.foto_perfil, profesional.rut, profesion.nombre_profesion, usuario.nombres, 
-          GROUP_CONCAT(DISTINCT servicio.nombre_servicio ORDER BY servicio.nombre_servicio SEPARATOR '|') AS servicios, 
-          GROUP_CONCAT(DISTINCT servicio_profesional.precio_serv_prof ORDER BY servicio.nombre_servicio SEPARATOR '|') AS montos,
+          GROUP_CONCAT(servicio.nombre_servicio ORDER BY servicio.nombre_servicio SEPARATOR '|') AS servicios, 
+          GROUP_CONCAT(servicio_profesional.precio_serv_prof ORDER BY servicio.nombre_servicio SEPARATOR '|') AS montos,
           GROUP_CONCAT(DISTINCT comuna.nombre_comuna ORDER BY comuna.nombre_comuna SEPARATOR '|') AS lugares_atencion 
           FROM usuario
           JOIN profesional ON profesional.rut = usuario.rut
@@ -41,7 +41,7 @@ if (!empty($filtro_ciudad)) {
 }
 if (!empty($filtro_region)) {
     $query .= " AND comuna.id_provincia IN (SELECT id_provincia FROM provincia WHERE id_region = '$filtro_region')";
-}   
+}
 if (!empty($filtro_servicio)) {
     $query .= " AND servicio.id_servicio = '$filtro_servicio'";
 }
@@ -58,7 +58,7 @@ $resultado_prof = mysqli_query($conexion, $query);
 // Preparar datos para el gráfico de citas
 $profesionales = [];
 $citas = [];
-while($fila = mysqli_fetch_assoc($resultado_prof)){
+while ($fila = mysqli_fetch_assoc($resultado_prof)) {
     $profesionales[] = $fila['nombres'];
     $rut_profesional = $fila['rut'];
     $query_cant_citas = "SELECT COUNT(*) as citas FROM cita WHERE rut_profesional='$rut_profesional'";
@@ -69,56 +69,96 @@ while($fila = mysqli_fetch_assoc($resultado_prof)){
 ?>
 
 <style>
-    .no-style-link { color: inherit; text-decoration: none; }
-    .card { max-width: 900px; margin: 20px auto; border: 1px solid #ddd; border-radius: 8px; }
-    .profile-section { display: flex; align-items: center; margin-bottom: 15px; }
-    .profile-section img { border-radius: 50%; width: 100px; height: 100px; margin-right: 15px; border: 2px solid #ddd; }
-    .badge { background-color: #e6f4ea; color: #28a745; font-size: 0.8rem; padding: 5px 10px; border-radius: 5px; }
-    .text-muted { font-size: 0.9rem; }
-    .nav-tabs .nav-link.active { font-weight: bold; color: #000; }
-    .nav-tabs .nav-link { color: #666; }
+    .no-style-link {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    .card {
+        max-width: 900px;
+        margin: 20px auto;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+    }
+
+    .profile-section {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    .profile-section img {
+        border-radius: 50%;
+        width: 100px;
+        height: 100px;
+        margin-right: 15px;
+        border: 2px solid #ddd;
+    }
+
+    .badge {
+        background-color: #e6f4ea;
+        color: #28a745;
+        font-size: 0.8rem;
+        padding: 5px 10px;
+        border-radius: 5px;
+    }
+
+    .text-muted {
+        font-size: 0.9rem;
+    }
+
+    .nav-tabs .nav-link.active {
+        font-weight: bold;
+        color: #000;
+    }
+
+    .nav-tabs .nav-link {
+        color: #666;
+    }
 </style>
 
 <div class="container mt-3">
     <div class="text-center mb-4" style="font-size: 20px;">Resultado búsqueda de profesionales</div>
     <div class="row">
         <div class="col-md-8">
-
             <?php
-            mysqli_data_seek($resultado_prof, 0); 
+            mysqli_data_seek($resultado_prof, 0);
             while ($row_prof = mysqli_fetch_assoc($resultado_prof)): ?>
                 <div class="card shadow-sm mb-3">
                     <div class="card-body">
                         <div class="profile-section">
                             <img src="<?php echo $row_prof['foto_perfil'] ?>" alt="Foto de perfil">
                             <div>
-                                <h5 class="mt-2"><a href="index.php?p=profesional/profile_cita&rut=<?php echo $row_prof['rut']; ?>" class="text-decoration-none"><b><?php echo $row_prof['nombres']; ?></b></a></h5>
+                                <h5 class="mt-2"><a
+                                        href="index.php?p=profesional/profile_cita&rut=<?php echo $row_prof['rut']; ?>"
+                                        class="text-decoration-none"><b><?php echo $row_prof['nombres']; ?></b></a></h5>
                                 <p class="text-muted"><?php echo $row_prof['nombre_profesion']; ?></p>
                             </div>
                         </div>
-                        
+
                         <!-- Navbar con pestañas de servicios y lugares de atención -->
                         <ul class="nav nav-tabs" id="myTab-<?php echo $row_prof['rut']; ?>" role="tablist">
-                            <?php 
+                            <?php
                             $servicios = explode('|', $row_prof['servicios']);
+                            $montos = explode('|', $row_prof['montos']);
                             $lugares = explode('|', $row_prof['lugares_atencion']);
                             foreach ($servicios as $index => $servicio) {
                                 echo "<li class='nav-item' role='presentation'>
-                                        <button class='nav-link " . ($index === 0 ? 'active' : '') . "' id='servicio-{$index}-tab-{$row_prof['rut']}' data-bs-toggle='tab' data-bs-target='#servicio-{$index}-{$row_prof['rut']}' type='button' role='tab' aria-controls='servicio-{$index}-{$row_prof['rut']}' aria-selected='" . ($index === 0 ? 'true' : 'false') . "'>Servicio " . ($index + 1) . "</button>
-                                      </li>";
+                <button class='nav-link " . ($index === 0 ? 'active' : '') . "' id='servicio-{$index}-tab-{$row_prof['rut']}' data-bs-toggle='tab' data-bs-target='#servicio-{$index}-{$row_prof['rut']}' type='button' role='tab' aria-controls='servicio-{$index}-{$row_prof['rut']}' aria-selected='" . ($index === 0 ? 'true' : 'false') . "'>Servicio " . ($index + 1) . "</button>
+              </li>";
                             }
                             ?>
                         </ul>
 
                         <!-- Contenido de cada pestaña de servicios -->
                         <div class="tab-content" id="myTabContent-<?php echo $row_prof['rut']; ?>">
-                            <?php 
+                            <?php
                             foreach ($servicios as $index => $servicio) {
-                                $monto = explode('|', $row_prof['montos'])[$index];
+                                $monto = isset($montos[$index]) ? $montos[$index] : 'N/A';
                                 echo "<div class='tab-pane fade " . ($index === 0 ? 'show active' : '') . "' id='servicio-{$index}-{$row_prof['rut']}' role='tabpanel' aria-labelledby='servicio-{$index}-tab-{$row_prof['rut']}'>
-                                        <br>
-                                        <p><b>Servicio:</b> " . htmlspecialchars($servicio) . " - <b>Precio:</b> " . htmlspecialchars($monto) . "$</p>
-                                      </div>";
+                <br>
+                <p><b>Servicio:</b> " . htmlspecialchars($servicio) . " - <b>Precio:</b> " . htmlspecialchars($monto) . "$</p>
+              </div>";
                             }
                             ?>
                         </div>
@@ -127,7 +167,13 @@ while($fila = mysqli_fetch_assoc($resultado_prof)){
                             <ul class="nav nav-tabs" id="direccionTab-<?php echo $row_prof['rut']; ?>" role="tablist">
                                 <?php foreach ($lugares as $index => $lugar): ?>
                                     <li class="nav-item" role="presentation">
-                                        <button class="nav-link <?php echo ($index === 0 ? 'active' : ''); ?>" id="direccion-<?php echo $index; ?>-tab-<?php echo $row_prof['rut']; ?>" data-bs-toggle="tab" data-bs-target="#direccion-<?php echo $index; ?>-<?php echo $row_prof['rut']; ?>" type="button" role="tab" aria-controls="direccion-<?php echo $index; ?>-<?php echo $row_prof['rut']; ?>" aria-selected="<?php echo ($index === 0 ? 'true' : 'false'); ?>">
+                                        <button class="nav-link <?php echo ($index === 0 ? 'active' : ''); ?>"
+                                            id="direccion-<?php echo $index; ?>-tab-<?php echo $row_prof['rut']; ?>"
+                                            data-bs-toggle="tab"
+                                            data-bs-target="#direccion-<?php echo $index; ?>-<?php echo $row_prof['rut']; ?>"
+                                            type="button" role="tab"
+                                            aria-controls="direccion-<?php echo $index; ?>-<?php echo $row_prof['rut']; ?>"
+                                            aria-selected="<?php echo ($index === 0 ? 'true' : 'false'); ?>">
                                             Dirección <?php echo $index + 1; ?>
                                         </button>
                                     </li>
@@ -135,7 +181,7 @@ while($fila = mysqli_fetch_assoc($resultado_prof)){
                             </ul>
 
                             <div class="tab-content" id="direccionTabContent-<?php echo $row_prof['rut']; ?>">
-                                <?php 
+                                <?php
                                 foreach ($lugares as $index => $lugar) {
                                     echo "<div class='tab-pane fade " . ($index === 0 ? 'show active' : '') . "' id='direccion-{$index}-{$row_prof['rut']}' role='tabpanel' aria-labelledby='direccion-{$index}-tab-{$row_prof['rut']}'>
                                             <br>
@@ -148,13 +194,16 @@ while($fila = mysqli_fetch_assoc($resultado_prof)){
 
                         <div class="form-check">
                             <?php
-                             $query_cant_citas="select COUNT(*) as citas from cita where rut_profesional='$row_prof[rut]'";
-                             $resultado_cant_citas = mysqli_query($conexion, $query_cant_citas);
-                             while ($row_cant_citas = mysqli_fetch_assoc($resultado_cant_citas)){
+                            $query_cant_citas = "select COUNT(*) as citas from cita where rut_profesional='$row_prof[rut]'";
+                            $resultado_cant_citas = mysqli_query($conexion, $query_cant_citas);
+                            while ($row_cant_citas = mysqli_fetch_assoc($resultado_cant_citas)) {
                                 $citas = $row_cant_citas["citas"];
-                             }
+                            }
                             ?>
-                            <input class="form-check-input comparar-checkbox" type="checkbox" value="" id="comparar-<?php echo $row_prof['rut']; ?>" data-id='<?php echo $row_prof['rut']; ?>' data-nombre='<?php echo $row_prof['nombres']; ?>' data-precio='<?php echo $monto; ?>' data-servicios='<?php echo implode(",", $servicios); ?>' data-citas='<?php echo $citas; ?>'>
+                            <input class="form-check-input comparar-checkbox" type="checkbox" value=""
+                                id="comparar-<?php echo $row_prof['rut']; ?>" data-id='<?php echo $row_prof['rut']; ?>'
+                                data-nombre='<?php echo $row_prof['nombres']; ?>' data-precio='<?php echo $monto; ?>'
+                                data-servicios='<?php echo implode(",", $servicios); ?>' data-citas='<?php echo $citas; ?>'>
                             <label class="form-check-label" for="comparar-<?php echo $row_prof['rut']; ?>">
                                 Comparar
                             </label>
@@ -190,9 +239,10 @@ while($fila = mysqli_fetch_assoc($resultado_prof)){
             </script>
         </div>
     </div>
-</div> 
+</div>
 <!-- Modal para mostrar la comparación -->
-<div class="modal fade" id="compararModal" tabindex="-1" role="dialog" aria-labelledby="compararModalLabel" aria-hidden="true">
+<div class="modal fade" id="compararModal" tabindex="-1" role="dialog" aria-labelledby="compararModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -272,14 +322,14 @@ while($fila = mysqli_fetch_assoc($resultado_prof)){
                     if (profesionalesSeleccionados[0].precio < profesionalesSeleccionados[1].precio) {
                         contenedor.append(`<p>Diferencia de precio: $${diferencia} , la mejor eleccion segun precio es: ${profesionalesSeleccionados[0].nombre}</p>`);
                     }
-                    if (profesionalesSeleccionados[0].precio==profesionalesSeleccionados[1].precio) {
+                    if (profesionalesSeleccionados[0].precio == profesionalesSeleccionados[1].precio) {
                         contenedor.append(`<p>Los precios son iguales</p>`);
                     }
                     if (profesionalesSeleccionados[0].precio > profesionalesSeleccionados[1].precio) {
-                       contenedor.append(`<p>Diferencia de precio: $${diferencia} , la mejor eleccion segun precio es: ${profesionalesSeleccionados[1].nombre}</p>`);  
+                        contenedor.append(`<p>Diferencia de precio: $${diferencia} , la mejor eleccion segun precio es: ${profesionalesSeleccionados[1].nombre}</p>`);
                     }
 
-                    
+
 
                     // Crear gráfico de comparación de citas
                     const ctx = document.getElementById('compararChart').getContext('2d');
@@ -307,11 +357,11 @@ while($fila = mysqli_fetch_assoc($resultado_prof)){
                     if (profesionalesSeleccionados[0].citas < profesionalesSeleccionados[1].citas) {
                         contenedor.append(`<p>la mejor eleccion segun citas es: ${profesionalesSeleccionados[1].nombre} ,ya que tiene: ${profesionalesSeleccionados[1].citas} citas</p>`);
                     }
-                    if (profesionalesSeleccionados[0].citas==profesionalesSeleccionados[1].citas) {
+                    if (profesionalesSeleccionados[0].citas == profesionalesSeleccionados[1].citas) {
                         contenedor.append(`<p>Los profesionales tienen la misma cantidad de citas</p>`);
                     }
                     if (profesionalesSeleccionados[0].citas > profesionalesSeleccionados[1].citas) {
-                       contenedor.append(`<p>la mejor eleccion segun citas es: ${profesionalesSeleccionados[0].nombre} ,ya que tiene: ${profesionalesSeleccionados[0].citas} citas</p>`);  
+                        contenedor.append(`<p>la mejor eleccion segun citas es: ${profesionalesSeleccionados[0].nombre} ,ya que tiene: ${profesionalesSeleccionados[0].citas} citas</p>`);
                     }
                 }
             }

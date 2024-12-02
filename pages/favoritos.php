@@ -51,7 +51,7 @@ $resultado = mysqli_query($conexion, $query);
         font-size: 0.9rem;
     }
 </style>
-
+<h1 class="text-center mt-5">Lista de favoritos</h1>
 <div class="favorite-list">
     <?php while ($row = mysqli_fetch_assoc($resultado)): ?>
         <div class="favorite-item" onclick="window.location.href='index.php?p=profesional/profile_cita&rut=<?php echo $row['rut']; ?>'">
